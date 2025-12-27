@@ -37,7 +37,7 @@ export function TechServices() {
     {
       icon: Brain,
       title: 'AI 工具',
-      description: '人���智慧應用整合',
+      description: '人工智慧應用整合',
       details: ['智能客服系統', '數據分析預測', '自動化流程', 'AI內容生成'],
       color: 'from-purple-400 to-pink-500',
       bgColor: 'bg-purple-500/10'
