@@ -147,7 +147,7 @@ export function Hero() {
         >
           <motion.button
             className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full text-white shadow-lg shadow-cyan-500/50"
-            whileHover={{ scale: 1.05, shadow: "0 0 30px rgba(6,182,212,0.6)" }}
+            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(6,182,212,0.6)" }}
             whileTap={{ scale: 0.95 }}
             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
           >

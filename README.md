@@ -109,3 +109,14 @@ pnpm start
 - [ ] 添加 Google Analytics 追蹤碼
 - [ ] 在 `layout.tsx` 中填入 Google 驗證碼
 - [ ] 添加社群媒體連結到 JSON-LD `sameAs` 欄位
+
+## 部署
+
+本專案支援 Vercel 部署：
+
+```bash
+# 建置生產版本
+pnpm build
+```
+
+**注意**：UI 組件使用 shadcn/ui，import 語句不應包含版本號（如 `@radix-ui/react-dialog` 而非 `@radix-ui/react-dialog@1.1.6`）。
