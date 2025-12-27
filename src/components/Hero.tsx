@@ -12,13 +12,13 @@ const seededRandom = (seed: number) => {
 };
 
 export function Hero() {
-  // 預先計算固定位置，確保伺服器和客戶端一致
+  // 預先計算固定位置，確保伺服器和客戶端一致（固定小數位數避免 hydration mismatch）
   const particles = useMemo(() =>
     [...Array(15)].map((_, i) => ({
-      left: 10 + seededRandom(i * 2) * 80,
-      top: 10 + seededRandom(i * 2 + 1) * 80,
-      duration: 2 + seededRandom(i * 3) * 3,
-      delay: seededRandom(i * 4) * 2,
+      left: Math.round((10 + seededRandom(i * 2) * 80) * 100) / 100,
+      top: Math.round((10 + seededRandom(i * 2 + 1) * 80) * 100) / 100,
+      duration: Math.round((2 + seededRandom(i * 3) * 3) * 100) / 100,
+      delay: Math.round(seededRandom(i * 4) * 2 * 100) / 100,
     })), []
   );
 

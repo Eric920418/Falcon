@@ -58,7 +58,7 @@ export function About() {
               >
                 <motion.div
                   className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl p-8 h-full"
-                  whileHover={{ 
+                  whileHover={{
                     y: -10,
                     borderColor: 'rgba(6,182,212,0.5)',
                     boxShadow: '0 20px 40px rgba(6,182,212,0.2)'

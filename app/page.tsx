@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { motion, useScroll, useSpring } from 'motion/react'
 import { Hero } from '@/components/Hero'
 import { About } from '@/components/About'
+import { Portfolio } from '@/components/Portfolio'
 import { TechServices } from '@/components/TechServices'
 import { MarketingServices } from '@/components/MarketingServices'
 import { ContentServices } from '@/components/ContentServices'
@@ -60,6 +61,7 @@ export default function HomePage() {
       <main className="relative z-10">
         <Hero />
         <About />
+        <Portfolio />
         <TechServices />
         <MarketingServices />
         <ContentServices />

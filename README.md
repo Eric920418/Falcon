@@ -54,6 +54,7 @@ pnpm start
 │   └── components/       # React 組件
 │       ├── Hero.tsx
 │       ├── About.tsx
+│       ├── Portfolio.tsx     # 作品案例展示
 │       ├── Navigation.tsx
 │       ├── TechServices.tsx
 │       ├── MarketingServices.tsx
@@ -75,6 +76,21 @@ pnpm start
 - 滑鼠跟隨漸層背景
 - 流暢的頁面過渡動畫
 - **Hero 純 CSS 動態背景** - 流動波浪、浮動氣泡、光暈效果（無需圖片）
+- **作品案例展示** - 包含 14+ 專案，支援分類篩選與展開詳情
+
+## 作品案例
+
+Portfolio 組件展示公司的專案作品，包含：
+
+- **電商平台** - 翊珍香電商、球鞋電商、燒烤訂餐服務
+- **企業官網** - 佑羲人力、R.OC 室內設計
+- **形象網站** - 書籍形象網站
+- **App 開發** - 接案媒合平台（Web + iOS + Android）
+- **AI 應用** - 現場 AI 智能客服系統
+- **學術系統** - 會議論文投稿審查系統
+- **POS 系統** - 餐飲 POS 機整合系統
+
+每個專案卡片包含：技術棧標籤、專案描述、核心功能、技術亮點
 
 ## Hero 背景實現
 

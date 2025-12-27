@@ -1,0 +1,387 @@
+'use client'
+
+import { motion, useInView } from 'motion/react'
+import { useRef, useState } from 'react'
+import { ExternalLink, ChevronDown, ChevronUp } from 'lucide-react'
+import Image from 'next/image'
+
+interface Project {
+  id: number
+  title: string
+  description: string
+  tech: string[]
+  features: string[]
+  highlights: string[]
+  image?: string
+  url?: string
+  category: string
+}
+
+const projects: Project[] = [
+  {
+    id: 1,
+    title: '翊珍香電商系統官網',
+    description: '為新北汐止 30 年老字號滷味品牌打造的現代化電商平台，專案核心聚焦於 SEO 優化與 Core Web Vitals 性能優化，實現圖片體積壓縮達 88.8%、LCP < 2.5s。',
+    tech: ['Next.js 14', 'TypeScript', 'GraphQL Yoga', 'Prisma ORM', 'PostgreSQL', 'Redis'],
+    features: ['完整電商流程', '19 種活動類型', '5 層會員等級系統', '優惠券系統', 'SEO 後台管理'],
+    highlights: ['企業級 SEO 實現', '極致性能優化', '國際化架構（中英雙語）'],
+    image: '/滷味.png',
+    url: 'https://yizhenxiang.com.tw/zh-TW',
+    category: '電商平台'
+  },
+  {
+    id: 2,
+    title: '球鞋電商',
+    description: '專業的鞋類電商平台，採用 Next.js 14 App Router 全端單體架構，整合品牌形象展示與完整購物流程。支援多國尺碼對照、會員等級制度、後台訂單管理與即時通知系統。',
+    tech: ['Next.js 14', 'TypeScript', 'PostgreSQL', 'GraphQL Yoga', 'Prisma ORM', 'Redis'],
+    features: ['多國尺碼對照', '5 級會員等級', '藍新金流串接', '客服聊天系統', '邀請碼推薦系統'],
+    highlights: ['Line 登入串接', '第三方金流與物流整合', 'GraphQL API 架構'],
+    image: '/財神賣鞋.png',
+    category: '電商平台'
+  },
+  {
+    id: 3,
+    title: '佑羲人力',
+    description: '結合企業形象網站與人力資源管理的平台，針對人力派遣公司設計，提供客戶線上瀏覽人才履歷、提交人力需求的完整體驗。',
+    tech: ['Next.js 15', 'React 19', 'TypeScript', 'GraphQL', 'Prisma', 'PostgreSQL'],
+    features: ['動態內容管理系統', '人力需求管理系統', '三層 RBAC 權限系統', '合約電子簽署系統'],
+    highlights: ['GraphQL + Prisma 彈性架構', '前後端完全類型安全', '14+ 複合索引優化'],
+    image: '/人力.png',
+    category: '企業官網'
+  },
+  {
+    id: 4,
+    title: 'R.OC 室內設計形象網站',
+    description: '現代化的設計公司形象網站，結合企業品牌展示與社群論壇功能。網站設計風格強調「當代設計」理念，以簡潔的線條與純粹的比例呈現品牌形象。',
+    tech: ['Next.js 15', 'React 19', 'TypeScript', 'GraphQL', 'Prisma', 'PostgreSQL', 'Framer Motion'],
+    features: ['動態內容管理系統', '論壇社群系統', '後台管理系統', 'RWD 響應式設計'],
+    highlights: ['Tailwind CSS v4 主題系統', '豐富的前端動畫效果', '支援假數據模式'],
+    image: '/ROC.png',
+    category: '企業官網'
+  },
+  {
+    id: 5,
+    title: '書籍形象網站',
+    description: '書籍推廣網站，結合 17 分鐘身心導引音頻與 MAIA-2 測驗系統。採用極簡黑白灰設計風格呈現療癒品牌調性。',
+    tech: ['Next.js 15', 'TypeScript', 'Prisma ORM', 'PostgreSQL', 'Chart.js'],
+    features: ['MAIA-2 量表測驗系統', '17 分鐘導引音頻播放器', '自動進度緩存機制', '後台管理系統'],
+    highlights: ['自定義計分引擎', '使用 Chart.js 雷達圖', '純 CSS 粒子動畫效果'],
+    image: '/書.png',
+    url: 'https://chaohealing.com/#audio-guide',
+    category: '形象網站'
+  },
+  {
+    id: 6,
+    title: '燒烤形象網站＋訂餐服務',
+    description: '結合品牌形象網站與線上訂餐服務的平台，針對燒烤餐廳設計，提供顧客沉浸式的線上點餐體驗，並支援後台訂單管理與即時訂單通知。',
+    tech: ['Vue.js', 'Node.js', 'MongoDB', 'Socket.io'],
+    features: ['線上訂餐系統', '訂單後台管理', '即時訂單通知', 'RWD 響應式設計'],
+    highlights: ['Socket.io 實時雙向通訊', '前後端分離架構', 'RESTful API 設計'],
+    image: '/燒烤.png',
+    category: '電商平台'
+  },
+  {
+    id: 7,
+    title: '破浪三國遊戲官網',
+    description: '三國主題手遊的官方網站平台，採用 Next.js App Router 全端單體架構。提供玩家遊戲資訊查詢、社群互動、評價分享等完整功能。',
+    tech: ['Next.js 16', 'React 19', 'TypeScript', 'PostgreSQL', 'GraphQL Yoga', 'Prisma ORM'],
+    features: ['評價系統', '論壇系統', '公告系統', '遊戲指南', '會員系統', '管理後台'],
+    highlights: ['AI 自動生成擬人化評價', '完整的內容審核工作流', '動態首頁內容管理'],
+    image: '/遊戲.png',
+    category: '遊戲官網'
+  },
+  {
+    id: 8,
+    title: '會議論文投稿官網',
+    description: '專業的學術投稿審查管理系統，專為「國立臺北教育大學課程與教學傳播科技研究所」研討會設計，實現從投稿、審稿到決議的完整工作流程。',
+    tech: ['Next.js 16', 'React 19', 'TypeScript', 'PostgreSQL', 'Prisma ORM', 'Tailwind CSS v4'],
+    features: ['6 步驟投稿流程', '雙盲審稿系統', '智慧審稿人分配', '主編決議系統', '完整郵件通知'],
+    highlights: ['4 層角色權限控制', 'CKEditor 5 整合', 'Zod Schema 統一驗證'],
+    image: '/投稿.png',
+    category: '學術系統'
+  },
+  {
+    id: 9,
+    title: '國際學術研討會',
+    description: '使用後台控制前台樣式，實現產品生命週期延續。使用 GraphQL 實作資料介接，支援多端資料統一存取。',
+    tech: ['Next.js', 'PostgreSQL', 'GraphQL'],
+    features: ['後台系統', 'CKEditor 編輯器', 'SSR 支援'],
+    highlights: ['GraphQL 資料介接', '後台管理', '複雜交易邏輯與索引優化'],
+    image: '/ictu.png',
+    category: '學術系統'
+  },
+  {
+    id: 10,
+    title: '元智大學管理學系校網',
+    description: '使用後台控制前台樣式，實現產品生命週期延續。整合 AI 客服與 3D 模型展示。',
+    tech: ['Next.js', 'PostgreSQL', 'GraphQL'],
+    features: ['後台系統', 'AI 客服串接', '3D 模型串接'],
+    highlights: ['GraphQL 資料介接', 'AI fine tune', 'SSR 與後台管理'],
+    image: '/元智管院.png',
+    category: '企業官網'
+  },
+  {
+    id: 11,
+    title: '展覽活動網站',
+    description: '展覽活動網站，含特殊擴張功能。使用 React.js 與 Laravel 打造。',
+    tech: ['React.js', 'PHP (Laravel)', 'MySQL'],
+    features: ['活動展示', '特殊擴張功能', 'RWD 響應式設計'],
+    highlights: ['前後端分離架構', '活動管理系統'],
+    image: '/活動官網.png',
+    url: 'https://strawberrypie.aaronlow.dev/',
+    category: '形象網站'
+  },
+  {
+    id: 12,
+    title: '幫棒生活網',
+    description: '企業級內容服務平台，提供心理健康、生活知識與自我成長的文章與課程。由 Laravel monolith 架構重構為前後端分離架構。',
+    tech: ['Next.js', 'PostgreSQL', 'GraphQL', 'Docker', 'GitHub Actions'],
+    features: ['前後端架構重構', '資料庫遷移', 'GraphQL API 建構', '容器化部署', 'CI/CD 整合'],
+    highlights: ['MySQL 轉 PostgreSQL', 'SSR / ISR 機制', 'DevOps 自動化'],
+    url: 'https://www.bounbang.com/',
+    category: '內容平台'
+  },
+  {
+    id: 13,
+    title: '接案媒合平台',
+    description: '專業的接案與發案媒合空間，讓個人與企業可以高效發布與管理案件，並透過演算法推薦與即時通知強化配對效率。',
+    tech: ['Nuxt.js', 'PostgreSQL', 'GraphQL', 'Swift', 'Kotlin', 'Redis'],
+    features: ['案件發布與瀏覽', '雙方配對與聊天室', 'App 用戶管理', '精準推薦演算法'],
+    highlights: ['Web + iOS + Android 跨端整合', 'Redis 快取與任務佇列', '原生 App 開發'],
+    category: 'App 開發'
+  },
+  {
+    id: 14,
+    title: '餐飲 POS 機整合系統',
+    description: '專為餐廳設計的全功能 POS 系統，涵蓋點餐、出單、庫存、桌位、報表、會員等模組，支援店內多裝置協同運作。',
+    tech: ['Next.js', 'PostgreSQL', 'GraphQL', 'Swift', 'Kotlin', 'Redis'],
+    features: ['POS 點餐介面', '廚房出單管理', '銷售報表', '桌位管理', '庫存管理', '會員系統'],
+    highlights: ['高併發訂單流處理', '多裝置併發寫入解決方案', 'Redis 即時通訊'],
+    category: 'POS 系統'
+  },
+  {
+    id: 15,
+    title: '現場 AI 智能客服系統',
+    description: '部署於實體場域的 AI 智能客服，結合虛擬角色展示與人體偵測技術，讓顧客以自然語音與 AI 進行互動。',
+    tech: ['Unreal Engine', 'Azure Kinect', 'MediaPipe', 'Whisper.cpp', 'Ollama', 'Coqui TTS'],
+    features: ['3D 虛擬角色顯示', '人體偵測技術', '語音辨識', '大語言模型整合', '語音合成'],
+    highlights: ['所有元件可離線部署', '模組化架構設計', '語音到語音完整流程'],
+    category: 'AI 應用'
+  },
+  {
+    id: 16,
+    title: '穿搭預約平台',
+    description: '使用者與專業穿搭師進行穿搭諮詢的預約服務平台，可瀏覽穿搭師個人介紹、查看可預約時段並進行線上預約。',
+    tech: ['JavaScript', 'HTML', 'CSS', 'Google OAuth'],
+    features: ['Google 帳號快速登入', '穿搭師個人頁面', '線上預約系統', '管理端後台'],
+    highlights: ['Google OAuth 整合', 'UI 設計風格簡潔清新', '模組化開發架構'],
+    image: '/傳搭.png',
+    category: '預約系統'
+  },
+  {
+    id: 17,
+    title: 'AI 學習程式設計研究專案',
+    description: '教授指導研究專案，探索如何運用 AI 輔助學生學習程式設計，同時評估 ChatGPT 與 LLaMA3 模型在教育場域的應用效果。',
+    tech: ['Vue.js', 'Node.js', 'MongoDB', 'Socket.io', 'ChatGPT API', 'LLaMA3'],
+    features: ['ChatGPT API 串接', 'LLaMA3 本地模型整合', '師生即時互動', '學習行為記錄'],
+    highlights: ['多種 AI 模型對比分析', '即時教學模擬體驗', '支援學習行為研究'],
+    image: '/寫code工具.png',
+    category: '教育科技'
+  }
+]
+
+const categories = ['全部', '電商平台', '企業官網', '形象網站', 'App 開發', 'AI 應用', '學術系統', '其他']
+
+export function Portfolio() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, amount: 0.1 })
+  const [selectedCategory, setSelectedCategory] = useState('全部')
+  const [expandedProject, setExpandedProject] = useState<number | null>(null)
+
+  const filteredProjects = selectedCategory === '全部'
+    ? projects
+    : projects.filter(p => p.category === selectedCategory || (selectedCategory === '其他' && !categories.slice(1, -1).includes(p.category)))
+
+  return (
+    <section id="portfolio" ref={ref} className="relative py-32 px-6 bg-slate-900/30">
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div
+            className="inline-block px-6 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6"
+            initial={{ scale: 0 }}
+            animate={isInView ? { scale: 1 } : {}}
+            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          >
+            <span className="text-cyan-400">Our Portfolio</span>
+          </motion.div>
+          <h2 className="text-4xl md:text-5xl mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+            作品案例
+          </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto mb-8"></div>
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+            我們為各行各業打造高品質的數位解決方案，從電商平台到企業官網，從 AI 應用到行動 App
+          </p>
+        </motion.div>
+
+        {/* Category Filter */}
+        <motion.div
+          className="flex flex-wrap justify-center gap-3 mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.3, duration: 0.8 }}
+        >
+          {categories.map((category) => (
+            <motion.button
+              key={category}
+              className={`px-5 py-2 rounded-full text-sm transition-all ${
+                selectedCategory === category
+                  ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30'
+                  : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50'
+              }`}
+              onClick={() => setSelectedCategory(category)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {category}
+            </motion.button>
+          ))}
+        </motion.div>
+
+        {/* Projects Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredProjects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              className="group"
+              initial={{ opacity: 0, y: 50 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.4 + index * 0.1, duration: 0.8 }}
+            >
+              <motion.div
+                className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl overflow-hidden h-full flex flex-col"
+                whileHover={{
+                  y: -5,
+                  borderColor: 'rgba(6,182,212,0.5)',
+                  boxShadow: '0 15px 30px rgba(6,182,212,0.15)'
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* Project Image */}
+                <div className="relative h-48 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center overflow-hidden">
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10" />
+                      <span className="text-4xl font-bold text-slate-700">{project.title.charAt(0)}</span>
+                    </>
+                  )}
+                  {/* Category Badge */}
+                  <div className="absolute top-3 right-3 px-3 py-1 bg-slate-900/80 backdrop-blur-sm rounded-full text-xs text-cyan-400 border border-slate-700">
+                    {project.category}
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 flex-1 flex flex-col">
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="text-xl font-semibold text-white group-hover:text-cyan-400 transition-colors">
+                      {project.title}
+                    </h3>
+                    {project.url && (
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-slate-400 hover:text-cyan-400 transition-colors ml-2 flex-shrink-0"
+                      >
+                        <ExternalLink size={18} />
+                      </a>
+                    )}
+                  </div>
+
+                  <p className="text-slate-400 text-sm mb-4 line-clamp-3">
+                    {project.description}
+                  </p>
+
+                  {/* Tech Stack */}
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {project.tech.slice(0, 4).map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2 py-0.5 bg-slate-800/50 border border-slate-700 rounded text-xs text-slate-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {project.tech.length > 4 && (
+                      <span className="px-2 py-0.5 bg-slate-800/50 border border-slate-700 rounded text-xs text-slate-500">
+                        +{project.tech.length - 4}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Expandable Details */}
+                  <motion.div
+                    className="mt-auto"
+                    initial={false}
+                    animate={{ height: expandedProject === project.id ? 'auto' : 0 }}
+                  >
+                    {expandedProject === project.id && (
+                      <div className="pt-4 border-t border-slate-800">
+                        <div className="mb-3">
+                          <p className="text-xs text-cyan-400 mb-2">核心功能</p>
+                          <div className="flex flex-wrap gap-1">
+                            {project.features.map((feature) => (
+                              <span key={feature} className="text-xs text-slate-400">
+                                {feature}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <p className="text-xs text-cyan-400 mb-2">技術亮點</p>
+                          <ul className="space-y-1">
+                            {project.highlights.map((highlight) => (
+                              <li key={highlight} className="text-xs text-slate-400 flex items-start gap-2">
+                                <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 flex-shrink-0" />
+                                {highlight}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+
+                  {/* Expand Button */}
+                  <button
+                    className="flex items-center justify-center gap-1 text-sm text-slate-500 hover:text-cyan-400 transition-colors mt-4 pt-4 border-t border-slate-800"
+                    onClick={() => setExpandedProject(expandedProject === project.id ? null : project.id)}
+                  >
+                    {expandedProject === project.id ? (
+                      <>收起 <ChevronUp size={16} /></>
+                    ) : (
+                      <>查看詳情 <ChevronDown size={16} /></>
+                    )}
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

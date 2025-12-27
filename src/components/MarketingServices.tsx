@@ -15,13 +15,13 @@ export function MarketingServices() {
   const containerRef = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
-  // 預先計算固定位置，確保伺服器和客戶端一致
+  // 預先計算固定位置，確保伺服器和客戶端一致（固定小數位數避免 hydration mismatch）
   const bgParticles = useMemo(() =>
     [...Array(30)].map((_, i) => ({
-      left: seededRandom(i * 5 + 100) * 100,
-      top: seededRandom(i * 5 + 101) * 100,
-      duration: 3 + seededRandom(i * 5 + 102) * 2,
-      delay: seededRandom(i * 5 + 103) * 2,
+      left: Math.round(seededRandom(i * 5 + 100) * 10000) / 100,
+      top: Math.round(seededRandom(i * 5 + 101) * 10000) / 100,
+      duration: Math.round((3 + seededRandom(i * 5 + 102) * 2) * 100) / 100,
+      delay: Math.round(seededRandom(i * 5 + 103) * 2 * 100) / 100,
     })), []
   );
   

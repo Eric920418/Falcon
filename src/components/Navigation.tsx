@@ -28,6 +28,7 @@ export function Navigation() {
   const navItems = [
     { label: '首頁', id: 'hero' },
     { label: '關於我們', id: 'about' },
+    { label: '作品案例', id: 'portfolio' },
     { label: '技術開發', id: 'tech-services' },
     { label: '數位行銷', id: 'marketing-services' },
     { label: '內容創作', id: 'content-services' },
