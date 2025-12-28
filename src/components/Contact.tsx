@@ -36,14 +36,14 @@ export function Contact() {
     {
       icon: Mail,
       title: 'Email',
-      content: 'contact@example.com',
-      link: 'mailto:contact@example.com'
+      content: '26416387.re@gmail.com',
+      link: 'mailto:26416387.re@gmail.com'
     },
     {
       icon: Phone,
       title: '電話',
-      content: '+886 2 1234 5678',
-      link: 'tel:+886212345678'
+      content: '+886 0958801559',
+      link: 'tel:+886095880155'
     },
     {
       icon: MapPin,
