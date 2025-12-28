@@ -2,7 +2,7 @@
 
 import { motion, useInView, useScroll, useTransform } from 'motion/react'
 import { useRef, useMemo } from 'react'
-import { Search, TrendingUp, Users, MessageSquare } from 'lucide-react'
+import { Search, TrendingUp, Users, MessageSquare, Bot, Sparkles } from 'lucide-react'
 
 // 確定性偽隨機生成器（避免 hydration mismatch）
 const seededRandom = (seed: number) => {
@@ -38,6 +38,24 @@ export function MarketingServices() {
       description: '提升網站在搜尋引擎的排名',
       features: ['關鍵字策略', 'SEO技術優化', '內容優化', '數據追蹤分析'],
       gradient: 'from-orange-400 via-red-400 to-pink-500',
+      position: 'left'
+    },
+    {
+      icon: Sparkles,
+      title: 'GEO 生成式引擎優化',
+      subtitle: 'Generative Engine Optimization',
+      description: '讓 AI 引擎優先引用您的品牌內容',
+      features: ['ChatGPT/Gemini 曝光優化', 'AI 引用策略', 'LLM 內容結構化', '品牌權威建立'],
+      gradient: 'from-violet-400 via-purple-400 to-fuchsia-500',
+      position: 'right'
+    },
+    {
+      icon: Bot,
+      title: 'AEO 答案引擎優化',
+      subtitle: 'Answer Engine Optimization',
+      description: '成為 AI 搜尋的首選答案來源',
+      features: ['Perplexity/Google AI 優化', '結構化答案佈局', 'E-E-A-T 權威提升', '語意搜尋優化'],
+      gradient: 'from-cyan-400 via-blue-400 to-indigo-500',
       position: 'left'
     },
     {
