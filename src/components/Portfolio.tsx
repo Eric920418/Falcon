@@ -1,7 +1,6 @@
 'use client'
 
-import { motion, useInView } from 'motion/react'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { ExternalLink, ChevronDown, ChevronUp } from 'lucide-react'
 import Image from 'next/image'
 
@@ -381,8 +380,6 @@ const projects: Project[] = [
 const categories = ['全部', '電商平台', '企業官網', '形象網站', 'App 開發', 'AI 應用', '學術系統', '其他']
 
 export function Portfolio() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, amount: 0.1 })
   const [selectedCategory, setSelectedCategory] = useState('全部')
   const [expandedProject, setExpandedProject] = useState<number | null>(null)
 
@@ -391,23 +388,13 @@ export function Portfolio() {
     : projects.filter(p => p.category === selectedCategory || (selectedCategory === '其他' && !categories.slice(1, -1).includes(p.category)))
 
   return (
-    <section id="portfolio" ref={ref} className="relative py-32 px-6 bg-slate-900/30">
+    <section id="portfolio" className="relative py-32 px-6 bg-slate-900/30">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-        >
-          <motion.div
-            className="inline-block px-6 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6"
-            initial={{ scale: 0 }}
-            animate={isInView ? { scale: 1 } : {}}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          >
+        <div className="text-center mb-16">
+          <div className="inline-block px-6 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
             <span className="text-cyan-400">Our Portfolio</span>
-          </motion.div>
+          </div>
           <h2 className="text-4xl md:text-5xl mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
             作品案例
           </h2>
@@ -415,31 +402,24 @@ export function Portfolio() {
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
             我們為各行各業打造高品質的數位解決方案，從電商平台到企業官網，從 AI 應用到行動 App
           </p>
-        </motion.div>
+        </div>
 
         {/* Category Filter */}
-        <motion.div
-          className="flex flex-wrap justify-center gap-3 mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.3, duration: 0.8 }}
-        >
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
           {categories.map((category) => (
-            <motion.button
+            <button
               key={category}
-              className={`px-5 py-2 rounded-full text-sm transition-all ${
+              className={`px-5 py-2 rounded-full text-sm transition-all hover:scale-105 active:scale-95 ${
                 selectedCategory === category
                   ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30'
                   : 'bg-slate-800/50 text-slate-400 hover:text-white hover:bg-slate-700/50'
               }`}
               onClick={() => setSelectedCategory(category)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
               {category}
-            </motion.button>
+            </button>
           ))}
-        </motion.div>
+        </div>
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
