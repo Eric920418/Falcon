@@ -128,6 +128,29 @@ Portfolio 組件展示公司的專案作品，包含：
 - [ ] 在 `layout.tsx` 中填入 Google 驗證碼
 - [ ] 添加社群媒體連結到 JSON-LD `sameAs` 欄位
 
+## Safari 移動版相容性
+
+為確保在 iOS Safari 上正常顯示，已修復以下 CSS 3D 變換相容性問題：
+
+### 已修復問題
+
+1. **`overflow-hidden` + `preserve-3d` 衝突**
+   - Safari 在父容器有 `overflow: hidden` 且子元素使用 `transform-style: preserve-3d` 時會隱藏內容
+   - 解決方案：移除相關 section 的 `overflow-hidden`
+
+2. **`translateZ()` 渲染問題**
+   - Safari 對 `translateZ()` 支援不完整
+   - 解決方案：移除不必要的 `translateZ()` 變換
+
+3. **缺少 WebKit 前綴**
+   - 添加 `-webkit-transform-style` 和 `-webkit-perspective` 前綴確保相容性
+
+### 受影響組件
+
+- `TechServices.tsx`
+- `MarketingServices.tsx`
+- `ContentServices.tsx`
+
 ## 部署
 
 本專案支援 Vercel 部署：
