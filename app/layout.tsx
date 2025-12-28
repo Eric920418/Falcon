@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 const siteConfig = {
-  name: 'Falcon 獵鷹整合行銷',
+  name: '隼訊數位行銷',
   url: 'https://falconinformation.com',
   description: '專業整合行銷服務平台，提供網站建置、軟體開發、CRM/ERP系統、AI工具、APP開發、SEO優化、數位廣告、社群經營、口碑行銷、短影音製作、活動企劃及互動體驗設計等全方位數位解決方案。',
   keywords: [
