@@ -53,7 +53,7 @@ export function TechServices() {
   ];
 
   return (
-    <section id="tech-services" ref={ref} className="relative py-32 px-6 overflow-hidden">
+    <section id="tech-services" ref={ref} className="relative py-32 px-6">
       {/* Animated Background Grid */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0" style={{
@@ -90,7 +90,7 @@ export function TechServices() {
         </motion.div>
 
         {/* 3D Cards Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" style={{ perspective: '1000px', WebkitPerspective: '1000px' }}>
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
@@ -120,12 +120,9 @@ export function TechServices() {
                         rotateY: hoveredCard === index ? [0, 360] : 0,
                         scale: hoveredCard === index ? 1.1 : 1
                       }}
-                      transition={{ 
+                      transition={{
                         rotateY: { duration: 0.6 },
                         scale: { duration: 0.3 }
-                      }}
-                      style={{
-                        transformStyle: 'preserve-3d',
                       }}
                     >
                       <Icon className="text-white" size={36} />
@@ -137,10 +134,13 @@ export function TechServices() {
                     {/* Service Details */}
                     <motion.ul
                       className="space-y-2"
-                      initial={{ opacity: 0, height: 0 }}
+                      style={{
+                        overflow: 'hidden',
+                        maxHeight: hoveredCard === index ? '200px' : '0px',
+                      }}
+                      initial={{ opacity: 0 }}
                       animate={{
                         opacity: hoveredCard === index ? 1 : 0,
-                        height: hoveredCard === index ? 'auto' : 0
                       }}
                       transition={{ duration: 0.3 }}
                     >
@@ -230,9 +230,10 @@ function Card3D({
       }}
       style={{
         transformStyle: 'preserve-3d',
+        WebkitTransformStyle: 'preserve-3d',
         rotateX: isHovered ? rotateX : 0,
         rotateY: isHovered ? rotateY : 0,
-      }}
+      } as React.CSSProperties}
       onMouseMove={handleMouseMove}
       onMouseEnter={onHover}
       onMouseLeave={handleMouseLeave}
@@ -245,8 +246,8 @@ function Card3D({
       <motion.div
         style={{
           transformStyle: 'preserve-3d',
-          transform: 'translateZ(75px)',
-        }}
+          WebkitTransformStyle: 'preserve-3d',
+        } as React.CSSProperties}
       >
         {children}
       </motion.div>

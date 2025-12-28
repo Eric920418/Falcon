@@ -55,7 +55,7 @@ export function ContentServices() {
   ];
 
   return (
-    <section id="content-services" ref={ref} className="relative py-32 px-6 overflow-hidden">
+    <section id="content-services" ref={ref} className="relative py-32 px-6">
       {/* Floating 3D Grid Background */}
       <motion.div 
         className="absolute inset-0 opacity-10"
@@ -103,7 +103,7 @@ export function ContentServices() {
         </motion.div>
 
         {/* 3D Carousel Cards */}
-        <div className="relative h-[700px] flex items-center justify-center perspective-2000">
+        <div className="relative h-[700px] flex items-center justify-center" style={{ perspective: '2000px', WebkitPerspective: '2000px' } as React.CSSProperties}>
           <div className="relative w-full max-w-5xl">
             {services.map((service, index) => {
               const Icon = service.icon;
@@ -149,7 +149,6 @@ export function ContentServices() {
                             rotateY: { duration: 1, ease: "easeInOut" },
                             scale: { duration: 0.5 }
                           }}
-                          style={{ transformStyle: 'preserve-3d' }}
                         >
                           <Icon className="text-white" size={40} />
                         </motion.div>
@@ -310,21 +309,22 @@ function FloatingCard3D({
       }}
       style={{
         transformStyle: 'preserve-3d',
+        WebkitTransformStyle: 'preserve-3d',
         rotateX: isActive ? rotateX : 0,
         rotateY: isActive ? rotateY : angle,
         zIndex: isActive ? 10 : total - index
-      }}
+      } as React.CSSProperties}
       onClick={onActivate}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       whileHover={!isActive ? { scale: 0.9, z: 50 } : {}}
     >
-      <div 
+      <div
         className="w-full max-w-2xl"
         style={{
           transformStyle: 'preserve-3d',
-          transform: 'translateZ(50px)'
-        }}
+          WebkitTransformStyle: 'preserve-3d',
+        } as React.CSSProperties}
       >
         {children}
 

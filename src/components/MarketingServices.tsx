@@ -88,7 +88,7 @@ export function MarketingServices() {
   ];
 
   return (
-    <section id="marketing-services" ref={containerRef} className="relative py-32 px-6 bg-slate-900/50 overflow-hidden">
+    <section id="marketing-services" ref={containerRef} className="relative py-32 px-6 bg-slate-900/50">
       {/* Animated background particles */}
       <div className="absolute inset-0">
         {bgParticles.map((p, i) => (
@@ -166,13 +166,14 @@ export function MarketingServices() {
                   transition={{ duration: 0.3 }}
                 >
                   <motion.div
-                    className="relative perspective-1000"
-                    whileHover={{ z: 100 }}
-                    style={{ transformStyle: 'preserve-3d' }}
+                    className="relative"
+                    style={{
+                      perspective: '1000px',
+                      WebkitPerspective: '1000px',
+                    } as React.CSSProperties}
                   >
-                    <div 
+                    <div
                       className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-10 border border-slate-700 overflow-hidden"
-                      style={{ transformStyle: 'preserve-3d', transform: 'translateZ(50px)' }}
                     >
                       {/* Gradient overlay */}
                       <motion.div
@@ -193,10 +194,6 @@ export function MarketingServices() {
                           repeat: Infinity,
                           ease: "easeInOut"
                         }}
-                        style={{
-                          transformStyle: 'preserve-3d',
-                          transform: 'translateZ(80px)'
-                        }}
                       >
                         <Icon className="text-white" size={48} />
                         
@@ -214,7 +211,7 @@ export function MarketingServices() {
                         />
                       </motion.div>
 
-                      <div className="relative" style={{ transformStyle: 'preserve-3d', transform: 'translateZ(40px)' }}>
+                      <div className="relative">
                         <h3 className="text-3xl mb-2 text-white">{service.title}</h3>
                         <p className={`text-sm mb-4 text-transparent bg-clip-text bg-gradient-to-r ${service.gradient}`}>
                           {service.subtitle}
