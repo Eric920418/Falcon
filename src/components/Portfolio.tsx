@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from 'motion/react'
 import { useState } from 'react'
 import { ExternalLink, ChevronDown, ChevronUp } from 'lucide-react'
 import Image from 'next/image'
@@ -391,10 +392,22 @@ export function Portfolio() {
     <section id="portfolio" className="relative py-32 px-6 bg-slate-900/30">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-block px-6 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+        >
+          <motion.div
+            className="inline-block px-6 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6"
+            initial={{ scale: 0.8, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
+          >
             <span className="text-cyan-400">Our Portfolio</span>
-          </div>
+          </motion.div>
           <h2 className="text-4xl md:text-5xl mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
             作品案例
           </h2>
@@ -402,10 +415,16 @@ export function Portfolio() {
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">
             我們為各行各業打造高品質的數位解決方案，從電商平台到企業官網，從 AI 應用到行動 App
           </p>
-        </div>
+        </motion.div>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+        <motion.div
+          className="flex flex-wrap justify-center gap-3 mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
           {categories.map((category) => (
             <button
               key={category}
@@ -419,7 +438,7 @@ export function Portfolio() {
               {category}
             </button>
           ))}
-        </div>
+        </motion.div>
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
