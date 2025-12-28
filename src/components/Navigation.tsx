@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'motion/react'
 import { Menu, X } from 'lucide-react'
-
+import Image from 'next/image'
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -47,9 +47,10 @@ export function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <motion.div
-          className="text-xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500"
+          className="text-xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 flex items-center gap-2"
           whileHover={{ scale: 1.05 }}
         >
+          <Image src="/logo.png" alt="隼訊數位行銷" width={60} height={40} />
           隼訊數位行銷
         </motion.div>
 
