@@ -130,7 +130,7 @@ Portfolio 組件展示公司的專案作品，包含：
 
 ## Safari 移動版相容性
 
-為確保在 iOS Safari 上正常顯示，已修復以下 CSS 3D 變換相容性問題：
+為確保在 iOS Safari 上正常顯示，已修復以下問題：
 
 ### 已修復問題
 
@@ -143,13 +143,25 @@ Portfolio 組件展示公司的專案作品，包含：
    - 解決方案：移除不必要的 `translateZ()` 變換
 
 3. **缺少 WebKit 前綴**
-   - 添加 `-webkit-transform-style` 和 `-webkit-perspective` 前綴確保相容性
+   - 添加 `-webkit-transform-style` 和 `-webkit-perspective` 前綴
+
+4. **Portfolio 效能優化**
+   - 移除 17 個卡片的延遲動畫（原本最後一個要等 2 秒）
+   - 移除 `backdrop-blur`（移動端效能殺手）
+   - 移除 `height: auto` 動畫
+   - 添加圖片 `loading="lazy"` 和 `sizes` 屬性
+
+5. **圖片壓縮**
+   - 原始圖片總計 ~40MB，嚴重影響載入速度
+   - 使用 sharp 壓縮後減少 93%+（~3MB）
+   - 壓縮腳本：`node scripts/compress-images.mjs`
 
 ### 受影響組件
 
 - `TechServices.tsx`
 - `MarketingServices.tsx`
 - `ContentServices.tsx`
+- `Portfolio.tsx`
 
 ## 部署
 

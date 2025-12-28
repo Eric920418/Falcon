@@ -444,21 +444,12 @@ export function Portfolio() {
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project, index) => (
-            <motion.div
+            <div
               key={project.id}
               className="group"
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.4 + index * 0.1, duration: 0.8 }}
             >
-              <motion.div
-                className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl overflow-hidden h-full flex flex-col"
-                whileHover={{
-                  y: -5,
-                  borderColor: 'rgba(6,182,212,0.5)',
-                  boxShadow: '0 15px 30px rgba(6,182,212,0.15)'
-                }}
-                transition={{ duration: 0.3 }}
+              <div
+                className="bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden h-full flex flex-col hover:-translate-y-1 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/10 transition-all duration-300"
               >
                 {/* Project Image */}
                 <div className="relative h-48 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center overflow-hidden">
@@ -467,6 +458,8 @@ export function Portfolio() {
                       src={project.image}
                       alt={project.title}
                       fill
+                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
@@ -521,37 +514,31 @@ export function Portfolio() {
                   </div>
 
                   {/* Expandable Details */}
-                  <motion.div
-                    className="mt-auto"
-                    initial={false}
-                    animate={{ height: expandedProject === project.id ? 'auto' : 0 }}
-                  >
-                    {expandedProject === project.id && (
-                      <div className="pt-4 border-t border-slate-800">
-                        <div className="mb-3">
-                          <p className="text-xs text-cyan-400 mb-2">核心功能</p>
-                          <div className="flex flex-wrap gap-1">
-                            {project.features.map((feature) => (
-                              <span key={feature} className="text-xs text-slate-400">
-                                {feature}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                        <div>
-                          <p className="text-xs text-cyan-400 mb-2">技術亮點</p>
-                          <ul className="space-y-1">
-                            {project.highlights.map((highlight) => (
-                              <li key={highlight} className="text-xs text-slate-400 flex items-start gap-2">
-                                <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 flex-shrink-0" />
-                                {highlight}
-                              </li>
-                            ))}
-                          </ul>
+                  {expandedProject === project.id && (
+                    <div className="mt-auto pt-4 border-t border-slate-800">
+                      <div className="mb-3">
+                        <p className="text-xs text-cyan-400 mb-2">核心功能</p>
+                        <div className="flex flex-wrap gap-1">
+                          {project.features.map((feature) => (
+                            <span key={feature} className="text-xs text-slate-400">
+                              {feature}
+                            </span>
+                          ))}
                         </div>
                       </div>
-                    )}
-                  </motion.div>
+                      <div>
+                        <p className="text-xs text-cyan-400 mb-2">技術亮點</p>
+                        <ul className="space-y-1">
+                          {project.highlights.map((highlight) => (
+                            <li key={highlight} className="text-xs text-slate-400 flex items-start gap-2">
+                              <span className="w-1 h-1 rounded-full bg-cyan-500 mt-1.5 flex-shrink-0" />
+                              {highlight}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Expand Button */}
                   <button
@@ -565,8 +552,8 @@ export function Portfolio() {
                     )}
                   </button>
                 </div>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
