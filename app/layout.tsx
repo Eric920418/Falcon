@@ -4,12 +4,12 @@ import './globals.css'
 const siteConfig = {
   name: '隼訊數位行銷',
   url: 'https://falconinformation.com',
-  description: '專業數位行銷服務平台，提供網站建置、軟體開發、CRM/ERP系統、AI工具、APP開發、SEO優化、GEO生成式引擎優化、AEO答案引擎優化、數位廣告、社群經營、口碑行銷、短影音製作、活動企劃及互動體驗設計等全方位數位解決方案。',
+  description: '專業數位行銷服務平台，提供網站建置、軟體開發、CMS/ERP系統、AI工具、APP開發、SEO優化、GEO生成式引擎優化、AEO答案引擎優化、數位廣告、社群經營、口碑行銷、短影音製作、活動企劃及互動體驗設計等全方位數位解決方案。',
   keywords: [
     '整合行銷',
     '網站建置',
     '軟體開發',
-    'CRM系統',
+    'CMS系統',
     'ERP系統',
     'AI工具',
     'APP開發',
@@ -122,7 +122,7 @@ const jsonLd = {
   knowsAbout: [
     '網站建置',
     '軟體開發',
-    'CRM系統',
+    'CMS系統',
     'ERP系統',
     'AI工具開發',
     'APP開發',

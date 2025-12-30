@@ -28,7 +28,7 @@ export function TechServices() {
     },
     {
       icon: Database,
-      title: 'CRM / ERP',
+      title: 'CMS / ERP',
       description: '企業資源管理系統',
       details: ['客戶關係管理', '資源規劃系統', '數據分析儀表板', '流程自動化'],
       color: 'from-indigo-400 to-purple-500',
