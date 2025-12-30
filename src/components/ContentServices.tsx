@@ -1,12 +1,11 @@
 'use client'
 
-import { motion, useInView, useMotionValue, useTransform, useSpring } from 'motion/react'
+import { motion, useMotionValue, useTransform, useSpring } from 'motion/react'
 import { useRef, useState } from 'react'
 import { Video, Sparkles, Layers } from 'lucide-react'
 
 export function ContentServices() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [activeCard, setActiveCard] = useState<number | null>(null);
 
   const services = [
@@ -117,7 +116,6 @@ export function ContentServices() {
                   key={index}
                   index={index}
                   total={services.length}
-                  isInView={isInView}
                   isActive={isActive}
                   onActivate={() => setActiveCard(index)}
                   angle={angle}
@@ -179,8 +177,9 @@ export function ContentServices() {
                             key={i}
                             className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50"
                             initial={{ opacity: 0, y: 20 }}
-                            animate={isInView ? { opacity: 1, y: 0 } : {}}
-                            transition={{ delay: index * 0.1 + i * 0.1 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.05, duration: 0.4 }}
                             whileHover={{ 
                               scale: 1.05,
                               borderColor: `rgba(6, 182, 212, 0.5)`,
@@ -255,7 +254,6 @@ function FloatingCard3D({
   children,
   index,
   total,
-  isInView,
   isActive,
   onActivate,
   angle
@@ -263,7 +261,6 @@ function FloatingCard3D({
   children: React.ReactNode;
   index: number;
   total: number;
-  isInView: boolean;
   isActive: boolean;
   onActivate: () => void;
   angle: number;
@@ -293,16 +290,15 @@ function FloatingCard3D({
     <motion.div
       ref={cardRef}
       className="absolute inset-0 flex items-center justify-center cursor-pointer"
-      initial={{ opacity: 0, scale: 0.5, z: -200 }}
-      animate={isInView ? {
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{
         opacity: 1,
         scale: isActive ? 1 : 0.85,
-        z: isActive ? 100 : index * -50,
         x: isActive ? 0 : Math.sin(angle * Math.PI / 180) * 200,
         y: isActive ? 0 : Math.cos(angle * Math.PI / 180) * 50,
-        rotateY: isActive ? 0 : angle,
-        filter: isActive ? 'blur(0px)' : 'blur(2px)'
-      } : {}}
+        rotateY: isActive ? 0 : angle
+      }}
+      viewport={{ once: true }}
       transition={{
         duration: 0.8,
         delay: index * 0.15,

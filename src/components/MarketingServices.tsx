@@ -156,9 +156,10 @@ export function MarketingServices() {
               <motion.div
                 key={index}
                 className={`flex flex-col lg:flex-row items-center gap-12 ${isLeft ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
-                initial={{ opacity: 0, x: isLeft ? -100 : 100 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: index * 0.2, duration: 0.8 }}
+                initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.6 }}
               >
                 {/* 3D Card */}
                 <motion.div
@@ -237,18 +238,20 @@ export function MarketingServices() {
                 {/* Features List */}
                 <motion.div
                   className="w-full lg:w-1/2"
-                  initial={{ opacity: 0, x: isLeft ? 100 : -100 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: index * 0.2 + 0.3, duration: 0.8 }}
+                  initial={{ opacity: 0, x: isLeft ? 50 : -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
                 >
                   <div className="space-y-6">
                     {service.features.map((feature, i) => (
                       <motion.div
                         key={i}
                         className="flex items-center gap-4 group"
-                        initial={{ opacity: 0, x: isLeft ? 50 : -50 }}
-                        animate={isInView ? { opacity: 1, x: 0 } : {}}
-                        transition={{ delay: index * 0.2 + 0.4 + i * 0.1 }}
+                        initial={{ opacity: 0, x: isLeft ? 20 : -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.05 }}
                         whileHover={{ x: isLeft ? 10 : -10, scale: 1.05 }}
                       >
                         <motion.div

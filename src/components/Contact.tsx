@@ -1,12 +1,11 @@
 'use client'
 
-import { motion, useInView } from 'motion/react'
+import { motion } from 'motion/react'
 import { useRef, useState } from 'react'
 import { Mail, Phone, MapPin, Send } from 'lucide-react'
 
 export function Contact() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -75,9 +74,10 @@ export function Contact() {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.8 }}
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1, duration: 0.6 }}
           >
             <h3 className="text-2xl mb-8 text-white">取得聯繫</h3>
             
@@ -126,9 +126,10 @@ export function Contact() {
 
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.4, duration: 0.8 }}
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.6 }}
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>

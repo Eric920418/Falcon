@@ -1,12 +1,11 @@
 'use client'
 
-import { motion, useInView, useMotionValue, useTransform } from 'motion/react'
+import { motion, useMotionValue, useTransform } from 'motion/react'
 import { useRef, useState } from 'react'
 import { Globe, Code, Database, Brain, Smartphone } from 'lucide-react'
 
 export function TechServices() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const services = [
@@ -96,10 +95,9 @@ export function TechServices() {
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
-              <Card3D 
+              <Card3D
                 key={index}
                 index={index}
-                isInView={isInView}
                 isHovered={hoveredCard === index}
                 onHover={() => setHoveredCard(index)}
                 onLeave={() => setHoveredCard(null)}
@@ -177,17 +175,15 @@ export function TechServices() {
 }
 
 // 3D Card Component with real depth effect
-function Card3D({ 
-  children, 
-  index, 
-  isInView,
+function Card3D({
+  children,
+  index,
   isHovered,
   onHover,
-  onLeave 
-}: { 
-  children: React.ReactNode; 
+  onLeave
+}: {
+  children: React.ReactNode;
   index: number;
-  isInView: boolean;
   isHovered: boolean;
   onHover: () => void;
   onLeave: () => void;
@@ -218,17 +214,15 @@ function Card3D({
     <motion.div
       ref={cardRef}
       className="relative h-full"
-      initial={{ opacity: 0, y: 100, rotateX: -20 }}
-      animate={isInView ? { 
-        opacity: 1, 
-        y: 0,
-        rotateX: 0
-      } : {}}
-      transition={{ 
-        delay: index * 0.15, 
-        duration: 0.8,
-        type: "spring",
-        stiffness: 100
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{
+        opacity: 1,
+        y: 0
+      }}
+      viewport={{ once: true }}
+      transition={{
+        delay: index * 0.1,
+        duration: 0.5
       }}
       style={{
         transformStyle: 'preserve-3d',

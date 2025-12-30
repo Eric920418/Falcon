@@ -1,12 +1,11 @@
 'use client'
 
-import { motion, useInView } from 'motion/react'
+import { motion } from 'motion/react'
 import { useRef } from 'react'
 import { Heart, Megaphone, Handshake, Star } from 'lucide-react'
 
 export function Philosophy() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   const values = [
     {
@@ -50,9 +49,10 @@ export function Philosophy() {
         {/* Main Philosophy Statement */}
         <motion.div
           className="mb-20"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ delay: 0.2, duration: 0.8 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
           <div className="relative">
             {/* Decorative elements */}
@@ -84,8 +84,10 @@ export function Philosophy() {
             <div className="relative bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-12 shadow-2xl">
               <motion.div
                 className="text-6xl mb-8 text-cyan-400 opacity-20"
-                initial={{ opacity: 0, x: -50 }}
-                animate={isInView ? { opacity: 0.2, x: 0 } : {}}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 0.2, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
               >
                 "
               </motion.div>
@@ -104,8 +106,10 @@ export function Philosophy() {
 
               <motion.div
                 className="text-6xl mt-8 text-cyan-400 opacity-20 text-right"
-                initial={{ opacity: 0, x: 50 }}
-                animate={isInView ? { opacity: 0.2, x: 0 } : {}}
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 0.2, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
               >
                 "
               </motion.div>
@@ -120,9 +124,10 @@ export function Philosophy() {
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 50 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.4 + index * 0.1, duration: 0.8 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
                 className="group"
               >
                 <motion.div

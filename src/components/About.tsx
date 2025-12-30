@@ -53,9 +53,10 @@ export function About() {
               <motion.div
                 key={index}
                 className="relative group"
-                initial={{ opacity: 0, y: 50 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: index * 0.2, duration: 0.8 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
               >
                 <motion.div
                   className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl p-8 h-full"
