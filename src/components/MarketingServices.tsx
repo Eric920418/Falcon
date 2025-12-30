@@ -117,15 +117,17 @@ export function MarketingServices() {
         {/* Section Header */}
         <motion.div
           className="text-center mb-24"
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
         >
           <motion.div
             className="inline-block px-6 py-2 bg-orange-500/10 border border-orange-500/30 rounded-full mb-6"
-            initial={{ scale: 0, rotate: -180 }}
-            animate={isInView ? { scale: 1, rotate: 0 } : {}}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            initial={{ scale: 0.8, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
           >
             <span className="text-orange-400">Digital Marketing</span>
           </motion.div>
