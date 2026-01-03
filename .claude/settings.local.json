@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(pnpm run build)",
-      "Bash(node scripts/compress-images.mjs:*)"
+      "Bash(node scripts/compress-images.mjs:*)",
+      "Bash(pnpm add:*)"
     ]
   }
 }

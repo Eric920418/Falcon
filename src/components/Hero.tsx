@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'motion/react'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, Shield, Zap } from 'lucide-react'
 import Image from 'next/image'
 
 export function Hero() {
@@ -82,6 +82,29 @@ export function Hero() {
           >
             探索服務
           </motion.button>
+        </motion.div>
+
+        {/* 信任徽章 */}
+        <motion.div
+          className="flex flex-wrap justify-center gap-4 md:gap-6 mt-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1, duration: 0.8 }}
+        >
+          <motion.div
+            className="flex items-center gap-2 px-4 py-2 bg-slate-900/60 backdrop-blur-sm border border-cyan-500/30 rounded-full"
+            whileHover={{ scale: 1.05, borderColor: 'rgba(6,182,212,0.6)' }}
+          >
+            <Shield className="w-4 h-4 text-cyan-400" />
+            <span className="text-sm text-slate-200">永久售後服務</span>
+          </motion.div>
+          <motion.div
+            className="flex items-center gap-2 px-4 py-2 bg-slate-900/60 backdrop-blur-sm border border-purple-500/30 rounded-full"
+            whileHover={{ scale: 1.05, borderColor: 'rgba(168,85,247,0.6)' }}
+          >
+            <Zap className="w-4 h-4 text-purple-400" />
+            <span className="text-sm text-slate-200">快速交件保證</span>
+          </motion.div>
         </motion.div>
       </div>
 

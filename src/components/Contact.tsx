@@ -34,22 +34,22 @@ export function Contact() {
   const contactInfo = [
     {
       icon: Mail,
-      title: 'Email',
-      content: '26416387.re@gmail.com',
-      link: 'mailto:26416387.re@gmail.com'
+      title: "Email",
+      content: "26416387.re@gmail.com",
+      link: "mailto:26416387.re@gmail.com",
     },
     {
       icon: Phone,
-      title: '電話',
-      content: '+886 0958801559',
-      link: 'tel:+886095880155'
+      title: "電話",
+      content: "+886 0958801559",
+      link: "tel:+886095880155",
     },
     {
       icon: MapPin,
-      title: '地址',
-      content: '台北市信義區信義路五段7號',
-      link: null
-    }
+      title: "地址",
+      content: "桃園市桃園區民權路6號5樓之4",
+      link: null,
+    },
   ];
 
   return (

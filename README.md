@@ -78,6 +78,7 @@ pnpm start
 - 滑鼠跟隨漸層背景
 - 流暢的頁面過渡動畫
 - **Hero 純 CSS 動態背景** - 流動波浪、浮動氣泡、光暈效果（無需圖片）
+- **信任徽章** - 首屏展示「永久售後服務」與「快速交件保證」，搭配 hover 動畫
 - **作品案例展示** - 包含 14+ 專案，支援分類篩選與展開詳情
 
 ## 作品案例
@@ -155,6 +156,15 @@ Portfolio 組件展示公司的專案作品，包含：
    - 原始圖片總計 ~40MB，嚴重影響載入速度
    - 使用 sharp 壓縮後減少 93%+（~3MB）
    - 壓縮腳本：`node scripts/compress-images.mjs`
+
+6. **MarketingServices 響應式修復**
+   - 手機版間距過大（`space-y-32` → `space-y-12 md:space-y-20 lg:space-y-32`）
+   - 標題 margin 過大（`mb-24` → `mb-12 md:mb-16 lg:mb-24`）
+   - 卡片 padding 過大（`p-10` → `p-6 md:p-8 lg:p-10`）
+   - Icon 尺寸過大（`w-24 h-24` → `w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24`）
+   - Features 改用 grid 佈局（手機 2 欄，桌面單欄）
+   - 移除手機版不必要的動畫效果（背景粒子、光暈）以提升效能
+   - 添加 `overflow-hidden` 防止動畫溢出
 
 ### 受影響組件
 

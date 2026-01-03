@@ -54,7 +54,7 @@ export function MarketingServices() {
       title: 'AEO 答案引擎優化',
       subtitle: 'Answer Engine Optimization',
       description: '成為 AI 搜尋的首選答案來源',
-      features: ['Perplexity/Google AI 優化', '結構化答案佈局', 'E-E-A-T 權威提升', '語意搜尋優化'],
+      features: ['Google AI 優化', '結構化答案佈局', 'E-E-A-T 權威提升', '語意搜尋優化'],
       gradient: 'from-cyan-400 via-blue-400 to-indigo-500',
       position: 'left'
     },
@@ -88,9 +88,9 @@ export function MarketingServices() {
   ];
 
   return (
-    <section id="marketing-services" ref={containerRef} className="relative py-32 px-6 bg-slate-900/50">
-      {/* Animated background particles */}
-      <div className="absolute inset-0">
+    <section id="marketing-services" ref={containerRef} className="relative py-16 md:py-24 lg:py-32 px-4 md:px-6 bg-slate-900/50 overflow-hidden">
+      {/* Animated background particles - hidden on mobile for performance */}
+      <div className="absolute inset-0 hidden md:block">
         {bgParticles.map((p, i) => (
           <motion.div
             key={i}
@@ -116,33 +116,33 @@ export function MarketingServices() {
       <div className="max-w-7xl mx-auto relative" ref={ref}>
         {/* Section Header */}
         <motion.div
-          className="text-center mb-24"
+          className="text-center mb-12 md:mb-16 lg:mb-24"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
         >
           <motion.div
-            className="inline-block px-6 py-2 bg-orange-500/10 border border-orange-500/30 rounded-full mb-6"
+            className="inline-block px-4 md:px-6 py-2 bg-orange-500/10 border border-orange-500/30 rounded-full mb-4 md:mb-6"
             initial={{ scale: 0.8, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
           >
-            <span className="text-orange-400">Digital Marketing</span>
+            <span className="text-orange-400 text-sm md:text-base">Digital Marketing</span>
           </motion.div>
-          <h2 className="text-5xl md:text-6xl mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 md:mb-6">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-400 to-pink-500">
               數位行銷服務
             </span>
           </h2>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+          <p className="text-base md:text-lg lg:text-xl text-slate-300 max-w-3xl mx-auto px-2">
             精準策略與數據驅動，讓您的品牌在數位世界脫穎而出
           </p>
         </motion.div>
 
         {/* Alternating 3D Cards */}
-        <div className="space-y-32">
+        <div className="space-y-12 md:space-y-20 lg:space-y-32">
           {services.map((service, index) => {
             const Icon = service.icon;
             const isLeft = service.position === 'left';
@@ -155,17 +155,16 @@ export function MarketingServices() {
             return (
               <motion.div
                 key={index}
-                className={`flex flex-col lg:flex-row items-center gap-12 ${isLeft ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
-                initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
+                className={`flex flex-col lg:flex-row items-center gap-6 md:gap-8 lg:gap-12 ${isLeft ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
+                initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ delay: index * 0.05, duration: 0.5 }}
               >
                 {/* 3D Card */}
                 <motion.div
                   className="w-full lg:w-1/2"
-                  style={{ y: yOffset }}
-                  whileHover={{ scale: 1.05, rotateY: isLeft ? 5 : -5 }}
+                  whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
                 >
                   <motion.div
@@ -176,7 +175,7 @@ export function MarketingServices() {
                     } as React.CSSProperties}
                   >
                     <div
-                      className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-10 border border-slate-700 overflow-hidden"
+                      className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl md:rounded-3xl p-6 md:p-8 lg:p-10 border border-slate-700 overflow-hidden"
                     >
                       {/* Gradient overlay */}
                       <motion.div
@@ -187,10 +186,10 @@ export function MarketingServices() {
 
                       {/* Floating icon */}
                       <motion.div
-                        className={`w-24 h-24 bg-gradient-to-br ${service.gradient} rounded-3xl flex items-center justify-center mb-8 shadow-2xl relative`}
+                        className={`w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-gradient-to-br ${service.gradient} rounded-2xl md:rounded-3xl flex items-center justify-center mb-4 md:mb-6 lg:mb-8 shadow-2xl relative`}
                         animate={{
-                          y: [0, -10, 0],
-                          rotateZ: [0, 5, 0, -5, 0]
+                          y: [0, -6, 0],
+                          rotateZ: [0, 3, 0, -3, 0]
                         }}
                         transition={{
                           duration: 4,
@@ -198,11 +197,11 @@ export function MarketingServices() {
                           ease: "easeInOut"
                         }}
                       >
-                        <Icon className="text-white" size={48} />
-                        
-                        {/* Icon glow effect */}
+                        <Icon className="text-white w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12" />
+
+                        {/* Icon glow effect - hidden on mobile for performance */}
                         <motion.div
-                          className={`absolute inset-0 bg-gradient-to-br ${service.gradient} rounded-3xl blur-xl`}
+                          className={`absolute inset-0 bg-gradient-to-br ${service.gradient} rounded-2xl md:rounded-3xl blur-xl hidden md:block`}
                           animate={{
                             scale: [1, 1.2, 1],
                             opacity: [0.5, 0.8, 0.5]
@@ -215,20 +214,20 @@ export function MarketingServices() {
                       </motion.div>
 
                       <div className="relative">
-                        <h3 className="text-3xl mb-2 text-white">{service.title}</h3>
-                        <p className={`text-sm mb-4 text-transparent bg-clip-text bg-gradient-to-r ${service.gradient}`}>
+                        <h3 className="text-xl md:text-2xl lg:text-3xl mb-1 md:mb-2 text-white">{service.title}</h3>
+                        <p className={`text-xs md:text-sm mb-2 md:mb-4 text-transparent bg-clip-text bg-gradient-to-r ${service.gradient}`}>
                           {service.subtitle}
                         </p>
-                        <p className="text-slate-300 text-lg mb-6">{service.description}</p>
+                        <p className="text-slate-300 text-sm md:text-base lg:text-lg">{service.description}</p>
                       </div>
 
                       {/* Decorative corner */}
-                      <div className={`absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl ${service.gradient} opacity-5 rounded-tl-full`} />
+                      <div className={`absolute bottom-0 right-0 w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 bg-gradient-to-tl ${service.gradient} opacity-5 rounded-tl-full`} />
                     </div>
 
-                    {/* 3D shadow */}
+                    {/* 3D shadow - hidden on mobile */}
                     <motion.div
-                      className={`absolute inset-0 bg-gradient-to-br ${service.gradient} rounded-3xl blur-2xl -z-10 opacity-0`}
+                      className={`absolute inset-0 bg-gradient-to-br ${service.gradient} rounded-2xl md:rounded-3xl blur-2xl -z-10 opacity-0 hidden md:block`}
                       whileHover={{ opacity: 0.3, scale: 1.05 }}
                       transition={{ duration: 0.3 }}
                     />
@@ -237,38 +236,28 @@ export function MarketingServices() {
 
                 {/* Features List */}
                 <motion.div
-                  className="w-full lg:w-1/2"
-                  initial={{ opacity: 0, x: isLeft ? 50 : -50 }}
+                  className="w-full lg:w-1/2 mt-4 lg:mt-0"
+                  initial={{ opacity: 0, x: isLeft ? 30 : -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ delay: 0.1, duration: 0.5 }}
                 >
-                  <div className="space-y-6">
+                  <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-1 lg:space-y-4 lg:gap-0">
                     {service.features.map((feature, i) => (
                       <motion.div
                         key={i}
-                        className="flex items-center gap-4 group"
-                        initial={{ opacity: 0, x: isLeft ? 20 : -20 }}
+                        className="flex items-center gap-2 md:gap-3 lg:gap-4 group"
+                        initial={{ opacity: 0, x: isLeft ? 10 : -10 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: i * 0.05 }}
-                        whileHover={{ x: isLeft ? 10 : -10, scale: 1.05 }}
+                        transition={{ delay: i * 0.03 }}
+                        whileHover={{ x: isLeft ? 5 : -5 }}
                       >
                         <motion.div
-                          className={`w-3 h-3 rounded-full bg-gradient-to-r ${service.gradient}`}
+                          className={`w-2 h-2 md:w-3 md:h-3 rounded-full bg-gradient-to-r ${service.gradient} flex-shrink-0`}
                           whileHover={{ scale: 1.5 }}
-                          animate={{
-                            boxShadow: [
-                              '0 0 0 0 rgba(251, 146, 60, 0.4)',
-                              '0 0 0 10px rgba(251, 146, 60, 0)',
-                            ]
-                          }}
-                          transition={{
-                            duration: 1.5,
-                            repeat: Infinity
-                          }}
                         />
-                        <span className="text-lg text-slate-200 group-hover:text-white transition-colors">
+                        <span className="text-sm md:text-base lg:text-lg text-slate-200 group-hover:text-white transition-colors">
                           {feature}
                         </span>
                       </motion.div>
