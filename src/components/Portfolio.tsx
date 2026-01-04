@@ -376,6 +376,34 @@ const projects: Project[] = [
     image: "/寫code工具.png",
     category: "教育科技",
   },
+  {
+    id: 18,
+    title: "CosmosWork 自由接案平台",
+    description:
+      "打造公平、透明、高效的自由接案生態系統，連結發案人與接案人，消除資訊不對稱。平台支援 AI 智能媒合，讓專業人才找到價值，讓企業高效尋才。",
+    tech: [
+      "Next.js 15",
+      "React 19",
+      "TypeScript",
+      "GraphQL Yoga",
+      "Prisma ORM",
+      "PostgreSQL",
+    ],
+    features: [
+      "AI 智能媒合系統",
+      "案件發布與瀏覽",
+      "人才履歷展示",
+      "需求追蹤管理",
+      "邀請獎勵機制",
+    ],
+    highlights: [
+      "CKEditor 5 富文本編輯器整合",
+      "NextAuth + Apollo Client 認證架構",
+      "14+ 複合索引與 N+1 查詢優化",
+    ],
+    image: "/CosmosWork.png",
+    category: "其他",
+  },
 ];
 
 const categories = ['全部', '電商平台', '企業官網', '形象網站', 'App 開發', 'AI 應用', '學術系統', '其他']
