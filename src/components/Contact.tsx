@@ -12,16 +12,43 @@ export function Contact() {
     company: '',
     message: ''
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // This is a mock submission - in production, you'd send this to a backend
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || '發送失敗');
+      }
+
+      setSubmitStatus('success');
       setFormData({ name: '', email: '', company: '', message: '' });
-    }, 3000);
+
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
+    } catch (error) {
+      setSubmitStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : '發送失敗，請稍後再試');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -195,24 +222,42 @@ export function Contact() {
                 />
               </div>
 
+              {submitStatus === 'error' && (
+                <div className="p-4 bg-red-500/20 border border-red-500/50 rounded-xl text-red-300">
+                  {errorMessage}
+                </div>
+              )}
+
               <motion.button
                 type="submit"
                 className={`w-full py-4 rounded-xl text-white flex items-center justify-center gap-2 transition-all ${
-                  isSubmitted 
-                    ? 'bg-green-600 shadow-lg shadow-green-500/50' 
+                  submitStatus === 'success'
+                    ? 'bg-green-600 shadow-lg shadow-green-500/50'
+                    : submitStatus === 'error'
+                    ? 'bg-red-600 shadow-lg shadow-red-500/50'
                     : 'bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/30'
                 }`}
-                whileHover={{ scale: isSubmitted ? 1 : 1.02 }}
+                whileHover={{ scale: isSubmitting || submitStatus === 'success' ? 1 : 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                disabled={isSubmitted}
+                disabled={isSubmitting || submitStatus === 'success'}
               >
-                {isSubmitted ? (
+                {isSubmitting ? (
                   <>
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       className="w-5 h-5 border-2 border-white rounded-full border-t-transparent animate-spin"
                     />
+                    發送中...
+                  </>
+                ) : submitStatus === 'success' ? (
+                  <>
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                    >
+                      ✓
+                    </motion.div>
                     已送出！我們會盡快回覆您
                   </>
                 ) : (

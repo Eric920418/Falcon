@@ -49,8 +49,10 @@ pnpm start
 
 ```
 ├── app/                  # Next.js App Router
-│   ├── layout.tsx        # 根布局
+│   ├── layout.tsx        # 根布局（含 SEO 配置）
 │   ├── page.tsx          # 首頁
+│   ├── sitemap.ts        # 動態 Sitemap 生成
+│   ├── robots.ts         # 動態 Robots.txt 生成
 │   └── globals.css       # 全局樣式 (Tailwind CSS v4)
 ├── src/
 │   └── components/       # React 組件
@@ -65,6 +67,7 @@ pnpm start
 │       ├── Contact.tsx
 │       └── ui/           # shadcn/ui 組件
 ├── public/               # 靜態資源
+│   └── manifest.json     # PWA Manifest
 ├── next.config.ts        # Next.js 配置
 ├── postcss.config.mjs    # PostCSS 配置
 └── tsconfig.json         # TypeScript 配置
@@ -109,25 +112,48 @@ Portfolio 組件展示公司的專案作品，包含：
 - `app/globals.css` - CSS 動畫和樣式定義
 - `src/components/Hero.tsx` - HTML 結構和 Motion 動畫
 
-## SEO 配置
+## SEO / GEO / AEO 配置
 
-網站已配置完整的 SEO 優化：
+網站已配置完整的搜尋引擎優化：
 
-### 已實現
+### SEO 基礎配置
 - **Metadata** - 完整的 title、description、keywords
 - **Open Graph** - Facebook/LINE 分享預覽 (`og:title`, `og:description`, `og:image`)
 - **Twitter Cards** - Twitter 分享預覽
 - **Canonical URL** - 避免重複內容問題
-- **robots.txt** - 搜尋引擎爬蟲規則 (`public/robots.txt`)
-- **sitemap.xml** - 網站地圖 (`public/sitemap.xml`)
-- **JSON-LD** - Organization Schema 結構化數據
+- **動態 robots.ts** - 搜尋引擎爬蟲規則（支援 AI 爬蟲）
+- **動態 sitemap.ts** - 網站地圖自動生成
+- **PWA manifest.json** - 應用程式清單
+
+### GEO 優化（地理位置優化）
+- **LocalBusiness Schema** - 完整的本地商家結構化數據
+- **GeoCoordinates** - 精確的經緯度座標
+- **GEO Meta Tags** - `geo.region`, `geo.placename`, `geo.position`, `ICBM`
+- **areaServed** - 服務區域標記（台灣、桃園、台北、新北）
+- **PostalAddress** - 完整地址結構化數據
+
+### AEO 優化（AI 搜尋優化）
+- **AI 爬蟲友善** - robots.ts 允許 GPTBot、ChatGPT-User、PerplexityBot、ClaudeBot 等
+- **knowsAbout Schema** - 明確標記專業領域，幫助 AI 理解品牌專長
+- **Service Schema** - 服務項目結構化數據，讓 AI 更容易引用
+- **Organization Schema** - 品牌識別與社群連結
+
+### JSON-LD 結構化數據
+網站包含以下 Schema：
+1. **Organization** - 品牌組織資訊
+2. **LocalBusiness** - 本地商家（GEO 核心）
+3. **WebSite** - 網站基本資訊
+4. **BreadcrumbList** - 導航結構
+5. **OfferCatalog** - 服務項目清單
+
+### 社群連結
+- Instagram: https://www.instagram.com/falcon.information
+- Threads: https://www.threads.net/@falcon.information
 
 ### 待完成
 - [ ] 創建 `public/og-image.png` (1200x630px) 用於社群分享預覽
-- [ ] 註冊 [Google Search Console](https://search.google.com/search-console) 並提交 sitemap
 - [ ] 添加 Google Analytics 追蹤碼
-- [ ] 在 `layout.tsx` 中填入 Google 驗證碼
-- [ ] 添加社群媒體連結到 JSON-LD `sameAs` 欄位
+- [ ] 申請並設定 Google Business Profile
 
 ## Safari 移動版相容性
 
@@ -173,6 +199,29 @@ Portfolio 組件展示公司的專案作品，包含：
 - `ContentServices.tsx`
 - `Portfolio.tsx`
 
+## 聯絡表單郵件設定
+
+聯絡表單提交後會自動發送郵件到 `26416387.re@gmail.com`。使用 Gmail SMTP 發送。
+
+### 環境變數設定
+
+在 `.env.local` 中添加以下變數：
+
+```env
+GMAIL_USER=你的gmail帳號@gmail.com
+GMAIL_APP_PASSWORD=你的應用程式密碼
+```
+
+### 取得 Gmail 應用程式密碼
+
+1. 前往 [Google 帳戶設定](https://myaccount.google.com/)
+2. 選擇「安全性」
+3. 確認已開啟「兩步驟驗證」
+4. 在「兩步驟驗證」頁面底部找到「應用程式密碼」
+5. 選擇「郵件」和「其他」，輸入名稱（如 "Falcon 網站"）
+6. 點擊「產生」，複製 16 位密碼
+7. 將密碼貼到 `.env.local` 的 `GMAIL_APP_PASSWORD`
+
 ## 部署
 
 本專案支援 Vercel 部署：
@@ -181,5 +230,7 @@ Portfolio 組件展示公司的專案作品，包含：
 # 建置生產版本
 pnpm build
 ```
+
+**重要**：部署時需在 Vercel 後台設定環境變數 `GMAIL_USER` 和 `GMAIL_APP_PASSWORD`。
 
 **注意**：UI 組件使用 shadcn/ui，import 語句不應包含版本號（如 `@radix-ui/react-dialog` 而非 `@radix-ui/react-dialog@1.1.6`）。

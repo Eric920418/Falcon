@@ -1,0 +1,27 @@
+{
+  "name": "隼訊數位行銷",
+  "short_name": "隼訊行銷",
+  "description": "專業數位行銷服務平台，提供網站建置、軟體開發、SEO優化、GEO生成式引擎優化、AEO答案引擎優化等全方位數位解決方案。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#0891b2",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "zh-TW",
+  "categories": ["business", "marketing", "technology"],
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
