@@ -51,6 +51,7 @@ pnpm start
 ├── app/                  # Next.js App Router
 │   ├── layout.tsx        # 根布局（含 SEO 配置）
 │   ├── page.tsx          # 首頁
+│   ├── icon.png          # Favicon（Next.js 自動處理）
 │   ├── sitemap.ts        # 動態 Sitemap 生成
 │   ├── robots.ts         # 動態 Robots.txt 生成
 │   └── globals.css       # 全局樣式 (Tailwind CSS v4)
@@ -67,6 +68,8 @@ pnpm start
 │       ├── Contact.tsx
 │       └── ui/           # shadcn/ui 組件
 ├── public/               # 靜態資源
+│   ├── favicon.ico       # Favicon（瀏覽器相容）
+│   ├── logo.png          # 網站 Logo
 │   └── manifest.json     # PWA Manifest
 ├── next.config.ts        # Next.js 配置
 ├── postcss.config.mjs    # PostCSS 配置
@@ -119,6 +122,7 @@ Portfolio 組件展示公司的專案作品，包含：
 
 ### SEO 基礎配置
 - **Metadata** - 完整的 title、description、keywords
+- **Favicon** - `app/icon.png` + `public/favicon.ico`（Google 搜尋結果顯示）
 - **Open Graph** - Facebook/LINE 分享預覽 (`og:title`, `og:description`, `og:image`)
 - **Twitter Cards** - Twitter 分享預覽
 - **Canonical URL** - 避免重複內容問題
