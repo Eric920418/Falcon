@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'motion/react'
-import { ChevronDown, Shield, Zap } from 'lucide-react'
+import { ChevronDown, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 
 export function Hero() {
@@ -13,109 +13,167 @@ export function Hero() {
   };
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#1E2A2E]">
       {/* 背景圖片 */}
       <Image
         src="/主視覺背景_3D立體風格.png"
         alt="Hero Background"
         fill
         priority
-        className="object-cover"
+        className="object-cover opacity-40"
         sizes="100vw"
       />
 
-      {/* 暗色遮罩讓文字更清晰 */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950/80" />
+      {/* 工業感網格背景 */}
+      <div className="absolute inset-0 industrial-grid opacity-30" />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-   
+      {/* 斜線紋理 */}
+      <div className="absolute inset-0 diagonal-lines" />
 
-        {/* Main Heading */}
-        <motion.h1
-          className="text-[40px] md:text-7xl mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
+      {/* 鋼藍灰光暈 */}
+      <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-[#5F808B]/10 rounded-full blur-[120px]" />
+      <div className="absolute bottom-1/3 left-1/5 w-[400px] h-[400px] bg-[#6D8F96]/8 rounded-full blur-[100px]" />
+
+      {/* 遮罩 */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#1E2A2E]/50 via-[#1E2A2E]/30 to-[#1E2A2E]/70" />
+
+      <div className="relative z-10 max-w-6xl mx-auto px-6">
+        {/* 上方裝飾線 */}
+        <motion.div
+          className="flex items-center gap-4 mb-8"
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
         >
-          數位轉型的領航者
-        </motion.h1>
+          <div className="brand-line" />
+          <span className="text-[#6D8F96] text-sm tracking-[0.2em] uppercase font-medium">
+            Digital Marketing Agency
+          </span>
+        </motion.div>
 
+        {/* 主標題 - 不對稱排版 */}
+        <div className="mb-8">
+          <motion.h1
+            className="text-5xl md:text-7xl lg:text-8xl text-[#E0E5E8] leading-[1.1] tracking-tight"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.7 }}
+          >
+            數位轉型的
+          </motion.h1>
+          <motion.h1
+            className="text-5xl md:text-7xl lg:text-8xl leading-[1.1] tracking-tight mt-2"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35, duration: 0.7 }}
+          >
+            <span className="text-falcon-gradient">領航者</span>
+          </motion.h1>
+        </div>
+
+        {/* 副標題 */}
         <motion.p
-          className="text-base md:text-2xl text-slate-300 mb-8 max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 30 }}
+          className="text-lg md:text-xl text-[#A8B6BC] mb-4 max-w-xl leading-relaxed"
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
         >
-          整合行銷 × 品牌形象 × 數位內容
+          整合行銷 · 品牌形象 · 數位內容
         </motion.p>
 
         <motion.p
-          className="text-base md:text-lg text-slate-400 mb-12 max-w-2xl mx-auto"
+          className="text-base text-[#6D8F96] mb-12 max-w-lg leading-relaxed"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.7, duration: 0.8 }}
+          transition={{ delay: 0.65, duration: 0.6 }}
         >
-          從網站開發到AI應用，從SEO優化到社群經營，<br />
+          從網站開發到AI應用，從SEO優化到社群經營，
           我們提供全方位的數位解決方案
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/* CTA 按鈕 */}
         <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-          initial={{ opacity: 0, y: 30 }}
+          className="flex flex-col sm:flex-row gap-4"
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.8 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
         >
-          <motion.button
-            className=" md:px-8 px-4 md:py-4 py-2 md:text-lg text-base bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full text-white shadow-lg shadow-cyan-500/50 w-[50%] md:w-full mx-auto"
-            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(6,182,212,0.6)" }}
-            whileTap={{ scale: 0.95 }}
+          <button
+            className="falcon-btn-primary inline-flex items-center gap-2 group"
             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
           >
             開始合作
-          </motion.button>
-          <motion.button
-            className="md:px-8 px-4 md:py-4 py-2 md:text-lg text-base border-2 border-cyan-500 rounded-full text-cyan-400 hover:bg-cyan-500/10 w-[50%] md:w-full mx-auto"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </button>
+          <button
+            className="falcon-btn-outline"
+            onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            探索服務
-          </motion.button>
+            探索作品
+          </button>
         </motion.div>
 
-        {/* 信任徽章 */}
+        {/* 信任徽章 - 簡化設計 */}
         <motion.div
-          className="flex flex-wrap justify-center gap-4 md:gap-6 mt-10"
+          className="flex flex-wrap gap-6 mt-16 pt-8 border-t border-[#344349]"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.1, duration: 0.8 }}
+          transition={{ delay: 1, duration: 0.6 }}
         >
-          <motion.div
-            className="flex items-center gap-2 px-4 py-2 bg-slate-900/60 backdrop-blur-sm border border-cyan-500/30 rounded-full"
-            whileHover={{ scale: 1.05, borderColor: 'rgba(6,182,212,0.6)' }}
-          >
-            <Shield className="w-4 h-4 text-cyan-400" />
-            <span className="text-sm text-slate-200">永久售後服務</span>
-          </motion.div>
-          <motion.div
-            className="flex items-center gap-2 px-4 py-2 bg-slate-900/60 backdrop-blur-sm border border-purple-500/30 rounded-full"
-            whileHover={{ scale: 1.05, borderColor: 'rgba(168,85,247,0.6)' }}
-          >
-            <Zap className="w-4 h-4 text-purple-400" />
-            <span className="text-sm text-slate-200">快速交件保證</span>
-          </motion.div>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded bg-[#2D3B40] border border-[#344349] flex items-center justify-center">
+              <span className="text-[#A8B6BC] text-lg">∞</span>
+            </div>
+            <div>
+              <p className="text-[#C5CED2] text-sm font-medium">永久售後服務</p>
+              <p className="text-[#5F808B] text-xs">終身技術支援</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded bg-[#2D3B40] border border-[#344349] flex items-center justify-center">
+              <span className="text-[#A8B6BC] text-lg">⚡</span>
+            </div>
+            <div>
+              <p className="text-[#C5CED2] text-sm font-medium">快速交件</p>
+              <p className="text-[#5F808B] text-xs">效率優先</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded bg-[#2D3B40] border border-[#344349] flex items-center justify-center">
+              <span className="text-[#A8B6BC] text-lg">✓</span>
+            </div>
+            <div>
+              <p className="text-[#C5CED2] text-sm font-medium">品質保證</p>
+              <p className="text-[#5F808B] text-xs">嚴格把關</p>
+            </div>
+          </div>
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* 右側裝飾數字 */}
+      <motion.div
+        className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:block"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+      >
+        <div className="text-[12rem] font-bold text-[#2D3B40]/60 leading-none select-none" style={{ fontFamily: 'var(--font-display)' }}>
+          隼
+        </div>
+      </motion.div>
+
+      {/* 捲動提示 */}
       <motion.button
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-cyan-400"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[#5F808B] hover:text-[#A8B6BC] transition-colors"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, y: [0, 8, 0] }}
+        transition={{
+          opacity: { delay: 1.5, duration: 0.5 },
+          y: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+        }}
         onClick={scrollToNext}
       >
-        <ChevronDown size={40} />
+        <ChevronDown size={32} />
       </motion.button>
     </section>
   );

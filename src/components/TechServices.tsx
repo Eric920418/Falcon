@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useMotionValue, useTransform } from 'motion/react'
+import { motion } from 'motion/react'
 import { useRef, useState } from 'react'
 import { Globe, Code, Database, Brain, Smartphone } from 'lucide-react'
 
@@ -14,249 +14,158 @@ export function TechServices() {
       title: '網站建置',
       description: '響應式網站設計與開發',
       details: ['RWD響應式設計', '品牌形象官網', '電商平台開發', 'UI/UX設計'],
-      color: 'from-cyan-400 to-blue-500',
-      bgColor: 'bg-cyan-500/10'
+      number: '01'
     },
     {
       icon: Code,
       title: '軟體開發',
       description: '客製化軟體解決方案',
       details: ['企業應用系統', 'API整合服務', '雲端解決方案', '系統維護'],
-      color: 'from-blue-400 to-indigo-500',
-      bgColor: 'bg-blue-500/10'
+      number: '02'
     },
     {
       icon: Database,
       title: 'CMS / ERP',
       description: '企業資源管理系統',
       details: ['客戶關係管理', '資源規劃系統', '數據分析儀表板', '流程自動化'],
-      color: 'from-indigo-400 to-purple-500',
-      bgColor: 'bg-indigo-500/10'
+      number: '03'
     },
     {
       icon: Brain,
       title: 'AI 工具',
       description: '人工智慧應用整合',
       details: ['智能客服系統', '數據分析預測', '自動化流程', 'AI內容生成'],
-      color: 'from-purple-400 to-pink-500',
-      bgColor: 'bg-purple-500/10'
+      number: '04'
     },
     {
       icon: Smartphone,
       title: 'APP 開發',
       description: '跨平台應用程式設計',
       details: ['iOS / Android', '跨平台開發', '互動體驗設計', 'APP維護更新'],
-      color: 'from-pink-400 to-rose-500',
-      bgColor: 'bg-pink-500/10'
+      number: '05'
     }
   ];
 
   return (
-    <section id="tech-services" ref={ref} className="relative py-32 px-6">
-      {/* Animated Background Grid */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px),
-                           linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px)`,
-          backgroundSize: '50px 50px',
-        }} />
-      </div>
+    <section id="tech-services" ref={ref} className="relative py-32 px-6 bg-[#1E2A2E]">
+      {/* 背景 */}
+      <div className="absolute inset-0 industrial-grid opacity-20" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#344349] to-transparent" />
 
       <div className="max-w-7xl mx-auto relative">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-20"
+          className="mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
         >
-          <motion.div
-            className="inline-block px-6 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-6"
-            initial={{ scale: 0.8, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
-          >
-            <span className="text-cyan-400">Technology Development</span>
-          </motion.div>
-          <h2 className="text-5xl md:text-6xl mb-6">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500">
-              技術開發服務
-            </span>
-          </h2>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            從網站到系統，從AI到APP，提供完整的技術解決方案
-          </p>
+          {/* 標籤 */}
+          <div className="flex items-center gap-3 mb-6">
+            <div className="brand-line" />
+            <span className="text-[#6D8F96] text-sm tracking-widest uppercase">Technology</span>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 items-end">
+            <div>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#E0E5E8] leading-tight">
+                技術開發
+                <br />
+                <span className="text-falcon-gradient">服務</span>
+              </h2>
+            </div>
+            <p className="text-lg text-[#A8B6BC] leading-relaxed">
+              從網站到系統，從AI到APP，我們提供完整的技術解決方案，
+              助您實現數位轉型的每一步
+            </p>
+          </div>
         </motion.div>
 
-        {/* 3D Cards Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8" style={{ perspective: '1000px', WebkitPerspective: '1000px' }}>
+        {/* Services Grid - 不規則排列 */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
+            const isLarge = index === 0 || index === 3; // 第1和第4個較大
+
             return (
-              <Card3D
+              <motion.div
                 key={index}
-                index={index}
-                isHovered={hoveredCard === index}
-                onHover={() => setHoveredCard(index)}
-                onLeave={() => setHoveredCard(null)}
+                className={`group relative ${isLarge ? 'lg:row-span-2' : ''}`}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
               >
-                <div className={`relative h-full ${service.bgColor} backdrop-blur-sm border border-slate-700/50 rounded-3xl p-8 overflow-hidden`}>
-                  {/* Animated gradient background */}
-                  <motion.div
-                    className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0`}
-                    animate={{
-                      opacity: hoveredCard === index ? 0.1 : 0
-                    }}
-                    transition={{ duration: 0.3 }}
-                  />
+                <div className={`falcon-card rounded-lg p-8 h-full relative overflow-hidden ${isLarge ? 'min-h-[400px]' : 'min-h-[200px]'}`}>
+                  {/* 背景編號 */}
+                  <span
+                    className="absolute -right-4 -top-8 text-[8rem] font-bold text-[#2D3B40]/50 leading-none select-none transition-colors group-hover:text-[#344349]/50"
+                    style={{ fontFamily: 'var(--font-display)' }}
+                  >
+                    {service.number}
+                  </span>
 
-                  <div className="relative z-10">
-                    {/* Icon with 3D effect */}
-                    <motion.div
-                      className={`w-20 h-20 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center mb-6 shadow-2xl`}
-                      animate={{
-                        rotateY: hoveredCard === index ? [0, 360] : 0,
-                        scale: hoveredCard === index ? 1.1 : 1
-                      }}
-                      transition={{
-                        rotateY: { duration: 0.6 },
-                        scale: { duration: 0.3 }
-                      }}
-                    >
-                      <Icon className="text-white" size={36} />
-                    </motion.div>
+                  {/* 內容 */}
+                  <div className="relative z-10 h-full flex flex-col">
+                    {/* Icon */}
+                    <div className="w-14 h-14 bg-[#2D3B40] border border-[#344349] rounded-lg flex items-center justify-center mb-6 group-hover:bg-[#5F808B] group-hover:border-[#6D8F96] transition-all duration-300">
+                      <Icon className="text-[#A8B6BC] group-hover:text-[#1E2A2E] transition-colors" size={24} />
+                    </div>
 
-                    <h3 className="text-2xl mb-3 text-white">{service.title}</h3>
-                    <p className="text-slate-400 mb-6">{service.description}</p>
+                    <h3 className="text-2xl text-[#E0E5E8] mb-2 group-hover:text-[#A8B6BC] transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
+                      {service.title}
+                    </h3>
+                    <p className="text-[#6D8F96] mb-6">{service.description}</p>
 
-                    {/* Service Details */}
+                    {/* Service Details - 展開時顯示 */}
                     <motion.ul
-                      className="space-y-2"
-                      style={{
-                        overflow: 'hidden',
-                        maxHeight: hoveredCard === index ? '200px' : '0px',
-                      }}
-                      initial={{ opacity: 0 }}
+                      className="mt-auto space-y-2"
+                      initial={false}
                       animate={{
-                        opacity: hoveredCard === index ? 1 : 0,
+                        opacity: hoveredCard === index ? 1 : 0.5,
                       }}
                       transition={{ duration: 0.3 }}
                     >
                       {service.details.map((detail, i) => (
-                        <motion.li
+                        <li
                           key={i}
-                          className="flex items-center gap-2 text-slate-300 text-sm"
-                          initial={{ x: -20, opacity: 0 }}
-                          animate={{
-                            x: hoveredCard === index ? 0 : -20,
-                            opacity: hoveredCard === index ? 1 : 0
-                          }}
-                          transition={{ delay: i * 0.1 }}
+                          className="flex items-center gap-3 text-sm text-[#6D8F96]"
                         >
-                          <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${service.color}`} />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#5F808B]/50 group-hover:bg-[#5F808B] transition-colors" />
                           {detail}
-                        </motion.li>
+                        </li>
                       ))}
                     </motion.ul>
                   </div>
 
-                  {/* Corner decoration */}
-                  <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${service.color} opacity-5 rounded-bl-full`} />
+                  {/* 底部裝飾線 */}
+                  <div className="absolute bottom-0 left-0 h-1 w-0 group-hover:w-full bg-gradient-to-r from-[#5F808B] to-[#6D8F96] transition-all duration-500" />
                 </div>
-              </Card3D>
+              </motion.div>
             );
           })}
         </div>
+
+        {/* 底部 CTA */}
+        <motion.div
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+        >
+          <p className="text-[#6D8F96] mb-6">需要客製化的技術解決方案？</p>
+          <button
+            className="falcon-btn-outline"
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            與我們聯繫
+          </button>
+        </motion.div>
       </div>
     </section>
-  );
-}
-
-// 3D Card Component with real depth effect
-function Card3D({
-  children,
-  index,
-  isHovered,
-  onHover,
-  onLeave
-}: {
-  children: React.ReactNode;
-  index: number;
-  isHovered: boolean;
-  onHover: () => void;
-  onLeave: () => void;
-}) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], [15, -15]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-15, 15]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    mouseX.set((e.clientX - centerX) / rect.width);
-    mouseY.set((e.clientY - centerY) / rect.height);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-    onLeave();
-  };
-
-  return (
-    <motion.div
-      ref={cardRef}
-      className="relative h-full"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{
-        opacity: 1,
-        y: 0
-      }}
-      viewport={{ once: true }}
-      transition={{
-        delay: index * 0.1,
-        duration: 0.5
-      }}
-      style={{
-        transformStyle: 'preserve-3d',
-        WebkitTransformStyle: 'preserve-3d',
-        rotateX: isHovered ? rotateX : 0,
-        rotateY: isHovered ? rotateY : 0,
-      } as React.CSSProperties}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={onHover}
-      onMouseLeave={handleMouseLeave}
-      whileHover={{ 
-        z: 50,
-        scale: 1.05,
-        transition: { duration: 0.3 }
-      }}
-    >
-      <motion.div
-        style={{
-          transformStyle: 'preserve-3d',
-          WebkitTransformStyle: 'preserve-3d',
-        } as React.CSSProperties}
-      >
-        {children}
-      </motion.div>
-
-      {/* 3D Shadow */}
-      <motion.div
-        className="absolute inset-0 bg-cyan-500/20 rounded-3xl blur-2xl -z-10"
-        animate={{
-          opacity: isHovered ? 0.6 : 0,
-          scale: isHovered ? 1.1 : 0.9,
-        }}
-        transition={{ duration: 0.3 }}
-      />
-    </motion.div>
   );
 }

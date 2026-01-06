@@ -80,20 +80,35 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" ref={ref} className="relative py-32 px-6 bg-slate-900/30">
-      <div className="max-w-6xl mx-auto">
+    <section id="contact" ref={ref} className="relative py-32 px-6 bg-stone-950">
+      {/* 背景 */}
+      <div className="absolute inset-0 industrial-grid opacity-20" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-stone-800 to-transparent" />
+
+      <div className="max-w-6xl mx-auto relative">
+        {/* 標籤 */}
         <motion.div
-          className="text-center mb-20"
+          className="flex items-center gap-3 mb-6"
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="brand-line" />
+          <span className="text-amber-500 text-sm tracking-widest uppercase">Contact</span>
+        </motion.div>
+
+        <motion.div
+          className="mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-            聯絡我們
+          <h2 className="text-4xl md:text-5xl text-stone-100 mb-4">
+            聯絡<span className="text-falcon-gradient">我們</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto mb-8"></div>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+          <p className="text-lg text-stone-400 max-w-xl">
             準備好開始您的數位轉型之旅了嗎？讓我們一起討論如何幫助您的品牌成長
           </p>
         </motion.div>
@@ -106,47 +121,45 @@ export function Contact() {
             viewport={{ once: true }}
             transition={{ delay: 0.1, duration: 0.6 }}
           >
-            <h3 className="text-2xl mb-8 text-white">取得聯繫</h3>
-            
-            <div className="space-y-6 mb-8">
+            <h3 className="text-xl mb-8 text-stone-100" style={{ fontFamily: 'var(--font-display)' }}>取得聯繫</h3>
+
+            <div className="space-y-6 mb-10">
               {contactInfo.map((info, index) => {
                 const Icon = info.icon;
                 return (
-                  <motion.div
+                  <div
                     key={index}
                     className="flex items-start gap-4 group"
-                    whileHover={{ x: 10 }}
-                    transition={{ duration: 0.3 }}
                   >
-                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:shadow-lg group-hover:shadow-cyan-500/50 transition-shadow">
-                      <Icon className="text-white" size={24} />
+                    <div className="w-12 h-12 bg-stone-800 border border-stone-700 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-amber-600 group-hover:border-amber-500 transition-all duration-300">
+                      <Icon className="text-stone-400 group-hover:text-stone-950 transition-colors" size={20} />
                     </div>
                     <div>
-                      <p className="text-slate-400 text-sm mb-1">{info.title}</p>
+                      <p className="text-stone-500 text-sm mb-1">{info.title}</p>
                       {info.link ? (
-                        <a 
+                        <a
                           href={info.link}
-                          className="text-white hover:text-cyan-400 transition-colors"
+                          className="text-stone-200 hover:text-amber-500 transition-colors"
                         >
                           {info.content}
                         </a>
                       ) : (
-                        <p className="text-white">{info.content}</p>
+                        <p className="text-stone-200">{info.content}</p>
                       )}
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>
 
-            <div className="bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-8">
-              <h4 className="text-xl mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+            <div className="falcon-card rounded-lg p-8">
+              <h4 className="text-lg mb-4 text-falcon-gradient" style={{ fontFamily: 'var(--font-display)' }}>
                 營業時間
               </h4>
-              <div className="space-y-2 text-slate-300">
+              <div className="space-y-2 text-stone-400">
                 <p>週一至週五：09:00 - 18:00</p>
                 <p>週六：10:00 - 17:00</p>
-                <p className="text-slate-500">週日及國定假日公休</p>
+                <p className="text-stone-600">週日及國定假日公休</p>
               </div>
             </div>
           </motion.div>
@@ -160,7 +173,7 @@ export function Contact() {
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-slate-300 mb-2">
+                <label htmlFor="name" className="block text-stone-400 text-sm mb-2">
                   姓名 *
                 </label>
                 <input
@@ -170,13 +183,13 @@ export function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors"
+                  className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors"
                   placeholder="請輸入您的姓名"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-slate-300 mb-2">
+                <label htmlFor="email" className="block text-stone-400 text-sm mb-2">
                   Email *
                 </label>
                 <input
@@ -186,13 +199,13 @@ export function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors"
+                  className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors"
                   placeholder="your@email.com"
                 />
               </div>
 
               <div>
-                <label htmlFor="company" className="block text-slate-300 mb-2">
+                <label htmlFor="company" className="block text-stone-400 text-sm mb-2">
                   公司名稱
                 </label>
                 <input
@@ -201,13 +214,13 @@ export function Contact() {
                   name="company"
                   value={formData.company}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors"
+                  className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors"
                   placeholder="您的公司名稱（選填）"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-slate-300 mb-2">
+                <label htmlFor="message" className="block text-stone-400 text-sm mb-2">
                   訊息內容 *
                 </label>
                 <textarea
@@ -217,56 +230,45 @@ export function Contact() {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors resize-none"
+                  className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors resize-none"
                   placeholder="請告訴我們您的需求..."
                 />
               </div>
 
               {submitStatus === 'error' && (
-                <div className="p-4 bg-red-500/20 border border-red-500/50 rounded-xl text-red-300">
+                <div className="p-4 bg-red-900/30 border border-red-800/50 rounded-lg text-red-400">
                   {errorMessage}
                 </div>
               )}
 
-              <motion.button
+              <button
                 type="submit"
-                className={`w-full py-4 rounded-xl text-white flex items-center justify-center gap-2 transition-all ${
+                className={`w-full py-4 rounded-lg flex items-center justify-center gap-2 transition-all ${
                   submitStatus === 'success'
-                    ? 'bg-green-600 shadow-lg shadow-green-500/50'
+                    ? 'bg-green-700 text-white'
                     : submitStatus === 'error'
-                    ? 'bg-red-600 shadow-lg shadow-red-500/50'
-                    : 'bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/30'
+                    ? 'bg-red-700 text-white'
+                    : 'falcon-btn-primary'
                 }`}
-                whileHover={{ scale: isSubmitting || submitStatus === 'success' ? 1 : 1.02 }}
-                whileTap={{ scale: 0.98 }}
                 disabled={isSubmitting || submitStatus === 'success'}
               >
                 {isSubmitting ? (
                   <>
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="w-5 h-5 border-2 border-white rounded-full border-t-transparent animate-spin"
-                    />
+                    <div className="w-5 h-5 border-2 border-current rounded-full border-t-transparent animate-spin" />
                     發送中...
                   </>
                 ) : submitStatus === 'success' ? (
                   <>
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                    >
-                      ✓
-                    </motion.div>
+                    <span>✓</span>
                     已送出！我們會盡快回覆您
                   </>
                 ) : (
                   <>
-                    <Send size={20} />
+                    <Send size={18} />
                     送出訊息
                   </>
                 )}
-              </motion.button>
+              </button>
             </form>
           </motion.div>
         </div>

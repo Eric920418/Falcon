@@ -1,34 +1,11 @@
 'use client'
 
-import { motion, useInView, useScroll, useTransform } from 'motion/react'
-import { useRef, useMemo } from 'react'
+import { motion } from 'motion/react'
+import { useRef } from 'react'
 import { Search, TrendingUp, Users, MessageSquare, Bot, Sparkles } from 'lucide-react'
-
-// 確定性偽隨機生成器（避免 hydration mismatch）
-const seededRandom = (seed: number) => {
-  const x = Math.sin(seed * 9999) * 10000;
-  return x - Math.floor(x);
-};
 
 export function MarketingServices() {
   const ref = useRef(null);
-  const containerRef = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
-
-  // 預先計算固定位置，確保伺服器和客戶端一致（固定小數位數避免 hydration mismatch）
-  const bgParticles = useMemo(() =>
-    [...Array(30)].map((_, i) => ({
-      left: Math.round(seededRandom(i * 5 + 100) * 10000) / 100,
-      top: Math.round(seededRandom(i * 5 + 101) * 10000) / 100,
-      duration: Math.round((3 + seededRandom(i * 5 + 102) * 2) * 100) / 100,
-      delay: Math.round(seededRandom(i * 5 + 103) * 2 * 100) / 100,
-    })), []
-  );
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
 
   const services = [
     {
@@ -37,8 +14,7 @@ export function MarketingServices() {
       subtitle: 'Search Engine Optimization',
       description: '提升網站在搜尋引擎的排名',
       features: ['關鍵字策略', 'SEO技術優化', '內容優化', '數據追蹤分析'],
-      gradient: 'from-orange-400 via-red-400 to-pink-500',
-      position: 'left'
+      number: '01'
     },
     {
       icon: Sparkles,
@@ -46,8 +22,7 @@ export function MarketingServices() {
       subtitle: 'Generative Engine Optimization',
       description: '讓 AI 引擎優先引用您的品牌內容',
       features: ['ChatGPT/Gemini 曝光優化', 'AI 引用策略', 'LLM 內容結構化', '品牌權威建立'],
-      gradient: 'from-violet-400 via-purple-400 to-fuchsia-500',
-      position: 'right'
+      number: '02'
     },
     {
       icon: Bot,
@@ -55,8 +30,7 @@ export function MarketingServices() {
       subtitle: 'Answer Engine Optimization',
       description: '成為 AI 搜尋的首選答案來源',
       features: ['Google AI 優化', '結構化答案佈局', 'E-E-A-T 權威提升', '語意搜尋優化'],
-      gradient: 'from-cyan-400 via-blue-400 to-indigo-500',
-      position: 'left'
+      number: '03'
     },
     {
       icon: TrendingUp,
@@ -64,8 +38,7 @@ export function MarketingServices() {
       subtitle: 'Digital Advertising',
       description: '精準觸及目標受眾',
       features: ['Google Ads', 'Facebook/IG廣告', '關鍵字廣告', 'ROI優化'],
-      gradient: 'from-amber-400 via-orange-400 to-red-500',
-      position: 'right'
+      number: '04'
     },
     {
       icon: Users,
@@ -73,8 +46,7 @@ export function MarketingServices() {
       subtitle: 'Social Media Management',
       description: '建立品牌社群影響力',
       features: ['內容策略規劃', '社群互動管理', 'KOL合作', '粉絲經營'],
-      gradient: 'from-green-400 via-emerald-400 to-teal-500',
-      position: 'left'
+      number: '05'
     },
     {
       icon: MessageSquare,
@@ -82,188 +54,101 @@ export function MarketingServices() {
       subtitle: 'Reputation Management',
       description: '打造正面品牌形象',
       features: ['輿情監測', '評論管理', '危機處理', '品牌聲譽維護'],
-      gradient: 'from-blue-400 via-cyan-400 to-teal-500',
-      position: 'right'
+      number: '06'
     }
   ];
 
   return (
-    <section id="marketing-services" ref={containerRef} className="relative py-16 md:py-24 lg:py-32 px-4 md:px-6 bg-slate-900/50 overflow-hidden">
-      {/* Animated background particles - hidden on mobile for performance */}
-      <div className="absolute inset-0 hidden md:block">
-        {bgParticles.map((p, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-orange-500/30 rounded-full"
-            style={{
-              left: `${p.left}%`,
-              top: `${p.top}%`,
-            }}
-            animate={{
-              y: [0, -50, 0],
-              opacity: [0.2, 0.5, 0.2],
-              scale: [1, 1.5, 1]
-            }}
-            transition={{
-              duration: p.duration,
-              repeat: Infinity,
-              delay: p.delay,
-            }}
-          />
-        ))}
-      </div>
+    <section id="marketing-services" ref={ref} className="relative py-32 px-6 bg-[#2D3B40]/50">
+      {/* 背景 */}
+      <div className="absolute inset-0 diagonal-lines" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#344349] to-transparent" />
 
-      <div className="max-w-7xl mx-auto relative" ref={ref}>
+      <div className="max-w-7xl mx-auto relative">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-12 md:mb-16 lg:mb-24"
+          className="mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
         >
-          <motion.div
-            className="inline-block px-4 md:px-6 py-2 bg-orange-500/10 border border-orange-500/30 rounded-full mb-4 md:mb-6"
-            initial={{ scale: 0.8, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
-          >
-            <span className="text-orange-400 text-sm md:text-base">Digital Marketing</span>
-          </motion.div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 md:mb-6">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-400 to-pink-500">
-              數位行銷服務
-            </span>
-          </h2>
-          <p className="text-base md:text-lg lg:text-xl text-slate-300 max-w-3xl mx-auto px-2">
-            精準策略與數據驅動，讓您的品牌在數位世界脫穎而出
-          </p>
+          {/* 標籤 */}
+          <div className="flex items-center gap-3 mb-6">
+            <div className="brand-line" />
+            <span className="text-[#6D8F96] text-sm tracking-widest uppercase">Marketing</span>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 items-end">
+            <div>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl text-[#E0E5E8] leading-tight">
+                數位行銷
+                <br />
+                <span className="text-falcon-gradient">服務</span>
+              </h2>
+            </div>
+            <p className="text-lg text-[#A8B6BC] leading-relaxed">
+              精準策略與數據驅動，讓您的品牌在數位世界脫穎而出，
+              觸及更多潛在客戶
+            </p>
+          </div>
         </motion.div>
 
-        {/* Alternating 3D Cards */}
-        <div className="space-y-12 md:space-y-20 lg:space-y-32">
+        {/* Services Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
-            const isLeft = service.position === 'left';
-            const yOffset = useTransform(
-              scrollYProgress,
-              [0, 1],
-              [100 * (index + 1), -100 * (index + 1)]
-            );
 
             return (
               <motion.div
                 key={index}
-                className={`flex flex-col lg:flex-row items-center gap-6 md:gap-8 lg:gap-12 ${isLeft ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
-                initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ delay: index * 0.05, duration: 0.5 }}
+                className="group"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08, duration: 0.5 }}
               >
-                {/* 3D Card */}
-                <motion.div
-                  className="w-full lg:w-1/2"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.div
-                    className="relative"
-                    style={{
-                      perspective: '1000px',
-                      WebkitPerspective: '1000px',
-                    } as React.CSSProperties}
+                <div className="falcon-card rounded-lg p-8 h-full relative overflow-hidden">
+                  {/* 背景編號 */}
+                  <span
+                    className="absolute -right-2 -top-6 text-[6rem] font-bold text-[#2D3B40]/50 leading-none select-none transition-colors group-hover:text-[#344349]/50"
+                    style={{ fontFamily: 'var(--font-display)' }}
                   >
-                    <div
-                      className="relative bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl md:rounded-3xl p-6 md:p-8 lg:p-10 border border-slate-700 overflow-hidden"
-                    >
-                      {/* Gradient overlay */}
-                      <motion.div
-                        className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0`}
-                        whileHover={{ opacity: 0.1 }}
-                        transition={{ duration: 0.3 }}
-                      />
+                    {service.number}
+                  </span>
 
-                      {/* Floating icon */}
-                      <motion.div
-                        className={`w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-gradient-to-br ${service.gradient} rounded-2xl md:rounded-3xl flex items-center justify-center mb-4 md:mb-6 lg:mb-8 shadow-2xl relative`}
-                        animate={{
-                          y: [0, -6, 0],
-                          rotateZ: [0, 3, 0, -3, 0]
-                        }}
-                        transition={{
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      >
-                        <Icon className="text-white w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12" />
-
-                        {/* Icon glow effect - hidden on mobile for performance */}
-                        <motion.div
-                          className={`absolute inset-0 bg-gradient-to-br ${service.gradient} rounded-2xl md:rounded-3xl blur-xl hidden md:block`}
-                          animate={{
-                            scale: [1, 1.2, 1],
-                            opacity: [0.5, 0.8, 0.5]
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity
-                          }}
-                        />
-                      </motion.div>
-
-                      <div className="relative">
-                        <h3 className="text-xl md:text-2xl lg:text-3xl mb-1 md:mb-2 text-white">{service.title}</h3>
-                        <p className={`text-xs md:text-sm mb-2 md:mb-4 text-transparent bg-clip-text bg-gradient-to-r ${service.gradient}`}>
-                          {service.subtitle}
-                        </p>
-                        <p className="text-slate-300 text-sm md:text-base lg:text-lg">{service.description}</p>
-                      </div>
-
-                      {/* Decorative corner */}
-                      <div className={`absolute bottom-0 right-0 w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 bg-gradient-to-tl ${service.gradient} opacity-5 rounded-tl-full`} />
+                  {/* 內容 */}
+                  <div className="relative z-10">
+                    {/* Icon */}
+                    <div className="w-12 h-12 bg-[#2D3B40] border border-[#344349] rounded-lg flex items-center justify-center mb-5 group-hover:bg-[#5F808B] group-hover:border-[#6D8F96] transition-all duration-300">
+                      <Icon className="text-[#A8B6BC] group-hover:text-[#1E2A2E] transition-colors" size={22} />
                     </div>
 
-                    {/* 3D shadow - hidden on mobile */}
-                    <motion.div
-                      className={`absolute inset-0 bg-gradient-to-br ${service.gradient} rounded-2xl md:rounded-3xl blur-2xl -z-10 opacity-0 hidden md:block`}
-                      whileHover={{ opacity: 0.3, scale: 1.05 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </motion.div>
-                </motion.div>
+                    <h3 className="text-xl text-[#E0E5E8] mb-1 group-hover:text-[#A8B6BC] transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
+                      {service.title}
+                    </h3>
+                    <p className="text-xs text-[#5F808B]/70 mb-3 tracking-wide">
+                      {service.subtitle}
+                    </p>
+                    <p className="text-[#6D8F96] text-sm mb-5">{service.description}</p>
 
-                {/* Features List */}
-                <motion.div
-                  className="w-full lg:w-1/2 mt-4 lg:mt-0"
-                  initial={{ opacity: 0, x: isLeft ? 30 : -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ delay: 0.1, duration: 0.5 }}
-                >
-                  <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-1 lg:space-y-4 lg:gap-0">
-                    {service.features.map((feature, i) => (
-                      <motion.div
-                        key={i}
-                        className="flex items-center gap-2 md:gap-3 lg:gap-4 group"
-                        initial={{ opacity: 0, x: isLeft ? 10 : -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.03 }}
-                        whileHover={{ x: isLeft ? 5 : -5 }}
-                      >
-                        <motion.div
-                          className={`w-2 h-2 md:w-3 md:h-3 rounded-full bg-gradient-to-r ${service.gradient} flex-shrink-0`}
-                          whileHover={{ scale: 1.5 }}
-                        />
-                        <span className="text-sm md:text-base lg:text-lg text-slate-200 group-hover:text-white transition-colors">
+                    {/* Features */}
+                    <ul className="space-y-2">
+                      {service.features.map((feature, i) => (
+                        <li
+                          key={i}
+                          className="flex items-center gap-2 text-sm text-[#6D8F96]"
+                        >
+                          <span className="w-1 h-1 rounded-full bg-[#5F808B]/50 group-hover:bg-[#5F808B] transition-colors" />
                           {feature}
-                        </span>
-                      </motion.div>
-                    ))}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </motion.div>
+
+                  {/* 底部裝飾線 */}
+                  <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-[#5F808B] to-[#6D8F96] transition-all duration-500" />
+                </div>
               </motion.div>
             );
           })}
