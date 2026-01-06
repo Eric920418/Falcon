@@ -268,26 +268,6 @@ const projects: Project[] = [
     category: "內容平台",
   },
   {
-    id: 13,
-    title: "接案媒合平台",
-    description:
-      "專業的接案與發案媒合空間，讓個人與企業可以高效發布與管理案件，並透過演算法推薦與即時通知強化配對效率。",
-    tech: ["Nuxt.js", "PostgreSQL", "GraphQL", "Swift", "Kotlin", "Redis"],
-    features: [
-      "案件發布與瀏覽",
-      "雙方配對與聊天室",
-      "App 用戶管理",
-      "精準推薦演算法",
-    ],
-    highlights: [
-      "Web + iOS + Android 跨端整合",
-      "Redis 快取與任務佇列",
-      "原生 App 開發",
-    ],
-    image: "/接案媒合平台網頁首頁.png",
-    category: "App 開發",
-  },
-  {
     id: 14,
     title: "餐飲 POS 機整合系統",
     description:
