@@ -411,3 +411,51 @@ html {
   outline: 2px solid var(--falcon-steel);
   outline-offset: 2px;
 }
+
+/* ========================================
+   移动端性能优化
+   ======================================== */
+
+/* 轻量级弹跳动画 - 替代 Framer Motion 无限动画 */
+@keyframes bounce-gentle {
+  0%, 100% {
+    transform: translateY(0) translateX(-50%);
+  }
+  50% {
+    transform: translateY(8px) translateX(-50%);
+  }
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 2s ease-in-out infinite;
+}
+
+/* 减少动画支持 - 提升无障碍访问和移动端性能 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animate-bounce-gentle {
+    animation: none;
+  }
+}
+
+/* 移动端禁用 hover 效果中的 transform（避免卡顿） */
+@media (hover: none) and (pointer: coarse) {
+  .falcon-card:hover {
+    transform: none;
+  }
+
+  .falcon-btn-primary:hover {
+    transform: none;
+  }
+
+  .falcon-btn-primary::before {
+    display: none;
+  }
+}

@@ -30,9 +30,9 @@ export function Hero() {
       {/* 斜線紋理 */}
       <div className="absolute inset-0 diagonal-lines" />
 
-      {/* 鋼藍灰光暈 */}
-      <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-[#5F808B]/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-1/3 left-1/5 w-[400px] h-[400px] bg-[#6D8F96]/8 rounded-full blur-[100px]" />
+      {/* 鋼藍灰光暈 - 简化 blur 值以提升移动端性能 */}
+      <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-[#5F808B]/15 rounded-full blur-[40px] md:blur-[60px]" />
+      <div className="absolute bottom-1/3 left-1/5 w-[400px] h-[400px] bg-[#6D8F96]/12 rounded-full blur-[30px] md:blur-[50px]" />
 
       {/* 遮罩 */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#1E2A2E]/50 via-[#1E2A2E]/30 to-[#1E2A2E]/70" />
@@ -162,15 +162,12 @@ export function Hero() {
         </div>
       </motion.div>
 
-      {/* 捲動提示 */}
+      {/* 捲動提示 - 移除无限动画，改用 CSS 动画节省性能 */}
       <motion.button
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[#5F808B] hover:text-[#A8B6BC] transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[#5F808B] hover:text-[#A8B6BC] transition-colors animate-bounce-gentle"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 8, 0] }}
-        transition={{
-          opacity: { delay: 1.5, duration: 0.5 },
-          y: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-        }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 0.5 }}
         onClick={scrollToNext}
       >
         <ChevronDown size={32} />

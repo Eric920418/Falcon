@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
@@ -8,13 +8,24 @@ import Image from 'next/image'
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      lastScrollY.current = window.scrollY;
+
+      if (!ticking.current) {
+        // 使用 requestAnimationFrame 节流，限制在 ~60fps
+        requestAnimationFrame(() => {
+          setIsScrolled(lastScrollY.current > 50);
+          ticking.current = false;
+        });
+        ticking.current = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -39,9 +50,9 @@ export function Navigation() {
 
   return (
     <motion.nav
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${
         isScrolled
-          ? 'bg-[#1E2A2E]/95 backdrop-blur-md border-b border-[#344349]/50'
+          ? 'bg-[#1E2A2E] border-b border-[#344349]/50'
           : 'bg-transparent'
       }`}
       initial={{ y: -100 }}
@@ -114,7 +125,7 @@ export function Navigation() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="lg:hidden fixed inset-0 top-[72px] bg-[#1E2A2E]/98 backdrop-blur-lg"
+            className="lg:hidden fixed inset-0 top-[72px] bg-[#1E2A2E]"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
