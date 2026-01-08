@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'motion/react'
 import { ChevronDown, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 
@@ -30,74 +29,44 @@ export function Hero() {
       {/* 斜線紋理 */}
       <div className="absolute inset-0 diagonal-lines" />
 
-      {/* 鋼藍灰光暈 - 简化 blur 值以提升移动端性能 */}
-      <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-[#5F808B]/15 rounded-full blur-[40px] md:blur-[60px]" />
-      <div className="absolute bottom-1/3 left-1/5 w-[400px] h-[400px] bg-[#6D8F96]/12 rounded-full blur-[30px] md:blur-[50px]" />
+      {/* 鋼藍灰光暈 - 移动端隐藏以提升性能 */}
+      <div className="hidden md:block absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-[#5F808B]/15 rounded-full blur-[60px]" />
+      <div className="hidden md:block absolute bottom-1/3 left-1/5 w-[400px] h-[400px] bg-[#6D8F96]/12 rounded-full blur-[50px]" />
 
       {/* 遮罩 */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#1E2A2E]/50 via-[#1E2A2E]/30 to-[#1E2A2E]/70" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
-        {/* 上方裝飾線 */}
-        <motion.div
-          className="flex items-center gap-4 mb-8"
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-        >
+        {/* 上方裝飾線 - CSS 动画 */}
+        <div className="flex items-center gap-4 mb-8 animate-fade-in-left">
           <div className="brand-line" />
           <span className="text-[#6D8F96] text-sm tracking-[0.2em] uppercase font-medium">
             Digital Marketing Agency
           </span>
-        </motion.div>
+        </div>
 
-        {/* 主標題 - 不對稱排版 */}
+        {/* 主標題 */}
         <div className="mb-8">
-          <motion.h1
-            className="text-5xl md:text-7xl lg:text-8xl text-[#E0E5E8] leading-[1.1] tracking-tight"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.7 }}
-          >
+          <h1 className="text-5xl md:text-7xl lg:text-8xl text-[#E0E5E8] leading-[1.1] tracking-tight animate-fade-in-up animation-delay-100">
             數位轉型的
-          </motion.h1>
-          <motion.h1
-            className="text-5xl md:text-7xl lg:text-8xl leading-[1.1] tracking-tight mt-2"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35, duration: 0.7 }}
-          >
+          </h1>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl leading-[1.1] tracking-tight mt-2 animate-fade-in-up animation-delay-200">
             <span className="text-falcon-gradient">領航者</span>
-          </motion.h1>
+          </h1>
         </div>
 
         {/* 副標題 */}
-        <motion.p
-          className="text-lg md:text-xl text-[#A8B6BC] mb-4 max-w-xl leading-relaxed"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.6 }}
-        >
+        <p className="text-lg md:text-xl text-[#A8B6BC] mb-4 max-w-xl leading-relaxed animate-fade-in-up animation-delay-300">
           整合行銷 · 品牌形象 · 數位內容
-        </motion.p>
+        </p>
 
-        <motion.p
-          className="text-base text-[#6D8F96] mb-12 max-w-lg leading-relaxed"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.65, duration: 0.6 }}
-        >
+        <p className="text-base text-[#6D8F96] mb-12 max-w-lg leading-relaxed animate-fade-in animation-delay-400">
           從網站開發到AI應用，從SEO優化到社群經營，
           我們提供全方位的數位解決方案
-        </motion.p>
+        </p>
 
         {/* CTA 按鈕 */}
-        <motion.div
-          className="flex flex-col sm:flex-row gap-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-        >
+        <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up animation-delay-500">
           <button
             className="falcon-btn-primary inline-flex items-center gap-2 group"
             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
@@ -111,15 +80,10 @@ export function Hero() {
           >
             探索作品
           </button>
-        </motion.div>
+        </div>
 
-        {/* 信任徽章 - 簡化設計 */}
-        <motion.div
-          className="flex flex-wrap gap-6 mt-16 pt-8 border-t border-[#344349]"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.6 }}
-        >
+        {/* 信任徽章 */}
+        <div className="flex flex-wrap gap-6 mt-16 pt-8 border-t border-[#344349] animate-fade-in-up animation-delay-600">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded bg-[#2D3B40] border border-[#344349] flex items-center justify-center">
               <span className="text-[#A8B6BC] text-lg">∞</span>
@@ -147,31 +111,23 @@ export function Hero() {
               <p className="text-[#5F808B] text-xs">嚴格把關</p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
-      {/* 右側裝飾數字 */}
-      <motion.div
-        className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:block"
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-      >
+      {/* 右側裝飾數字 - 仅桌面显示 */}
+      <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:block animate-fade-in-right animation-delay-700">
         <div className="text-[12rem] font-bold text-[#2D3B40]/60 leading-none select-none" style={{ fontFamily: 'var(--font-display)' }}>
           隼
         </div>
-      </motion.div>
+      </div>
 
-      {/* 捲動提示 - 移除无限动画，改用 CSS 动画节省性能 */}
-      <motion.button
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[#5F808B] hover:text-[#A8B6BC] transition-colors animate-bounce-gentle"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.5 }}
+      {/* 捲動提示 */}
+      <button
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[#5F808B] hover:text-[#A8B6BC] transition-colors animate-bounce-gentle animation-delay-800"
         onClick={scrollToNext}
       >
         <ChevronDown size={32} />
-      </motion.button>
+      </button>
     </section>
   );
 }

@@ -224,6 +224,15 @@ Portfolio 組件展示公司的專案作品，包含：
    - 移除手機版不必要的動畫效果（背景粒子、光暈）以提升效能
    - 添加 `overflow-hidden` 防止動畫溢出
 
+7. **移動端性能優化（2025/01）**
+   - 移除 `backdrop-blur-md` 和 `backdrop-blur-lg`（GPU 密集型操作）
+   - 為 scroll 事件添加 `requestAnimationFrame` 節流
+   - 簡化 Hero 的 blur 效果（`blur-[120px]` → `blur-[60px]`，移動端隱藏）
+   - **Hero 完全移除 Framer Motion**，改用純 CSS 動畫（減少 JS 開銷）
+   - 添加 `prefers-reduced-motion` 媒體查詢支持
+   - 移動端禁用 hover transform 效果（`@media (hover: none)`）
+   - 新增 CSS 動畫類：`animate-fade-in-up`、`animate-fade-in-left` 等
+
 ### 受影響組件
 
 - `TechServices.tsx`
