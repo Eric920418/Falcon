@@ -331,23 +331,6 @@ export function Portfolio() {
                     {project.description}
                   </p>
 
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {project.tech.slice(0, 4).map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 py-0.5 bg-[#2D3B40]/50 border border-[#344349]/50 text-xs text-[#A8B6BC]"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                    {project.tech.length > 4 && (
-                      <span className="px-2 py-0.5 bg-[#2D3B40]/50 border border-[#344349]/50 text-xs text-[#6D8F96]">
-                        +{project.tech.length - 4}
-                      </span>
-                    )}
-                  </div>
-
                   {/* Expandable Details */}
                   {expandedProject === project.id && (
                     <motion.div
