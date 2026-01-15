@@ -176,17 +176,6 @@ const projects: Project[] = [
     category: "AI 應用",
   },
   {
-    id: 16,
-    title: "穿搭預約平台",
-    description:
-      "使用者與專業穿搭師進行穿搭諮詢的預約服務平台，可瀏覽穿搭師個人介紹、查看可預約時段並進行線上預約。",
-    tech: ["JavaScript", "HTML", "CSS", "Google OAuth"],
-    features: ["Google 帳號快速登入", "穿搭師個人頁面", "線上預約系統", "管理端後台"],
-    highlights: ["Google OAuth 整合", "UI 設計風格簡潔清新", "模組化開發架構"],
-    image: "/傳搭.png",
-    category: "預約系統",
-  },
-  {
     id: 17,
     title: "AI 學習程式設計研究專案",
     description:
@@ -206,6 +195,28 @@ const projects: Project[] = [
     features: ["AI 智能媒合系統", "案件發布與瀏覽", "人才履歷展示", "需求追蹤管理", "邀請獎勵機制"],
     highlights: ["CKEditor 5 富文本編輯器整合", "NextAuth + Apollo Client 認證架構", "14+ 複合索引與 N+1 查詢優化"],
     image: "/CosmosWork.png",
+    category: "其他",
+  },
+  {
+    id: 19,
+    title: "展覽管理系統",
+    description:
+      "專業的展覽作品管理與預約系統，涵蓋展覽管理、團隊協作、作品管理、前台模板編輯器、任務看板、預約叫號等完整功能。採用 Next.js 16 全端架構，支援 52 個資料表與 Craft.js 視覺化編輯器。",
+    tech: ["Next.js 16", "React 19", "TypeScript", "Prisma ORM", "PostgreSQL", "Redis", "Socket.io", "MinIO"],
+    features: ["展覽與作品管理", "Craft.js 視覺化模板編輯器", "Trello-like 任務看板", "即時預約叫號系統 (SSE)", "數據匯出 (CSV/JSON/Excel)"],
+    highlights: ["52 個資料表完整架構", "4 種預設模板與拖放編輯", "Redis Pub/Sub 即時通訊"],
+    image: "/展覽管理系統.png",
+    category: "其他",
+  },
+  {
+    id: 20,
+    title: "中醫診所 LINE 預約系統",
+    description:
+      "整合 LINE LIFF 的中醫診所預約系統，提供病患線上預約與診所後台管理功能。支援時段分鐘數管理、黑名單自動判定、併發預約控制，並使用 Supabase Realtime 實現即時更新。",
+    tech: ["Next.js 16", "React 19", "TypeScript", "Supabase", "LINE LIFF v2", "Prisma ORM", "Tailwind CSS"],
+    features: ["LINE LIFF 病患預約", "班表與時段管理", "黑名單自動管理", "後台 Dashboard", "即時時段餘量更新"],
+    highlights: ["Supabase Realtime 即時同步", "Row-Level Lock 併發控制", "130+ E2E 測試案例"],
+    image: "/欣百漢.png",
     category: "其他",
   },
 ];
