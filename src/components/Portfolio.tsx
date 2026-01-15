@@ -13,6 +13,7 @@ interface Project {
   features: string[]
   highlights: string[]
   image?: string
+  imageContain?: boolean
   url?: string
   category: string
 }
@@ -217,6 +218,7 @@ const projects: Project[] = [
     features: ["LINE LIFF 病患預約", "班表與時段管理", "黑名單自動管理", "後台 Dashboard", "即時時段餘量更新"],
     highlights: ["Supabase Realtime 即時同步", "Row-Level Lock 併發控制", "130+ E2E 測試案例"],
     image: "/欣百漢.png",
+    imageContain: true,
     category: "其他",
   },
 ];
@@ -302,7 +304,7 @@ export function Portfolio() {
                       fill
                       loading="lazy"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className={`${project.imageContain ? 'object-contain p-4' : 'object-cover'} group-hover:scale-105 transition-transform duration-500`}
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
