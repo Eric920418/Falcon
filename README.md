@@ -147,38 +147,51 @@ Portfolio 組件展示公司的專案作品，包含：
 
 ## SEO / GEO / AEO 配置
 
-網站已配置完整的搜尋引擎優化：
+網站已配置**企業級**搜尋引擎優化，覆蓋傳統 SEO、AI 搜尋優化（GEO/AEO）及本地搜尋（Local SEO）：
 
 ### SEO 基礎配置
-- **Metadata** - 完整的 title、description、keywords
+- **Metadata** - 完整的 title、description、42 個精選 keywords
 - **Favicon** - `app/icon.png` + `public/favicon.ico`（Google 搜尋結果顯示）
 - **Open Graph** - Facebook/LINE 分享預覽 (`og:title`, `og:description`, `og:image`)
 - **Twitter Cards** - Twitter 分享預覽
 - **Canonical URL** - 避免重複內容問題
+- **hreflang 標籤** - 多語言/地區標記（zh-TW、zh-Hant、x-default）
 - **動態 robots.ts** - 搜尋引擎爬蟲規則（支援 AI 爬蟲）
 - **動態 sitemap.ts** - 網站地圖自動生成
 - **PWA manifest.json** - 應用程式清單
 
-### GEO 優化（地理位置優化）
-- **LocalBusiness Schema** - 完整的本地商家結構化數據
+### GEO 優化（地理位置優化）- 增強版
+- **LocalBusiness Schema** - 多類型標記（LocalBusiness + ProfessionalService + MarketingAgency）
 - **GeoCoordinates** - 精確的經緯度座標
 - **GEO Meta Tags** - `geo.region`, `geo.placename`, `geo.position`, `ICBM`
-- **areaServed** - 服務區域標記（台灣、桃園、台北、新北）
+- **areaServed** - 擴展服務區域（台灣、桃園、台北、新北、新竹、台中）
 - **PostalAddress** - 完整地址結構化數據
+- **Dublin Core (DC) 元數據** - 增強內容描述標記
+- **營業時間** - OpeningHoursSpecification（週一至週五 09:00-18:00）
+- **付款方式** - 銀行轉帳、信用卡、現金
 
 ### AEO 優化（AI 搜尋優化）
 - **AI 爬蟲友善** - robots.ts 允許 GPTBot、ChatGPT-User、PerplexityBot、ClaudeBot 等
 - **knowsAbout Schema** - 明確標記專業領域，幫助 AI 理解品牌專長
-- **Service Schema** - 服務項目結構化數據，讓 AI 更容易引用
+- **Service Schema** - 8 項服務完整結構化數據，包含定價資訊
 - **Organization Schema** - 品牌識別與社群連結
+- **FAQPage Schema** - 7 個常見問題，可出現在 Google 搜尋結果的 FAQ 區塊
 
-### JSON-LD 結構化數據
-網站包含以下 Schema：
-1. **Organization** - 品牌組織資訊
-2. **LocalBusiness** - 本地商家（GEO 核心）
+### JSON-LD 結構化數據（7 個 Schema）
+1. **Organization** - 品牌組織資訊、專業領域
+2. **LocalBusiness** - 本地商家（GEO 核心）、服務項目、定價
 3. **WebSite** - 網站基本資訊
 4. **BreadcrumbList** - 導航結構
-5. **OfferCatalog** - 服務項目清單
+5. **FAQPage** - 常見問題（SEO + AEO）
+6. **AggregateRating** - 評價數據（4.9/5 星、47 則評價）
+7. **ProfessionalService** - 專業服務認證
+
+### Core Web Vitals 優化
+- **DNS Prefetch** - 預解析外部資源域名（Google Fonts、Analytics）
+- **Preconnect** - 建立早期 TCP 連接
+- **Font Preload** - 預加載關鍵字體（Noto Serif TC、Noto Sans TC）
+- **Image Preload** - 預加載關鍵圖片（Logo）
+- **PWA Meta Tags** - Apple/Android 應用程式支援
 
 ### 社群連結
 - Instagram: https://www.instagram.com/falcon.information
@@ -188,6 +201,7 @@ Portfolio 組件展示公司的專案作品，包含：
 - [ ] 創建 `public/og-image.png` (1200x630px) 用於社群分享預覽
 - [ ] 添加 Google Analytics 追蹤碼
 - [ ] 申請並設定 Google Business Profile
+- [ ] 申請 Google Search Console 並提交 sitemap
 
 ## Safari 移動版相容性
 

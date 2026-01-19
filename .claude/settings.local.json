@@ -6,7 +6,8 @@
       "Bash(pnpm add:*)",
       "Bash(cp:*)",
       "Bash(grep:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(pnpm build:*)"
     ]
   }
 }

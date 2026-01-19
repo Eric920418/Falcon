@@ -157,9 +157,7 @@ export function Contact() {
                 營業時間
               </h4>
               <div className="space-y-2 text-stone-400">
-                <p>週一至週五：09:00 - 18:00</p>
-                <p>週六：10:00 - 17:00</p>
-                <p className="text-stone-600">週日及國定假日公休</p>
+                <p>24小時營業，全年無休</p>
               </div>
             </div>
           </motion.div>
