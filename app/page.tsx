@@ -48,7 +48,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="text-center md:text-left">
               <p className="text-stone-400 text-sm">
-                &copy; 2025 隼訊數位行銷
+                &copy; 2026 隼訊數位行銷
               </p>
               <p className="text-stone-600 text-xs mt-1">
                 讓每個品牌都能被聽見
