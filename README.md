@@ -118,14 +118,15 @@ pnpm start
 
 Portfolio 組件展示公司的專案作品，包含：
 
-- **電商平台** - 翊珍香電商、球鞋電商、燒烤訂餐服務
+- **電商平台** - 翊珍香電商、財神賣鞋球鞋電商（https://www.xn--cjzl80byf571b.tw/）、燒烤訂餐服務
 - **企業官網** - 佑羲人力、R.OC 室內設計
 - **形象網站** - 書籍形象網站
+- **遊戲官網** - 破浪三國（https://www.kingdoms.blog/）
 - **App 開發** - 接案媒合平台（Web + iOS + Android）
 - **AI 應用** - 現場 AI 智能客服系統
-- **學術系統** - 會議論文投稿審查系統
+- **學術系統** - 會議論文投稿審查系統、國際學術研討會（https://icte2025.ntue.edu.tw/）
 - **POS 系統** - 餐飲 POS 機整合系統
-- **自由接案平台** - CosmosWork（AI 智能媒合、人才履歷展示、需求追蹤）
+- **自由接案平台** - CosmosWork（https://falcontaskbridge.com/）（AI 智能媒合、人才履歷展示、需求追蹤）
 - **展覽管理系統** - 完整的展覽作品管理與預約系統（52 資料表、Craft.js 編輯器、任務看板、即時叫號）
 - **中醫診所 LINE 預約系統** - LINE LIFF 整合預約系統（Supabase Realtime、併發控制、130+ E2E 測試）
 

@@ -40,6 +40,7 @@ const projects: Project[] = [
     features: ["多國尺碼對照", "5 級會員等級", "藍新金流串接", "客服聊天系統", "邀請碼推薦系統"],
     highlights: ["Line 登入串接", "第三方金流與物流整合", "GraphQL API 架構"],
     image: "/財神賣鞋.png",
+    url: "https://www.xn--cjzl80byf571b.tw/",
     category: "電商平台",
   },
   {
@@ -96,6 +97,7 @@ const projects: Project[] = [
     features: ["評價系統", "論壇系統", "公告系統", "遊戲指南", "會員系統", "管理後台"],
     highlights: ["AI 自動生成擬人化評價", "完整的內容審核工作流", "動態首頁內容管理"],
     image: "/遊戲.png",
+    url: "https://www.kingdoms.blog/",
     category: "遊戲官網",
   },
   {
@@ -118,6 +120,7 @@ const projects: Project[] = [
     features: ["後台系統", "CKEditor 編輯器", "SSR 支援"],
     highlights: ["GraphQL 資料介接", "後台管理", "複雜交易邏輯與索引優化"],
     image: "/ictu.png",
+    url: "https://icte2025.ntue.edu.tw/",
     category: "學術系統",
   },
   {
@@ -196,6 +199,7 @@ const projects: Project[] = [
     features: ["AI 智能媒合系統", "案件發布與瀏覽", "人才履歷展示", "需求追蹤管理", "邀請獎勵機制"],
     highlights: ["CKEditor 5 富文本編輯器整合", "NextAuth + Apollo Client 認證架構", "14+ 複合索引與 N+1 查詢優化"],
     image: "/CosmosWork.png",
+    url: "https://falcontaskbridge.com/",
     category: "其他",
   },
   {
