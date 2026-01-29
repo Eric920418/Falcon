@@ -52,6 +52,7 @@ const projects: Project[] = [
     features: ["動態內容管理系統", "人力需求管理系統", "三層 RBAC 權限系統", "合約電子簽署系統"],
     highlights: ["GraphQL + Prisma 彈性架構", "前後端完全類型安全", "14+ 複合索引優化"],
     image: "/人力.png",
+    url: "https://yoshi3166.com",
     category: "企業官網",
   },
   {

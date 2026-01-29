@@ -119,7 +119,7 @@ pnpm start
 Portfolio 組件展示公司的專案作品，包含：
 
 - **電商平台** - 翊珍香電商、財神賣鞋球鞋電商（https://www.xn--cjzl80byf571b.tw/）、燒烤訂餐服務
-- **企業官網** - 佑羲人力、R.OC 室內設計
+- **企業官網** - 佑羲人力（https://yoshi3166.com）、R.OC 室內設計
 - **形象網站** - 書籍形象網站
 - **遊戲官網** - 破浪三國（https://www.kingdoms.blog/）
 - **App 開發** - 接案媒合平台（Web + iOS + Android）
