@@ -197,6 +197,7 @@ Portfolio 組件展示公司的專案作品，包含：
 ### 社群連結
 - Instagram: https://www.instagram.com/falcon.information
 - Threads: https://www.threads.net/@falcon.information
+- LINE 官方帳號: https://lin.ee/7IjIYw2
 
 ### 待完成
 - [ ] 創建 `public/og-image.png` (1200x630px) 用於社群分享預覽

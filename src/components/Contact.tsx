@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react'
 import { useRef, useState } from 'react'
-import { Mail, Phone, MapPin, Send } from 'lucide-react'
+import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react'
 
 export function Contact() {
   const ref = useRef(null);
@@ -70,6 +70,12 @@ export function Contact() {
       title: "電話",
       content: "+886 0958801559",
       link: "tel:+886095880155",
+    },
+    {
+      icon: MessageCircle,
+      title: "LINE 官方帳號",
+      content: "加入好友諮詢",
+      link: "https://lin.ee/7IjIYw2",
     },
     {
       icon: MapPin,

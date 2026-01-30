@@ -71,6 +71,19 @@ export default function HomePage() {
               >
                 Threads
               </a>
+              <a
+                href="https://lin.ee/7IjIYw2"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-stone-500 hover:text-amber-500 transition-colors text-sm"
+              >
+                <img
+                  src="https://qr-official.line.me/gs/M_154wjvkx_GW.png?oat_content=qr"
+                  alt="LINE QR Code"
+                  className="w-10 h-10 rounded"
+                />
+                <span>LINE</span>
+              </a>
             </div>
           </div>
         </div>
