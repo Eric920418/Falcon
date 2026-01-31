@@ -226,6 +226,17 @@ const projects: Project[] = [
     imageContain: true,
     category: "其他",
   },
+  {
+    id: 21,
+    title: "茶客棧飲料店官網",
+    description:
+      "茶飲品牌官方網站，採用「東方墨韻 × 現代極簡」視覺風格，融合傳統茶文化美學與現代設計。含完整 CMS 後台管理系統，支援產品管理、門市據點、活動專區、加盟資訊等功能模組。",
+    tech: ["Next.js 15", "React 18", "TypeScript", "Prisma 7", "PostgreSQL", "NextAuth.js", "Cloudflare R2"],
+    features: ["品牌形象展示", "茶品菜單管理", "門市據點系統", "活動專區", "加盟資訊頁面", "CMS 後台管理"],
+    highlights: ["東方墨韻視覺設計（水墨紋理、印章效果）", "Cloudflare R2 圖片雲存儲", "可視化內容編輯器"],
+    image: "/茶客棧.png",
+    category: "形象網站",
+  },
 ];
 
 const categories = ['全部', '電商平台', '企業官網', '形象網站', 'App 開發', 'AI 應用', '學術系統', '其他']
