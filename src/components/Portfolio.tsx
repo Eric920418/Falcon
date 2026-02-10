@@ -44,18 +44,6 @@ const projects: Project[] = [
     category: "電商平台",
   },
   {
-    id: 3,
-    title: "佑羲人力",
-    description:
-      "結合企業形象網站與人力資源管理的平台，針對人力派遣公司設計，提供客戶線上瀏覽人才履歷、提交人力需求的完整體驗。",
-    tech: ["Next.js 15", "React 19", "TypeScript", "GraphQL", "Prisma", "PostgreSQL"],
-    features: ["動態內容管理系統", "人力需求管理系統", "三層 RBAC 權限系統", "合約電子簽署系統"],
-    highlights: ["GraphQL + Prisma 彈性架構", "前後端完全類型安全", "14+ 複合索引優化"],
-    image: "/人力.png",
-    url: "https://yoshi3166.com",
-    category: "企業官網",
-  },
-  {
     id: 4,
     title: "R.OC 室內設計形象網站",
     description:
@@ -236,6 +224,7 @@ const projects: Project[] = [
     highlights: ["東方墨韻視覺設計（水墨紋理、印章效果）", "Cloudflare R2 圖片雲存儲", "可視化內容編輯器"],
     image: "/茶客棧.png",
     category: "形象網站",
+    url: "https://ckh2013.com/",
   },
 ];
 
