@@ -215,6 +215,17 @@ const projects: Project[] = [
     category: "其他",
   },
   {
+    id: 22,
+    title: "企業 HR 管理系統",
+    description:
+      "基於 Next.js 16 的企業級人力資源管理與形象網站系統，涵蓋前台形象網站、員工工作平台、管理決策後台三層架構。支援四級 RBAC 權限控制（32 項細粒度權限）、可視化工作流程編輯器、動態 CMS 內容管理與活動日誌追蹤系統。",
+    tech: ["Next.js 16", "React 19", "TypeScript", "GraphQL Yoga", "Apollo Client", "Tailwind CSS v4", "NextAuth"],
+    features: ["四級 RBAC 權限管理", "可視化工作流程編輯器", "動態 CMS 內容管理", "行政事務簽核系統", "活動日誌追蹤"],
+    highlights: ["React Flow 拖拉式流程設計", "GraphQL DataLoader 解決 N+1", "CKEditor 5 富文本整合"],
+    url: "https://manpower2.vercel.app/faq",
+    category: "其他",
+  },
+  {
     id: 21,
     title: "茶客棧飲料店官網",
     description:
