@@ -222,6 +222,7 @@ const projects: Project[] = [
     tech: ["Next.js 16", "React 19", "TypeScript", "GraphQL Yoga", "Apollo Client", "Tailwind CSS v4", "NextAuth"],
     features: ["四級 RBAC 權限管理", "可視化工作流程編輯器", "動態 CMS 內容管理", "行政事務簽核系統", "活動日誌追蹤"],
     highlights: ["React Flow 拖拉式流程設計", "GraphQL DataLoader 解決 N+1", "CKEditor 5 富文本整合"],
+    image: "/展望國際人力.png",
     url: "https://manpower2.vercel.app",
     category: "其他",
   },
