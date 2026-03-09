@@ -6,6 +6,8 @@ import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react'
 
 export function Contact() {
   const ref = useRef(null);
+  const phoneNumber = '0958801559';
+  const phoneHref = 'tel:+886958801559';
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -68,8 +70,8 @@ export function Contact() {
     {
       icon: Phone,
       title: "電話",
-      content: "+886 0958801559",
-      link: "tel:+886095880155",
+      content: phoneNumber,
+      link: phoneHref,
     },
     {
       icon: MessageCircle,
