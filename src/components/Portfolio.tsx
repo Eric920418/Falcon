@@ -247,6 +247,18 @@ const projects: Project[] = [
     category: "企業官網",
   },
   {
+    id: 24,
+    title: "神經元 2026 畢業展官網",
+    description:
+      "元智大學 2026 畢業展覽「神經元」官方網站，以粒子放射視覺效果打造沉浸式體驗。涵蓋展覽資訊、參展作品瀏覽、意見回饋、預約系統與預約進度查詢等完整功能。",
+    tech: ["React 19", "Vite", "TypeScript", "Three.js", "React Three Fiber", "Framer Motion", "Tailwind CSS v4", "Express"],
+    features: ["3D 粒子視覺效果", "展覽資訊與作品瀏覽", "預約系統", "意見回饋系統", "Google GenAI 整合"],
+    highlights: ["Three.js 沉浸式首頁動畫", "d3-force 網路圖視覺化", "Lenis 平滑滾動體驗"],
+    image: "/神經元.png",
+    url: "https://neuron.bond/home",
+    category: "形象網站",
+  },
+  {
     id: 11,
     title: "展覽活動網站",
     description:
