@@ -404,7 +404,8 @@ const projects: Project[] = [
       "4 種預設模板與拖放編輯",
       "Redis Pub/Sub 即時通訊",
     ],
-    image: "/截圖 2026-04-01 中午12.05.04",
+    image: "/截圖 2026-04-01 中午12.05.04.png",
+    url: "https://gradexhibit.tech/artworks",
     category: "其他",
   },
   {
