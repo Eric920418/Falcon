@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import './globals.css'
 
 const siteConfig = {
@@ -103,20 +104,11 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: `${siteConfig.name} | 讓每個品牌都能被聽見`,
     description: siteConfig.description,
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: siteConfig.name,
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: `${siteConfig.name} | 讓每個品牌都能被聽見`,
     description: siteConfig.description,
-    images: ['/og-image.png'],
   },
   alternates: {
     canonical: siteConfig.url,
@@ -215,9 +207,9 @@ const localBusinessSchema = {
     height: 512,
   },
   image: [
-    `${siteConfig.url}/og-image.png`,
     `${siteConfig.url}/logo.png`,
   ],
+  telephone: '+886958801559',
   email: siteConfig.email,
   priceRange: '$$-$$$',
   currenciesAccepted: 'TWD',
@@ -277,6 +269,11 @@ const localBusinessSchema = {
     {
       '@type': 'AdministrativeArea',
       name: '台中市',
+      containedInPlace: { '@type': 'Country', name: '台灣' },
+    },
+    {
+      '@type': 'AdministrativeArea',
+      name: '基隆市',
       containedInPlace: { '@type': 'Country', name: '台灣' },
     },
   ],
@@ -472,6 +469,24 @@ const breadcrumbSchema = {
       name: '首頁',
       item: siteConfig.url,
     },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: '服務項目',
+      item: `${siteConfig.url}/#tech-services`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: '作品案例',
+      item: `${siteConfig.url}/#portfolio`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 4,
+      name: '聯絡我們',
+      item: `${siteConfig.url}/#contact`,
+    },
   ],
 }
 
@@ -639,6 +654,110 @@ const professionalServiceSchema = {
   ],
 }
 
+// WebPage + Speakable Schema（GEO/語音搜尋優化 — 標記 AI 可引用的重點內容）
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${siteConfig.url}/#webpage`,
+  name: `${siteConfig.name} | 整合行銷服務平台`,
+  url: siteConfig.url,
+  description: siteConfig.description,
+  inLanguage: 'zh-TW',
+  isPartOf: { '@id': `${siteConfig.url}/#website` },
+  about: { '@id': `${siteConfig.url}/#organization` },
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['#hero', '#about', '#marketing-services'],
+  },
+  mainEntity: { '@id': `${siteConfig.url}/#organization` },
+}
+
+// ItemList Schema（作品集 — 可觸發 Google 輪播式搜尋結果）
+const portfolioListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  '@id': `${siteConfig.url}/#portfolio-list`,
+  name: '隼訊數位行銷作品案例',
+  description: '精選客戶案例，涵蓋電商平台、企業官網、AI 應用、學術系統等多元專案',
+  numberOfItems: 23,
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      item: {
+        '@type': 'CreativeWork',
+        name: '翊珍香電商平台',
+        description: '手工麵線電商平台，完整購物車與金流系統',
+        creator: { '@id': `${siteConfig.url}/#organization` },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      item: {
+        '@type': 'CreativeWork',
+        name: 'R.OC 室內設計官網',
+        description: '東方美學室內設計工作室品牌網站',
+        creator: { '@id': `${siteConfig.url}/#organization` },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      item: {
+        '@type': 'CreativeWork',
+        name: '佑羲人力管理平台',
+        description: '人力資源招募與管理系統',
+        url: 'https://yoshi3166.com',
+        creator: { '@id': `${siteConfig.url}/#organization` },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 4,
+      item: {
+        '@type': 'CreativeWork',
+        name: '破浪三國遊戲官網',
+        description: '三國題材手遊官方網站',
+        url: 'https://www.kingdoms.blog/',
+        creator: { '@id': `${siteConfig.url}/#organization` },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 5,
+      item: {
+        '@type': 'CreativeWork',
+        name: 'CosmosWork 接案媒合平台',
+        description: 'AI 智能自由接案媒合平台，含人才履歷展示與需求追蹤',
+        url: 'https://falcontaskbridge.com/',
+        creator: { '@id': `${siteConfig.url}/#organization` },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 6,
+      item: {
+        '@type': 'CreativeWork',
+        name: 'ICTE 2025 國際學術研討會',
+        description: '國際學術研討會官方網站與論文投稿系統',
+        url: 'https://icte2025.ntue.edu.tw/',
+        creator: { '@id': `${siteConfig.url}/#organization` },
+      },
+    },
+    {
+      '@type': 'ListItem',
+      position: 7,
+      item: {
+        '@type': 'CreativeWork',
+        name: '茶客棧飲料店官網',
+        description: '茶飲品牌官網，東方墨韻視覺設計與 CMS 後台管理',
+        creator: { '@id': `${siteConfig.url}/#organization` },
+      },
+    },
+  ],
+}
+
 // 合併所有 Schema
 const jsonLdScripts = [
   organizationSchema,
@@ -648,6 +767,8 @@ const jsonLdScripts = [
   faqSchema,
   aggregateRatingSchema,
   professionalServiceSchema,
+  webPageSchema,
+  portfolioListSchema,
 ]
 
 export default function RootLayout({
@@ -682,6 +803,9 @@ export default function RootLayout({
         {/* 預加載關鍵圖片 - LCP 優化 */}
         <link rel="preload" href="/logo.png" as="image" type="image/png" />
 
+        {/* llms.txt - AI 搜尋引擎發現（GEO 標準） */}
+        <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt" />
+
         {/* 額外的 SEO meta tags */}
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
@@ -708,8 +832,35 @@ export default function RootLayout({
             dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
           />
         ))}
+        {/* Google Tag Manager */}
+        {process.env.NEXT_PUBLIC_GTM_ID && (
+          <Script
+            id="gtm-script"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID}');`,
+            }}
+          />
+        )}
       </head>
-      <body>{children}</body>
+      <body>
+        {/* GTM noscript fallback */}
+        {process.env.NEXT_PUBLIC_GTM_ID && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            />
+          </noscript>
+        )}
+        {children}
+      </body>
     </html>
   )
 }

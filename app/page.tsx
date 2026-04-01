@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, useScroll, useSpring } from 'motion/react'
+import Image from 'next/image'
 import { Hero } from '@/components/Hero'
 import { About } from '@/components/About'
 import { Portfolio } from '@/components/Portfolio'
@@ -77,10 +78,12 @@ export default function HomePage() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-stone-500 hover:text-amber-500 transition-colors text-sm"
               >
-                <img
+                <Image
                   src="https://qr-official.line.me/gs/M_154wjvkx_GW.png?oat_content=qr"
-                  alt="LINE QR Code"
-                  className="w-10 h-10 rounded"
+                  alt="隼訊數位行銷 LINE 官方帳號 QR Code"
+                  width={40}
+                  height={40}
+                  className="rounded"
                 />
                 <span>LINE</span>
               </a>

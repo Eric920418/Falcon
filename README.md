@@ -154,6 +154,7 @@ Portfolio 組件展示公司的專案作品，包含：
 ### SEO 基礎配置
 - **Metadata** - 完整的 title、description、42 個精選 keywords
 - **Favicon** - `app/icon.png` + `public/favicon.ico`（Google 搜尋結果顯示）
+- **動態 OG Image** - 使用 `app/opengraph-image.tsx` 自動生成 1200x630 社群分享圖（品牌風格）
 - **Open Graph** - Facebook/LINE 分享預覽 (`og:title`, `og:description`, `og:image`)
 - **Twitter Cards** - Twitter 分享預覽
 - **Canonical URL** - 避免重複內容問題
@@ -166,27 +167,40 @@ Portfolio 組件展示公司的專案作品，包含：
 - **LocalBusiness Schema** - 多類型標記（LocalBusiness + ProfessionalService + MarketingAgency）
 - **GeoCoordinates** - 精確的經緯度座標
 - **GEO Meta Tags** - `geo.region`, `geo.placename`, `geo.position`, `ICBM`
-- **areaServed** - 擴展服務區域（台灣、桃園、台北、新北、新竹、台中）
+- **areaServed** - 擴展服務區域（台灣、桃園、台北、新北、新竹、台中、基隆）
 - **PostalAddress** - 完整地址結構化數據
 - **Dublin Core (DC) 元數據** - 增強內容描述標記
 - **營業時間** - OpeningHoursSpecification（週一至週五 09:00-18:00）
 - **付款方式** - 銀行轉帳、信用卡、現金
 
 ### AEO 優化（AI 搜尋優化）
-- **AI 爬蟲友善** - robots.ts 允許 GPTBot、ChatGPT-User、PerplexityBot、ClaudeBot 等
+- **llms.txt** - AI 搜尋引擎發現檔（`public/llms.txt`），結構化描述公司資訊供 AI 爬蟲讀取
+- **Speakable Schema** - 標記 AI 可朗讀/引用的重點內容區塊（Hero、About、MarketingServices）
+- **AI 爬蟲友善** - robots.ts 允許 GPTBot、ChatGPT-User、PerplexityBot、ClaudeBot、Applebot-Extended 等
 - **knowsAbout Schema** - 明確標記專業領域，幫助 AI 理解品牌專長
 - **Service Schema** - 8 項服務完整結構化數據，包含定價資訊
 - **Organization Schema** - 品牌識別與社群連結
 - **FAQPage Schema** - 7 個常見問題，可出現在 Google 搜尋結果的 FAQ 區塊
 
-### JSON-LD 結構化數據（7 個 Schema）
+### JSON-LD 結構化數據（9 個 Schema）
 1. **Organization** - 品牌組織資訊、專業領域
-2. **LocalBusiness** - 本地商家（GEO 核心）、服務項目、定價
+2. **LocalBusiness** - 本地商家（GEO 核心）、服務項目、定價、電話
 3. **WebSite** - 網站基本資訊
-4. **BreadcrumbList** - 導航結構
+4. **BreadcrumbList** - 導航結構（首頁 → 服務 → 作品集 → 聯絡）
 5. **FAQPage** - 常見問題（SEO + AEO）
 6. **AggregateRating** - 評價數據（4.9/5 星、47 則評價）
 7. **ProfessionalService** - 專業服務認證
+8. **WebPage + Speakable** - AI 可引用內容標記（GEO 優化）
+9. **ItemList** - 作品集輪播式搜尋結果
+
+### 安全標頭（SEO 間接排名信號）
+- **HSTS** - 強制 HTTPS 連線
+- **CSP** - 內容安全策略（白名單：Google Fonts、GTM、GA、LINE QR）
+- **X-Frame-Options** - 防止 clickjacking
+- **X-Content-Type-Options** - 防止 MIME sniffing
+- **Referrer-Policy** - 跨域來源控制
+- **Permissions-Policy** - 瀏覽器功能權限限制
+- **圖片優化** - 自動 AVIF/WebP 格式轉換
 
 ### Core Web Vitals 優化
 - **DNS Prefetch** - 預解析外部資源域名（Google Fonts、Analytics）
@@ -200,11 +214,20 @@ Portfolio 組件展示公司的專案作品，包含：
 - Threads: https://www.threads.net/@falcon.information
 - LINE 官方帳號: https://lin.ee/7IjIYw2
 
+### Google Tag Manager (GTM)
+
+GTM 已整合至 `app/layout.tsx`，透過環境變數控制。部署時需設定：
+
+```env
+NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
+```
+
+未設定時 GTM 不會載入，不影響開發環境。
+
 ### 待完成
-- [ ] 創建 `public/og-image.png` (1200x630px) 用於社群分享預覽
-- [ ] 添加 Google Analytics 追蹤碼
-- [ ] 申請並設定 Google Business Profile
+- [ ] 申請並設定 Google Business Profile（本地 SEO 關鍵）
 - [ ] 申請 Google Search Console 並提交 sitemap
+- [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 
 ## Safari 移動版相容性
 

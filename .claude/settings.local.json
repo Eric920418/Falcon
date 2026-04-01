@@ -8,7 +8,8 @@
       "Bash(grep:*)",
       "Bash(wc:*)",
       "Bash(pnpm build:*)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(ls -la /Users/eric/Desktop/Falcon/public/*.png)"
     ]
   }
 }

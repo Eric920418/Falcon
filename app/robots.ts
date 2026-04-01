@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/_next/', '/static/'],
+        disallow: ['/api/', '/_next/'],
       },
       {
         userAgent: 'Googlebot',
@@ -41,6 +41,11 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: 'ClaudeBot',
+        allow: '/',
+      },
+      // Apple Intelligence / Siri
+      {
+        userAgent: 'Applebot-Extended',
         allow: '/',
       },
     ],
