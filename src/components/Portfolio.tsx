@@ -51,6 +51,38 @@ const projects: Project[] = [
     category: "AI 應用",
   },
   {
+    id: 25,
+    title: "TISCLLB 台灣臨床下肢生物力學國際學會",
+    description:
+      "台灣臨床下肢生物力學國際學會（TISCLLB）官方網站，2026 正式啟動。涵蓋學會介紹、倡導理念、活動訊息、藝廊展示、會員管理、組織委員與會員招募等完整功能，搭配全功能後台管理系統。",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Drizzle ORM",
+      "Neon Database",
+      "NextAuth",
+      "Vercel Blob",
+      "Tailwind CSS v4",
+    ],
+    features: [
+      "學會介紹與倡導理念",
+      "活動訊息管理",
+      "藝廊展示系統",
+      "會員與組織委員管理",
+      "會員招募系統",
+      "完整後台管理系統",
+    ],
+    highlights: [
+      "Drizzle ORM + Neon Serverless PostgreSQL",
+      "Vercel Blob 檔案上傳管理",
+      "NextAuth 認證與後台權限控制",
+    ],
+    image: "/TISCLLB.png",
+    url: "https://www.tiscllb.org.tw/",
+    category: "學術系統",
+  },
+  {
     id: 1,
     title: "翊珍香電商系統官網",
     description:
