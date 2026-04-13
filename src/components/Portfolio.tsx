@@ -51,6 +51,36 @@ const projects: Project[] = [
     category: "AI 應用",
   },
   {
+    id: 26,
+    title: "ROLL ON. 外商顧問企業官網",
+    description:
+      "協助外商進入台灣與亞洲市場的國際顧問公司官網，以深酒紅品牌色彩與大氣視覺風格呈現企業形象。涵蓋全球業務版圖、台灣地圖互動動畫、服務項目、作品案例、客戶展示與 YouTube 頻道整合，支援中英雙語切換。",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "GSAP + ScrollTrigger",
+      "Motion",
+      "next-intl",
+      "Tailwind CSS v4",
+    ],
+    features: [
+      "全球業務版圖數據展示",
+      "台灣地圖 ScrollTrigger 動畫",
+      "中英雙語 i18n",
+      "YouTube 頻道整合",
+      "聯絡表單",
+    ],
+    highlights: [
+      "GSAP ScrollTrigger 滾動驅動動畫",
+      "SVG 世界地圖與台灣地圖互動",
+      "計數動畫與排名視覺化",
+    ],
+    image: "/RollOn.png",
+    url: "https://www.rollgrp.com/",
+    category: "企業官網",
+  },
+  {
     id: 25,
     title: "TISCLLB 台灣臨床下肢生物力學國際學會",
     description:
