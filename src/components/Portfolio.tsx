@@ -353,23 +353,6 @@ const projects: Project[] = [
     category: "形象網站",
   },
   {
-    id: 12,
-    title: "幫棒生活網",
-    description:
-      "企業級內容服務平台，提供心理健康、生活知識與自我成長的文章與課程。由 Laravel monolith 架構重構為前後端分離架構。",
-    tech: ["Next.js", "PostgreSQL", "GraphQL", "Docker", "GitHub Actions"],
-    features: [
-      "前後端架構重構",
-      "資料庫遷移",
-      "GraphQL API 建構",
-      "容器化部署",
-      "CI/CD 整合",
-    ],
-    highlights: ["MySQL 轉 PostgreSQL", "SSR / ISR 機制", "DevOps 自動化"],
-    url: "https://www.bounbang.com/",
-    category: "內容平台",
-  },
-  {
     id: 14,
     title: "餐飲 POS 機整合系統",
     description:
