@@ -119,10 +119,10 @@ pnpm start
 Portfolio 組件展示公司的專案作品，包含：
 
 - **電商平台** - 翊珍香電商、財神賣鞋球鞋電商（https://www.xn--cjzl80byf571b.tw/）、燒烤訂餐服務
-- **企業官網** - 佑羲人力（https://yoshi3166.com）、R.OC 室內設計
+- **企業官網** - 佑羲人力（https://yoshi3166.com）、R collectives 室內設計、ROLL ON. 外商顧問官網（https://www.rollgrp.com/）
 - **形象網站** - 書籍形象網站
 - **遊戲官網** - 破浪三國（https://www.kingdoms.blog/）
-- **App 開發** - 接案媒合平台（Web + iOS + Android）
+- **App 開發** - 接案媒合平台（Web + iOS + Android）、GoGoCha 花蓮計程車雙模式 App（Kotlin + Jetpack Compose，已上架 Google Play）
 - **AI 應用** - 現場 AI 智能客服系統
 - **學術系統** - 會議論文投稿審查系統、國際學術研討會（https://icte2025.ntue.edu.tw/）
 - **POS 系統** - 餐飲 POS 機整合系統
@@ -304,6 +304,44 @@ GMAIL_APP_PASSWORD=你的應用程式密碼
 5. 選擇「郵件」和「其他」，輸入名稱（如 "Falcon 網站"）
 6. 點擊「產生」，複製 16 位密碼
 7. 將密碼貼到 `.env.local` 的 `GMAIL_APP_PASSWORD`
+
+## 個人履歷 PDF 產生器
+
+路由 `/resume` 是一個**隱藏的個人履歷 PDF 產生器**（不在主導覽、不進 sitemap、`robots: noindex/nofollow`）。開啟頁面後選擇語言（繁中 / 英文），按下載即可取得對應語言的 A4 單頁 PDF。
+
+### 使用方式
+
+1. `pnpm dev` 後開 http://localhost:3000/resume
+2. 選擇語言，點「下載」按鈕
+
+### 相關檔案
+
+- `app/resume/page.tsx` — 產生器 UI（客戶端元件）
+- `app/resume/layout.tsx` — 設定 noindex metadata
+- `src/components/resume/ResumeDocument.tsx` — `@react-pdf/renderer` 的 PDF 版面定義
+- `src/lib/resume-data.ts` — 履歷內容（中英雙語結構化資料）
+- `public/fonts/NotoSansTC-{Regular,Bold}.woff` — 繁中字型（來源：`@fontsource/noto-sans-tc` 的 `chinese-traditional` 子集，共 ~2.7MB）
+
+### 修改履歷內容
+
+改 `src/lib/resume-data.ts` 即可。每個欄位都是 `{ zh, en }` 物件，中英文內容各寫一版。新增工作經歷、專案、學歷都直接往 array 裡推。
+
+### 放個人照片
+
+把照片命名為 `resume-photo.jpg` 放到 `public/` 資料夾，然後把 `src/lib/resume-data.ts` 裡的 `photoPath` 從 `undefined` 改成 `'/resume-photo.jpg'`。建議正方形 512×512 以上。
+
+### 字型支援範圍
+
+- 繁體中文 ✅
+- 英文、數字、常見符號 ✅
+- 簡體中文 ❌（若需要請加裝 `@fontsource/noto-sans-sc` 並額外 `Font.register`）
+- 日文 / 韓文 ❌
+
+### 技術細節
+
+- `@react-pdf/renderer` 純前端產 PDF，不需要 serverless / Puppeteer runtime
+- 字型透過 `Font.register()` 從 `/fonts/*.woff` 載入；React-PDF 支援 TTF/WOFF/WOFF2
+- 錯誤會在頁面上完整顯示（包含 stack trace），符合專案 CLAUDE.md 規範
 
 ## 部署
 

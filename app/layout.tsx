@@ -588,7 +588,7 @@ const aggregateRatingSchema = {
       '@type': 'Review',
       author: {
         '@type': 'Person',
-        name: 'R.OC 室內設計',
+        name: 'R collectives 室內設計',
       },
       datePublished: '2024-09-20',
       reviewRating: {
@@ -696,7 +696,7 @@ const portfolioListSchema = {
       position: 2,
       item: {
         '@type': 'CreativeWork',
-        name: 'R.OC 室內設計官網',
+        name: 'R collectives 室內設計官網',
         description: '東方美學室內設計工作室品牌網站',
         creator: { '@id': `${siteConfig.url}/#organization` },
       },
@@ -777,7 +777,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="zh-TW">
+    <html lang="zh-TW" suppressHydrationWarning>
       <head>
         {/* DNS Prefetch - 加速外部資源載入 */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />

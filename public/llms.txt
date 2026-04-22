@@ -46,7 +46,7 @@
 ## 代表案例
 
 - 翊珍香電商 — 手工麵線電商平台
-- R.OC 室內設計 — 東方美學設計工作室官網
+- R collectives 室內設計 — 東方美學設計工作室官網
 - 佑羲人力 — 人力資源管理平台 (yoshi3166.com)
 - 破浪三國 — 三國題材遊戲官網 (kingdoms.blog)
 - CosmosWork — AI 智能接案媒合平台 (falcontaskbridge.com)

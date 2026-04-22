@@ -51,6 +51,39 @@ const projects: Project[] = [
     category: "AI 應用",
   },
   {
+    id: 27,
+    title: "GoGoCha 花蓮計程車雙模式 App",
+    description:
+      "花蓮在地計程車叫車平台 Android 原生 App，司機端與乘客端整合於單一 APK。整合 Whisper 語音助理、AI 自動接單、Socket.io 即時派單、Firebase 驗證與 FCM 推播通知，並為中老年族群設計語音優先介面。已上架 Google Play（隼訊數位行銷有限公司）。",
+    tech: [
+      "Kotlin",
+      "Jetpack Compose",
+      "Material 3",
+      "Firebase Auth + FCM",
+      "Google Maps + Places",
+      "Socket.io",
+      "Retrofit + OkHttp",
+      "CameraX",
+    ],
+    features: [
+      "司機端 + 乘客端雙模式",
+      "Whisper 語音叫車",
+      "AI 自動接單",
+      "智能派單 V2 + 熱區配額",
+      "語音對講機",
+      "車資計算 + 拍照",
+      "FCM 推播通知",
+    ],
+    highlights: [
+      "語音優先介面（中老年友善模式）",
+      "Socket.io 即時派單與通訊",
+      "Firebase App Distribution Beta 發佈流程",
+    ],
+    image: "/GoGoCha.png",
+    url: "https://play.google.com/store/apps/details?id=com.hualien.taxidriver",
+    category: "App 開發",
+  },
+  {
     id: 26,
     title: "ROLL ON. 外商顧問企業官網",
     description:
@@ -164,7 +197,7 @@ const projects: Project[] = [
   },
   {
     id: 4,
-    title: "R.OC 室內設計形象網站",
+    title: "R collectives 室內設計形象網站",
     description:
       "現代化的設計公司形象網站，結合企業品牌展示與社群論壇功能。網站設計風格強調「當代設計」理念，以簡潔的線條與純粹的比例呈現品牌形象。",
     tech: [

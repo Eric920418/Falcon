@@ -59,11 +59,29 @@ const nextConfig: NextConfig = {
     ],
   },
   async headers() {
+    // /resume 需要放寬 CSP 給 @react-pdf/renderer：
+    // - yoga-layout WASM 透過 data: URL 載入 (connect-src data:)
+    // - 需要 wasm-unsafe-eval 執行 WASM
+    // - 圖片處理用 Web Worker 從 blob: URL 載入 (worker-src blob:)
+    const resumeHeaders = securityHeaders.map((h) => {
+      if (h.key !== 'Content-Security-Policy') return h
+      return {
+        key: 'Content-Security-Policy',
+        value: h.value
+          .replace(
+            "connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com",
+            "connect-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com",
+          )
+          .replace(
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
+          ) + "; worker-src 'self' blob:",
+      }
+    })
+    // 順序重要：後面的規則同 key 會覆蓋前面的，所以 /resume 要放最後
     return [
-      {
-        source: '/(.*)',
-        headers: securityHeaders,
-      },
+      { source: '/(.*)', headers: securityHeaders },
+      { source: '/resume', headers: resumeHeaders },
     ]
   },
 }
