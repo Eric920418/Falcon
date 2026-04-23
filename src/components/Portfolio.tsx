@@ -340,6 +340,7 @@ const projects: Project[] = [
     features: ["後台系統", "AI 客服串接", "3D 模型串接"],
     highlights: ["GraphQL 資料介接", "AI fine tune", "SSR 與後台管理"],
     image: "/元智管院.png",
+    url: "https://www.cm.yzu.edu.tw/zh",
     category: "企業官網",
   },
   {
