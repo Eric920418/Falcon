@@ -34,8 +34,8 @@ export default function HomePage() {
       {/* Main Content */}
       <main className="relative">
         <Hero />
-        <About />
         <Portfolio />
+        <About />
         <TechServices />
         <MarketingServices />
         <ContentServices />

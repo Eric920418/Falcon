@@ -48,32 +48,65 @@ pnpm start
 ## 專案結構
 
 ```
-├── app/                  # Next.js App Router
-│   ├── layout.tsx        # 根布局（含 SEO 配置）
-│   ├── page.tsx          # 首頁
-│   ├── icon.png          # Favicon（Next.js 自動處理）
-│   ├── sitemap.ts        # 動態 Sitemap 生成
-│   ├── robots.ts         # 動態 Robots.txt 生成
-│   └── globals.css       # 全局樣式 (Tailwind CSS v4)
+├── app/                              # Next.js App Router
+│   ├── layout.tsx                    # 根布局（全站級 schema + metadata）
+│   ├── page.tsx                      # 首頁
+│   ├── sitemap.ts                    # 動態 Sitemap（自動聚合所有 routes）
+│   ├── robots.ts                     # 動態 Robots.txt（含 AI 爬蟲規則）
+│   ├── opengraph-image.tsx           # 首頁 OG image 動態生成
+│   ├── globals.css                   # 全局樣式
+│   ├── services/[slug]/              # 8 個服務子頁（SEO/GEO/AEO/網站/AI 等）
+│   ├── local/[slug]/                 # 6 個 local landing page
+│   ├── blog/                         # Blog index + blog/[slug] 動態文章頁
+│   ├── pricing/                      # 透明定價 index + pricing/[slug]
+│   ├── compare/[slug]/               # 服務比較頁（SEO vs GEO vs AEO 等）
+│   ├── resume/                       # 履歷頁（noindex）
+│   └── api/contact/                  # 聯絡表單 API
 ├── src/
-│   └── components/       # React 組件
-│       ├── Hero.tsx
-│       ├── About.tsx
-│       ├── Portfolio.tsx     # 作品案例展示
-│       ├── Navigation.tsx
-│       ├── TechServices.tsx
-│       ├── MarketingServices.tsx
-│       ├── ContentServices.tsx
-│       ├── Philosophy.tsx
-│       ├── Contact.tsx
-│       └── ui/           # shadcn/ui 組件
-├── public/               # 靜態資源
-│   ├── favicon.ico       # Favicon（瀏覽器相容）
-│   ├── logo.png          # 網站 Logo
-│   └── manifest.json     # PWA Manifest
-├── next.config.ts        # Next.js 配置
-├── postcss.config.mjs    # PostCSS 配置
-└── tsconfig.json         # TypeScript 配置
+│   ├── components/
+│   │   ├── Hero.tsx, About.tsx ...   # 首頁元件
+│   │   ├── ui/                       # shadcn/ui 元件
+│   │   ├── page-layout/              # 子頁面共用 layout
+│   │   │   ├── PageShell.tsx
+│   │   │   ├── SitePageHeader.tsx
+│   │   │   └── SitePageFooter.tsx
+│   │   └── page-templates/           # 共用內容渲染模板
+│   │       ├── ServicePageTemplate.tsx
+│   │       ├── LocalPageTemplate.tsx
+│   │       ├── BlogPostTemplate.tsx
+│   │       ├── PricingPageTemplate.tsx
+│   │       └── ComparePageTemplate.tsx
+│   └── lib/
+│       ├── seo/                      # SEO/GEO/AEO 工廠函數
+│       │   ├── site-config.ts        # 全站常數
+│       │   ├── metadata.ts           # createMetadata() 統一 metadata 產生器
+│       │   ├── json-ld.tsx           # <JsonLd> 元件
+│       │   └── schemas/              # 9 種 schema 工廠
+│       │       ├── organization.ts   # 全站級
+│       │       ├── local-business.ts # 全站級
+│       │       ├── website.ts        # 全站級
+│       │       ├── professional-service.ts # 全站級
+│       │       ├── breadcrumb.ts     # 頁面級（工廠）
+│       │       ├── faq.ts            # 頁面級（工廠）
+│       │       ├── howto.ts          # 頁面級（GEO 神器）
+│       │       ├── service.ts        # 頁面級（工廠）
+│       │       ├── article.ts        # 頁面級（工廠）
+│       │       ├── webpage.ts        # 頁面級（含 Speakable）
+│       │       └── item-list.ts      # portfolio 列表
+│       └── content/                  # 內容資料層（data-driven UI）
+│           ├── types.ts              # 共用 content schema
+│           ├── services/             # 8 項服務內容
+│           ├── local.ts              # 6 個 local landing 內容
+│           ├── blog.ts               # 10 篇文章內容
+│           └── pricing.ts            # pricing + compare 內容
+├── public/
+│   ├── llms.txt                      # AI 搜尋引擎發現檔（精簡版）
+│   ├── llms-full.txt                 # AI 完整可引用知識庫
+│   ├── logo.png
+│   └── manifest.json
+├── next.config.ts
+├── postcss.config.mjs
+└── tsconfig.json
 ```
 
 ## 設計美學
@@ -149,49 +182,95 @@ Portfolio 組件展示公司的專案作品，包含：
 
 ## SEO / GEO / AEO 配置
 
-網站已配置**企業級**搜尋引擎優化，覆蓋傳統 SEO、AI 搜尋優化（GEO/AEO）及本地搜尋（Local SEO）：
+網站採用 **資料驅動的多頁面架構**，覆蓋四種搜尋意圖（informational / commercial / transactional / navigational），整合傳統 SEO、GEO 生成式引擎優化、AEO 答案引擎優化。
 
-### SEO 基礎配置
-- **Metadata** - 完整的 title、description、42 個精選 keywords
-- **Favicon** - `app/icon.png` + `public/favicon.ico`（Google 搜尋結果顯示）
-- **動態 OG Image** - 使用 `app/opengraph-image.tsx` 自動生成 1200x630 社群分享圖（品牌風格）
-- **Open Graph** - Facebook/LINE 分享預覽 (`og:title`, `og:description`, `og:image`)
-- **Twitter Cards** - Twitter 分享預覽
-- **Canonical URL** - 避免重複內容問題
-- **hreflang 標籤** - 多語言/地區標記（zh-TW、zh-Hant、x-default）
-- **動態 robots.ts** - 搜尋引擎爬蟲規則（支援 AI 爬蟲）
-- **動態 sitemap.ts** - 網站地圖自動生成
-- **PWA manifest.json** - 應用程式清單
+### 內容架構（30+ indexable pages）
 
-### GEO 優化（地理位置優化）- 增強版
-- **LocalBusiness Schema** - 多類型標記（LocalBusiness + ProfessionalService + MarketingAgency）
-- **GeoCoordinates** - 精確的經緯度座標
-- **GEO Meta Tags** - `geo.region`, `geo.placename`, `geo.position`, `ICBM`
-- **areaServed** - 擴展服務區域（台灣、桃園、台北、新北、新竹、台中、基隆）
-- **PostalAddress** - 完整地址結構化數據
-- **Dublin Core (DC) 元數據** - 增強內容描述標記
-- **營業時間** - OpeningHoursSpecification（週一至週五 09:00-18:00）
-- **付款方式** - 銀行轉帳、信用卡、現金
+| 路由群 | 路徑 | 數量 | 搜尋意圖 |
+| --- | --- | --- | --- |
+| 服務頁 | `/services/[slug]` | 8 | informational + commercial |
+| 本地頁 | `/local/[slug]` | 6 | local SEO |
+| 部落格 | `/blog`、`/blog/[slug]` | 11 | informational + topical authority |
+| 定價頁 | `/pricing`、`/pricing/[slug]` | 4 | transactional |
+| 比較頁 | `/compare/[slug]` | 1+ | commercial investigation |
+| 首頁 | `/` | 1 | navigational |
 
-### AEO 優化（AI 搜尋優化）
-- **llms.txt** - AI 搜尋引擎發現檔（`public/llms.txt`），結構化描述公司資訊供 AI 爬蟲讀取
-- **Speakable Schema** - 標記 AI 可朗讀/引用的重點內容區塊（Hero、About、MarketingServices）
-- **AI 爬蟲友善** - robots.ts 允許 GPTBot、ChatGPT-User、PerplexityBot、ClaudeBot、Applebot-Extended 等
-- **knowsAbout Schema** - 明確標記專業領域，幫助 AI 理解品牌專長
-- **Service Schema** - 8 項服務完整結構化數據，包含定價資訊
-- **Organization Schema** - 品牌識別與社群連結
-- **FAQPage Schema** - 7 個常見問題，可出現在 Google 搜尋結果的 FAQ 區塊
+每個頁面：獨立 metadata、獨立 OG、獨立 schema（透過 `lib/seo/schemas/*` 工廠產生）、獨立 canonical。
 
-### JSON-LD 結構化數據（9 個 Schema）
-1. **Organization** - 品牌組織資訊、專業領域
-2. **LocalBusiness** - 本地商家（GEO 核心）、服務項目、定價、電話
-3. **WebSite** - 網站基本資訊
-4. **BreadcrumbList** - 導航結構（首頁 → 服務 → 作品集 → 聯絡）
-5. **FAQPage** - 常見問題（SEO + AEO）
-6. **AggregateRating** - 評價數據（4.9/5 星、47 則評價）
-7. **ProfessionalService** - 專業服務認證
-8. **WebPage + Speakable** - AI 可引用內容標記（GEO 優化）
-9. **ItemList** - 作品集輪播式搜尋結果
+### Schema 架構（模組化、可擴展）
+
+`src/lib/seo/` 把所有 SEO 邏輯抽出為純資料 + 工廠函數，分兩層：
+
+**全站級**（在 `app/layout.tsx` 內，所有頁面共享）
+- Organization
+- LocalBusiness（含 areaServed、hasOfferCatalog、openingHoursSpecification）
+- WebSite
+- ProfessionalService
+
+**頁面級**（在各 `page.tsx` 內，按需引入）
+- WebPage + SpeakableSpecification（標記 AI 可引用內容）
+- BreadcrumbList
+- Service（每個服務頁）
+- Article（每篇 blog）
+- FAQPage（每頁不同問題集）
+- HowTo（GEO 神器，AI 最愛引用步驟化內容）
+- OfferCatalog（定價頁）
+
+> **重要**：先前版本的 `AggregateRating`（4.9/47 評分）已移除，因為缺少對應的 Google Business Profile 驗證來源，違反 Google Rich Results 政策。如未來有真實 Google 商家評論，請改用 `sameAs` 指向 GBP。
+
+### llms.txt + llms-full.txt（GEO 雙層架構）
+
+- `public/llms.txt` — 精簡版，AI 爬蟲快速理解品牌定位
+- `public/llms-full.txt` — 完整知識庫，含定價、案例、FAQ、產業專業領域
+
+兩份檔案皆在 `<head>` 用 `<link rel="alternate">` 宣告，讓 AI 爬蟲明確發現。
+
+### 動態 Sitemap
+
+`app/sitemap.ts` 從 `lib/content/` 動態聚合所有頁面，新增頁面**自動進入 sitemap**，無需手動維護。
+
+### Local SEO
+
+6 個 local landing page 使用拼音 URL（`/local/taoyuan-seo` 而非中文 URL），避免編碼風險並有利於反向連結。每頁針對：在地關鍵字、在地客戶案例、在地化 FAQ。
+
+### Core Web Vitals 優化
+- DNS Prefetch / Preconnect / Font Preload / Image Preload
+- Next.js Image 自動優化（AVIF/WebP）
+- Server-rendered schema（JSON-LD 在 HTML 內，AI 爬蟲可直接讀）
+
+### AI 爬蟲規則
+
+`app/robots.ts` 明確 allow：GPTBot、ChatGPT-User、Google-Extended、PerplexityBot、Amazonbot、ClaudeBot、Applebot-Extended。
+
+### 怎麼新增一個服務 / blog / 本地頁面
+
+只需修改資料層，不用碰 React：
+
+1. **新增服務頁** — 在 `src/lib/content/services/` 加一個 `[slug].ts`，並在 `services/index.ts` 註冊。動態路由自動產生對應頁面。
+2. **新增 blog 文章** — 在 `src/lib/content/blog.ts` 加一個物件條目。
+3. **新增 local landing** — 在 `src/lib/content/local.ts` 加條目。
+4. **新增定價頁** — 在 `src/lib/content/pricing.ts` 加條目。
+
+每次新增，sitemap、navigation、JSON-LD、metadata 全部自動生效。
+
+### 驗證指令
+
+```bash
+# Build 並檢查所有頁面 SSG 成功
+pnpm build
+
+# 啟動 production server
+pnpm start
+
+# 驗證 schema 渲染
+curl -s http://localhost:3000/services/geo | grep -oE '"@type":"[^"]+' | sort -u
+
+# 驗證 sitemap 完整
+curl -s http://localhost:3000/sitemap.xml | grep -c "<loc>"
+
+# Google Rich Results Test（推薦）
+# https://search.google.com/test/rich-results
+```
 
 ### 安全標頭（SEO 間接排名信號）
 - **HSTS** - 強制 HTTPS 連線
@@ -225,9 +304,12 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 未設定時 GTM 不會載入，不影響開發環境。
 
 ### 待完成
-- [ ] 申請並設定 Google Business Profile（本地 SEO 關鍵）
-- [ ] 申請 Google Search Console 並提交 sitemap
+- [ ] 申請並設定 Google Business Profile（本地 SEO 關鍵；含真實評論後可重新加入 AggregateRating，連結至 GBP）
+- [ ] 申請 Google Search Console 並提交新版 sitemap（含 30+ 路由）
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
+- [ ] 為 8 個 service 子頁加上獨立 OG image（目前只有首頁有動態 OG）
+- [ ] 為 10 篇 blog 文章補充細節內容（目前是骨架，每篇 800-1200 字）
+- [ ] 申請 Wikidata 條目強化 GEO 訊號
 
 ## Safari 移動版相容性
 
