@@ -36,7 +36,7 @@ export const blogPosts: Record<string, BlogContent> = {
       {
         heading: '方法 1：部署 llms.txt 與 llms-full.txt',
         body:
-          'llms.txt 是 AI 爬蟲的「快速導覽圖」。在網站根目錄放一份 llms.txt，內容包含品牌簡介、核心服務、聯絡方式。AI 爬蟲讀到後能快速理解你品牌定位。llms-full.txt 提供更完整的可引用內容。隼訊的 llms.txt 可作為範例：https://falconinformation.com/llms.txt',
+          'llms.txt 是 AI 爬蟲的「快速導覽圖」。在網站根目錄放一份 llms.txt，內容包含品牌簡介、核心服務、聯絡方式。AI 爬蟲讀到後能快速理解你品牌定位。llms-full.txt 提供更完整的可引用內容。隼訊的 llms.txt 可作為範例：https://www.falconinformation.com/llms.txt',
       },
       {
         heading: '方法 2：完整部署 Schema.org 結構化資料',

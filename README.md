@@ -2,7 +2,7 @@
 
 3D 互動式公司網站，使用 Next.js 16 + React 19 + Tailwind CSS v4 構建。
 
-**網站**: https://falconinformation.com
+**網站**: https://www.falconinformation.com
 
 ## 業務範圍
 
