@@ -10,6 +10,7 @@
 - CMS 系統、ERP 系統
 - AI 工具開發
 - APP 與互動應用程式設計
+- **Telegram / LINE Bot 開發**（群組管理、廣告同步、排程貼文、入群認證、防 raid）
 - 搜尋引擎優化（SEO）
 - **GEO 生成式引擎優化**（Generative Engine Optimization）- 讓 ChatGPT、Gemini 等 AI 優先引用您的品牌
 - **AEO 答案引擎優化**（Answer Engine Optimization）- 成為 Perplexity、Google AI 的首選答案來源

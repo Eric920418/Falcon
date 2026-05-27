@@ -20,7 +20,7 @@ export function TechServices() {
       icon: Code,
       title: '軟體開發',
       description: '客製化軟體解決方案',
-      details: ['企業應用系統', 'API整合服務', '雲端解決方案', '系統維護'],
+      details: ['企業應用系統', 'API整合服務', 'Telegram / LINE Bot 開發', '雲端解決方案'],
       number: '02'
     },
     {

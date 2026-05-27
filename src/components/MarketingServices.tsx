@@ -45,7 +45,7 @@ export function MarketingServices() {
       title: '社群經營',
       subtitle: 'Social Media Management',
       description: '建立品牌社群影響力',
-      features: ['內容策略規劃', '社群互動管理', 'KOL合作', '粉絲經營'],
+      features: ['內容策略規劃', '社群互動管理', 'Telegram 群組管理 Bot', '粉絲經營'],
       number: '05'
     },
     {
