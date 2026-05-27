@@ -29,6 +29,7 @@ export async function generateMetadata({ params }: CompareProps): Promise<Metada
     description: page.description,
     path: `/compare/${slug}`,
     keywords: page.keywords,
+    noIndex: page.qualityTier !== 'production',
   })
 }
 

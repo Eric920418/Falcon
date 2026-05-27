@@ -74,29 +74,6 @@ export function PricingPageTemplate({ page }: PricingPageTemplateProps) {
         </div>
       </section>
 
-      {page.marketComparison && (
-        <section className="py-12 px-6 bg-[#1E2A2E]/50">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
-              {page.marketComparison.heading}
-            </h2>
-            {page.marketComparison.body && (
-              <p className="text-[#A8B6BC] mb-4">{page.marketComparison.body}</p>
-            )}
-            {page.marketComparison.items && (
-              <ul className="space-y-2">
-                {page.marketComparison.items.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-[#A8B6BC]">
-                    <Check size={20} className="text-amber-500 flex-shrink-0 mt-1" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </section>
-      )}
-
       <section id="faq" className="py-12 px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
@@ -119,10 +96,10 @@ export function PricingPageTemplate({ page }: PricingPageTemplateProps) {
       <section className="py-12 px-6 bg-[#1E2A2E]/50">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
-            {page.cta}
+            想要實際報價？
           </h2>
           <Link href="/#contact" className="falcon-btn-primary inline-flex items-center">
-            立即聯絡 <ArrowRight size={18} className="ml-2" />
+            預約諮詢 <ArrowRight size={18} className="ml-2" />
           </Link>
         </div>
       </section>

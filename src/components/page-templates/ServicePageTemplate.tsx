@@ -176,7 +176,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             className="text-2xl md:text-3xl text-[#E0E5E8] mb-4"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            {service.cta}
+            想了解這項服務適不適合你？
           </h2>
           <Link href="/#contact" className="falcon-btn-primary inline-flex items-center">
             立即聯絡我們 <ArrowRight size={18} className="ml-2" />

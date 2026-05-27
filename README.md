@@ -305,11 +305,45 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 
 ### 待完成
 - [ ] 申請並設定 Google Business Profile（本地 SEO 關鍵；含真實評論後可重新加入 AggregateRating，連結至 GBP）
-- [ ] 申請 Google Search Console 並提交新版 sitemap（含 30+ 路由）
+- [ ] 申請 Google Search Console 並提交新版 sitemap
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 - [ ] 為 8 個 service 子頁加上獨立 OG image（目前只有首頁有動態 OG）
-- [ ] 為 10 篇 blog 文章補充細節內容（目前是骨架，每篇 800-1200 字）
+- [ ] 補真實客戶 case study 細節（接手日期、量化成果），把對應頁面 qualityTier 升為 'production'
 - [ ] 申請 Wikidata 條目強化 GEO 訊號
+
+## 內容品質護欄
+
+為避免 AI slop（會被 Google 2024+ Helpful Content Update 降權）：
+
+### 三層機制
+
+1. **qualityTier 三態**（在每個 content 檔的物件上）
+   - `'placeholder'`：空殼，不進 sitemap、加 `<meta robots="noindex">`
+   - `'draft'`：寫了但未審核，不進 sitemap、加 noindex
+   - `'production'`：完整、有 E-E-A-T 訊號，進 sitemap 且可被 Google 收錄
+
+   預設為 `'draft'`。升 `'production'` 前須跑 `pnpm lint:content` 且通過 `.claude/content-playbook.md` 的審核清單。
+
+2. **CaseStudy.consentToPublish 三態**（在 `LocalContent.caseStudies` 上）
+   - `'name-only'`：只顯示客戶名 + 一句描述（預設值，未取得客戶授權前用）
+   - `'metrics-only'`：加上接手日期、量化指標
+   - `'full'`：完整 case study（客戶已簽過授權）
+
+   未填的欄位在前端**條件式渲染、不會露出**，避免「假裝有資料」。
+
+3. **AI slop lint**（`scripts/lint-content.ts`）
+   - 跑 `pnpm lint:content` 掃描所有 content 檔
+   - 偵測 10 種 AI 寫作 pattern（緊迫感詞、無來源統計、數字標題、模板 CTA、競品貶低等）
+   - HIGH 風險項使 exit code 1，可整合到 CI / pre-commit hook
+
+### 編輯部架構
+
+所有文章作者統一為 `siteConfig.editorial.teamName`（隼訊數位行銷編輯部），使用 Schema.org 的 Organization-as-Author 規範。
+blog 文章可選擇性顯示 `reviewedByRole`（如「資深 SEO 顧問」）強化 trust 訊號 — 不公開實名但表明審稿角色。
+
+### 撰寫指南
+
+詳見 `.claude/content-playbook.md`：訪談題庫、AI slop 範例 vs 改寫範例、跨檔協作流程。
 
 ## Safari 移動版相容性
 

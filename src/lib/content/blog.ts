@@ -1,475 +1,487 @@
 import type { BlogContent } from './types'
 
-const author = '隼訊團隊'
 const datePublished = '2026-05-18'
+const reviewedByRole = '資深 SEO 顧問'
 
 export const blogPosts: Record<string, BlogContent> = {
   'geo-complete-guide-2026': {
     slug: 'geo-complete-guide-2026',
-    title: '2026 GEO 完整指南：讓 ChatGPT、Claude 主動引用你品牌的 7 個方法',
-    h1: '2026 GEO 完整指南 — 讓 AI 主動引用你品牌的 7 個方法',
+    title: 'GEO 生成式引擎優化指南：技術與內容怎麼準備',
+    h1: 'GEO 生成式引擎優化指南',
     description:
-      '生成式引擎優化 (GEO) 是 2026 年最被低估的成長槓桿。本文拆解 7 個讓 ChatGPT、Claude、Gemini 優先引用你品牌的具體做法。',
-    keywords: ['GEO', 'GEO 怎麼做', 'GEO 完整指南', 'ChatGPT 行銷', 'AI SEO', '生成式引擎優化'],
+      '生成式引擎優化（GEO）讓 ChatGPT、Claude、Gemini 等 AI 在回答用戶問題時能引用你的品牌。本文整理隼訊實際在做的技術與內容工作。',
+    keywords: ['GEO', 'GEO 怎麼做', 'GEO 完整指南', 'AI 搜尋優化', '生成式引擎優化'],
     datePublished,
-    author,
+    reviewedByRole,
+    qualityTier: 'draft',
     intent: 'informational',
     intro:
-      '當 13 億用戶用 ChatGPT 取代搜尋引擎查資訊，「被 AI 引用」變成新時代的「排在第一名」。但 90% 的企業還不知道 GEO 是什麼。本文用最具體的方法告訴你怎麼做。',
-    toc: ['什麼是 GEO？', '為什麼 GEO 比 SEO 更重要？', '7 個讓 AI 引用你的方法', '怎麼測量 GEO 成效', '常見陷阱'],
+      'GEO（Generative Engine Optimization）是針對 ChatGPT、Claude、Gemini、Perplexity 等生成式 AI 搜尋的內容優化。傳統 SEO 競爭的是 Google 排名，GEO 競爭的是「用戶問 AI 時，AI 是否會講出你的品牌」。本文是我們實際在做的工作筆記，不討論未經驗證的假設。',
     sections: [
       {
-        heading: '什麼是 GEO？跟 SEO 差在哪？',
+        heading: 'GEO 與 SEO 的差別',
         body:
-          'GEO（Generative Engine Optimization，生成式引擎優化）是針對 ChatGPT、Claude、Gemini、Perplexity 等生成式 AI 搜尋的優化策略。傳統 SEO 競爭的是「排名」，GEO 競爭的是「被引用」。當用戶問 ChatGPT 一個問題，AI 會直接給答案 — 你的品牌要嘛被講出來，要嘛完全不存在。',
+          'SEO 訊號來自反向連結、TF-IDF、E-E-A-T 與站速等；GEO 訊號偏向結構化資料、可被擷取的句式、權威來源的引用密度、AI 訓練資料涵蓋度。兩者基礎重疊（一份好內容對兩邊都加分），但訊號權重不同。',
       },
       {
-        heading: '為什麼 2026 年企業必須做 GEO？',
-        body: '',
+        heading: '我們執行 GEO 的工作項目',
+        body: '這是隼訊接案實際在做的事，依重要性排序：',
         items: [
-          'AI 搜尋使用率年增 240%，2025 年台灣突破 600 萬月活',
-          'AI 給的答案具「絕對信任感」 — 用戶不會質疑、不會多看其他結果',
-          '台灣中小企業做 GEO 的比例 < 5%，先進入者享有藍海優勢',
-          'AI 搜尋轉換率比傳統 SEO 高 3-5 倍（用戶意圖明確）',
+          '部署 llms.txt 與 llms-full.txt — AI 爬蟲的「快速簡介」',
+          '加入完整 Schema.org 結構化資料（Organization、LocalBusiness、FAQPage、HowTo、Speakable）',
+          '改寫內容為「可引用」格式 — 明確段落、直接陳述、不過度行銷化',
+          '建立主題集群 — 同一主題寫多篇深度文章，建立 AI 認可的領域權威',
+          '監測 AI 引用率 — 定期在 ChatGPT、Claude、Perplexity 測試品牌相關問題',
         ],
       },
       {
-        heading: '方法 1：部署 llms.txt 與 llms-full.txt',
+        heading: '常見誤解',
         body:
-          'llms.txt 是 AI 爬蟲的「快速導覽圖」。在網站根目錄放一份 llms.txt，內容包含品牌簡介、核心服務、聯絡方式。AI 爬蟲讀到後能快速理解你品牌定位。llms-full.txt 提供更完整的可引用內容。隼訊的 llms.txt 可作為範例：https://www.falconinformation.com/llms.txt',
-      },
-      {
-        heading: '方法 2：完整部署 Schema.org 結構化資料',
-        body:
-          'AI 引擎依賴 schema 理解你的網站。必備：Organization、LocalBusiness、FAQPage、HowTo、Article、Speakable。每加一個 schema，AI 引用率約提升 15-25%。',
-      },
-      {
-        heading: '方法 3：寫「可被引用」的內容',
-        body:
-          'AI 喜歡引用「明確、簡潔、可驗證」的句子。把「我們提供優質的 SEO 服務」改成「隼訊 SEO 起價 30,000 元/月，包含月度健檢、4 篇深度內容、技術修正」— 後者具體、可引用、可驗證。',
-      },
-      {
-        heading: '方法 4：建立主題集群（Topic Cluster）',
-        body:
-          '單一頁面難以建立 AI 權威。針對 1 個核心主題寫 10+ 篇深度文章，互相連結，AI 會把你認定為該領域權威。例如「GEO」主題下，可以寫 GEO 入門、GEO 工具、GEO 案例、GEO 報價、GEO vs SEO 等。',
-      },
-      {
-        heading: '方法 5：取得權威來源引用',
-        body:
-          'AI 訓練資料來自網路上的「被引用次數」。被知名媒體報導、被產業 wiki 收錄、被學術論文引用 — 這些訊號讓 AI 把你列入信任名單。具體做法：發新聞稿、申請 Wikipedia 條目、投稿產業媒體。',
-      },
-      {
-        heading: '方法 6：優化 AI 可讀性',
-        body: '',
-        items: [
-          '使用清晰的 H1 / H2 / H3 階層',
-          '段落短（< 4 句）',
-          '使用條列式內容（AI 易於擷取）',
-          '加入 FAQ 區塊（針對高頻搜尋問題）',
-          '避免過多 JavaScript 渲染（AI 爬蟲可能讀不到）',
-        ],
-      },
-      {
-        heading: '方法 7：監測與迭代',
-        body:
-          '每週測試 ChatGPT、Claude、Perplexity 對你品牌相關問題的回答，記錄引用率變化。發現哪些頁面被引用、哪些沒被，針對未被引用的內容做優化。',
+          '「加個 llms.txt 就有 GEO 了」— 不對。llms.txt 只是發現機制，AI 是否會引用你還取決於整體內容權威與可讀性。「GEO 多久看到效果」— 視內容基礎而定，已有 SEO 基礎的網站約 4-8 週，從零開始的新品牌時間更長且難以預估。',
       },
     ],
-    howTo: {
-      name: 'GEO 優化 30 天執行清單',
-      description: '30 天內讓你網站 GEO 就緒',
-      steps: [
-        { name: 'Day 1-3', text: '建立 llms.txt 與 llms-full.txt，部署到網站根目錄' },
-        { name: 'Day 4-7', text: '盤點現有頁面，加入完整 Schema.org 標記' },
-        { name: 'Day 8-14', text: '改寫首頁與核心服務頁，提高 AI 可讀性' },
-        { name: 'Day 15-21', text: '建立 5-10 篇主題集群文章' },
-        { name: 'Day 22-28', text: '發新聞稿、申請 Wikidata 條目' },
-        { name: 'Day 29-30', text: '在 ChatGPT/Claude/Perplexity 測試引用率，記錄基準' },
-      ],
-    },
     faq: [
-      { question: 'GEO 多久看到效果？', answer: '部署完整 GEO 戰略後，通常 2-3 個月可在 ChatGPT、Claude 等 AI 引用中看到品牌出現。已有 SEO 基礎的網站約 1 個月即可。' },
-      { question: '我自己能做 GEO 嗎？', answer: '部分可以。llms.txt、基礎 schema 可自行部署。但主題集群內容生產、權威建立、Wikipedia 條目這些需要團隊長期投入。' },
-      { question: 'GEO 跟 SEO 衝突嗎？', answer: '不衝突。優化 GEO 同時會強化 SEO（schema、內容深度都共用）。我們建議三合一：SEO + GEO + AEO。' },
+      {
+        question: 'GEO 跟 SEO 衝突嗎？',
+        answer: '不衝突。優化 GEO 的工作（schema、內容結構化、權威累積）多數會同時強化 SEO。',
+      },
+      {
+        question: '我自己可以做嗎？',
+        answer:
+          '部分可以。llms.txt、基礎 schema 自己部署即可。但主題集群內容生產、權威來源累積這類工作通常需要團隊長期投入。',
+      },
     ],
     relatedServices: ['geo', 'aeo', 'seo'],
-    cta: '想知道你的網站目前在 AI 搜尋中的能見度？預約免費 GEO 健診',
   },
   'seo-vs-geo-vs-aeo': {
     slug: 'seo-vs-geo-vs-aeo',
-    title: 'SEO vs GEO vs AEO 完整比較：差異、應用場景、優先順序',
-    h1: 'SEO、GEO、AEO 三者差別與優先順序',
-    description: '搞混 SEO、GEO、AEO？本文用最簡單方式解釋三者差別、各自適合場景、預算有限時該先做哪一個。',
+    title: 'SEO、GEO、AEO 差別與優先順序',
+    h1: 'SEO、GEO、AEO 三者差異與優先順序',
+    description:
+      'SEO、GEO、AEO 是三種不同搜尋優化策略，分別針對傳統搜尋引擎、生成式 AI、答案引擎。本文釐清三者差異、適用場景、預算分配建議。',
     keywords: ['SEO GEO AEO', 'SEO vs GEO', 'AEO 是什麼', 'GEO 是什麼', '搜尋優化差異'],
     datePublished,
-    author,
+    reviewedByRole,
+    qualityTier: 'draft',
     intent: 'informational',
-    intro: '行銷圈最近的新縮寫太多，光是搜尋優化就有 SEO、GEO、AEO 三種。它們不是同義詞、不能互相取代。本文一次講清楚。',
+    intro:
+      '這三個縮寫常被混用，但目標、訊號、評量標準都不同。本文用最簡單方式釐清，並提供「預算有限時該優先做哪一個」的判斷依據。',
     sections: [
       {
-        heading: '三者的核心差異',
+        heading: '三者各自的定義',
         body: '',
         items: [
-          'SEO (Search Engine Optimization)：競爭 Google、Bing 等「傳統搜尋引擎」的關鍵字排名',
-          'GEO (Generative Engine Optimization)：競爭 ChatGPT、Claude、Gemini 等「生成式 AI」的品牌引用',
-          'AEO (Answer Engine Optimization)：競爭 Perplexity、Google AI Overview 等「答案引擎」的精選答案',
+          'SEO (Search Engine Optimization)：競爭 Google、Bing 等傳統搜尋引擎的排名',
+          'GEO (Generative Engine Optimization)：競爭 ChatGPT、Claude、Gemini 等生成式 AI 的品牌引用',
+          'AEO (Answer Engine Optimization)：競爭 Perplexity、Google AI Overview 等答案引擎的精選來源',
         ],
       },
       {
-        heading: '視覺化對比',
-        body: '把這三者想像成三種搜尋場景：用戶在 Google 看到 10 條結果（SEO）；用戶問 ChatGPT 拿到對話式回答（GEO）；用戶用 Perplexity 拿到 3 條來源摘要（AEO）。',
+        heading: '搜尋場景對比',
+        body:
+          '想像三種搜尋情境：(1) 用戶在 Google 看到 10 條結果並點擊 → SEO 戰場；(2) 用戶問 ChatGPT「桃園哪間 SEO 公司」並拿到對話式回答 → GEO 戰場；(3) 用戶用 Perplexity 拿到一段答案 + 3 個來源 → AEO 戰場。',
       },
       {
         heading: '預算有限時的優先順序',
-        body: '隼訊建議的優先順序：',
+        body: '這是我們對中小企業客戶常給的建議：',
         items: [
-          '預算 3 萬/月以下：先做 SEO（最成熟、最可預測）',
-          '預算 5 萬/月：SEO 70% + GEO 30%（為 AI 時代鋪路）',
-          '預算 10 萬/月以上：SEO + GEO + AEO 三合一（享有複合效益）',
-        ],
-      },
-      {
-        heading: '哪些產業該優先做哪一個？',
-        body: '',
-        items: [
-          '本地服務（餐飲、診所）：SEO + Google My Business 優先',
-          '專業服務（顧問、律師）：GEO + AEO 優先（客戶會問 AI）',
-          '高客單價 B2B：三合一全做（決策週期長、研究行為密集）',
-          '電商：SEO + AEO（商品搜尋意圖明確）',
+          '預算 3 萬 / 月以下：先做 SEO（手法最成熟、效果最可預測）',
+          '預算 5 萬 / 月：SEO 為主，加部分 GEO 工作（為 AI 搜尋時代鋪路）',
+          '預算 10 萬 / 月以上：可以三者整合進行',
         ],
       },
     ],
     faq: [
-      { question: 'GEO 跟 AEO 重疊很多嗎？', answer: '約 60% 重疊。兩者都需要結構化資料、權威性、可引用內容。差別在 GEO 偏向「對話式 AI 引用」，AEO 偏向「答案引擎的精選來源」。整合執行最有效率。' },
-      { question: '只做 SEO，不做 GEO/AEO 行嗎？', answer: '短期可以，2-3 年內會被淘汰。Google 自己已推出 AI Overview，傳統 SEO 點擊率 2024 年已下降 30%。' },
+      {
+        question: 'GEO 跟 AEO 重疊很多嗎？',
+        answer: '工作項目約 60% 重疊（兩者都需要 schema、內容結構化、權威性建立）。建議整合執行避免重複投資。',
+      },
     ],
     relatedServices: ['seo', 'geo', 'aeo'],
-    cta: '想知道你公司該優先做哪一個？預約 30 分鐘策略諮詢',
-  },
-  'chatgpt-marketing-techniques': {
-    slug: 'chatgpt-marketing-techniques',
-    title: 'ChatGPT 行銷實戰：10 個讓 AI 推薦你品牌的內容技巧',
-    h1: 'ChatGPT 行銷：10 個讓 AI 主動推薦你品牌的技巧',
-    description: 'ChatGPT 已是月活 13 億的搜尋入口。本文教你 10 個讓 ChatGPT 主動推薦你品牌的具體技巧。',
-    keywords: ['ChatGPT 行銷', 'ChatGPT 推薦', 'AI 行銷', 'ChatGPT 品牌曝光', 'AI 搜尋優化'],
-    datePublished,
-    author,
-    intent: 'informational',
-    intro: '當潛在客戶問 ChatGPT 「桃園哪間網頁設計公司比較推薦？」，你希望 AI 講出你的名字。本文是達成這個目標的具體手冊。',
-    sections: [
-      {
-        heading: '為什麼 ChatGPT 會「推薦」品牌？',
-        body: 'ChatGPT 的推薦不是隨機的，背後有 3 個訊號：(1) 訓練資料中的品牌提及頻率、(2) 網站上的結構化資料、(3) 即時搜尋（GPT-4 Search）讀取的最新網頁內容。優化這三個訊號 = 提高被推薦機率。',
-      },
-      {
-        heading: '10 個具體技巧',
-        body: '',
-        items: [
-          '技巧 1：寫包含「最佳」「推薦」「比較」等關鍵字的長文（AI 抓 ranking 內容）',
-          '技巧 2：在文章中明確列出品牌名（提高品牌提及訊號）',
-          '技巧 3：建立 Wikipedia / Wikidata 條目（GPT 訓練資料來源）',
-          '技巧 4：上 G2 / Capterra 等評論平台（B2B 必備）',
-          '技巧 5：取得權威媒體報導（被引用次數累積）',
-          '技巧 6：發產業白皮書 PDF（GPT 會抓 PDF 內容）',
-          '技巧 7：在 Reddit、Quora 上有真實討論（GPT 重視社群訊號）',
-          '技巧 8：建立 YouTube 頻道並有字幕（YouTube 內容被 GPT 大量抓取）',
-          '技巧 9：發英文版內容（即使主要客戶在台灣，英文內容增加全球可見性）',
-          '技巧 10：監測 ChatGPT 中的品牌提及，發現缺漏立即補內容',
-        ],
-      },
-    ],
-    faq: [
-      { question: '這些技巧多久看到效果？', answer: '1-3 個月內 ChatGPT 即時搜尋會抓到新內容；2-6 個月後新訓練模型釋出時，會反映到 GPT 預設知識中。' },
-      { question: '小公司也能做嗎？', answer: '可以，但需要時間。優先做技巧 1、2、5、7。技巧 3（Wikipedia）難度較高，需符合「值得收錄」標準。' },
-    ],
-    relatedServices: ['geo', 'seo'],
-    cta: '想要系統化執行 ChatGPT 行銷？預約 GEO 諮詢',
-  },
-  'ai-search-2026-guide': {
-    slug: 'ai-search-2026-guide',
-    title: 'AI 搜尋優化是什麼？2026 年中小企業必懂的搜尋新生態',
-    h1: 'AI 搜尋時代：2026 年中小企業的搜尋新生態',
-    description: 'ChatGPT、Perplexity、Google AI Overview 正在改寫搜尋規則。本文解釋這場變革對中小企業的衝擊與機會。',
-    keywords: ['AI 搜尋', 'AI 搜尋優化', 'AI 搜尋是什麼', 'Perplexity', 'Google AI Overview'],
-    datePublished,
-    author,
-    intent: 'informational',
-    intro: '搜尋這件事 25 年來第一次大改版。Google 不再是唯一入口，ChatGPT、Perplexity、Claude 都成為新搜尋引擎。',
-    sections: [
-      {
-        heading: 'AI 搜尋的三種型態',
-        body: '',
-        items: [
-          '生成式 AI（ChatGPT、Claude）：對話式回答，可能引用品牌',
-          '答案引擎（Perplexity、Google AI Overview）：直接給答案 + 列來源',
-          'AI 增強搜尋（Bing Copilot）：傳統搜尋結果旁附 AI 摘要',
-        ],
-      },
-      {
-        heading: '對中小企業的衝擊',
-        body: '',
-        items: [
-          '傳統 SEO 流量下降：用戶在 AI 答案頁就滿意，不再點進你網站',
-          '品牌能見度兩極化：被 AI 引用的品牌曝光暴增，沒被引用的徹底消失',
-          '長尾關鍵字流量轉移到 AI（用戶寧願問 ChatGPT 也不打 Google）',
-          '本地搜尋（local search）受影響較小（仍依賴 Google Maps）',
-        ],
-      },
-    ],
-    faq: [
-      { question: '我該完全放棄 SEO 嗎？', answer: '絕對不要。Google 仍是 80% 流量來源。但要逐步加入 GEO + AEO，避免在 AI 浪潮中被淘汰。' },
-    ],
-    relatedServices: ['geo', 'aeo', 'seo'],
-    cta: '想了解 AI 搜尋時代你公司該如何布局？預約 1 小時策略諮詢',
   },
   'schema-org-tutorial': {
     slug: 'schema-org-tutorial',
-    title: 'Schema 結構化資料完整教學：從 LocalBusiness 到 Speakable',
-    h1: 'Schema.org 結構化資料完整教學',
-    description: '結構化資料 (Schema.org) 是 SEO 與 GEO 的共同基石。本文用最具體方式教你部署 8 種必備 schema。',
-    keywords: ['Schema.org', '結構化資料', 'JSON-LD', 'LocalBusiness schema', 'FAQ schema', 'HowTo schema'],
+    title: 'Schema.org 結構化資料部署實作',
+    h1: 'Schema.org 結構化資料部署實作',
+    description:
+      'Schema.org 結構化資料是 SEO 與 GEO 的共同基礎。本文整理 8 種必備 schema 的用途與部署方式，附 JSON-LD 範例。',
+    keywords: ['Schema.org', '結構化資料', 'JSON-LD', 'LocalBusiness schema', 'FAQ schema'],
     datePublished,
-    author,
+    reviewedByRole,
+    qualityTier: 'draft',
     intent: 'informational',
-    intro: 'Schema 不是「加分項」，是「基本門票」。沒有 schema 的網站在 AI 時代等於隱形。',
+    intro:
+      'Schema.org 結構化資料是搜尋引擎理解網站內容的工具。沒部署 schema 不等於完全沒 SEO，但會錯失多數 Rich Results、AI 引用機會、Knowledge Graph 條目。',
     sections: [
       {
-        heading: '8 種必備 Schema',
+        heading: '常用的 8 種 Schema',
         body: '',
         items: [
-          'Organization：品牌身份（必備）',
-          'LocalBusiness：本地商家（有實體地址必加）',
+          'Organization：品牌身份識別（多數網站必備）',
+          'LocalBusiness：本地商家（有實體地址時加）',
           'WebSite：搜尋框 + sitelinks',
-          'FAQPage：FAQ 區塊（觸發 Google rich snippet）',
-          'HowTo：步驟化內容（AI 最愛）',
-          'Article：文章內容',
+          'FAQPage：FAQ 區塊（可觸發 Google rich snippet）',
+          'HowTo：步驟化內容（AI 引擎偏好擷取）',
+          'Article：文章內容（含作者、發布日期）',
           'BreadcrumbList：麵包屑導航',
           'Speakable：語音搜尋優化',
         ],
       },
       {
-        heading: '怎麼部署？',
-        body: '在 HTML <head> 內加入 <script type="application/ld+json"> 包 JSON 物件。Next.js 用 metadata API + 動態 script tag。WordPress 用 Yoast SEO 或 Rank Math 自動產生。',
+        heading: '部署位置與方式',
+        body:
+          '在 HTML <head> 內加入 <script type="application/ld+json">{JSON 物件}</script>。Next.js 可用 metadata API 配合動態 script 標籤。WordPress 可用 Yoast SEO 或 Rank Math 等外掛產生。',
+      },
+      {
+        heading: '常見錯誤',
+        body: '',
+        items: [
+          '加入不真實的 AggregateRating（如自填 4.9 星 / 50 評論）— 違反 Google Rich Results 政策',
+          '只在 client-side 渲染 schema — 部分爬蟲讀不到',
+          'schema 內容與頁面實際內容不一致 — Google 會直接拒絕 rich results',
+        ],
       },
     ],
     faq: [
-      { question: '加錯 Schema 會被懲罰嗎？', answer: '會。Google 對「不準確的 schema」（如假評分、不存在的內容）會直接拒絕 rich results 並可能降權。本網站之前的 AggregateRating 就是錯誤示範。' },
+      {
+        question: 'schema 加錯會被懲罰嗎？',
+        answer:
+          '會。「Spammy structured data」是 Google 明文列出的人工懲罰項目。最常見的觸發：自填 AggregateRating、宣稱頁面有實際上沒有的內容。',
+      },
     ],
     relatedServices: ['seo', 'geo', 'aeo'],
-    cta: '想要快速部署完整 Schema？我們提供「Schema 健檢 + 部署」服務',
   },
-  'perplexity-aeo-deep-dive': {
-    slug: 'perplexity-aeo-deep-dive',
-    title: 'Perplexity AI 怎麼讓你的品牌出現？AEO 實戰拆解',
-    h1: 'Perplexity 排名策略：AEO 實戰拆解',
-    description: 'Perplexity 月活破 1500 萬，是答案引擎優化 (AEO) 的指標平台。本文拆解進入 Perplexity 引用名單的具體方法。',
-    keywords: ['Perplexity', 'Perplexity 排名', 'AEO 實戰', '答案引擎優化', 'Perplexity 引用'],
+  'perplexity-aeo-overview': {
+    slug: 'perplexity-aeo-overview',
+    title: 'Perplexity AI 的引用邏輯與 AEO 實作',
+    h1: 'Perplexity 引用邏輯與 AEO 實作',
+    description:
+      'Perplexity 在回答時會列出 3-5 個來源網站。本文整理 Perplexity 偏好引用的內容特徵，以及對應的 AEO 實作方向。',
+    keywords: ['Perplexity', 'Perplexity 排名', 'AEO 實作', '答案引擎優化'],
     datePublished,
-    author,
+    reviewedByRole,
+    qualityTier: 'draft',
     intent: 'informational',
-    intro: 'Perplexity 不只回答問題，還會列出 3-5 個「來源」。被列為來源 = 流量 + 品牌權威。',
+    intro:
+      'Perplexity 不只回答問題，還會列出引用來源。被列為來源 = 流量 + 品牌權威訊號。本文整理我們觀察到 Perplexity 偏好的內容特徵。',
     sections: [
       {
-        heading: 'Perplexity 引用邏輯',
-        body: 'Perplexity 使用即時搜尋 + 內容摘要技術。它優先選擇：(1) 主題相關性高、(2) 內容權威（外鏈多、HTTPS、有作者）、(3) 內容結構清晰（H1/H2/FAQ）、(4) 載入快速（LCP < 2.5s）的頁面。',
+        heading: 'Perplexity 引用偏好的內容特徵',
+        body: '依我們監測的觀察：',
+        items: [
+          '主題相關性高（不是泛論文章）',
+          '內容具權威訊號（多反向連結、HTTPS、清楚作者）',
+          '結構清晰（明顯 H1 / H2 階層 + FAQ 區塊）',
+          '載入快速（LCP < 2.5s）',
+          '內容更新頻率穩定',
+        ],
       },
       {
-        heading: '進入 Perplexity 引用名單的 5 個策略',
+        heading: '提高被 Perplexity 引用的工作',
         body: '',
         items: [
-          '策略 1：撰寫直接回答問題的段落（前 100 字就給答案）',
-          '策略 2：FAQ schema 完整部署',
-          '策略 3：建立網站權威（DA > 30 是基準）',
-          '策略 4：明確的作者標記（Person schema）',
-          '策略 5：定期更新內容（Perplexity 偏好新鮮內容）',
+          '前 100 字直接回答主題問題（不要長篇鋪陳）',
+          '完整部署 FAQPage schema',
+          '建立網站整體權威（DA 30 以上為常見基準）',
+          '清楚的作者 / 編輯部標記（Person schema 或 Organization）',
+          '定期更新內容（last-modified 時間戳）',
         ],
       },
     ],
     faq: [
-      { question: 'Perplexity 跟 ChatGPT 差別？', answer: 'Perplexity 強調「引用來源」，每個答案都列 3-5 個來源網站。ChatGPT 是純對話式，較少引用具體網站。' },
+      {
+        question: 'Perplexity 跟 ChatGPT 引用邏輯一樣嗎？',
+        answer:
+          '不完全一樣。Perplexity 強制列出來源（每個答案附 3-5 個網站），ChatGPT 是對話式回答、有時提及品牌但不一定附連結。優化方式有共同點但需分別測試。',
+      },
     ],
     relatedServices: ['aeo', 'geo'],
-    cta: '想讓你的品牌出現在 Perplexity 來源？預約 AEO 諮詢',
   },
-  'google-ai-overview-strategy': {
-    slug: 'google-ai-overview-strategy',
-    title: 'Google AI Overview 排名策略：3 種內容會被優先引用',
-    h1: 'Google AI Overview 排名策略：3 種會被引用的內容',
-    description: 'Google AI Overview 已覆蓋 70% 搜尋查詢。被它引用 = 不用排第一名也能拿到流量。',
+  'google-ai-overview-basics': {
+    slug: 'google-ai-overview-basics',
+    title: 'Google AI Overview 是什麼？對 SEO 的影響',
+    h1: 'Google AI Overview 與 SEO 的關係',
+    description:
+      'Google AI Overview 在搜尋結果頁直接顯示 AI 生成答案。本文說明它對傳統 SEO 的影響，以及該如何調整內容策略。',
     keywords: ['Google AI Overview', 'AI Overview 優化', 'SGE', 'Search Generative Experience'],
     datePublished,
-    author,
+    reviewedByRole,
+    qualityTier: 'draft',
     intent: 'informational',
-    intro: 'AI Overview 改變了 SEO 規則：你不再競爭「第一名」，而是競爭「被 AI Overview 摘錄」。',
+    intro:
+      'Google AI Overview（前身 SGE）會在搜尋結果頁上方直接顯示 AI 生成的答案。對 SEO 的影響是：用戶可能在不點進任何網站的情況下得到答案。本文討論如何在這個變化下保持流量。',
     sections: [
       {
-        heading: '會被 AI Overview 引用的 3 種內容',
+        heading: 'AI Overview 會抓取怎樣的內容',
         body: '',
         items: [
-          '1. 直接回答型內容（用戶問什麼、文章前 100 字直接答）',
-          '2. 步驟化內容（HowTo schema + 清楚編號）',
-          '3. 比較表格 / 清單型內容（AI 喜歡擷取結構化資訊）',
+          '直接回答型內容（用戶問什麼、文章前段直接回答）',
+          '步驟化內容（HowTo 結構）',
+          '比較表 / 條列式結構（便於 AI 擷取）',
+          '具明確作者與發布日期的權威來源',
         ],
       },
       {
-        heading: '不會被引用的內容',
+        heading: '不容易被引用的內容類型',
         body: '',
         items: [
-          '行銷話術為主的內容（「我們最棒」「業界首選」）',
-          '埋藏資訊的長文（重點要滑到底才出現）',
-          '純圖文混排沒有純文字版本（AI 讀不到）',
-          'JavaScript 渲染後才出現的內容（多數 AI 爬蟲讀不到 JS）',
+          '純行銷話術（缺乏可驗證資訊）',
+          '重點埋藏太深（要滑到底才出現）',
+          '需要 JavaScript 渲染才會顯示的內容',
+          '完全沒有 schema 標記',
         ],
       },
     ],
     faq: [
-      { question: 'AI Overview 會搶走我流量嗎？', answer: '會但有解。若內容被列為來源，仍能拿到點擊。重點是「成為來源」，而不是抗拒 AI Overview。' },
+      {
+        question: 'AI Overview 會搶走我的流量嗎？',
+        answer:
+          '部分搜尋查詢的點擊率確實會下降。但若內容被列為 AI Overview 引用來源，仍能取得品牌曝光與部分點擊。策略重點是「成為引用來源」而非抗拒 AI Overview。',
+      },
     ],
     relatedServices: ['aeo', 'seo'],
-    cta: '想優化 Google AI Overview 引用？預約 AEO 健診',
   },
   'website-pricing-2026': {
     slug: 'website-pricing-2026',
-    title: '網站建置費用一次看懂：2026 台灣行情、隱藏成本、避雷指南',
-    h1: '2026 網站建置費用完整指南',
-    description: '台灣網站建置費用差距 10 倍以上。本文揭露各區間實際內容、隱藏成本、選錯廠商會發生的災難。',
-    keywords: ['網站建置費用', '網頁設計費用', '網站架設多少錢', '台灣網站建置行情', '網站報價'],
+    title: '網站建置費用區間：台灣行情與成本拆解',
+    h1: '網站建置費用區間與成本拆解',
+    description:
+      '網站建置費用從幾萬到幾百萬都有，差別在哪？本文拆解四個價格區間的實際內容、常被忽略的隱藏成本、轉換廠商時的注意事項。',
+    keywords: ['網站建置費用', '網頁設計費用', '網站架設多少錢', '網站報價'],
     datePublished,
-    author,
+    reviewedByRole,
+    qualityTier: 'draft',
     intent: 'transactional',
-    intro: '網站建置費用從 3 萬到 300 萬都有，差別不是「品質好不好」這麼簡單。本文揭露你該知道的所有事實。',
+    intro:
+      '網站建置費用差距很大。本文只談「實際費用包含什麼」，不貶低任何特定廠商或工具。',
     sections: [
       {
-        heading: '台灣網站建置費用四大區間',
+        heading: '台灣網站建置費用四個區間',
         body: '',
         items: [
-          'NT$ 3,000-30,000：模板網站（Wix / Strikingly）— 適合個人 / 微型企業',
-          'NT$ 30,000-100,000：WordPress 套版 — 適合預算有限的中小企業',
-          'NT$ 100,000-500,000：客製化開發 — 適合品牌 / 電商',
-          'NT$ 500,000+：複雜系統 / 大型電商 — 適合上市櫃 / 中大型企業',
+          'NT$ 3,000-30,000：模板網站（Wix / Squarespace 等）— 適合個人 / 微型企業',
+          'NT$ 30,000-100,000：WordPress 套版或半客製化',
+          'NT$ 100,000-500,000：完整客製化開發',
+          'NT$ 500,000+：複雜系統 / 大型電商 / 多語言企業網站',
         ],
       },
       {
-        heading: '隱藏成本（廠商不會告訴你的）',
+        heading: '常被忽略的隱藏成本',
         body: '',
         items: [
-          '主機 / 網域年費（1,000-30,000 / 年）',
-          '套件 / Plugin 授權費（特別是 WordPress 商業套件）',
-          'SSL 憑證（多數含但要確認）',
-          '後續維護費（通常另計，月費 3,000-30,000）',
-          '修改費用（小改是否含？大改怎麼算？）',
-          '搬家 / 移交費（換廠商時的「贖身費」）',
+          '主機 / 網域年費',
+          'CMS 或 plugin 商業授權費（特別是 WordPress 商業套件）',
+          'SSL 憑證（多數廠商已含但要確認）',
+          '後續維護費（通常另計）',
+          '修改費用（小改是否含？大改怎麼算？合約必寫）',
+          '搬家 / 移交費（轉換廠商時的成本）',
         ],
       },
       {
-        heading: '怎麼避免被坑',
+        heading: '簽約前要確認的事',
         body: '',
         items: [
-          '原始碼歸誰所有？（合約必寫，否則綁定一輩子）',
-          '主機帳號控制權？（要在你名下，不是廠商代管）',
-          'CMS 後台你能不能改？（套件式網站常常你動不了）',
-          'SEO 內建嗎？（Lighthouse SEO 分數應 > 90）',
-          '響應式設計嗎？（手機 / 平板測試是否正常）',
-          '售後保固範圍？（多久、哪些算保固、哪些另計）',
+          '原始碼歸誰所有（合約必寫，否則綁定）',
+          '主機帳號是在你名下還是廠商代管',
+          'CMS 後台你能不能自己改',
+          'SEO 內建到什麼程度（Lighthouse SEO 分數可作基準）',
+          '是否支援響應式設計',
+          '售後保固範圍與年限',
         ],
       },
     ],
     faq: [
-      { question: '5 萬可以做出像樣的網站嗎？', answer: '可以，但有限制：5-8 頁靜態網站、用既有設計風格、不含複雜功能。如果想要客製化視覺、會員系統、電商、後台管理，預算建議 15 萬以上。' },
-      { question: 'WordPress 真的便宜嗎？', answer: '初期便宜（套版 5-10 萬），但 5 年總成本可能比 Next.js 客製化貴。原因：plugin 月費、安全性維護、效能優化都要錢。' },
+      {
+        question: '5 萬可以做出像樣的網站嗎？',
+        answer:
+          '可以，但限制較多：5-8 頁靜態內容、套用既有設計風格、不含複雜功能。如果需要客製化視覺、會員系統、電商或後台管理，預算建議 15 萬以上。',
+      },
     ],
     relatedServices: ['web-development'],
-    cta: '想知道你需求的精準預算？預約免費諮詢含初步報價單',
   },
   'common-seo-mistakes': {
     slug: 'common-seo-mistakes',
-    title: '為什麼你的網站 SEO 沒效？10 個技術 SEO 常見錯誤',
-    h1: '10 個讓你 SEO 沒效的技術錯誤',
-    description: '網站 SEO 做了半年沒進展？問題可能不是內容，是技術。本文盤點 10 個最常見的技術 SEO 錯誤。',
-    keywords: ['SEO 沒效果', 'SEO 錯誤', '技術 SEO', 'SEO 問題', 'SEO 排名下滑'],
+    title: '網站 SEO 沒效果？常見的技術 SEO 問題盤點',
+    h1: '常見技術 SEO 問題盤點',
+    description:
+      'SEO 做了卻沒看到排名變化？多數情況問題出在技術面而非內容。本文整理我們接手客戶網站時最常發現的技術 SEO 問題。',
+    keywords: ['SEO 沒效果', 'SEO 錯誤', '技術 SEO', 'SEO 問題'],
     datePublished,
-    author,
+    reviewedByRole,
+    qualityTier: 'draft',
     intent: 'informational',
-    intro: '我們接手過 30+ 家「SEO 做不出來」的客戶，9 成問題都出在技術面。',
+    intro:
+      'SEO 沒見到變化，多數情況不是內容問題，是技術面的基本設定有錯。本文整理我們接手新客戶時最常發現的問題類型。',
     sections: [
       {
-        heading: '10 個必檢查的技術 SEO 錯誤',
-        body: '',
+        heading: '常見技術 SEO 問題',
+        body: '依出現頻率排序：',
         items: [
-          '1. 站速太慢（LCP > 4s，Google 直接降權）',
-          '2. 沒有手機版（Mobile-First Indexing 時代必死）',
-          '3. Robots.txt 把重要頁面擋掉（很常見的低級錯誤）',
-          '4. Sitemap 沒提交或不完整',
-          '5. Canonical 設錯（導致內容被視為重複）',
-          '6. HTTPS 沒設或設錯',
-          '7. Schema.org 沒部署',
-          '8. 圖片沒 alt text（accessibility + SEO 雙重損失）',
-          '9. JS 渲染導致爬蟲讀不到內容',
-          '10. Internal linking 結構崩壞（孤兒頁面）',
+          '站速過慢（LCP > 4 秒）— Google 演算法會降權',
+          '沒有手機版或手機版體驗差',
+          'Robots.txt 把重要頁面意外擋掉',
+          'Sitemap 不完整或沒提交',
+          'Canonical 設錯（導致 Google 視為重複內容）',
+          'HTTPS 設定有混合內容問題',
+          'Schema.org 完全沒部署',
+          '圖片缺 alt text',
+          '關鍵內容靠 JS 渲染，爬蟲讀不到',
+          'Internal linking 結構崩壞（孤兒頁面）',
         ],
+      },
+      {
+        heading: '自我檢查工具',
+        body:
+          '可以用 Google Search Console、Lighthouse、Screaming Frog 這三項工具掃描，多數技術問題會被偵測出來。',
       },
     ],
     faq: [
-      { question: '我怎麼知道我中了幾項？', answer: '用 Lighthouse、Screaming Frog、Google Search Console 三項工具掃描即可知道。或預約我們的「SEO 健檢」（免費）。' },
+      {
+        question: '我自己檢查就好還是要找廠商？',
+        answer:
+          '基礎問題（如 Sitemap、HTTPS、手機版）可自己用 GSC + Lighthouse 找出來。較複雜的問題（如 canonical 衝突、JS 渲染、internal linking 重構）通常需要有經驗的人介入。',
+      },
     ],
     relatedServices: ['seo'],
-    cta: '想要完整 SEO 健檢報告？預約免費健檢（48 小時內交付）',
   },
   'ai-customer-service-cost': {
     slug: 'ai-customer-service-cost',
-    title: 'AI 客服系統開發成本完整解析：自建 vs SaaS 比較',
-    h1: 'AI 客服系統：自建 vs SaaS 成本完整解析',
-    description: 'AI 客服該自建還是用 Intercom AI、Zendesk AI？本文用具體數字比較 3 年總成本。',
-    keywords: ['AI 客服', 'AI 客服費用', '聊天機器人', 'Intercom AI', 'Zendesk AI', 'AI 客服自建'],
+    title: 'AI 客服系統：自建與 SaaS 的成本比較',
+    h1: 'AI 客服自建 vs SaaS 成本比較',
+    description:
+      'AI 客服該自建還是用 Intercom AI、Zendesk AI 等 SaaS？本文比較兩種方案的長期成本、技術門檻、適用情境。',
+    keywords: ['AI 客服', 'AI 客服費用', '聊天機器人', 'Intercom AI', 'AI 客服自建'],
     datePublished,
-    author,
+    reviewedByRole,
+    qualityTier: 'draft',
     intent: 'commercial',
-    intro: 'AI 客服已從「可選」變「必備」。但選 SaaS 還是自建，3 年下來總成本差距可能達 200%。',
+    intro:
+      'AI 客服是 2026 年企業導入 AI 最常見的切入點。但「自建」與「用 SaaS」的長期成本差距可能很大，本文整理可參考的成本結構（實際費用依授權方案、用量而定）。',
     sections: [
       {
-        heading: 'SaaS AI 客服費用（國際品牌）',
-        body: '',
+        heading: 'SaaS AI 客服費用參考',
+        body: '以下為各服務官方公開的牌價區間（請以該品牌最新報價為準）：',
         items: [
-          'Intercom AI：USD 99-499/月/座位（約 NT$ 3,000-15,000/座位/月）',
-          'Zendesk AI Agent：USD 50-200/月/座位',
-          'Drift：USD 2,500-5,000/月（基本方案）',
-          'Salesforce Einstein：USD 75/月/座位起',
+          'Intercom Fin：每次解決對話約 USD 0.99 起',
+          'Zendesk AI Agent：依授權方案，通常從 USD 50 / 座位 / 月起',
+          'Salesforce Einstein：依方案組合差異大',
         ],
       },
       {
-        heading: '自建 AI 客服費用（隼訊報價）',
+        heading: '自建 AI 客服的成本結構',
         body: '',
         items: [
-          'MVP 開發：NT$ 120,000 一次性費用',
-          'API 費用：NT$ 5,000-30,000/月（依使用量）',
-          '維護費：NT$ 10,000-30,000/月（可選）',
-          '3 年總成本：NT$ 60-150 萬',
+          'MVP 開發：一次性 10-15 萬',
+          'AI API 費用：每月 5,000-30,000（依對話量、模型選擇）',
+          '維護費：每月 1-3 萬（可選包月或按工時）',
         ],
       },
       {
-        heading: '3 年總成本比較（10 座位）',
+        heading: '什麼情況該選 SaaS',
         body: '',
         items: [
-          'Intercom AI：USD 240,000（約 NT$ 720 萬）',
-          'Zendesk AI：USD 90,000（約 NT$ 270 萬）',
-          '自建（隼訊）：NT$ 80-150 萬',
+          '需要立即上線（SaaS 通常 1 週內、自建需 3-4 週）',
+          '團隊沒有 IT 人員可維護',
+          '客服流程很標準、不需太多客製化',
+          '客戶數還少，月對話量低於 1,000 次',
         ],
       },
       {
-        heading: '什麼情況該選 SaaS？',
+        heading: '什麼情況自建較划算',
         body: '',
         items: [
-          '需要立即上線（SaaS 1 週內、自建 3-4 週）',
-          '團隊沒有技術維護能力',
-          '客服流程很標準（不需太多客製化）',
+          '對話量大（自建邊際成本低）',
+          '需要連接內部系統 / 資料庫',
+          '有資料合規要求（部分產業如金融、醫療）',
+          '希望避免長期被授權費綁定',
         ],
       },
     ],
     faq: [
-      { question: '自建 AI 客服真的能比 Intercom 好嗎？', answer: '功能上 80% 可以，特定客製化甚至超越。差距在現成的整合（Slack、Salesforce 等），這些自建需另外開發。' },
+      {
+        question: '自建 AI 客服需要哪些技術人員？',
+        answer:
+          '可委外開發，內部不需要養工程師。隼訊提供「開發 + 後續維護」的服務，客戶端只需要一位「對話策略 / 知識庫管理」的 PM 角色。',
+      },
     ],
     relatedServices: ['ai-tools'],
-    cta: '想評估你公司該自建還是用 SaaS？預約免費 AI 客服需求諮詢',
+  },
+  'how-we-define-good-seo-content': {
+    slug: 'how-we-define-good-seo-content',
+    title: '我們對「好 SEO 內容」的定義',
+    h1: '我們對「好 SEO 內容」的定義',
+    description:
+      '內容是 SEO 的核心，但「好內容」很難量化。本文整理隼訊在客戶內容生產時實際遵守的判斷標準。',
+    keywords: ['SEO 內容', '內容行銷', 'E-E-A-T', '內容品質'],
+    datePublished,
+    reviewedByRole,
+    qualityTier: 'draft',
+    intent: 'informational',
+    intro:
+      '「內容是國王」這句話被講爛了，但什麼算好內容沒有統一答案。本文記錄我們在實際接案時對「可生產 / 不可生產」的判斷標準。',
+    sections: [
+      {
+        heading: '不會通過審稿的內容類型',
+        body: '',
+        items: [
+          '空泛優點堆疊（「我們最專業、最便宜、最快交件」）',
+          '無來源的統計數字（任何數字若無法附 source，要嘛刪除要嘛改為「依我們觀察」）',
+          '貶低競品但無證據（例：宣稱某平台「速度差」卻沒提供實測數據）',
+          '靠數字湊版面的標題（多數時候只是把可寫 1 段的東西硬拆成清單）',
+          '純 AI 生成、未經人工編輯與事實查核的內容',
+        ],
+      },
+      {
+        heading: '我們認可的內容類型',
+        body: '',
+        items: [
+          '具體流程說明（我們實際怎麼做，含工具與步驟）',
+          '誠實的限制聲明（什麼客戶不適合我們）',
+          '可驗證的數據（含 source 連結）',
+          '不模糊的觀點（敢於說「我們不建議這樣做」）',
+          '能引導讀者下一步行動的具體建議',
+        ],
+      },
+    ],
+    relatedServices: ['seo', 'geo', 'aeo'],
+  },
+  'how-we-pick-clients': {
+    slug: 'how-we-pick-clients',
+    title: '我們選客戶的標準（誰不適合找隼訊）',
+    h1: '我們選客戶的標準',
+    description:
+      '不是每個案子我們都接。本文說明哪幾種需求類型我們不接，避免雙方浪費時間。',
+    keywords: ['行銷公司選擇', '行銷公司合作', '不接哪些案'],
+    datePublished,
+    reviewedByRole,
+    qualityTier: 'draft',
+    intent: 'informational',
+    intro:
+      '多數行銷公司網站只寫「為什麼選我們」，少數會寫「什麼客戶不該找我們」。我們認為後者對雙方比較公平，這篇是我們的版本。',
+    sections: [
+      {
+        heading: '我們不接的案類型',
+        body: '',
+        items: [
+          '產業：博弈、傳直銷、未經主管機關核准的金融商品',
+          '預算明顯不符需求（例：5 萬預算要做電商 + 會員 + ERP 整合）',
+          '需要保證排名 / 保證 ROAS 的客戶',
+          '希望用 AI 大量灌水內容衝排名的客戶',
+          '預算極低（如 SEO 月費低於 3 萬），我們無法做出真正有效的工作',
+        ],
+      },
+      {
+        heading: '我們適合接的案類型',
+        body: '',
+        items: [
+          '中小企業主想長期經營品牌、願意投入 6-12 個月看效果',
+          '客戶對 SEO / GEO 已有基本理解（或願意花時間學）',
+          '客戶可提供基本內容素材（公司資料、案例、產品細節）',
+          '客戶願意採用透明定價、不殺價、按合約執行',
+        ],
+      },
+    ],
+    relatedServices: ['seo', 'geo'],
   },
 }
 

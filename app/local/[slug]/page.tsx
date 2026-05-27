@@ -29,6 +29,7 @@ export async function generateMetadata({ params }: LocalPageProps): Promise<Meta
     description: page.description,
     path: `/local/${slug}`,
     keywords: page.keywords,
+    noIndex: page.qualityTier !== 'production',
   })
 }
 

@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
     description: post.description,
     path: `/blog/${slug}`,
     keywords: post.keywords,
+    noIndex: post.qualityTier !== 'production',
   })
 }
 
@@ -48,7 +49,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
       url,
       datePublished: post.datePublished,
       dateModified: post.dateModified,
-      authorName: post.author,
+      reviewedByRole: post.reviewedByRole,
       keywords: post.keywords,
     }),
     createBreadcrumbSchema([

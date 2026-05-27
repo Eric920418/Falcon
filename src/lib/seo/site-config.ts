@@ -48,6 +48,10 @@ export const siteConfig = {
     { name: '台中市', slug: 'taichung' },
     { name: '基隆市', slug: 'keelung' },
   ],
+  editorial: {
+    teamName: '隼訊數位行銷編輯部',
+    reviewedByRole: '資深 SEO 顧問',
+  },
 } as const
 
 export type SiteConfig = typeof siteConfig

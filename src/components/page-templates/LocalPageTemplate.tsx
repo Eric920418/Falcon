@@ -1,9 +1,72 @@
 import Link from 'next/link'
-import { ArrowRight, Check, ChevronRight, MapPin } from 'lucide-react'
-import type { LocalContent } from '@/lib/content/types'
+import { ArrowRight, Check, ChevronRight, MapPin, ExternalLink } from 'lucide-react'
+import type { LocalContent, CaseStudy } from '@/lib/content/types'
 
 interface LocalPageTemplateProps {
   page: LocalContent
+}
+
+function CaseStudyCard({ study }: { study: CaseStudy }) {
+  // 根據 consentToPublish 等級條件式渲染
+  const showMetrics = study.consentToPublish === 'full' || study.consentToPublish === 'metrics-only'
+  const hasDates = study.engagementStart || study.engagementEnd
+  const hasResults = study.result && study.result.length > 0
+  const hasBaseline = study.baseline && study.baseline.length > 0
+
+  return (
+    <div className="p-5 border border-[#344349] rounded-lg bg-stone-900/30">
+      <div className="flex items-start justify-between gap-3 mb-2">
+        <h3 className="text-lg text-[#E0E5E8]" style={{ fontFamily: 'var(--font-display)' }}>
+          {study.clientName}
+        </h3>
+        {study.industry && (
+          <span className="text-xs text-[#7A8A91] px-2 py-1 bg-[#344349]/30 rounded">
+            {study.industry}
+          </span>
+        )}
+      </div>
+      <p className="text-sm text-[#A8B6BC] mb-3">{study.oneLineSummary}</p>
+
+      {showMetrics && hasDates && (
+        <div className="text-xs text-[#7A8A91] mb-2">
+          {study.engagementStart && <span>接手：{study.engagementStart}</span>}
+          {study.engagementEnd && <span> ｜ 結案：{study.engagementEnd}</span>}
+        </div>
+      )}
+
+      {showMetrics && hasBaseline && study.baseline && (
+        <div className="mt-3 text-xs text-[#A8B6BC]">
+          <div className="text-[#7A8A91] mb-1">起點：</div>
+          {study.baseline.map((b, i) => (
+            <div key={i}>· {b.metric}：{b.value}</div>
+          ))}
+        </div>
+      )}
+
+      {showMetrics && hasResults && study.result && (
+        <div className="mt-3 text-xs text-[#A8B6BC]">
+          <div className="text-[#7A8A91] mb-1">成果：</div>
+          {study.result.map((r, i) => (
+            <div key={i}>
+              · {r.metric}：{r.value}
+              {r.delta && <span className="text-amber-500 ml-1">（{r.delta}）</span>}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {study.url && (
+        <a
+          href={study.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 mt-3 text-xs text-amber-500 hover:underline"
+        >
+          查看網站 <ExternalLink size={12} />
+        </a>
+      )}
+    </div>
+  )
 }
 
 export function LocalPageTemplate({ page }: LocalPageTemplateProps) {
@@ -53,7 +116,7 @@ export function LocalPageTemplate({ page }: LocalPageTemplateProps) {
               >
                 {section.heading}
               </h2>
-              <p className="text-[#A8B6BC] leading-relaxed mb-4">{section.body}</p>
+              {section.body && <p className="text-[#A8B6BC] leading-relaxed mb-4">{section.body}</p>}
               {section.items && (
                 <ul className="space-y-2">
                   {section.items.map((item, i) => (
@@ -66,6 +129,22 @@ export function LocalPageTemplate({ page }: LocalPageTemplateProps) {
               )}
             </article>
           ))}
+
+          {page.caseStudies && page.caseStudies.length > 0 && (
+            <div>
+              <h2
+                className="text-2xl md:text-3xl text-[#E0E5E8] mb-4"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                合作客戶
+              </h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {page.caseStudies.map((cs, i) => (
+                  <CaseStudyCard key={i} study={cs} />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -97,7 +176,7 @@ export function LocalPageTemplate({ page }: LocalPageTemplateProps) {
             className="text-2xl md:text-3xl text-[#E0E5E8] mb-4"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            {page.cta}
+            想了解 {page.city} 在地服務細節？
           </h2>
           <Link href="/#contact" className="falcon-btn-primary inline-flex items-center">
             立即聯絡 <ArrowRight size={18} className="ml-2" />

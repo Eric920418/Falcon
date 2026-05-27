@@ -7,13 +7,13 @@ export interface ArticleSchemaInput {
   url: string
   datePublished: string
   dateModified?: string
-  authorName?: string
+  reviewedByRole?: string
   image?: string
   keywords?: string[]
 }
 
 export function createArticleSchema(input: ArticleSchemaInput) {
-  return {
+  const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     '@id': `${input.url}#article`,
@@ -25,9 +25,10 @@ export function createArticleSchema(input: ArticleSchemaInput) {
     inLanguage: 'zh-TW',
     image: input.image ?? `${siteConfig.url}/logo.png`,
     author: {
-      '@type': 'Person',
-      name: input.authorName ?? '隼訊團隊',
-      url: `${siteConfig.url}/about`,
+      '@type': 'Organization',
+      '@id': orgId,
+      name: siteConfig.editorial.teamName,
+      url: siteConfig.url,
     },
     publisher: {
       '@id': orgId,
@@ -42,6 +43,22 @@ export function createArticleSchema(input: ArticleSchemaInput) {
       '@type': 'WebPage',
       '@id': input.url,
     },
-    ...(input.keywords ? { keywords: input.keywords.join(', ') } : {}),
   }
+
+  if (input.reviewedByRole) {
+    schema.reviewedBy = {
+      '@type': 'Role',
+      roleName: input.reviewedByRole,
+      author: {
+        '@type': 'Organization',
+        '@id': orgId,
+      },
+    }
+  }
+
+  if (input.keywords) {
+    schema.keywords = input.keywords.join(', ')
+  }
+
+  return schema
 }

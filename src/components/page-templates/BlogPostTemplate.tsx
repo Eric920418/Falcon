@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import { ArrowRight, Check, ChevronRight, Calendar, User } from 'lucide-react'
+import { ArrowRight, Check, ChevronRight, Calendar, Users, ShieldCheck } from 'lucide-react'
 import type { BlogContent } from '@/lib/content/types'
+import { siteConfig } from '@/lib/seo'
 
 interface BlogPostTemplateProps {
   post: BlogContent
@@ -39,8 +40,22 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
           <p className="text-lg text-[#A8B6BC] leading-relaxed">{post.intro}</p>
 
           <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-[#7A8A91]">
-            <span className="inline-flex items-center gap-1"><User size={14} /> {post.author}</span>
-            <span className="inline-flex items-center gap-1"><Calendar size={14} /> {post.datePublished}</span>
+            <span className="inline-flex items-center gap-1">
+              <Users size={14} /> {siteConfig.editorial.teamName}
+            </span>
+            <span className="inline-flex items-center gap-1">
+              <Calendar size={14} /> 發布 {post.datePublished}
+            </span>
+            {post.dateModified && post.dateModified !== post.datePublished && (
+              <span className="inline-flex items-center gap-1">
+                <Calendar size={14} /> 最後更新 {post.dateModified}
+              </span>
+            )}
+            {post.reviewedByRole && (
+              <span className="inline-flex items-center gap-1">
+                <ShieldCheck size={14} /> 審稿：{post.reviewedByRole}
+              </span>
+            )}
           </div>
         </div>
       </section>
@@ -155,10 +170,10 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
       <section className="py-12 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
-            {post.cta}
+            有相關需求？
           </h2>
           <Link href="/#contact" className="falcon-btn-primary inline-flex items-center">
-            立即聯絡 <ArrowRight size={18} className="ml-2" />
+            聯絡我們 <ArrowRight size={18} className="ml-2" />
           </Link>
         </div>
       </section>

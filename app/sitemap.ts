@@ -15,40 +15,51 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
   ]
 
-  const serviceRoutes: MetadataRoute.Sitemap = getAllServices().map((s) => ({
-    url: `${baseUrl}/services/${s.slug}`,
-    lastModified: s.lastModified,
-    changeFrequency: 'monthly',
-    priority: 0.95,
-  }))
+  // 僅收錄 qualityTier === 'production' 的頁面
+  const serviceRoutes: MetadataRoute.Sitemap = getAllServices()
+    .filter((s) => s.qualityTier === 'production')
+    .map((s) => ({
+      url: `${baseUrl}/services/${s.slug}`,
+      lastModified: s.lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.95,
+    }))
 
-  const localRoutes: MetadataRoute.Sitemap = getAllLocalPages().map((p) => ({
-    url: `${baseUrl}/local/${p.slug}`,
-    lastModified: p.lastModified,
-    changeFrequency: 'monthly',
-    priority: 0.85,
-  }))
+  const localRoutes: MetadataRoute.Sitemap = getAllLocalPages()
+    .filter((p) => p.qualityTier === 'production')
+    .map((p) => ({
+      url: `${baseUrl}/local/${p.slug}`,
+      lastModified: p.lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    }))
 
-  const blogRoutes: MetadataRoute.Sitemap = getAllBlogPosts().map((p) => ({
-    url: `${baseUrl}/blog/${p.slug}`,
-    lastModified: p.dateModified ?? p.datePublished,
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }))
+  const blogRoutes: MetadataRoute.Sitemap = getAllBlogPosts()
+    .filter((p) => p.qualityTier === 'production')
+    .map((p) => ({
+      url: `${baseUrl}/blog/${p.slug}`,
+      lastModified: p.dateModified ?? p.datePublished,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    }))
 
-  const pricingRoutes: MetadataRoute.Sitemap = Object.values(pricingPages).map((p) => ({
-    url: `${baseUrl}/pricing/${p.slug}`,
-    lastModified: p.lastModified,
-    changeFrequency: 'monthly',
-    priority: 0.85,
-  }))
+  const pricingRoutes: MetadataRoute.Sitemap = Object.values(pricingPages)
+    .filter((p) => p.qualityTier === 'production')
+    .map((p) => ({
+      url: `${baseUrl}/pricing/${p.slug}`,
+      lastModified: p.lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    }))
 
-  const compareRoutes: MetadataRoute.Sitemap = Object.values(comparePages).map((p) => ({
-    url: `${baseUrl}/compare/${p.slug}`,
-    lastModified: p.lastModified,
-    changeFrequency: 'monthly',
-    priority: 0.85,
-  }))
+  const compareRoutes: MetadataRoute.Sitemap = Object.values(comparePages)
+    .filter((p) => p.qualityTier === 'production')
+    .map((p) => ({
+      url: `${baseUrl}/compare/${p.slug}`,
+      lastModified: p.lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    }))
 
   return [
     ...staticRoutes,

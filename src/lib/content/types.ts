@@ -1,5 +1,7 @@
 import type { FAQItem, HowToInput } from '@/lib/seo'
 
+export type QualityTier = 'production' | 'draft' | 'placeholder'
+
 export interface ContentSection {
   heading: string
   body: string
@@ -15,6 +17,28 @@ export interface PricingTier {
   bestFor?: string
 }
 
+export interface SourcedNumber {
+  value: string
+  label: string
+  source?: {
+    name: string
+    url?: string
+    date?: string
+  }
+}
+
+export interface CaseStudy {
+  clientName: string
+  industry?: string
+  url?: string
+  engagementStart?: string
+  engagementEnd?: string
+  baseline?: { metric: string; value: string }[]
+  result?: { metric: string; value: string; delta?: string }[]
+  oneLineSummary: string
+  consentToPublish: 'full' | 'metrics-only' | 'name-only'
+}
+
 export interface ServiceContent {
   slug: string
   title: string
@@ -23,12 +47,12 @@ export interface ServiceContent {
   keywords: string[]
   intent: 'informational' | 'commercial' | 'transactional' | 'navigational'
   lastModified: string
+  qualityTier: QualityTier
   intro: string
   sections: ContentSection[]
   howTo?: HowToInput
   faq: FAQItem[]
   pricing?: PricingTier[]
-  cta: string
   serviceType: string
   priceMin: string
   priceUnit: string
@@ -43,10 +67,11 @@ export interface LocalContent {
   description: string
   keywords: string[]
   lastModified: string
+  qualityTier: QualityTier
   intro: string
   sections: ContentSection[]
+  caseStudies?: CaseStudy[]
   faq: FAQItem[]
-  cta: string
 }
 
 export interface BlogContent {
@@ -57,7 +82,8 @@ export interface BlogContent {
   keywords: string[]
   datePublished: string
   dateModified?: string
-  author: string
+  reviewedByRole?: string
+  qualityTier: QualityTier
   intent: 'informational' | 'commercial' | 'transactional' | 'navigational'
   intro: string
   toc?: string[]
@@ -65,7 +91,6 @@ export interface BlogContent {
   howTo?: HowToInput
   faq?: FAQItem[]
   relatedServices?: string[]
-  cta: string
 }
 
 export interface PricingPageContent {
@@ -75,11 +100,10 @@ export interface PricingPageContent {
   description: string
   keywords: string[]
   lastModified: string
+  qualityTier: QualityTier
   intro: string
   tiers: PricingTier[]
-  marketComparison?: ContentSection
   faq: FAQItem[]
-  cta: string
 }
 
 export interface ComparePageContent {
@@ -89,6 +113,7 @@ export interface ComparePageContent {
   description: string
   keywords: string[]
   lastModified: string
+  qualityTier: QualityTier
   intro: string
   comparisonTable: {
     feature: string
@@ -97,5 +122,4 @@ export interface ComparePageContent {
   comparisonHeaders: string[]
   sections: ContentSection[]
   faq: FAQItem[]
-  cta: string
 }

@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     description: service.description,
     path: `/services/${slug}`,
     keywords: service.keywords,
+    noIndex: service.qualityTier !== 'production',
   })
 }
 

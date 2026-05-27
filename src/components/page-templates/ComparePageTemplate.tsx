@@ -100,10 +100,10 @@ export function ComparePageTemplate({ page }: ComparePageTemplateProps) {
       <section className="py-12 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
-            {page.cta}
+            想針對你的情境諮詢？
           </h2>
           <Link href="/#contact" className="falcon-btn-primary inline-flex items-center">
-            立即聯絡 <ArrowRight size={18} className="ml-2" />
+            預約諮詢 <ArrowRight size={18} className="ml-2" />
           </Link>
         </div>
       </section>
