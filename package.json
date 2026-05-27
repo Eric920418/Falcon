@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:content": "tsx scripts/lint-content.ts"
+    "lint:content": "tsx scripts/lint-content.ts",
+    "check:seo": "tsx scripts/check-seo-status.ts"
   },
   "dependencies": {
     "@fontsource/noto-sans-tc": "^5.2.9",
