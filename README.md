@@ -279,7 +279,7 @@ curl -s http://localhost:3000/sitemap.xml | grep -c "<loc>"
 
 ### 安全標頭（SEO 間接排名信號）
 - **HSTS** - 強制 HTTPS 連線
-- **CSP** - 內容安全策略（白名單：Google Fonts、GTM、GA、LINE QR）
+- **CSP** - 內容安全策略（白名單：Google Fonts、GTM、GA、LINE QR）。`/resume` 額外放寬 `wasm-unsafe-eval`、`worker-src blob:`、`connect-src data: blob:` 給 `@react-pdf/renderer` 使用。Preview / development 環境（`VERCEL_ENV !== 'production'`）額外放行 `https://vercel.live` 與 `wss://ws-us3.pusher.com` 讓 Vercel Live toolbar（Comments / Feedback）可運作；**production 不受影響**。CSP 構造集中在 `next.config.ts` 的 `buildCsp()` helper，避免字串 `.replace()` 的脆弱性。
 - **X-Frame-Options** - 防止 clickjacking
 - **X-Content-Type-Options** - 防止 MIME sniffing
 - **Referrer-Policy** - 跨域來源控制
