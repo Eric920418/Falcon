@@ -20,69 +20,6 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: 29,
-    title: "Telegram 雙群管理機器人 + Vercel 後台",
-    description:
-      "從零打造的 Telegram 群組守門 / 廣告同步 / 排程貼文機器人，部署於 Vercel Pro。涵蓋主群→子群 fan-out 同步、入群隨機題庫認證、簡體字守門（OpenCC 嚴格策略）、關鍵字黑名單、防 raid、退群雪崩監控、排程貼文（QStash + Vercel Cron 兜底）與完整後台 CRUD。",
-    tech: [
-      "Next.js 16",
-      "React 19",
-      "TypeScript",
-      "grammY",
-      "Drizzle ORM",
-      "Neon Postgres",
-      "Upstash Redis + QStash",
-      "Tailwind CSS v4",
-    ],
-    features: [
-      "主群→子群多群同步（copyMessage fan-out）",
-      "入群題庫認證（答錯 / 超時踢人）",
-      "OpenCC 簡體字守門 + 關鍵字黑名單",
-      "防 raid 與退群雪崩監控",
-      "排程貼文（QStash 精準觸發 + Cron 兜底）",
-      "Bot DM 素材匯入（保留動態貼紙與富格式）",
-    ],
-    highlights: [
-      "Serverless-first grammY 架構（webhook + transformer-throttler）",
-      "QStash + Vercel Cron 雙保險排程，避開分鐘級限制",
-      "Drizzle strict: true，禁止破壞性遷移",
-    ],
-    image: "/TGBot.png",
-    category: "其他",
-  },
-  {
-    id: 28,
-    title: "invisible care 居家健康守護官網與 CMS",
-    description:
-      "整合防霾紗網、全戶濾水、水塔清洗、冷氣與洗衣機深度拆洗、精緻居家清潔六大專業服務的居家清潔品牌官網。前台 7 頁完整 SEO 實體圖（LocalBusiness + Service + FAQPage + Review JSON-LD），後台 11 頁老人友善 CMS（業主 55-65 歲），支援 Section 動態區塊管理、Before/After 對比圖、Lightbox 圖片放大與 R2 圖片上傳。",
-    tech: [
-      "Next.js 15",
-      "React 18",
-      "TypeScript",
-      "Prisma 7",
-      "Neon PostgreSQL",
-      "NextAuth",
-      "Cloudflare R2",
-      "Tailwind CSS v4",
-    ],
-    features: [
-      "Section CMS 動態區塊管理",
-      "Before/After 對比圖",
-      "Lightbox 圖片放大（手機 pinch zoom）",
-      "預約諮詢表單",
-      "服務 slug pinyin 自動產生",
-      "11 頁後台老人友善 CMS",
-    ],
-    highlights: [
-      "完整 SEO 實體圖（LocalBusiness + Service + FAQPage + Review）",
-      "後台老人友善 UI（16px 字級、48px 按鈕、口語化措辭）",
-      "Neon Serverless + Prisma Adapter WebSocket 架構",
-    ],
-    image: "/InvisibleCare.png",
-    url: "https://needfix.com.tw/",
-    category: "企業官網",
-  },
-  {
     id: 23,
     title: "TellCraft AI 網站生成平台",
     description:
@@ -145,6 +82,69 @@ const projects: Project[] = [
     image: "/GoGoCha.png",
     url: "https://play.google.com/store/apps/details?id=com.hualien.taxidriver",
     category: "App 開發",
+  },
+  {
+    id: 29,
+    title: "Telegram 雙群管理機器人 + Vercel 後台",
+    description:
+      "從零打造的 Telegram 群組守門 / 廣告同步 / 排程貼文機器人，部署於 Vercel Pro。涵蓋主群→子群 fan-out 同步、入群隨機題庫認證、簡體字守門（OpenCC 嚴格策略）、關鍵字黑名單、防 raid、退群雪崩監控、排程貼文（QStash + Vercel Cron 兜底）與完整後台 CRUD。",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "grammY",
+      "Drizzle ORM",
+      "Neon Postgres",
+      "Upstash Redis + QStash",
+      "Tailwind CSS v4",
+    ],
+    features: [
+      "主群→子群多群同步（copyMessage fan-out）",
+      "入群題庫認證（答錯 / 超時踢人）",
+      "OpenCC 簡體字守門 + 關鍵字黑名單",
+      "防 raid 與退群雪崩監控",
+      "排程貼文（QStash 精準觸發 + Cron 兜底）",
+      "Bot DM 素材匯入（保留動態貼紙與富格式）",
+    ],
+    highlights: [
+      "Serverless-first grammY 架構（webhook + transformer-throttler）",
+      "QStash + Vercel Cron 雙保險排程，避開分鐘級限制",
+      "Drizzle strict: true，禁止破壞性遷移",
+    ],
+    image: "/TGBot.png",
+    category: "Bot / 自動化",
+  },
+  {
+    id: 28,
+    title: "invisible care 居家健康守護官網與 CMS",
+    description:
+      "整合防霾紗網、全戶濾水、水塔清洗、冷氣與洗衣機深度拆洗、精緻居家清潔六大專業服務的居家清潔品牌官網。前台 7 頁完整 SEO 實體圖（LocalBusiness + Service + FAQPage + Review JSON-LD），後台 11 頁老人友善 CMS（業主 55-65 歲），支援 Section 動態區塊管理、Before/After 對比圖、Lightbox 圖片放大與 R2 圖片上傳。",
+    tech: [
+      "Next.js 15",
+      "React 18",
+      "TypeScript",
+      "Prisma 7",
+      "Neon PostgreSQL",
+      "NextAuth",
+      "Cloudflare R2",
+      "Tailwind CSS v4",
+    ],
+    features: [
+      "Section CMS 動態區塊管理",
+      "Before/After 對比圖",
+      "Lightbox 圖片放大（手機 pinch zoom）",
+      "預約諮詢表單",
+      "服務 slug pinyin 自動產生",
+      "11 頁後台老人友善 CMS",
+    ],
+    highlights: [
+      "完整 SEO 實體圖（LocalBusiness + Service + FAQPage + Review）",
+      "後台老人友善 UI（16px 字級、48px 按鈕、口語化措辭）",
+      "Neon Serverless + Prisma Adapter WebSocket 架構",
+    ],
+    image: "/InvisibleCare.png",
+    url: "https://needfix.com.tw/",
+    category: "企業官網",
   },
   {
     id: 26,
@@ -675,7 +675,7 @@ const projects: Project[] = [
   },
 ];
 
-const categories = ['全部', '電商平台', '企業官網', '形象網站', 'App 開發', 'AI 應用', '學術系統', '其他']
+const categories = ['全部', '電商平台', '企業官網', '形象網站', 'App 開發', 'AI 應用', 'Bot / 自動化', '學術系統', '其他']
 
 export function Portfolio() {
   const [selectedCategory, setSelectedCategory] = useState('全部')

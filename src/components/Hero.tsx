@@ -61,7 +61,7 @@ export function Hero() {
         </p>
 
         <p className="text-base text-[#6D8F96] mb-12 max-w-lg leading-relaxed animate-fade-in animation-delay-400">
-          從網站開發到AI應用，從SEO優化到社群經營，
+          從網站、APP 到 Telegram / LINE Bot，從 SEO 到社群經營，
           我們提供全方位的數位解決方案
         </p>
 

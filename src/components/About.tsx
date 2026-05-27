@@ -70,7 +70,7 @@ export function About() {
               transition={{ delay: 0.2, duration: 0.5 }}
             >
               我們致力於幫助企業在數位時代中脫穎而出。從品牌形象建立到數位內容製作，
-              從技術開發到行銷推廣，我們提供完整的解決方案。
+              從網站、APP、Telegram / LINE Bot 自動化到 SEO 與社群經營，提供完整的解決方案。
             </motion.p>
 
             {/* 裝飾數字 */}
