@@ -73,18 +73,6 @@ export function About() {
               從網站、APP、Telegram / LINE Bot 自動化到 SEO 與社群經營，提供完整的解決方案。
             </motion.p>
 
-            {/* 裝飾數字 */}
-            <motion.div
-              className="hidden lg:block"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-            >
-              <span className="text-[10rem] font-bold text-[#2D3B40]/50 leading-none select-none" style={{ fontFamily: 'var(--font-display)' }}>
-                關
-              </span>
-            </motion.div>
           </div>
 
           {/* 右側特色卡片 */}

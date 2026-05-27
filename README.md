@@ -221,6 +221,8 @@ Portfolio 組件展示公司的專案作品，包含：
 
 > **重要**：先前版本的 `AggregateRating`（4.9/47 評分）已移除，因為缺少對應的 Google Business Profile 驗證來源，違反 Google Rich Results 政策。如未來有真實 Google 商家評論，請改用 `sameAs` 指向 GBP。
 
+> **JsonLd 安全 escape**：`src/lib/seo/json-ld.tsx` 的 `safeJsonForScript()` 會額外 escape `<`、`>`、`&`、`U+2028`、`U+2029` 後再塞進 `<script type="application/ld+json">`。原因：原生 `JSON.stringify` 不會處理這些字元 — schema 內任一字串若含 `</script>` 會造成 HTML parser 提前關閉標籤（XSS），含 U+2028/U+2029 則會在瀏覽器 hydrate 時拋 `Invalid or unexpected token` SyntaxError 讓整頁炸掉。新增 schema 工廠時直接傳物件給 `<JsonLd>` 即可，escape 已內建。
+
 ### llms.txt + llms-full.txt（GEO 雙層架構）
 
 - `public/llms.txt` — 精簡版，AI 爬蟲快速理解品牌定位
