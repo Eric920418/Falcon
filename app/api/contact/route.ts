@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
+import { siteConfig } from '@/lib/seo/site-config'
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,28 +15,33 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 驗證環境變數
-    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
-      console.error('缺少 Gmail SMTP 設定')
+    // 驗證環境變數（廠商中立：Zoho / 任何 SMTP 供應商皆適用）
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
+      console.error('缺少 SMTP 設定：請設定 SMTP_USER 與 SMTP_PASSWORD')
       return NextResponse.json(
-        { error: '郵件服務未正確設定，請聯繫管理員' },
+        { error: '郵件服務未正確設定（缺少 SMTP_USER / SMTP_PASSWORD），請聯繫管理員' },
         { status: 500 }
       )
     }
 
-    // 建立 SMTP transporter
+    // 建立 SMTP transporter（預設 Zoho；host/port 可由環境變數覆寫）
+    const smtpPort = Number(process.env.SMTP_PORT) || 465
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: process.env.SMTP_HOST || 'smtp.zoho.com',
+      port: smtpPort,
+      secure: smtpPort === 465, // 465 用 SSL，587 用 STARTTLS
       auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD,
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
       },
     })
 
     // 郵件內容
+    // from 必須是已驗證的寄件信箱（Zoho 會拒絕非本帳號的 from）
+    // to 取自 siteConfig 公司信箱，單一來源、避免硬編碼漂移
     const mailOptions = {
-      from: process.env.GMAIL_USER,
-      to: '26416387.re@gmail.com',
+      from: process.env.SMTP_USER,
+      to: process.env.CONTACT_RECIPIENT || siteConfig.email,
       subject: `[網站聯絡表單] 來自 ${name} 的新訊息`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

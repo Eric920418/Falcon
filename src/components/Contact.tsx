@@ -3,6 +3,7 @@
 import { motion } from 'motion/react'
 import { useRef, useState } from 'react'
 import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react'
+import { siteConfig } from '@/lib/seo/site-config'
 
 export function Contact() {
   const ref = useRef(null);
@@ -64,8 +65,8 @@ export function Contact() {
     {
       icon: Mail,
       title: "Email",
-      content: "26416387.re@gmail.com",
-      link: "mailto:26416387.re@gmail.com",
+      content: siteConfig.email,
+      link: `mailto:${siteConfig.email}`,
     },
     {
       icon: Phone,
