@@ -23,6 +23,7 @@ export function SitePageFooter() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/services/web-development" className="text-[#A8B6BC] hover:text-amber-500">網站建置</Link></li>
               <li><Link href="/services/ai-tools" className="text-[#A8B6BC] hover:text-amber-500">AI 工具開發</Link></li>
+              <li><Link href="/services/quant-trading" className="text-[#A8B6BC] hover:text-amber-500">量化交易系統開發</Link></li>
               <li><Link href="/pricing" className="text-[#A8B6BC] hover:text-amber-500">透明定價</Link></li>
             </ul>
           </div>

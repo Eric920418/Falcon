@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react'
 import { useRef, useState } from 'react'
-import { Globe, Code, Database, Brain, Smartphone } from 'lucide-react'
+import { Globe, Code, Database, Brain, Smartphone, CandlestickChart } from 'lucide-react'
 
 export function TechServices() {
   const ref = useRef(null);
@@ -43,6 +43,13 @@ export function TechServices() {
       description: '跨平台應用程式設計',
       details: ['iOS / Android', '跨平台開發', '互動體驗設計', 'APP維護更新'],
       number: '05'
+    },
+    {
+      icon: CandlestickChart,
+      title: '量化交易系統',
+      description: '證券・虛擬貨幣自動交易程式開發',
+      details: ['券商 / 交易所 API 串接', '策略回測引擎', '風控與監控模組', '原始碼交付・不代操'],
+      number: '06'
     }
   ];
 

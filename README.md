@@ -11,6 +11,7 @@
 - AI 工具開發
 - APP 與互動應用程式設計
 - **Telegram / LINE Bot 開發**（群組管理、廣告同步、排程貼文、入群認證、防 raid）
+- **量化／自動交易系統開發**（證券・虛擬貨幣，純軟體開發：串接券商／交易所 API、策略回測、風控監控、原始碼交付；不代操、不提供投資建議、不保證獲利）
 - 搜尋引擎優化（SEO）
 - **GEO 生成式引擎優化**（Generative Engine Optimization）- 讓 ChatGPT、Gemini 等 AI 優先引用您的品牌
 - **AEO 答案引擎優化**（Answer Engine Optimization）- 成為 Perplexity、Google AI 的首選答案來源
@@ -56,7 +57,7 @@ pnpm start
 │   ├── robots.ts                     # 動態 Robots.txt（含 AI 爬蟲規則）
 │   ├── opengraph-image.tsx           # 首頁 OG image 動態生成
 │   ├── globals.css                   # 全局樣式
-│   ├── services/[slug]/              # 8 個服務子頁（SEO/GEO/AEO/網站/AI 等）
+│   ├── services/[slug]/              # 9 個服務子頁（SEO/GEO/AEO/網站/AI/量化交易 等）
 │   ├── local/[slug]/                 # 6 個 local landing page
 │   ├── blog/                         # Blog index + blog/[slug] 動態文章頁
 │   ├── pricing/                      # 透明定價 index + pricing/[slug]
@@ -96,7 +97,7 @@ pnpm start
 │       │       └── item-list.ts      # portfolio 列表
 │       └── content/                  # 內容資料層（data-driven UI）
 │           ├── types.ts              # 共用 content schema
-│           ├── services/             # 8 項服務內容
+│           ├── services/             # 9 項服務內容
 │           ├── local.ts              # 6 個 local landing 內容
 │           ├── blog.ts               # 10 篇文章內容
 │           └── pricing.ts            # pricing + compare 內容
@@ -191,7 +192,7 @@ Portfolio 組件展示公司的專案作品，包含：
 
 | 路由群 | 路徑 | 數量 | 搜尋意圖 |
 | --- | --- | --- | --- |
-| 服務頁 | `/services/[slug]` | 8 | informational + commercial |
+| 服務頁 | `/services/[slug]` | 9 | informational + commercial |
 | 本地頁 | `/local/[slug]` | 6 | local SEO |
 | 部落格 | `/blog`、`/blog/[slug]` | 11 | informational + topical authority |
 | 定價頁 | `/pricing`、`/pricing/[slug]` | 4 | transactional |
@@ -199,6 +200,8 @@ Portfolio 組件展示公司的專案作品，包含：
 | 首頁 | `/` | 1 | navigational |
 
 每個頁面：獨立 metadata、獨立 OG、獨立 schema（透過 `lib/seo/schemas/*` 工廠產生）、獨立 canonical。
+
+> **合規紅線（量化交易服務頁）**：`/services/quant-trading` 一律維持「**軟體開發**」定位——交付程式、客戶以自有帳戶自行下單、本公司不碰資金。文案**禁止**出現代操、保證獲利、收益分潤、招攬資金等字眼（在台灣需金管會投顧／投信牌照，且會被 `pnpm lint:content` 擋）。該頁 `src/lib/content/services/quant-trading.ts` 內含「重要聲明：服務性質與風險告知」段落，修改文案時務必保留。
 
 ### Schema 架構（模組化、可擴展）
 
