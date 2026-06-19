@@ -20,6 +20,37 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: 30,
+    title: "ESCROWA 全球遊戲交易託管服務官網",
+    description:
+      "遊戲交易中間人暨跨國代購／代售服務的黑金科技風形象官網，品牌 ESCROWA。採 Laravel 12 自刻全站 CMS，客戶可自行增刪改前台所有動態內容（服務、費率、FAQ、成交案例、頁面區塊）。主視覺為純前端 canvas 程式生成的金色點陣地球，無需任何外部圖檔，中英雙語並具完整 SEO。",
+    tech: [
+      "Laravel 12",
+      "PHP 8.2",
+      "MySQL",
+      "Blade",
+      "Tailwind CSS v4",
+      "Canvas",
+      "commonmark",
+    ],
+    features: [
+      "自刻全站 CMS（8 模組內容管理）",
+      "中英雙語 i18n（/{locale} + hreflang）",
+      "金色點陣地球主視覺（純 canvas 生成）",
+      "成交案例多圖上傳",
+      "三服務交易流程與費率管理",
+      "聯絡表單（CSRF + honeypot + 限流）",
+    ],
+    highlights: [
+      "Tailwind CLI 編譯（不用 Vite），FTP 單檔部署 cPanel",
+      "完整 SEO（hreflang / JSON-LD Organization / OG image）",
+      "線上隱藏 stack trace、錯誤寫入後台可查的資安策略",
+    ],
+    image: "/ESCROWA.png",
+    url: "https://escrowa.com.tw/zh",
+    category: "企業官網",
+  },
+  {
     id: 23,
     title: "TellCraft AI 網站生成平台",
     description:
