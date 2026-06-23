@@ -148,6 +148,36 @@ pnpm start
 - **Hero 背景** - 工業網格 + 暖色光暈 + 大型漢字裝飾
 - **信任徽章** - 首屏展示「永久售後服務」與「快速交件保證」
 - **作品案例展示** - 包含 25+ 專案，支援分類篩選與展開詳情
+- **AI 語音客服區塊** - 首頁主打的新興服務 section（見下節）
+
+## 首頁區塊：AI 語音客服・智慧派單系統（新興服務）
+
+首頁在「技術開發」之後新增一個主打 section，向客戶宣傳本公司**已實際導入運行**的 AI 電話語音派單服務（電信級 SIP Trunk + OpenAI Realtime 即時語音 + 自動派單）。此為公司新增業務的對外門面。
+
+### 相關檔案
+
+- `src/components/AIVoiceDispatch.tsx` — section 本體（`id="ai-voice"`）
+- `app/page.tsx` — 在 `<TechServices />` 與 `<MarketingServices />` 之間引入 `<AIVoiceDispatch />`
+- `src/components/Navigation.tsx` — `navItems` 在「技術開發」後加入 `{ label: 'AI 語音', id: 'ai-voice' }`
+
+### 區塊內容
+
+- **標題區**：`AI Voice Agent` 標籤 + 脈動「新興服務」徽章 + 漸層標題「AI 語音客服／智慧派單系統」
+- **AI 對話示意卡**：模擬一通真實電話（來電狀態列 + 計時），左 AI／右客人的對話氣泡逐則動畫浮現（自強路近遠百 → 花蓮火車站），底部「已自動建單派車・車號 888・ETA 5 分鐘」結果條
+- **數據格**：24h 不打烊接聽／即時語音雙向對話／3 通路（電話・App・LINE）／0 漏接訂單
+- **功能卡（6）**：24h AI 真人對話、在地口音辨識、智慧即時派單、全通路整合、電信級串接、全程留痕可稽核
+- **CTA**：捲動至 `#contact` 的「預約 AI 語音方案」按鈕
+
+### 設計一致性
+
+完全沿用既有設計系統，未新增任何 CSS token 或全域 class：
+
+- 背景 `bg-[#16201F]`（比 TechServices 的 `#1E2A2E` 略深一階以做區隔）+ `.industrial-grid`
+- 沿用 `.falcon-card`、`.brand-line`、`.text-falcon-gradient`、`.falcon-btn-outline`
+- 標題字體 `var(--font-display)`（Noto Serif TC）、配色取自 globals.css 的 falcon 色票（`#6D8F96`／`#A8B6BC`／`#E0E5E8`／`#2D3B40`／`#344349`）
+- 動畫用 `motion/react` 的 `whileInView`（`once: true`），與 TechServices 同模式
+
+> 對話內容為示意，刻意呼應實際導入案例（GoGoCha 花蓮計程車）。若要改文案，編輯 `AIVoiceDispatch.tsx` 上方的 `conversation` / `features` / `stats` 三個常數陣列即可，不需動 JSX。
 
 ## 作品案例
 

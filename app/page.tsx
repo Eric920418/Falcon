@@ -6,6 +6,7 @@ import { Hero } from '@/components/Hero'
 import { About } from '@/components/About'
 import { Portfolio } from '@/components/Portfolio'
 import { TechServices } from '@/components/TechServices'
+import { AIVoiceDispatch } from '@/components/AIVoiceDispatch'
 import { MarketingServices } from '@/components/MarketingServices'
 import { ContentServices } from '@/components/ContentServices'
 import { Philosophy } from '@/components/Philosophy'
@@ -37,6 +38,7 @@ export default function HomePage() {
         <Portfolio />
         <About />
         <TechServices />
+        <AIVoiceDispatch />
         <MarketingServices />
         <ContentServices />
         <Philosophy />
