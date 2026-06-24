@@ -198,6 +198,7 @@ Portfolio 組件展示公司的專案作品，包含：
 - **invisible care 居家健康守護官網與 CMS** - 居家清潔六大服務品牌官網（https://needfix.com.tw/）（Section CMS 動態區塊、Before/After 對比圖、完整 SEO 實體圖、老人友善後台 UI）
 - **Telegram 雙群管理機器人 + 後台** - grammY + Vercel Pro 部署（主群→子群 fan-out 同步、入群題庫認證、OpenCC 簡體字守門、防 raid、QStash 排程貼文）
 - **ESCROWA 全球遊戲交易託管服務官網** - 遊戲交易中間人形象官網（https://escrowa.com.tw/zh）（Laravel 12 自刻 CMS、中英雙語、純 canvas 金色點陣地球、cPanel FTP 部署）
+- **GoGoCha 花蓮計程車品牌官網 + 自建派單後端** - 花蓮 24h 計程車隊官網（https://hualientaxi.taxi/）（與雙模式 App 同生態系；AI 接電話派車、車資試算真實 API、長輩友善無障礙；後端 SmartDispatcherV2 AI 派單、LINE Bot、跨車隊媒合分潤、完整營運後台）
 
 每個專案卡片包含：專案描述、核心功能、技術亮點
 

@@ -20,6 +20,38 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: 31,
+    title: "GoGoCha 花蓮計程車品牌官網 + 自建派單後端",
+    description:
+      "花蓮 24h 在地計程車隊的品牌官網，與司機／乘客雙模式 App 同屬一套生態系。官網主打「AI 接電話・三秒派車」，車資試算器直接串接後端真實費率 API（失敗自動 fallback 本地計算），並具長輩友善無障礙設計（A-/A+ 字級切換、WCAG AAA）。背後為自建 Express + PostgreSQL 後端：AI 智慧派單、LINE Bot 叫車、Socket.IO 即時通訊、跨車隊媒合分潤對帳，搭配完整營運管理後台。",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "Tailwind CSS v4",
+      "Express 5",
+      "PostgreSQL",
+      "Socket.io",
+      "OpenAI",
+      "Redis + BullMQ",
+    ],
+    features: [
+      "AI 接電話・三秒派車",
+      "車資試算器（真實 API + 本地 fallback）",
+      "長輩友善無障礙（A-/A+、WCAG AAA）",
+      "乘客 / 司機 / B2B 三受眾分眾頁",
+      "LINE Bot 叫車 + LIFF",
+      "Resend 表單寄信",
+    ],
+    highlights: [
+      "SmartDispatcherV2 AI 智慧派單 + Socket.io 即時通訊",
+      "跨車隊媒合平台（Partner 分潤規則 + BillingSnapshot 對帳）",
+      "完整營運後台（司機/乘客/訂單 CRUD、營運儀表板、即時監控、糾紛處理）",
+    ],
+    image: "/GoGoChaWebsite.png",
+    url: "https://hualientaxi.taxi/",
+    category: "企業官網",
+  },
+  {
     id: 30,
     title: "ESCROWA 全球遊戲交易託管服務官網",
     description:
