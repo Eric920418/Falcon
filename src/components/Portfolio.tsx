@@ -20,6 +20,38 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: 32,
+    title: "鴻緯商仲顧問 工業地產官網 + CMS",
+    description:
+      "北桃竹苗企業廠房・工業土地顧問的個人品牌官網與內容管理系統（顧問羅緯倫 Allen）。前台含精選物件、市場分析文章、結構化詢問表單（找廠房／地主委託／一般諮詢）；後台提供物件、文章、展示卡、服務、詢問、內容、設定完整 CRUD，業主可自助維運。採企業藏青視覺，物件支援分頁／篩選可放數百筆。",
+    tech: [
+      "Next.js 15",
+      "React 18",
+      "TypeScript",
+      "Prisma 7",
+      "Neon PostgreSQL",
+      "NextAuth",
+      "Vercel Blob",
+      "Zod",
+    ],
+    features: [
+      "精選物件列表（售/租篩選、分頁、可放數百筆）",
+      "市場分析文章 CMS",
+      "結構化詢問表單（找廠房/委託/一般諮詢）",
+      "Resend Email 雙向通知（顧問 + 客戶自動回覆）",
+      "個資法同意 + 隱私權政策頁",
+      "後台老人友善 UI",
+    ],
+    highlights: [
+      "Prisma migrate 版本化遷移（禁用 accept-data-loss）",
+      "Zod 前後端共用驗證 + 全站錯誤邊界（錯誤完整顯示前端）",
+      "RealEstateAgent JSON-LD 實體圖 + sitemap + GEO（llms.txt）",
+    ],
+    image: "/AllenLo.png",
+    url: "https://allenlo.com.tw/",
+    category: "企業官網",
+  },
+  {
     id: 31,
     title: "GoGoCha 花蓮計程車品牌官網 + 自建派單後端",
     description:
