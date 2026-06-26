@@ -92,7 +92,13 @@ const globalSchemas = [
   professionalServiceSchema,
 ]
 
-const gtmId = process.env.NEXT_PUBLIC_GTM_ID
+// NEXT_PUBLIC_GTM_ID 在 build 時被字串替換進 inline <script>。
+// 若值挾帶換行/引號等雜訊（例如貼進 Vercel env 時多了結尾換行），
+// 會讓 JS 字串字面值斷行 → Uncaught SyntaxError，導致全站 GTM/GA 失效，
+// 同時也是 script injection 破口。故先 trim 再用 GTM-XXXX 格式驗證，
+// 任何不符格式的值一律不注入。
+const rawGtmId = process.env.NEXT_PUBLIC_GTM_ID?.trim()
+const gtmId = rawGtmId && /^GTM-[A-Z0-9]+$/i.test(rawGtmId) ? rawGtmId : undefined
 
 export default function RootLayout({
   children,

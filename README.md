@@ -375,6 +375,9 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 
 未設定時 GTM 不會載入，不影響開發環境。
 
+**ID 會先 `trim()` 再以 `/^GTM-[A-Z0-9]+$/i` 驗證格式，不符者一律不注入。**
+原因：`NEXT_PUBLIC_*` 是 build 時被字串替換進 inline `<script>`，若環境變數挾帶換行/引號（例如貼進 Vercel env 欄位時多了結尾換行 `GTM-XXXX\n`），會讓 inline JS 字串字面值斷行，瀏覽器丟 `Uncaught SyntaxError: Failed to execute 'appendChild' on 'Node': Invalid or unexpected token`，導致**全站 GTM/GA 追蹤失效**，同時是 script injection 破口。驗證後即使環境變數髒掉也不會炸；但仍應到 Vercel 後台確認該變數**值的前後無多餘空白或換行**，改完需重新部署（build 時才會重新替換）。
+
 ### 待完成
 - [ ] 申請並設定 Google Business Profile（本地 SEO 關鍵；含真實評論後可重新加入 AggregateRating，連結至 GBP）
 - [ ] 申請 Google Search Console 並提交新版 sitemap
