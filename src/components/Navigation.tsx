@@ -43,6 +43,7 @@ export function Navigation() {
     { label: '作品案例', id: 'portfolio' },
     { label: '技術開發', id: 'tech-services' },
     { label: 'AI 語音', id: 'ai-voice' },
+    { label: '遊戲製作', id: 'game-services' },
     { label: '數位行銷', id: 'marketing-services' },
     { label: '內容創作', id: 'content-services' },
     { label: '核心理念', id: 'philosophy' },

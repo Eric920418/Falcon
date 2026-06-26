@@ -7,6 +7,7 @@ import { About } from '@/components/About'
 import { Portfolio } from '@/components/Portfolio'
 import { TechServices } from '@/components/TechServices'
 import { AIVoiceDispatch } from '@/components/AIVoiceDispatch'
+import { GameServices } from '@/components/GameServices'
 import { MarketingServices } from '@/components/MarketingServices'
 import { ContentServices } from '@/components/ContentServices'
 import { Philosophy } from '@/components/Philosophy'
@@ -39,6 +40,7 @@ export default function HomePage() {
         <About />
         <TechServices />
         <AIVoiceDispatch />
+        <GameServices />
         <MarketingServices />
         <ContentServices />
         <Philosophy />

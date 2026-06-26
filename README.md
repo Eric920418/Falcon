@@ -11,6 +11,7 @@
 - AI 工具開發
 - APP 與互動應用程式設計
 - **Telegram / LINE Bot 開發**（群組管理、廣告同步、排程貼文、入群認證、防 raid）
+- **遊戲製作**（AI 互動遊戲、跨平台 App、角色對話與情緒系統、內容安全與審核）
 - **量化／自動交易系統開發**（證券・虛擬貨幣，純軟體開發：串接券商／交易所 API、策略回測、風控監控、原始碼交付；不代操、不提供投資建議、不保證獲利）
 - 搜尋引擎優化（SEO）
 - **GEO 生成式引擎優化**（Generative Engine Optimization）- 讓 ChatGPT、Gemini 等 AI 優先引用您的品牌
@@ -149,6 +150,7 @@ pnpm start
 - **信任徽章** - 首屏展示「永久售後服務」與「快速交件保證」
 - **作品案例展示** - 包含 25+ 專案，支援分類篩選與展開詳情
 - **AI 語音客服區塊** - 首頁主打的新興服務 section（見下節）
+- **遊戲製作區塊** - 首頁主打的新興服務 section，以自研作品《Alive》為實績（見下節）
 
 ## 首頁區塊：AI 語音客服・智慧派單系統（新興服務）
 
@@ -179,6 +181,34 @@ pnpm start
 
 > 對話內容為示意，刻意呼應實際導入案例（GoGoCha 花蓮計程車）。若要改文案，編輯 `AIVoiceDispatch.tsx` 上方的 `conversation` / `features` / `stats` 三個常數陣列即可，不需動 JSX。
 
+## 首頁區塊：遊戲製作・AI 互動遊戲開發（新興服務）
+
+首頁在「AI 語音」之後新增第二個新興業務 section，宣傳本公司的**遊戲製作**能力，並以自研作品《Alive》（具真實情緒的 AI 角色戀愛遊戲，已上架 iOS／Android 雙平台，Google Play `com.aliverole.app`）為實績佐證。
+
+### 相關檔案
+
+- `src/components/GameServices.tsx` — section 本體（`id="game-services"`）
+- `app/page.tsx` — 在 `<AIVoiceDispatch />` 與 `<MarketingServices />` 之間引入 `<GameServices />`
+- `src/components/Navigation.tsx` — `navItems` 在「AI 語音」後加入 `{ label: '遊戲製作', id: 'game-services' }`
+
+### 區塊內容
+
+- **標題區**：`Game Production` 標籤 + 脈動「新興服務」徽章 + 漸層標題「遊戲製作／AI 互動遊戲開發」，副標點明《Alive》已上架雙平台
+- **AI 角色對話示意卡**：模擬玩家與 AI 角色的戀愛互動（角色狀態列 + 好感度 + 輸入中），左角色／右玩家對話氣泡逐則動畫浮現，底部「好感 +3・信任 +2・解鎖角色主動私訊」結果條
+- **數據格**：雙平台（iOS・Android）／15 角色人格／7 維情緒狀態／AI 即時生成劇照
+- **功能卡（6）**：AI 角色對話系統、情緒與關係系統、跨平台上架、內容安全與審核、即時語音與圖像、即時後端與推播
+- **CTA**：捲動至 `#contact` 的「預約遊戲製作方案」按鈕
+
+### 設計一致性
+
+完全沿用既有設計系統，未新增任何 CSS token 或全域 class：
+
+- 背景 `bg-[#1E2A2E]`（夾在 AIVoice 的 `#16201F` 與 Marketing 的 `#2D3B40/50` 之間做漸層階）+ `.industrial-grid`
+- 沿用 `.falcon-card`、`.brand-line`、`.text-falcon-gradient`、`.falcon-btn-outline`，版型與 `AIVoiceDispatch.tsx` 一致
+- 動畫用 `motion/react` 的 `whileInView`（`once: true`），與其他 section 同模式
+
+> 對話內容為示意。若要改文案，編輯 `GameServices.tsx` 上方的 `conversation` / `features` / `stats` 三個常數陣列即可，不需動 JSX。
+
 ## 作品案例
 
 Portfolio 組件展示公司的專案作品，包含：
@@ -200,6 +230,7 @@ Portfolio 組件展示公司的專案作品，包含：
 - **ESCROWA 全球遊戲交易託管服務官網** - 遊戲交易中間人形象官網（https://escrowa.com.tw/zh）（Laravel 12 自刻 CMS、中英雙語、純 canvas 金色點陣地球、cPanel FTP 部署）
 - **GoGoCha 花蓮計程車品牌官網 + 自建派單後端** - 花蓮 24h 計程車隊官網（https://hualientaxi.taxi/）（與雙模式 App 同生態系；AI 接電話派車、車資試算真實 API、長輩友善無障礙；後端 SmartDispatcherV2 AI 派單、LINE Bot、跨車隊媒合分潤、完整營運後台）
 - **鴻緯商仲顧問 工業地產官網 + CMS** - 北桃竹苗企業廠房・工業土地顧問官網（https://allenlo.com.tw/）（精選物件分頁篩選、市場分析文章、結構化詢問表單、Resend 雙向通知；後台完整 CRUD、Prisma migrate 版本化遷移、Zod 前後端共用驗證、企業藏青視覺）
+- **Alive AI 互動戀愛遊戲（雙平台）** - iOS＋Android 上架（Google Play com.aliverole.app）（Convex + 多模型編排 Claude/Gemini/OpenAI、7 維情緒系統、配對→分手關係生命週期、AI 即時生成劇照、雙平台內購）
 
 每個專案卡片包含：專案描述、核心功能、技術亮點
 

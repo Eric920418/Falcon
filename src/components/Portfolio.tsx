@@ -20,6 +20,38 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: 33,
+    title: "Alive AI 互動戀愛遊戲（雙平台）",
+    description:
+      "AI 角色互動戀愛養成遊戲，iOS＋Android 雙平台上架。玩家與具真實情緒的 AI 角色從配對、聊天、好感升溫到分手，體驗完整關係生命週期。15 名角色各有深度人格設定與 7 維隱藏情緒狀態，具記憶、主動傳訊與擬真回覆節奏；多模型編排（Claude 敘事＋Gemini 效率＋OpenAI 審核/生圖），即時語音配音與 AI 即時生成劇照。",
+    tech: [
+      "Next.js 15",
+      "TypeScript",
+      "Convex",
+      "Claude API",
+      "Gemini",
+      "OpenAI",
+      "Firebase FCM",
+      "StoreKit / Google Play Billing",
+    ],
+    features: [
+      "AI 角色即時對話（多模型編排）",
+      "7 維情緒隱藏狀態系統",
+      "配對→交往→分手關係生命週期",
+      "三層記憶（摘要/事實/衰減）",
+      "AI 即時生成角色劇照",
+      "雙平台 App 內購串接",
+    ],
+    highlights: [
+      "多層內容安全防護（審核＋越獄偵測＋輸出守門＋判官）",
+      "Convex 即時同步 + FCM 角色主動傳訊",
+      "擬真回覆節奏（不秒讀秒回）與冷讀互動",
+    ],
+    image: "/Alive.png",
+    url: "https://play.google.com/store/apps/details?id=com.aliverole.app",
+    category: "遊戲製作",
+  },
+  {
     id: 32,
     title: "鴻緯商仲顧問 工業地產官網 + CMS",
     description:
@@ -770,7 +802,7 @@ const projects: Project[] = [
   },
 ];
 
-const categories = ['全部', '電商平台', '企業官網', '形象網站', 'App 開發', 'AI 應用', 'Bot / 自動化', '學術系統', '其他']
+const categories = ['全部', '電商平台', '企業官網', '形象網站', 'App 開發', 'AI 應用', '遊戲製作', 'Bot / 自動化', '學術系統', '其他']
 
 export function Portfolio() {
   const [selectedCategory, setSelectedCategory] = useState('全部')
