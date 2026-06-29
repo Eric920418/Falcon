@@ -2,12 +2,42 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ChevronDown } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
+
+const serviceLinks = [
+  { label: 'SEO 搜尋引擎優化', href: '/services/seo' },
+  { label: 'GEO 生成式引擎優化', href: '/services/geo' },
+  { label: 'AEO 答案引擎優化', href: '/services/aeo' },
+  { label: '網站建置與軟體開發', href: '/services/web-development' },
+  { label: 'AI 工具開發', href: '/services/ai-tools' },
+  { label: '數位廣告投放', href: '/services/digital-ads' },
+  { label: '社群經營', href: '/services/social-media' },
+  { label: '短影音與影片製作', href: '/services/video' },
+  { label: '量化交易系統開發', href: '/services/quant-trading' },
+]
+
+type NavItem =
+  | { label: string; kind: 'scroll'; id: string }
+  | { label: string; kind: 'link'; href: string }
+  | { label: string; kind: 'dropdown'; items: { label: string; href: string }[] }
+
+const navItems: NavItem[] = [
+  { label: '首頁', kind: 'scroll', id: 'hero' },
+  { label: '服務', kind: 'dropdown', items: serviceLinks },
+  { label: '定價', kind: 'link', href: '/pricing' },
+  { label: '部落格', kind: 'link', href: '/blog' },
+  { label: '作品案例', kind: 'scroll', id: 'portfolio' },
+  { label: '關於我們', kind: 'scroll', id: 'about' },
+  { label: '聯絡我們', kind: 'scroll', id: 'contact' },
+]
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
 
@@ -29,26 +59,18 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const closeMobile = () => {
+    setIsMobileMenuOpen(false);
+    setMobileServicesOpen(false);
+  };
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
     }
+    closeMobile();
   };
-
-  const navItems = [
-    { label: '首頁', id: 'hero' },
-    { label: '關於我們', id: 'about' },
-    { label: '作品案例', id: 'portfolio' },
-    { label: '技術開發', id: 'tech-services' },
-    { label: 'AI 語音', id: 'ai-voice' },
-    { label: '遊戲製作', id: 'game-services' },
-    { label: '數位行銷', id: 'marketing-services' },
-    { label: '內容創作', id: 'content-services' },
-    { label: '核心理念', id: 'philosophy' },
-    { label: '聯絡我們', id: 'contact' },
-  ];
 
   return (
     <motion.nav
@@ -86,20 +108,73 @@ export function Navigation() {
 
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center gap-1">
-          {navItems.map((item, index) => (
-            <motion.button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className="relative px-4 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8] transition-colors group"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-            >
-              {item.label}
-              {/* 底線動畫 */}
-              <span className="absolute bottom-1 left-4 right-4 h-px bg-[#5F808B] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-            </motion.button>
-          ))}
+          {navItems.map((item) => {
+            if (item.kind === 'dropdown') {
+              return (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => setServicesOpen(true)}
+                  onMouseLeave={() => setServicesOpen(false)}
+                >
+                  <button className="flex items-center gap-1 px-4 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8] transition-colors">
+                    {item.label}
+                    <ChevronDown
+                      size={14}
+                      className={`transition-transform ${servicesOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                  <AnimatePresence>
+                    {servicesOpen && (
+                      <motion.div
+                        className="absolute left-0 top-full w-64 pt-2"
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        <div className="rounded-lg border border-[#344349]/60 bg-[#1E2A2E] py-2 shadow-xl">
+                          {item.items.map((s) => (
+                            <Link
+                              key={s.href}
+                              href={s.href}
+                              className="block px-4 py-2 text-sm text-[#A8B6BC] hover:text-amber-500 hover:bg-[#2D3B40]/50 transition-colors"
+                            >
+                              {s.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            }
+
+            if (item.kind === 'link') {
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="relative px-4 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8] transition-colors group"
+                >
+                  {item.label}
+                  <span className="absolute bottom-1 left-4 right-4 h-px bg-[#5F808B] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+                </Link>
+              );
+            }
+
+            return (
+              <button
+                key={item.label}
+                onClick={() => scrollToSection(item.id)}
+                className="relative px-4 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8] transition-colors group"
+              >
+                {item.label}
+                <span className="absolute bottom-1 left-4 right-4 h-px bg-[#5F808B] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+              </button>
+            );
+          })}
         </div>
 
         {/* CTA Button - Desktop */}
@@ -127,37 +202,78 @@ export function Navigation() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="lg:hidden fixed inset-0 top-[72px] bg-[#1E2A2E]"
+            className="lg:hidden fixed inset-0 top-[72px] bg-[#1E2A2E] overflow-y-auto"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="px-6 py-8 flex flex-col gap-2">
-              {navItems.map((item, index) => (
-                <motion.button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className="flex items-center gap-4 py-4 text-left text-lg text-[#C5CED2] hover:text-[#A8B6BC] transition-colors border-b border-[#344349]/50"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                >
-                  <span className="w-6 text-[#5F808B] text-sm">0{index + 1}</span>
-                  <span style={{ fontFamily: 'var(--font-display)' }}>{item.label}</span>
-                </motion.button>
-              ))}
+            <div className="px-6 py-8 flex flex-col gap-1 pb-24">
+              {navItems.map((item) => {
+                if (item.kind === 'dropdown') {
+                  return (
+                    <div key={item.label} className="border-b border-[#344349]/50">
+                      <button
+                        onClick={() => setMobileServicesOpen((v) => !v)}
+                        className="w-full flex items-center justify-between py-4 text-left text-lg text-[#C5CED2] hover:text-[#A8B6BC] transition-colors"
+                      >
+                        <span style={{ fontFamily: 'var(--font-display)' }}>{item.label}</span>
+                        <ChevronDown
+                          size={18}
+                          className={`transition-transform ${mobileServicesOpen ? 'rotate-180' : ''}`}
+                        />
+                      </button>
+                      {mobileServicesOpen && (
+                        <div className="pb-3 pl-3 flex flex-col">
+                          {item.items.map((s) => (
+                            <Link
+                              key={s.href}
+                              href={s.href}
+                              onClick={closeMobile}
+                              className="py-2.5 text-[#A8B6BC] hover:text-amber-500 transition-colors"
+                            >
+                              {s.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+
+                if (item.kind === 'link') {
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={closeMobile}
+                      className="py-4 text-lg text-[#C5CED2] hover:text-[#A8B6BC] transition-colors border-b border-[#344349]/50"
+                      style={{ fontFamily: 'var(--font-display)' }}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
+
+                return (
+                  <button
+                    key={item.label}
+                    onClick={() => scrollToSection(item.id)}
+                    className="py-4 text-left text-lg text-[#C5CED2] hover:text-[#A8B6BC] transition-colors border-b border-[#344349]/50"
+                    style={{ fontFamily: 'var(--font-display)' }}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
 
               {/* Mobile CTA */}
-              <motion.button
+              <button
                 className="falcon-btn-primary mt-6 w-full text-center"
                 onClick={() => scrollToSection('contact')}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
               >
                 立即諮詢
-              </motion.button>
+              </button>
             </div>
           </motion.div>
         )}
