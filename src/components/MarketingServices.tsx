@@ -2,19 +2,31 @@
 
 import { motion } from 'motion/react'
 import { useRef } from 'react'
+import Link from 'next/link'
 import { Search, TrendingUp, Users, MessageSquare, Bot, Sparkles } from 'lucide-react'
+
+interface MarketingService {
+  icon: typeof Search
+  title: string
+  subtitle: string
+  description: string
+  features: string[]
+  number: string
+  href?: string
+}
 
 export function MarketingServices() {
   const ref = useRef(null);
 
-  const services = [
+  const services: MarketingService[] = [
     {
       icon: Search,
       title: 'SEO 優化',
       subtitle: 'Search Engine Optimization',
       description: '提升網站在搜尋引擎的排名',
       features: ['關鍵字策略', 'SEO技術優化', '內容優化', '數據追蹤分析'],
-      number: '01'
+      number: '01',
+      href: '/services/seo'
     },
     {
       icon: Sparkles,
@@ -22,7 +34,8 @@ export function MarketingServices() {
       subtitle: 'Generative Engine Optimization',
       description: '讓 AI 引擎優先引用您的品牌內容',
       features: ['ChatGPT/Gemini 曝光優化', 'AI 引用策略', 'LLM 內容結構化', '品牌權威建立'],
-      number: '02'
+      number: '02',
+      href: '/services/geo'
     },
     {
       icon: Bot,
@@ -30,7 +43,8 @@ export function MarketingServices() {
       subtitle: 'Answer Engine Optimization',
       description: '成為 AI 搜尋的首選答案來源',
       features: ['Google AI 優化', '結構化答案佈局', 'E-E-A-T 權威提升', '語意搜尋優化'],
-      number: '03'
+      number: '03',
+      href: '/services/aeo'
     },
     {
       icon: TrendingUp,
@@ -38,7 +52,8 @@ export function MarketingServices() {
       subtitle: 'Digital Advertising',
       description: '精準觸及目標受眾',
       features: ['Google Ads', 'Facebook/IG廣告', '關鍵字廣告', 'ROI優化'],
-      number: '04'
+      number: '04',
+      href: '/services/digital-ads'
     },
     {
       icon: Users,
@@ -46,7 +61,8 @@ export function MarketingServices() {
       subtitle: 'Social Media Management',
       description: '建立品牌社群影響力',
       features: ['內容策略規劃', '社群互動管理', 'Telegram 群組管理 Bot', '粉絲經營'],
-      number: '05'
+      number: '05',
+      href: '/services/social-media'
     },
     {
       icon: MessageSquare,
@@ -144,6 +160,17 @@ export function MarketingServices() {
                         </li>
                       ))}
                     </ul>
+
+                    {/* 導流至服務詳細頁（hub → detail） */}
+                    {service.href && (
+                      <Link
+                        href={service.href}
+                        className="mt-6 inline-flex items-center gap-1.5 text-sm text-[#A8B6BC] hover:text-amber-500 transition-colors"
+                      >
+                        了解 {service.title} 服務內容與定價
+                        <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+                      </Link>
+                    )}
                   </div>
 
                   {/* 底部裝飾線 */}

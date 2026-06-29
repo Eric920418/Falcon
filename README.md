@@ -375,13 +375,34 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 
 未設定時 GTM 不會載入，不影響開發環境。
 
+**ID 會先 `trim()` 再以 `/^GTM-[A-Z0-9]+$/i` 驗證格式，不符者一律不注入。**
+原因：`NEXT_PUBLIC_*` 是 build 時被字串替換進 inline `<script>`，若環境變數挾帶換行/引號（例如貼進 Vercel env 欄位時多了結尾換行 `GTM-XXXX\n`），會讓 inline JS 字串字面值斷行，瀏覽器丟 `Uncaught SyntaxError: Failed to execute 'appendChild' on 'Node': Invalid or unexpected token`，導致**全站 GTM/GA 追蹤失效**，同時是 script injection 破口。驗證後即使環境變數髒掉也不會炸；但仍應到 Vercel 後台確認該變數**值的前後無多餘空白或換行**，改完需重新部署（build 時才會重新替換）。
+
 ### 待完成
 - [ ] 申請並設定 Google Business Profile（本地 SEO 關鍵；含真實評論後可重新加入 AggregateRating，連結至 GBP）
 - [ ] 申請 Google Search Console 並提交新版 sitemap
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 - [ ] 為 8 個 service 子頁加上獨立 OG image（目前只有首頁有動態 OG）
-- [ ] 補真實客戶 case study 細節（接手日期、量化成果），把對應頁面 qualityTier 升為 'production'
+- [ ] 把 draft 頁面逐批升級為 production（內容深化 + 真實 E-E-A-T，流程見「內容品質護欄」）
+  - [x] 批次 1：`services/seo`、`services/geo`、`services/aeo`（2026-06-29；補 HowTo schema、SEO/GEO/AEO 決策框架、誠實限制聲明、「自己官網即實證」訊號）
+  - [x] 批次 2：`local/taoyuan-seo`、`local/taoyuan-web-design`（2026-06-29；以現有 name-only 案例深化、補在地觀點與 GBP 重點。case study 仍為 name-only，取得客戶授權後可升 metrics-only/full 再強化）
+  - [x] 批次 3：其餘 service 子頁 web-development／ai-tools／digital-ads／social-media／video（2026-06-29；補 HowTo schema、觀點段落、真實案例訊號。dev/ai 引用 GoGoCha・Alive・中醫診所等真實案例；ads/social/video 無公開成效數據故只寫方法與流程、不編數字。首頁 MarketingServices 卡片內鏈同步點亮 digital-ads／social-media）
+  - [x] 批次 5：pricing 3 頁（web-development／seo／ai-development）+ compare（2026-06-29；價格已半價、compare「重疊 60%」軟化為「大部分重疊」、升 production）
+  - [x] 批次 4：blog 10 篇（2026-06-29；內容已具方法論與誠實觀點，修正 3 篇與新價/門檻不一致處〔seo-vs-geo-vs-aeo 預算建議、ai-customer-service-cost 自建 MVP 與維護費、how-we-pick-clients SEO 門檻〕、軟化「60%」後全數升 production）
+
+**✅ 全站 0 draft：所有 service／local／blog／pricing／compare 頁面皆 production，sitemap 收錄數 ~2 → 32。**
+  - [x] 剩餘在地頁：台北數位行銷／台北 SEO／新北 SEO／新竹網頁設計（2026-06-29；各補在地觀點段落、軟化一處未佐證宣稱、升 production。6 個 local 頁全 production）
+- [x] 內鏈強化（2026-06-29）：首頁 MarketingServices／TechServices／ContentServices 卡片連到對應 production 服務頁；子頁 footer「本地服務」補桃園網頁設計。**首頁仍用社群版 footer、未連 local 頁**（local 頁靠子頁 footer 取得內鏈，如需更強可考慮首頁加「服務地區」或讓首頁共用 SitePageFooter）。
+- [ ] 補真實客戶 case study 細節（接手日期、量化成果、客戶授權），強化上述已升 production 的頁面
 - [ ] 申請 Wikidata 條目強化 GEO 訊號
+
+> **2026-06-29 全站定價調整（一律半價）**：所有「隼訊服務費」砍半，已同步更新全站每個價格出現點 — 9 個服務頁 `pricing[]` 與 `priceMin`、服務頁／在地頁 FAQ 文字價、`pricing.ts`（4 定價頁 + compare 起價表 + 預算建議）、`local-business.ts` 的 OfferCatalog 硬寫價（schema 同步）、`llms.txt`/`llms-full.txt`、`site-config.ts` 的 `priceRange`（`$$-$$$` → `$-$$`）。
+>
+> **刻意未砍**（非隼訊服務費）：① AI 工具的 **API 費用**（OpenAI/Anthropic 實際用量成本）；② 廣告 **最低投放預算**（客戶投在平台上的錢、關乎演算法樣本數）；③ 廣告 **抽成 15-25%**（代操抽成率，砍半不合理）。
+>
+> **連帶誠信修正**：移除 `llms-full.txt` 中「佑羲人力 月自然流量 +400%」（未授權、無來源）、「藍海窗口期 / GEO <5%」「完全不存在」「重疊約 60%」等與正式頁面文案矛盾的 AI-slop 用語；並把「30,000 是最低有效門檻」改為與新價一致（否則自打臉）。
+>
+> **待你確認的宣稱**（我未動，可能需佐證或更新）：`llms-full.txt` 的「Lighthouse SEO 100 分基準」「台灣最早全面導入 GEO 的行銷公司之一」「比台北同等品質低 25-30%」「比 Intercom AI 省 70%+」。
 
 ## 內容品質護欄
 

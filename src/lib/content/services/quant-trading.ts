@@ -107,27 +107,27 @@ export const quantTradingService: ServiceContent = {
   pricing: [
     {
       name: '策略回測與雛型',
-      price: '80,000',
+      price: '40,000',
       unit: '專案',
       includes: ['單一策略回測報告', '可運行雛型程式', '模擬交易驗證', '原始碼交付'],
       bestFor: '想先驗證策略可行性',
     },
     {
       name: '客製化自動交易系統',
-      price: '250,000',
+      price: '125,000',
       unit: '專案起',
       includes: ['完整下單 / 風控 / 監控模組', '券商或交易所 API 串接', '監控儀表板與告警', '原始碼交付與上線部署'],
       bestFor: '已有明確策略、要正式上線',
     },
     {
       name: '系統維護與監控',
-      price: '30,000',
+      price: '15,000',
       unit: '月',
       includes: ['監控告警維運', 'API 變更維護', '策略參數調整', '不含投資建議'],
       bestFor: '系統上線後的持續維運',
     },
   ],
   serviceType: '程式交易系統開發',
-  priceMin: '80000',
+  priceMin: '40000',
   priceUnit: '專案',
 }
