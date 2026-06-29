@@ -13,7 +13,7 @@ export const blogPosts: Record<string, BlogContent> = {
     keywords: ['GEO', 'GEO 怎麼做', 'GEO 完整指南', 'AI 搜尋優化', '生成式引擎優化'],
     datePublished,
     reviewedByRole,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intent: 'informational',
     intro:
       'GEO（Generative Engine Optimization）是針對 ChatGPT、Claude、Gemini、Perplexity 等生成式 AI 搜尋的內容優化。傳統 SEO 競爭的是 Google 排名，GEO 競爭的是「用戶問 AI 時，AI 是否會講出你的品牌」。本文是我們實際在做的工作筆記，不討論未經驗證的假設。',
@@ -62,7 +62,7 @@ export const blogPosts: Record<string, BlogContent> = {
     keywords: ['SEO GEO AEO', 'SEO vs GEO', 'AEO 是什麼', 'GEO 是什麼', '搜尋優化差異'],
     datePublished,
     reviewedByRole,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intent: 'informational',
     intro:
       '這三個縮寫常被混用，但目標、訊號、評量標準都不同。本文用最簡單方式釐清，並提供「預算有限時該優先做哪一個」的判斷依據。',
@@ -85,16 +85,16 @@ export const blogPosts: Record<string, BlogContent> = {
         heading: '預算有限時的優先順序',
         body: '這是我們對中小企業客戶常給的建議：',
         items: [
-          '預算 3 萬 / 月以下：先做 SEO（手法最成熟、效果最可預測）',
-          '預算 5 萬 / 月：SEO 為主，加部分 GEO 工作（為 AI 搜尋時代鋪路）',
-          '預算 10 萬 / 月以上：可以三者整合進行',
+          '預算 1.5 萬 / 月以下：先做 SEO（手法最成熟、效果最可預測）',
+          '預算 2.5 萬 / 月：SEO 為主，加部分 GEO 工作（為 AI 搜尋時代鋪路）',
+          '預算 5 萬 / 月以上：可以三者整合進行',
         ],
       },
     ],
     faq: [
       {
         question: 'GEO 跟 AEO 重疊很多嗎？',
-        answer: '工作項目約 60% 重疊（兩者都需要 schema、內容結構化、權威性建立）。建議整合執行避免重複投資。',
+        answer: '工作項目大部分重疊（兩者都需要 schema、內容結構化、權威性建立）。建議整合執行避免重複投資。',
       },
     ],
     relatedServices: ['seo', 'geo', 'aeo'],
@@ -108,7 +108,7 @@ export const blogPosts: Record<string, BlogContent> = {
     keywords: ['Schema.org', '結構化資料', 'JSON-LD', 'LocalBusiness schema', 'FAQ schema'],
     datePublished,
     reviewedByRole,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intent: 'informational',
     intro:
       'Schema.org 結構化資料是搜尋引擎理解網站內容的工具。沒部署 schema 不等於完全沒 SEO，但會錯失多數 Rich Results、AI 引用機會、Knowledge Graph 條目。',
@@ -160,7 +160,7 @@ export const blogPosts: Record<string, BlogContent> = {
     keywords: ['Perplexity', 'Perplexity 排名', 'AEO 實作', '答案引擎優化'],
     datePublished,
     reviewedByRole,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intent: 'informational',
     intro:
       'Perplexity 不只回答問題，還會列出引用來源。被列為來源 = 流量 + 品牌權威訊號。本文整理我們觀察到 Perplexity 偏好的內容特徵。',
@@ -206,7 +206,7 @@ export const blogPosts: Record<string, BlogContent> = {
     keywords: ['Google AI Overview', 'AI Overview 優化', 'SGE', 'Search Generative Experience'],
     datePublished,
     reviewedByRole,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intent: 'informational',
     intro:
       'Google AI Overview（前身 SGE）會在搜尋結果頁上方直接顯示 AI 生成的答案。對 SEO 的影響是：用戶可能在不點進任何網站的情況下得到答案。本文討論如何在這個變化下保持流量。',
@@ -250,7 +250,7 @@ export const blogPosts: Record<string, BlogContent> = {
     keywords: ['網站建置費用', '網頁設計費用', '網站架設多少錢', '網站報價'],
     datePublished,
     reviewedByRole,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intent: 'transactional',
     intro:
       '網站建置費用差距很大。本文只談「實際費用包含什麼」，不貶低任何特定廠商或工具。',
@@ -308,7 +308,7 @@ export const blogPosts: Record<string, BlogContent> = {
     keywords: ['SEO 沒效果', 'SEO 錯誤', '技術 SEO', 'SEO 問題'],
     datePublished,
     reviewedByRole,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intent: 'informational',
     intro:
       'SEO 沒見到變化，多數情況不是內容問題，是技術面的基本設定有錯。本文整理我們接手新客戶時最常發現的問題類型。',
@@ -353,7 +353,7 @@ export const blogPosts: Record<string, BlogContent> = {
     keywords: ['AI 客服', 'AI 客服費用', '聊天機器人', 'Intercom AI', 'AI 客服自建'],
     datePublished,
     reviewedByRole,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intent: 'commercial',
     intro:
       'AI 客服是 2026 年企業導入 AI 最常見的切入點。但「自建」與「用 SaaS」的長期成本差距可能很大，本文整理可參考的成本結構（實際費用依授權方案、用量而定）。',
@@ -371,9 +371,9 @@ export const blogPosts: Record<string, BlogContent> = {
         heading: '自建 AI 客服的成本結構',
         body: '',
         items: [
-          'MVP 開發：一次性 10-15 萬',
-          'AI API 費用：每月 5,000-30,000（依對話量、模型選擇）',
-          '維護費：每月 1-3 萬（可選包月或按工時）',
+          'MVP 開發：一次性 5-7.5 萬',
+          'AI API 費用：每月 5,000-30,000（API 為實際用量成本，照原價計）',
+          '維護費：每月 0.5-1.5 萬（可選包月或按工時）',
         ],
       },
       {
@@ -415,7 +415,7 @@ export const blogPosts: Record<string, BlogContent> = {
     keywords: ['SEO 內容', '內容行銷', 'E-E-A-T', '內容品質'],
     datePublished,
     reviewedByRole,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intent: 'informational',
     intro:
       '「內容是國王」這句話被講爛了，但什麼算好內容沒有統一答案。本文記錄我們在實際接案時對「可生產 / 不可生產」的判斷標準。',
@@ -454,7 +454,7 @@ export const blogPosts: Record<string, BlogContent> = {
     keywords: ['行銷公司選擇', '行銷公司合作', '不接哪些案'],
     datePublished,
     reviewedByRole,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intent: 'informational',
     intro:
       '多數行銷公司網站只寫「為什麼選我們」，少數會寫「什麼客戶不該找我們」。我們認為後者對雙方比較公平，這篇是我們的版本。',
@@ -467,7 +467,7 @@ export const blogPosts: Record<string, BlogContent> = {
           '預算明顯不符需求（例：5 萬預算要做電商 + 會員 + ERP 整合）',
           '需要保證排名 / 保證 ROAS 的客戶',
           '希望用 AI 大量灌水內容衝排名的客戶',
-          '預算極低（如 SEO 月費低於 3 萬），我們無法做出真正有效的工作',
+          '預算極低（如 SEO 月費低於 1.5 萬），我們無法做出真正有效的工作',
         ],
       },
       {

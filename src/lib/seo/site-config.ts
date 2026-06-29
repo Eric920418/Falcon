@@ -33,7 +33,7 @@ export const siteConfig = {
     'https://www.threads.net/@falcon.information',
   ],
   lineUrl: 'https://lin.ee/7IjIYw2',
-  priceRange: '$$-$$$',
+  priceRange: '$-$$',
   knowsAbout: [
     '網站建置', '軟體開發', 'CMS系統', 'ERP系統', 'AI工具開發', 'APP開發',
     'SEO搜尋引擎優化', 'GEO生成式引擎優化', 'AEO答案引擎優化', 'AI搜尋優化',

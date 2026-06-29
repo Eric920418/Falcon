@@ -1,6 +1,6 @@
 import type { PricingPageContent, ComparePageContent } from './types'
 
-const lastModified = '2026-05-18'
+const lastModified = '2026-06-29'
 
 export const pricingPages: Record<string, PricingPageContent> = {
   'web-development': {
@@ -8,16 +8,16 @@ export const pricingPages: Record<string, PricingPageContent> = {
     title: '網站建置費用｜隼訊定價公開',
     h1: '網站建置費用',
     description:
-      '隼訊網站建置定價：企業官網 80,000 起、電商平台 180,000 起、客製化系統 300,000 起。本頁列出每個方案的實際包含內容。',
+      '隼訊網站建置定價：企業官網 40,000 起、電商平台 90,000 起、客製化系統 150,000 起。本頁列出每個方案的實際包含內容。',
     keywords: ['網站建置費用', '網頁設計費用', '網站架設多少錢', '網站報價'],
     lastModified,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intro:
       '我們公開定價是因為相信透明合約對雙方都好。但每個案的實際報價會依需求複雜度做調整，本頁的數字是起價，實際報價請預約諮詢。',
     tiers: [
       {
         name: '形象官網',
-        price: '80,000',
+        price: '40,000',
         unit: '專案起',
         includes: [
           '5-10 頁客製化設計',
@@ -27,12 +27,12 @@ export const pricingPages: Record<string, PricingPageContent> = {
           '聯絡表單 + Email 通知',
           '永久售後保固（小修改不另收費）',
         ],
-        notIncludes: ['網域 / 主機年費（另計）', '會員系統（+15 萬）', '電商功能（+10 萬起）'],
+        notIncludes: ['網域 / 主機年費（另計）', '會員系統（+7.5 萬）', '電商功能（+5 萬起）'],
         bestFor: '中小企業形象網站、專業服務業、個人品牌',
       },
       {
         name: '電商平台',
-        price: '180,000',
+        price: '90,000',
         unit: '專案起',
         includes: [
           '商品 / 購物車 / 結帳流程',
@@ -43,12 +43,12 @@ export const pricingPages: Record<string, PricingPageContent> = {
           '響應式設計',
           '永久售後保固',
         ],
-        notIncludes: ['POS 整合（+10 萬）', '多倉庫 / ERP 整合（+30 萬起）'],
+        notIncludes: ['POS 整合（+5 萬）', '多倉庫 / ERP 整合（+15 萬起）'],
         bestFor: '品牌電商、D2C、線上銷售為主的業務',
       },
       {
         name: '客製化系統',
-        price: '300,000',
+        price: '150,000',
         unit: '專案起',
         includes: [
           '完整需求訪談 + Figma 設計稿',
@@ -80,7 +80,7 @@ export const pricingPages: Record<string, PricingPageContent> = {
       {
         question: '可以分期付款嗎？',
         answer:
-          '可以。專案款一般分 3 期：簽約 30%、設計通過 30%、上線 40%。50 萬以上專案可協商更彈性付款方式。',
+          '可以。專案款一般分 3 期：簽約 30%、設計通過 30%、上線 40%。25 萬以上專案可協商更彈性付款方式。',
       },
     ],
   },
@@ -89,30 +89,30 @@ export const pricingPages: Record<string, PricingPageContent> = {
     title: 'SEO 費用｜隼訊三方案定價',
     h1: 'SEO 費用',
     description:
-      '隼訊 SEO 三個方案：基礎 30,000、進階 60,000、企業 120,000 / 月。本頁列出每個方案實際包含的工作內容。',
+      '隼訊 SEO 三個方案：基礎 15,000、進階 30,000、企業 60,000 / 月。本頁列出每個方案實際包含的工作內容。',
     keywords: ['SEO 多少錢', 'SEO 費用', 'SEO 報價', 'SEO 一個月多少'],
     lastModified,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intro:
       'SEO 廠商報價常會「依需求報價」，本頁公開隼訊三個方案的固定定價與內容。實際合作前會做免費健檢，確認方案適合度。',
     tiers: [
       {
         name: '基礎 SEO',
-        price: '30,000',
+        price: '15,000',
         unit: '月',
         includes: ['月度 SEO 健檢報告', '4 篇深度 SEO 內容（每篇 1500+ 字）', '技術 SEO 修正', 'GSC + GA4 監測', '月度成效報告'],
         bestFor: '中小企業、單一服務領域、預算有限',
       },
       {
         name: '進階 SEO',
-        price: '60,000',
+        price: '30,000',
         unit: '月',
         includes: ['8 篇深度內容（每篇 2000+ 字）', '反向連結建立（每月 5 個）', '競品深度分析', '雙週優化會議', '完整 Schema 部署', '初步 GEO + AEO 整合'],
         bestFor: '中大型企業、競爭較激烈產業',
       },
       {
         name: '企業 SEO',
-        price: '120,000',
+        price: '60,000',
         unit: '月',
         includes: ['15+ 篇內容', 'PR + 媒體外鏈（每月 2-3 篇）', '專屬 SEO 顧問', '完整 SEO + GEO + AEO 整合', '即時報告儀表板', '每週優化會議'],
         bestFor: '上市櫃公司、極激烈競爭產業',
@@ -122,7 +122,7 @@ export const pricingPages: Record<string, PricingPageContent> = {
       {
         question: 'SEO 一個月多少錢才合理？',
         answer:
-          '我們的最低方案是 30,000 / 月。低於這個門檻通常只能用 AI 大量生成內容或買低品質外鏈，反而會被 Google 演算法懲罰，不建議。',
+          '我們的最低方案是 15,000 / 月。再低通常只能用 AI 大量生成內容或買低品質外鏈，反而會被 Google 演算法懲罰，不建議。',
       },
       {
         question: '為什麼有些 SEO 廠商更便宜？',
@@ -136,31 +136,31 @@ export const pricingPages: Record<string, PricingPageContent> = {
     title: 'AI 開發費用｜AI 客服、智能助理定價',
     h1: 'AI 工具開發報價',
     description:
-      '隼訊 AI 客服 MVP 12 萬起、客製化 AI 助理 30 萬起、AI 顧問 5 萬 / 月。本頁列出方案實際包含內容。',
+      '隼訊 AI 客服 MVP 6 萬起、客製化 AI 助理 15 萬起、AI 顧問 2.5 萬 / 月。本頁列出方案實際包含內容。',
     keywords: ['AI 開發報價', 'AI 客服費用', 'AI 工具費用', '聊天機器人費用'],
     lastModified,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intro:
-      'AI 開發費用差距大（5 萬到 500 萬都有），本頁公開隼訊標準方案。實際依需求複雜度報價。',
+      'AI 開發費用差距大（2.5 萬到 250 萬都有），本頁公開隼訊標準方案。實際依需求複雜度報價。',
     tiers: [
       {
         name: 'AI 客服 MVP',
-        price: '120,000',
+        price: '60,000',
         unit: '專案',
         includes: ['基礎 chatbot（GPT / Claude API）', '知識庫整合（50 題以內）', 'LINE / 網站嵌入', '3 個月技術支援', '完整原始碼交付'],
-        notIncludes: ['API 費用（依用量另計）', 'CRM 整合（+5 萬）', '多語言（+3 萬）'],
+        notIncludes: ['API 費用（依用量另計）', 'CRM 整合（+2.5 萬）', '多語言（+1.5 萬）'],
         bestFor: '中小企業、想試水溫',
       },
       {
         name: '客製化 AI 助理',
-        price: '300,000',
+        price: '150,000',
         unit: '專案起',
         includes: ['完整客製功能（需求訪談 + 設計）', 'CRM / Slack / 內部系統整合', '多語言（中、英、日）', '客製化 UI', '6 個月技術支援', 'Prompt 優化'],
         bestFor: '中大型企業、特定流程需求',
       },
       {
         name: 'AI 顧問',
-        price: '50,000',
+        price: '25,000',
         unit: '月',
         includes: ['AI 策略諮詢', '導入順序規劃', '工具選型（自建 vs SaaS）', '員工訓練', '定期模型更新', 'Prompt 庫維護'],
         bestFor: '上市櫃公司、全面導入 AI',
@@ -196,7 +196,7 @@ export const comparePages: Record<string, ComparePageContent> = {
       'SEO、GEO、AEO 三種搜尋優化策略的差異、適用場景、預算分配。本頁用比較表清楚對照三者特性。',
     keywords: ['SEO vs GEO', 'SEO GEO 差別', 'GEO 是什麼', 'AEO 是什麼', '搜尋優化比較'],
     lastModified,
-    qualityTier: 'draft',
+    qualityTier: 'production',
     intro:
       '三者不是同義詞、不能互相取代。理解差異後，才知道該怎麼分配資源。',
     comparisonHeaders: ['面向', 'SEO', 'GEO', 'AEO'],
@@ -206,16 +206,16 @@ export const comparePages: Record<string, ComparePageContent> = {
       { feature: '核心訊號', values: ['關鍵字、反向連結、E-E-A-T', '內容權威、結構化資料、引用密度', '可引用性、Schema、即時搜尋'] },
       { feature: '主要產出', values: ['搜尋排名', 'AI 對話中的品牌提及', '精選答案來源'] },
       { feature: '見效時間', values: ['4-6 個月', '2-3 個月', '2-4 週'] },
-      { feature: '隼訊起價', values: ['NT$ 30,000 / 月', 'NT$ 50,000 / 月', 'NT$ 40,000 / 月'] },
+      { feature: '隼訊起價', values: ['NT$ 15,000 / 月', 'NT$ 25,000 / 月', 'NT$ 20,000 / 月'] },
     ],
     sections: [
       {
         heading: '怎麼決定優先順序',
         body: '我們對客戶的建議：',
         items: [
-          '預算 3 萬 / 月以下：先做 SEO（基礎、可預測）',
-          '預算 5 萬 / 月：SEO 70% + GEO 30%',
-          '預算 10 萬 / 月以上：可三者整合進行',
+          '預算 1.5 萬 / 月以下：先做 SEO（基礎、可預測）',
+          '預算 2.5 萬 / 月：SEO 70% + GEO 30%',
+          '預算 5 萬 / 月以上：可三者整合進行',
         ],
       },
     ],
@@ -228,7 +228,7 @@ export const comparePages: Record<string, ComparePageContent> = {
       {
         question: 'GEO 跟 AEO 重疊很多嗎？',
         answer:
-          '約 60% 重疊。兩者都需要 schema、內容結構化、權威性建立。整合執行最有效率。',
+          '大部分重疊。兩者都需要 schema、內容結構化、權威性建立，所以整合執行最有效率，不必重複投資。',
       },
     ],
   },

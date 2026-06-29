@@ -2,19 +2,30 @@
 
 import { motion } from 'motion/react'
 import { useRef, useState } from 'react'
+import Link from 'next/link'
 import { Globe, Code, Database, Brain, Smartphone, CandlestickChart } from 'lucide-react'
+
+interface TechService {
+  icon: typeof Globe
+  title: string
+  description: string
+  details: string[]
+  number: string
+  href?: string
+}
 
 export function TechServices() {
   const ref = useRef(null);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
-  const services = [
+  const services: TechService[] = [
     {
       icon: Globe,
       title: '網站建置',
       description: '響應式網站設計與開發',
       details: ['RWD響應式設計', '品牌形象官網', '電商平台開發', 'UI/UX設計'],
-      number: '01'
+      number: '01',
+      href: '/services/web-development'
     },
     {
       icon: Code,
@@ -35,7 +46,8 @@ export function TechServices() {
       title: 'AI 工具',
       description: '人工智慧應用整合',
       details: ['智能客服系統', '數據分析預測', '自動化流程', 'AI內容生成'],
-      number: '04'
+      number: '04',
+      href: '/services/ai-tools'
     },
     {
       icon: Smartphone,
@@ -49,7 +61,8 @@ export function TechServices() {
       title: '量化交易系統',
       description: '證券・虛擬貨幣自動交易程式開發',
       details: ['券商 / 交易所 API 串接', '策略回測引擎', '風控與監控模組', '原始碼交付・不代操'],
-      number: '06'
+      number: '06',
+      href: '/services/quant-trading'
     }
   ];
 
@@ -146,6 +159,16 @@ export function TechServices() {
                         </li>
                       ))}
                     </motion.ul>
+
+                    {service.href && (
+                      <Link
+                        href={service.href}
+                        className="relative z-10 mt-6 inline-flex items-center gap-1.5 text-sm text-[#A8B6BC] hover:text-amber-500 transition-colors"
+                      >
+                        了解 {service.title}
+                        <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+                      </Link>
+                    )}
                   </div>
 
                   {/* 底部裝飾線 */}

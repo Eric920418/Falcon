@@ -43,6 +43,7 @@ export function SitePageFooter() {
             </h3>
             <ul className="space-y-2 text-sm">
               <li><Link href="/local/taoyuan-seo" className="text-[#A8B6BC] hover:text-amber-500">桃園 SEO 公司</Link></li>
+              <li><Link href="/local/taoyuan-web-design" className="text-[#A8B6BC] hover:text-amber-500">桃園網頁設計</Link></li>
               <li><Link href="/local/taipei-digital-marketing" className="text-[#A8B6BC] hover:text-amber-500">台北數位行銷</Link></li>
               <li><Link href="/blog" className="text-[#A8B6BC] hover:text-amber-500">部落格</Link></li>
             </ul>

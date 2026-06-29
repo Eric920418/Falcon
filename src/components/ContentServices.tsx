@@ -2,12 +2,23 @@
 
 import { motion } from 'motion/react'
 import { useRef } from 'react'
+import Link from 'next/link'
 import { Video, Sparkles, Layers } from 'lucide-react'
+
+interface ContentService {
+  icon: typeof Video
+  title: string
+  subtitle: string
+  description: string
+  features: { name: string; detail: string }[]
+  number: string
+  href?: string
+}
 
 export function ContentServices() {
   const ref = useRef(null);
 
-  const services = [
+  const services: ContentService[] = [
     {
       icon: Video,
       title: '影音製作',
@@ -19,7 +30,8 @@ export function ContentServices() {
         { name: '產品宣傳', detail: '商品展示、使用教學' },
         { name: '活動紀錄', detail: '直播、剪輯、後製' }
       ],
-      number: '01'
+      number: '01',
+      href: '/services/video'
     },
     {
       icon: Sparkles,
@@ -136,6 +148,16 @@ export function ContentServices() {
                         </div>
                       ))}
                     </div>
+
+                    {service.href && (
+                      <Link
+                        href={service.href}
+                        className="mt-8 inline-flex items-center gap-1.5 text-sm text-[#A8B6BC] hover:text-amber-500 transition-colors"
+                      >
+                        了解 {service.title}
+                        <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+                      </Link>
+                    )}
                   </div>
 
                   {/* 底部裝飾線 */}
