@@ -393,6 +393,7 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 **✅ 全站 0 draft：所有 service／local／blog／pricing／compare 頁面皆 production，sitemap 收錄數 ~2 → 32。**
   - [x] 剩餘在地頁：台北數位行銷／台北 SEO／新北 SEO／新竹網頁設計（2026-06-29；各補在地觀點段落、軟化一處未佐證宣稱、升 production。6 個 local 頁全 production）
 - [x] 內鏈強化（2026-06-29）：首頁 MarketingServices／TechServices／ContentServices 卡片連到對應 production 服務頁；子頁 footer「本地服務」補桃園網頁設計。**首頁仍用社群版 footer、未連 local 頁**（local 頁靠子頁 footer 取得內鏈，如需更強可考慮首頁加「服務地區」或讓首頁共用 SitePageFooter）。
+- [x] 首頁導覽改分頁式（2026-06-29）：`Navigation.tsx` 的 header 由「全錨點滑動」改為「服務 ▾」下拉連 9 個 `/services/*`、定價→`/pricing`、部落格→`/blog`（真換頁）；首頁／作品／關於／聯絡維持首頁錨點滑動。**AI 語音、遊戲製作目前僅為首頁區塊、未在 header**（無獨立 `/services` 頁；日後可加回錨點或為其開獨立頁再放進服務下拉）。
 - [ ] 補真實客戶 case study 細節（接手日期、量化成果、客戶授權），強化上述已升 production 的頁面
 - [ ] 申請 Wikidata 條目強化 GEO 訊號
 
