@@ -9,7 +9,11 @@
       "Bash(wc:*)",
       "Bash(pnpm build:*)",
       "Bash(tree:*)",
-      "Bash(ls -la /Users/eric/Desktop/Falcon/public/*.png)"
+      "Bash(ls -la /Users/eric/Desktop/Falcon/public/*.png)",
+      "Bash(pnpm lint:content)",
+      "Bash(npx tsc *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
     ]
   }
 }
