@@ -6,7 +6,7 @@ export const geoService: ServiceContent = {
   h1: 'GEO 生成式引擎優化',
   description:
     'GEO (Generative Engine Optimization) 是針對 ChatGPT、Gemini、Claude、Perplexity 等 AI 搜尋引擎的優化策略。本頁說明我們實際的 GEO 工作流程、定價、與 SEO／AEO 的差異與搭配順序。',
-  keywords: ['GEO', '生成式引擎優化', 'GEO 怎麼做', 'AI 搜尋優化', 'Generative Engine Optimization', 'ChatGPT 優化'],
+  keywords: ['GEO', '生成式引擎優化', 'GEO 服務', 'GEO 優化公司', 'Generative Engine Optimization', 'ChatGPT 優化'],
   intent: 'commercial',
   lastModified: '2026-06-29',
   qualityTier: 'production',

@@ -10,7 +10,7 @@ export const blogPosts: Record<string, BlogContent> = {
     h1: 'GEO 生成式引擎優化指南',
     description:
       '生成式引擎優化（GEO）讓 ChatGPT、Claude、Gemini 等 AI 在回答用戶問題時能引用你的品牌。本文整理隼訊實際在做的技術與內容工作。',
-    keywords: ['GEO', 'GEO 怎麼做', 'GEO 完整指南', 'AI 搜尋優化', '生成式引擎優化'],
+    keywords: ['GEO 怎麼做', 'GEO 完整指南', 'GEO 教學', 'AI 搜尋優化', '生成式引擎優化 教學'],
     datePublished,
     reviewedByRole,
     qualityTier: 'production',
@@ -59,7 +59,7 @@ export const blogPosts: Record<string, BlogContent> = {
     h1: 'SEO、GEO、AEO 三者差異與優先順序',
     description:
       'SEO、GEO、AEO 是三種不同搜尋優化策略，分別針對傳統搜尋引擎、生成式 AI、答案引擎。本文釐清三者差異、適用場景、預算分配建議。',
-    keywords: ['SEO GEO AEO', 'SEO vs GEO', 'AEO 是什麼', 'GEO 是什麼', '搜尋優化差異'],
+    keywords: ['SEO GEO AEO 差別', 'GEO 是什麼', 'AEO 是什麼', 'SEO GEO AEO 優先順序', '搜尋優化差異'],
     datePublished,
     reviewedByRole,
     qualityTier: 'production',
@@ -157,7 +157,7 @@ export const blogPosts: Record<string, BlogContent> = {
     h1: 'Perplexity 引用邏輯與 AEO 實作',
     description:
       'Perplexity 在回答時會列出 3-5 個來源網站。本文整理 Perplexity 偏好引用的內容特徵，以及對應的 AEO 實作方向。',
-    keywords: ['Perplexity', 'Perplexity 排名', 'AEO 實作', '答案引擎優化'],
+    keywords: ['Perplexity', 'Perplexity 排名', 'Perplexity 引用', 'AEO 實作'],
     datePublished,
     reviewedByRole,
     qualityTier: 'production',
@@ -247,7 +247,7 @@ export const blogPosts: Record<string, BlogContent> = {
     h1: '網站建置費用區間與成本拆解',
     description:
       '網站建置費用從幾萬到幾百萬都有，差別在哪？本文拆解四個價格區間的實際內容、常被忽略的隱藏成本、轉換廠商時的注意事項。',
-    keywords: ['網站建置費用', '網頁設計費用', '網站架設多少錢', '網站報價'],
+    keywords: ['網站建置費用區間', '網站建置費用怎麼算', '網站成本拆解', '網站建置隱藏成本', '網站維護費用'],
     datePublished,
     reviewedByRole,
     qualityTier: 'production',
@@ -380,7 +380,7 @@ export const blogPosts: Record<string, BlogContent> = {
     h1: 'AI 客服自建 vs SaaS 成本比較',
     description:
       'AI 客服該自建還是用 Intercom AI、Zendesk AI 等 SaaS？本文比較兩種方案的長期成本、技術門檻、適用情境。',
-    keywords: ['AI 客服', 'AI 客服費用', '聊天機器人', 'Intercom AI', 'AI 客服自建'],
+    keywords: ['AI 客服自建', 'AI 客服 SaaS', 'AI 客服成本比較', 'Intercom AI', 'AI 客服 ROI'],
     datePublished,
     reviewedByRole,
     qualityTier: 'production',
@@ -447,6 +447,11 @@ export const blogPosts: Record<string, BlogContent> = {
         question: 'AI 客服能完全取代人工客服嗎？',
         answer:
           '不建議這樣期待。AI 適合處理大量重複、規則明確的問題，把人力釋放去處理真正需要判斷或情緒安撫的個案。實務上跑得穩的是「人機協作」：AI 當第一線、遇到答不了或高風險的問題就帶著上下文轉真人。把 AI 設定成「全部它來」，通常是導入翻車的起點。',
+      },
+      {
+        question: '聊天機器人有哪些類型？差在哪？',
+        answer:
+          '大致分三種：規則型（照設定好的流程走，精準但不靈活）、AI 生成型（用大型語言模型自由對話，靈活但要控制幻覺）、以及兩者混合型（固定流程走規則、開放問題交給 AI）。實務上跑得穩的多半是混合型——查訂單、預約這類走規則確保不出錯，開放問答才交給 AI，再搭配 RAG 與轉真人當安全網。',
       },
     ],
     relatedServices: ['ai-tools'],

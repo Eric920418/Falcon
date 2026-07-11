@@ -6,7 +6,7 @@ export const aeoService: ServiceContent = {
   h1: 'AEO 答案引擎優化',
   description:
     'AEO（Answer Engine Optimization）讓你的網站成為 Perplexity、Google AI Overview、Bing Copilot 等答案引擎的引用來源。本頁說明我們的工作流程、定價，以及與 GEO、SEO 的差異與搭配。',
-  keywords: ['AEO', '答案引擎優化', 'Answer Engine Optimization', 'Perplexity 排名', 'Google AI Overview', 'Featured Snippet'],
+  keywords: ['AEO', '答案引擎優化', 'Answer Engine Optimization', 'AEO 優化', 'AEO 服務', 'Featured Snippet'],
   intent: 'commercial',
   lastModified: '2026-06-29',
   qualityTier: 'production',

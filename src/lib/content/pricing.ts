@@ -204,7 +204,7 @@ export const comparePages: Record<string, ComparePageContent> = {
     h1: 'SEO、GEO、AEO 完整比較',
     description:
       'SEO、GEO、AEO 三種搜尋優化策略的差異、適用場景、預算分配。本頁用比較表清楚對照三者特性。',
-    keywords: ['SEO vs GEO', 'SEO GEO 差別', 'GEO 是什麼', 'AEO 是什麼', '搜尋優化比較'],
+    keywords: ['SEO vs GEO', 'SEO GEO AEO 比較', 'SEO GEO AEO 比較表', '搜尋優化比較', '三者差異比較'],
     lastModified,
     qualityTier: 'production',
     intro:

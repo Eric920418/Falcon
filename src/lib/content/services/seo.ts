@@ -6,7 +6,7 @@ export const seoService: ServiceContent = {
   h1: 'SEO 搜尋引擎優化',
   description:
     '隼訊提供 SEO 全站健檢、關鍵字研究、內容企劃、白帽反向連結、Google Search Console 監測。本頁說明我們實際的工作流程、三種方案定價，以及 SEO 與 GEO、AEO 如何搭配。',
-  keywords: ['SEO', '搜尋引擎優化', 'SEO 公司', 'SEO 服務', 'SEO 多少錢', 'Google 排名', '桃園 SEO'],
+  keywords: ['SEO', '搜尋引擎優化', 'SEO 公司', 'SEO 服務', 'SEO 優化', 'Google 排名', 'SEO 怎麼做'],
   intent: 'commercial',
   lastModified: '2026-06-29',
   qualityTier: 'production',
@@ -116,6 +116,11 @@ export const seoService: ServiceContent = {
       question: 'AI 搜尋（AI Overview）會不會讓 SEO 流量變少？',
       answer:
         '會有影響。Google 在搜尋結果上方直接生成摘要後，有些問題使用者看完就滿足、不再點進網站（俗稱零點擊）。我們的因應是兩件事：一是內容同時做 AEO／GEO，爭取「被摘要引用」而不只是「被排名」；二是月報不只看排名與點擊，也看曝光與 AI 引用狀況，避免用單一指標誤判成效。',
+    },
+    {
+      question: '怎麼挑 SEO 公司？該注意什麼？',
+      answer:
+        '幾個實用的判斷點：(1) 有沒有把手法講清楚——是白帽、可驗證，還是含糊帶過；(2) 報告看不看得懂，是給你數據與下一步，還是塞滿術語的 PDF；(3) 有沒有承諾「保證第一名」，有的話請直接跳過；(4) 內容與帳號（GSC、GA4）是不是掛在你名下、換廠商帶得走。價格只是其中一項，別只看月費高低。',
     },
   ],
   pricing: [
