@@ -361,6 +361,36 @@ const projects: Project[] = [
     category: "電商平台",
   },
   {
+    id: 20,
+    title: "中醫診所 LINE 預約系統",
+    description:
+      "整合 LINE LIFF 的中醫診所預約系統，提供病患線上預約與診所後台管理功能。支援時段分鐘數管理、黑名單自動判定、併發預約控制，並使用 Supabase Realtime 實現即時更新。",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Supabase",
+      "LINE LIFF v2",
+      "Prisma ORM",
+      "Tailwind CSS",
+    ],
+    features: [
+      "LINE LIFF 病患預約",
+      "班表與時段管理",
+      "黑名單自動管理",
+      "後台 Dashboard",
+      "即時時段餘量更新",
+    ],
+    highlights: [
+      "Supabase Realtime 即時同步",
+      "Row-Level Lock 併發控制",
+      "130+ E2E 測試案例",
+    ],
+    image: "/欣百漢.png",
+    imageContain: true,
+    category: "其他",
+  },
+  {
     id: 2,
     title: "球鞋電商",
     description:
@@ -707,36 +737,6 @@ const projects: Project[] = [
     ],
     image: "/截圖 2026-04-01 中午12.05.04.png",
     url: "https://gradexhibit.tech/artworks",
-    category: "其他",
-  },
-  {
-    id: 20,
-    title: "中醫診所 LINE 預約系統",
-    description:
-      "整合 LINE LIFF 的中醫診所預約系統，提供病患線上預約與診所後台管理功能。支援時段分鐘數管理、黑名單自動判定、併發預約控制，並使用 Supabase Realtime 實現即時更新。",
-    tech: [
-      "Next.js 16",
-      "React 19",
-      "TypeScript",
-      "Supabase",
-      "LINE LIFF v2",
-      "Prisma ORM",
-      "Tailwind CSS",
-    ],
-    features: [
-      "LINE LIFF 病患預約",
-      "班表與時段管理",
-      "黑名單自動管理",
-      "後台 Dashboard",
-      "即時時段餘量更新",
-    ],
-    highlights: [
-      "Supabase Realtime 即時同步",
-      "Row-Level Lock 併發控制",
-      "130+ E2E 測試案例",
-    ],
-    image: "/欣百漢.png",
-    imageContain: true,
     category: "其他",
   },
   {
