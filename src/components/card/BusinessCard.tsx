@@ -159,11 +159,9 @@ export function BusinessCard({ className = '' }: { className?: string }) {
             )}
             <ContactRow
               icon={<MapPin size={16} />}
-              label="所在地"
-              value={cardProfile.location}
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                `${cardProfile.address.addressRegion}${cardProfile.address.addressLocality}${cardProfile.address.streetAddress}`,
-              )}`}
+              label="主要服務區"
+              value={`${cardProfile.location}（非到訪門市）`}
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(cardProfile.location)}`}
               external
             />
           </div>

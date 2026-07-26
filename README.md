@@ -1,27 +1,17 @@
 # 隼訊數位行銷服務平台
 
-3D 互動式公司網站，使用 Next.js 16 + React 19 + Tailwind CSS v4 構建。
+隼訊企業官網，以「網站與 AI 開發」及「SEO／GEO 搜尋成長」兩個獲客 Hub 為核心，使用 Next.js 16 + React 19 + Tailwind CSS v4 構建。
 
 **網站**: https://www.falconinformation.com
 
 ## 業務範圍
 
-- 網站建置與軟體開發
-- CMS 系統、ERP 系統
-- AI 工具開發
-- APP 與互動應用程式設計
-- **Telegram / LINE Bot 開發**（群組管理、廣告同步、排程貼文、入群認證、防 raid）
-- **遊戲製作**（AI 互動遊戲、跨平台 App、角色對話與情緒系統、內容安全與審核）
-- **量化／自動交易系統開發**（證券・虛擬貨幣，純軟體開發：串接券商／交易所 API、策略回測、風控監控、原始碼交付；不代操、不提供投資建議、不保證獲利）
-- 搜尋引擎優化（SEO）
-- **GEO 生成式引擎優化**（Generative Engine Optimization）- 讓 ChatGPT、Gemini 等 AI 優先引用您的品牌
-- **AEO 答案引擎優化**（Answer Engine Optimization）- 成為 Perplexity、Google AI 的首選答案來源
-- 數位廣告投放
-- 社群經營策略
-- 口碑行銷及輿情管理
-- 短影音與形象影片製作
-- 整合活動與企劃執行
-- 互動體驗設計
+- 企業網站、電商、CMS 與客製系統開發
+- AI 工具、LINE／Telegram Bot 與流程自動化
+- SEO 技術、內容與自然搜尋成長
+- GEO／AI 搜尋可引用內容、實體一致性與引薦量測
+
+舊有廣告、社群、影片與量化交易頁只保留既有資訊，不列入主導覽與 sitemap，並設定 `noindex,follow`。AEO 是 GEO 的回答設計方法，不作獨立服務銷售。
 
 ## 技術棧
 
@@ -58,11 +48,15 @@ pnpm start
 │   ├── robots.ts                     # 動態 Robots.txt（含 AI 爬蟲規則）
 │   ├── opengraph-image.tsx           # 首頁 OG image 動態生成
 │   ├── globals.css                   # 全局樣式
-│   ├── services/[slug]/              # 9 個服務子頁（SEO/GEO/AEO/網站/AI/量化交易 等）
-│   ├── local/[slug]/                 # 6 個 local landing page
+│   ├── services/[slug]/              # 4 個索引 Hub/子服務 + 4 個 noindex 舊服務 + AEO 轉址
+│   ├── about/                        # 實名負責人與工作方法
+│   ├── case-studies/[slug]/          # 證據、資料來源與限制
+│   ├── local/[slug]/                 # 6 個保留 URL；證據達標前一律 noindex
 │   ├── blog/                         # Blog index + blog/[slug] 動態文章頁
-│   ├── pricing/                      # 透明定價 index + pricing/[slug]
-│   ├── compare/[slug]/               # 服務比較頁（SEO vs GEO vs AEO 等）
+│   ├── pricing/                      # 透明定價 index + 4 個 pricing/[slug]
+│   ├── compare/[slug]/               # SEO／GEO／AEO 名詞比較
+│   ├── llms.txt/                     # 共用內容資料源生成的低成本摘要
+│   ├── llms-full.txt/                # 共用內容資料源生成的完整摘要
 │   ├── resume/                       # 履歷頁（noindex）
 │   └── api/contact/                  # 聯絡表單 API
 ├── src/
@@ -80,31 +74,30 @@ pnpm start
 │   │       ├── PricingPageTemplate.tsx
 │   │       └── ComparePageTemplate.tsx
 │   └── lib/
-│       ├── seo/                      # SEO/GEO/AEO 工廠函數
+│       ├── seo/                      # metadata 與精簡結構化資料工廠
 │       │   ├── site-config.ts        # 全站常數
 │       │   ├── metadata.ts           # createMetadata() 統一 metadata 產生器
 │       │   ├── json-ld.tsx           # <JsonLd> 元件
 │       │   └── schemas/              # 9 種 schema 工廠
 │       │       ├── organization.ts   # 全站級
-│       │       ├── local-business.ts # 全站級
 │       │       ├── website.ts        # 全站級
-│       │       ├── professional-service.ts # 全站級
 │       │       ├── breadcrumb.ts     # 頁面級（工廠）
-│       │       ├── faq.ts            # 頁面級（工廠）
-│       │       ├── howto.ts          # 頁面級（GEO 神器）
 │       │       ├── service.ts        # 頁面級（工廠）
 │       │       ├── article.ts        # 頁面級（工廠）
-│       │       ├── webpage.ts        # 頁面級（含 Speakable）
+│       │       ├── webpage.ts        # 頁面級（工廠）
+│       │       ├── profile-page.ts   # 實名作者頁
+│       │       ├── case-study.ts     # 案例 CreativeWork
 │       │       └── item-list.ts      # portfolio 列表
 │       └── content/                  # 內容資料層（data-driven UI）
 │           ├── types.ts              # 共用 content schema
-│           ├── services/             # 9 項服務內容
+│           ├── authors.ts            # 實名作者資料
+│           ├── case-studies.ts       # 公開案例證據
+│           ├── price-catalog.ts      # 單一價格來源
+│           ├── services/             # 服務內容
 │           ├── local.ts              # 6 個 local landing 內容
 │           ├── blog.ts               # 10 篇文章內容
 │           └── pricing.ts            # pricing + compare 內容
 ├── public/
-│   ├── llms.txt                      # AI 搜尋引擎發現檔（精簡版）
-│   ├── llms-full.txt                 # AI 完整可引用知識庫
 │   ├── logo.png
 │   └── manifest.json
 ├── next.config.ts
@@ -248,22 +241,26 @@ Portfolio 組件展示公司的專案作品，包含：
 - `app/globals.css` - 品牌視覺系統和 CSS 組件
 - `src/components/Hero.tsx` - HTML 結構和 Motion 動畫
 
-## SEO / GEO / AEO 配置
+## SEO／GEO 配置
 
-網站採用 **資料驅動的多頁面架構**，覆蓋四種搜尋意圖（informational / commercial / transactional / navigational），整合傳統 SEO、GEO 生成式引擎優化、AEO 答案引擎優化。
+網站採用資料驅動的多頁面架構。SEO 與 GEO 共用抓取、索引、效能、原創內容、實體一致性與可驗證證據；AEO 只作為清楚回答問題的內容方法，不另建近義服務頁。
 
-### 內容架構（30+ indexable pages）
+### 內容架構
 
 | 路由群 | 路徑 | 數量 | 搜尋意圖 |
 | --- | --- | --- | --- |
-| 服務頁 | `/services/[slug]` | 9 | informational + commercial |
-| 本地頁 | `/local/[slug]` | 6 | local SEO |
+| 核心服務頁 | `/services/[slug]` | 4 | informational + commercial |
+| 舊服務頁 | `/services/[slug]` | 4 | `noindex,follow` |
+| AEO 舊路徑 | `/services/aeo` | 1 | 永久轉址至 `/services/geo` |
+| 本地頁 | `/local/[slug]` | 6 | 證據達標前 `noindex,follow` |
+| 案例頁 | `/case-studies`、`/case-studies/[slug]` | 4 | commercial + evidence |
 | 部落格 | `/blog`、`/blog/[slug]` | 11 | informational + topical authority |
-| 定價頁 | `/pricing`、`/pricing/[slug]` | 4 | transactional |
+| 定價頁 | `/pricing`、`/pricing/[slug]` | 5 | transactional |
 | 比較頁 | `/compare/[slug]` | 1+ | commercial investigation |
-| 首頁 | `/` | 1 | navigational |
+| 公司頁 | `/about` | 1 | E-E-A-T / entity |
+| 首頁 | `/` | 1 | navigational + commercial |
 
-每個頁面：獨立 metadata、獨立 OG、獨立 schema（透過 `lib/seo/schemas/*` 工廠產生）、獨立 canonical。
+每個可索引頁面維持唯一 title、description、canonical、單一 H1，以及預設 OG／Twitter 圖。索引與 sitemap 由內容證據門檻控制，不以「檔案存在」等同「應該收錄」。
 
 > **合規紅線（量化交易服務頁）**：`/services/quant-trading` 一律維持「**軟體開發**」定位——交付程式、客戶以自有帳戶自行下單、本公司不碰資金。文案**禁止**出現代操、保證獲利、收益分潤、招攬資金等字眼（在台灣需金管會投顧／投信牌照，且會被 `pnpm lint:content` 擋）。該頁 `src/lib/content/services/quant-trading.ts` 內含「重要聲明：服務性質與風險告知」段落，修改文案時務必保留。
 
@@ -271,48 +268,41 @@ Portfolio 組件展示公司的專案作品，包含：
 
 `src/lib/seo/` 把所有 SEO 邏輯抽出為純資料 + 工廠函數，分兩層：
 
-**全站級**（在 `app/layout.tsx` 內，所有頁面共享）
-- Organization
-- LocalBusiness（含 areaServed、hasOfferCatalog、openingHoursSpecification）
-- WebSite
-- ProfessionalService
+所有 JSON-LD 在單一 `@graph` 輸出，且只標記畫面上真實可見的資料：
 
-**頁面級**（在各 `page.tsx` 內，按需引入）
-- WebPage + SpeakableSpecification（標記 AI 可引用內容）
-- BreadcrumbList
-- Service（每個服務頁）
-- Article（每篇 blog）
-- FAQPage（每頁不同問題集）
-- HowTo（GEO 神器，AI 最愛引用步驟化內容）
-- OfferCatalog（定價頁）
+- 全站：Organization、WebSite
+- 頁面：WebPage、BreadcrumbList、Service、Article、ProfilePage、CreativeWork
+
+沒有可到訪門市，因此不輸出 LocalBusiness、地理座標、地址或營業時間。FAQ 與步驟內容可以保留給讀者，但不輸出 FAQPage、HowTo、Speakable，也不宣稱存在 AI 專用 Schema。
 
 > **重要**：先前版本的 `AggregateRating`（4.9/47 評分）已移除，因為缺少對應的 Google Business Profile 驗證來源，違反 Google Rich Results 政策。如未來有真實 Google 商家評論，請改用 `sameAs` 指向 GBP。
 
 > **JsonLd 安全 escape**：`src/lib/seo/json-ld.tsx` 的 `safeJsonForScript()` 會額外 escape `<`、`>`、`&`、`U+2028`、`U+2029` 後再塞進 `<script type="application/ld+json">`。原因：原生 `JSON.stringify` 不會處理這些字元 — schema 內任一字串若含 `</script>` 會造成 HTML parser 提前關閉標籤（XSS），含 U+2028/U+2029 則會在瀏覽器 hydrate 時拋 `Invalid or unexpected token` SyntaxError 讓整頁炸掉。新增 schema 工廠時直接傳物件給 `<JsonLd>` 即可，escape 已內建。
 
-### llms.txt + llms-full.txt（GEO 雙層架構）
+### llms.txt 與 llms-full.txt
 
-- `public/llms.txt` — 精簡版，AI 爬蟲快速理解品牌定位
-- `public/llms-full.txt` — 完整知識庫，含定價、案例、FAQ、產業專業領域
+- `/llms.txt`：品牌、核心服務與公開起價的精簡摘要
+- `/llms-full.txt`：加入實名作者、案例證據與限制
 
-兩份檔案皆在 `<head>` 用 `<link rel="alternate">` 宣告，讓 AI 爬蟲明確發現。
+兩者由 TypeScript 的服務、價格、案例與作者資料源生成，目的是降低內容漂移。Google 官方文件明確說明 Google Search 不使用 llms.txt，因此它不是排名、索引或 AI 引用保證。
 
 ### 動態 Sitemap
 
-`app/sitemap.ts` 從 `lib/content/` 動態聚合所有頁面，新增頁面**自動進入 sitemap**，無需手動維護。
+`app/sitemap.ts` 只聚合可索引 canonical URL，使用內容真實更新日期，不輸出 Google 不採用的 `priority` 或 `changefreq`。
 
 ### Local SEO
 
-6 個 local landing page 使用拼音 URL（`/local/taoyuan-seo` 而非中文 URL），避免編碼風險並有利於反向連結。每頁針對：在地關鍵字、在地客戶案例、在地化 FAQ。
+6 個城市 URL 目前全部保留，但只有同時具備完整客戶同意、服務期間、基準與結果證據時才可索引。借址、name-only 案例或空白服務清單不構成索引資格，也不得暗示當地有分公司。
 
 ### Core Web Vitals 優化
-- DNS Prefetch / Preconnect / Font Preload / Image Preload
-- Next.js Image 自動優化（AVIF/WebP）
+- `next/font/local` 自託管 Noto Sans TC
+- Next.js Image 自動優化（AVIF/WebP）與折疊下方圖片延遲載入
+- Logo 256×256 約 34KB；favicon 為真正的 64×64 ICO
 - Server-rendered schema（JSON-LD 在 HTML 內，AI 爬蟲可直接讀）
 
 ### AI 爬蟲規則
 
-`app/robots.ts` 明確 allow：GPTBot、ChatGPT-User、Google-Extended、PerplexityBot、Amazonbot、ClaudeBot、Applebot-Extended。
+`app/robots.ts` 明確允許 OAI-SearchBot 與 PerplexityBot。GPTBot 的用途是訓練控制，不當作 ChatGPT Search 曝光訊號或保證。
 
 ### 怎麼新增一個服務 / blog / 本地頁面
 
@@ -346,7 +336,7 @@ curl -s http://localhost:3000/sitemap.xml | grep -c "<loc>"
 
 ### 安全標頭（SEO 間接排名信號）
 - **HSTS** - 強制 HTTPS 連線
-- **CSP** - 內容安全策略（白名單：Google Fonts、GTM、GA、LINE QR）。`/resume` 額外放寬 `wasm-unsafe-eval`、`worker-src blob:`、`connect-src data: blob:` 給 `@react-pdf/renderer` 使用。Preview / development 環境（`VERCEL_ENV !== 'production'`）額外放行 `https://vercel.live` 與 `wss://ws-us3.pusher.com` 讓 Vercel Live toolbar（Comments / Feedback）可運作；**production 不受影響**。CSP 構造集中在 `next.config.ts` 的 `buildCsp()` helper，避免字串 `.replace()` 的脆弱性。
+- **CSP** - 內容安全策略（白名單：GTM、GA；字型與圖片改為同網域）。`/resume` 額外放寬 `wasm-unsafe-eval`、`worker-src blob:`、`connect-src data: blob:` 給 `@react-pdf/renderer` 使用。Preview / development 環境（`VERCEL_ENV !== 'production'`）額外放行 `https://vercel.live` 與 `wss://ws-us3.pusher.com` 讓 Vercel Live toolbar（Comments / Feedback）可運作；**production 不受影響**。CSP 構造集中在 `next.config.ts` 的 `buildCsp()` helper，避免字串 `.replace()` 的脆弱性。
 - **X-Frame-Options** - 防止 clickjacking
 - **X-Content-Type-Options** - 防止 MIME sniffing
 - **Referrer-Policy** - 跨域來源控制
@@ -381,29 +371,52 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 ### 待完成
 - [ ] 申請並設定 Google Business Profile（本地 SEO 關鍵；含真實評論後可重新加入 AggregateRating，連結至 GBP）
 - [ ] 申請 Google Search Console 並提交新版 sitemap
+
+### SEO／GEO 架構（2026-07-26）
+
+- 網站獲客主軸收斂為「網站與 AI 開發」及「SEO／GEO 搜尋成長」。
+- 實名作者資料集中於 `src/lib/content/authors.ts`；公開案例證據集中於 `src/lib/content/case-studies.ts`。
+- 公開起價與報價因素集中於 `src/lib/content/price-catalog.ts`，服務頁、價格頁、Schema 與 llms 路由必須共用此來源。
+- 案例只可使用已公開或取得同意的資料；沒有 GA4、GSC、營收等原始資料時，不得宣稱商業成長幅度。
+- 不把 `llms.txt`、FAQ／HowTo／Speakable Schema 當作 Google AI 搜尋排名手段；GEO 以可索引內容、真實經驗與可驗證證據為核心。
+- 全站 JSON-LD 只輸出單一 `@graph`；全站實體為 Organization + WebSite，借址不再輸出為 LocalBusiness、地理 meta 或 vCard 地址。
+- 已刪除失效的 `MarketingAgency`／`ProfessionalService`／重複 LocalBusiness Schema 實作，避免未被引用的檔案仍在型別檢查或日後誤用。
+- 字型改由 `next/font/local` 自託管 `public/fonts` 內的 Noto Sans TC，不再從瀏覽器重複請求 Google Fonts。
+- 可索引服務固定為 `/services/web-development`、`/services/ai-tools`、`/services/seo`、`/services/geo`；AEO 永久轉址至 GEO，其餘舊服務保留可讀但設為 `noindex,follow` 並移出 sitemap。
+- 沒有公開案例證據的城市頁會自動 `noindex,follow` 並移出 sitemap，避免把薄弱城市頁當成虛構據點或 doorway page。
+- `robots.txt` 明確允許 `OAI-SearchBot` 與 `PerplexityBot`；GPTBot 保留但只視為訓練爬蟲設定，不當作搜尋曝光保證。
+- `/about` 使用實名負責人與可核對的公開連結；`/case-studies` 與三個案例詳頁明確區分技術量測、產品能力與商業成效，並顯示資料限制。
+- 所有文章作者統一為實名蔡翊廉並連到 `/about`；已移除虛構的「資深 SEO 顧問」審稿者。
+- `/pricing` 與四個價格詳頁直接由 `price-catalog.ts` 產生，公開起價為網站 4 萬／專案、AI 工具 6 萬／專案、SEO 1.5 萬／月、SEO／GEO 2.5 萬／月；AEO 併入 GEO、不另售 Schema 套餐。
+- 服務頁的價格卡片與 `/pricing` 速覽也直接讀取同一價格目錄；各服務檔內的舊價格欄位不再作為前端或 Schema 輸出來源。
+- `/llms.txt` 與 `/llms-full.txt` 改為 App Router 純文字路由，直接讀取服務、價格、案例與作者資料；不再維護可能漂移的手寫靜態副本。
+- 首頁已移除遊戲、廣告、社群、影片等平鋪區塊與捲動進度動畫，只保留單一 H1、兩個獲客 Hub、三個證據化案例與聯絡轉換；子頁導覽同步收斂為六個主要入口。
+- 全站 footer 已移除借址、AEO 舊連結、非主軸服務與外部 LINE QR 大圖，改為兩個 Hub、案例、價格、實名資料與直接聯絡入口。
+- 聯絡表單成功推送 `generate_lead`、電話／Email／LINE 推送 `contact_click`、失敗推送不含 PII 的 `form_error`；API 回傳穩定錯誤碼，前端完整顯示錯誤碼與訊息。
+- Logo 與 App icon 已由 2048×2048／約 2MB 改為 256×256／約 34KB；`public/favicon.ico` 已改為真正的 64×64 ICO（約 17KB）。
+- 電子名片不再連到借址，只顯示「台灣桃園（非到訪門市）」作為主要服務區；vCard 同樣不輸出街道地址。
+- SEO／GEO 服務內容已依 Google 2026-07-10 官方指引重寫：明確說明 Google 忽略 llms.txt、沒有 AI 專用 Schema、沒有固定見效週期，並移除借址辦公室與 FAQ／HowTo／Speakable 成效宣稱。
+- GEO 指南、SEO／GEO／AEO 比較、Schema、Perplexity 與 Google AI Overview 五篇文章已同步改寫；移除 TF-IDF、DA 門檻、固定週期、FAQ rich result 與「無 Schema 就不會被引用」等錯誤說法。
+- 預設 OG 圖已改為雙 Hub 定位並移除 AEO 與借址；拿掉 Edge runtime，讓 Next.js 可靜態產生分享圖。
+- FAQ 與步驟內容仍可供讀者閱讀，但 FAQPage／HowTo Schema 工廠已刪除；AEO 舊內容檔也已刪除，僅保留 `/services/aeo` 永久轉址。
+- 六個城市 URL 在缺少「完整客戶同意＋期間＋基準＋結果」前一律 `noindex,follow` 並排除 sitemap；不以 name-only 案例或借址通過索引門檻。
+- Footer 的電話、Email、LINE 入口均統一發送不含 PII 的 `contact_click` 事件；履歷也已移除「AI 引擎優先引用」的不實保證。
+- `/services/aeo` 由 Next.js redirects 明確回傳單次 301 至 `/services/geo`，文章與舊元件內鏈皆直接改連 GEO。
+- `pnpm check:seo` 會全站驗證 HTTP 200、index/noindex、sitemap、唯一 metadata/canonical、單一 H1、OG/Twitter、單一 JSON-LD `@graph`、孤兒頁與 AEO 301。
+- sitemap 已納入案例索引頁與三個案例詳頁；城市頁在證據達標前不會被列入。
+- SEO 服務 FAQ 已移除固定 2–6 個月見效區間；舊作品元件也不再把 FAQPage／Review JSON-LD 當作成果賣點。
+- 內容 lint 標記的空泛絕對化用語已改為可驗證表述。
+- `/pricing` 已補上 SEO／GEO／AEO 比較頁的直接文字內鏈，避免比較頁成為孤兒頁。
+- 自託管 Noto Sans TC 已依網站實際字元產生 WOFF2 子集：Regular 約 220KB、Bold 約 224KB，取代初始載入的兩個 1.3MB 全字集檔。
+- 2026-07-26 冷快取 headless lab：首頁 Fast 4G 行動傳輸約 0.79MB、LCP 0.61s、CLS 0.0215、DOM 355；網站開發與 SEO Hub 傳輸約 0.79MB、LCP 0.66s 內。這是本機實驗室值，不等同 CrUX。
+- 聯絡驗收涵蓋 `REQUIRED_FIELDS_MISSING`、`SMTP_NOT_CONFIGURED` 前端完整顯示、電話／Email／LINE `contact_click`、失敗 `form_error`、模擬成功 `generate_lead`；所有事件均未帶姓名、Email 或訊息內容。
+- JSON-LD 已改成每頁剛好一個 script／一個 `@graph`；Organization 與 WebSite 由 `JsonLd` 合併並依 `@id` 去重，頁面 schema 接在同一 graph。
+- `pnpm check:seo` 也會強制驗證 JSON-LD 可解析、script 數量為 1，且 Organization／WebSite 各只有一個節點。
+- 聯絡區塊已移除依賴 viewport 才顯示的 reveal 動畫，避免完整頁、弱 JS 或動畫尚未觸發時出現大片空白，並確保表單錯誤直接可見。
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
-- [ ] 為 8 個 service 子頁加上獨立 OG image（目前只有首頁有動態 OG）
-- [ ] 把 draft 頁面逐批升級為 production（內容深化 + 真實 E-E-A-T，流程見「內容品質護欄」）
-  - [x] 批次 1：`services/seo`、`services/geo`、`services/aeo`（2026-06-29；補 HowTo schema、SEO/GEO/AEO 決策框架、誠實限制聲明、「自己官網即實證」訊號）
-  - [x] 批次 2：`local/taoyuan-seo`、`local/taoyuan-web-design`（2026-06-29；以現有 name-only 案例深化、補在地觀點與 GBP 重點。case study 仍為 name-only，取得客戶授權後可升 metrics-only/full 再強化）
-  - [x] 批次 3：其餘 service 子頁 web-development／ai-tools／digital-ads／social-media／video（2026-06-29；補 HowTo schema、觀點段落、真實案例訊號。dev/ai 引用 GoGoCha・Alive・中醫診所等真實案例；ads/social/video 無公開成效數據故只寫方法與流程、不編數字。首頁 MarketingServices 卡片內鏈同步點亮 digital-ads／social-media）
-  - [x] 批次 5：pricing 3 頁（web-development／seo／ai-development）+ compare（2026-06-29；價格已半價、compare「重疊 60%」軟化為「大部分重疊」、升 production）
-  - [x] 批次 4：blog 10 篇（2026-06-29；內容已具方法論與誠實觀點，修正 3 篇與新價/門檻不一致處〔seo-vs-geo-vs-aeo 預算建議、ai-customer-service-cost 自建 MVP 與維護費、how-we-pick-clients SEO 門檻〕、軟化「60%」後全數升 production）
-
-**✅ 全站 0 draft：所有 service／local／blog／pricing／compare 頁面皆 production，sitemap 收錄數 ~2 → 32。**
-  - [x] 剩餘在地頁：台北數位行銷／台北 SEO／新北 SEO／新竹網頁設計（2026-06-29；各補在地觀點段落、軟化一處未佐證宣稱、升 production。6 個 local 頁全 production）
-- [x] 內鏈強化（2026-06-29）：首頁 MarketingServices／TechServices／ContentServices 卡片連到對應 production 服務頁；子頁 footer「本地服務」補桃園網頁設計。**首頁仍用社群版 footer、未連 local 頁**（local 頁靠子頁 footer 取得內鏈，如需更強可考慮首頁加「服務地區」或讓首頁共用 SitePageFooter）。
-- [x] 首頁導覽改分頁式（2026-06-29）：`Navigation.tsx` 的 header 由「全錨點滑動」改為「服務 ▾」下拉連 9 個 `/services/*`、定價→`/pricing`、部落格→`/blog`（真換頁）；首頁／作品／關於／聯絡維持首頁錨點滑動。**AI 語音、遊戲製作目前僅為首頁區塊、未在 header**（無獨立 `/services` 頁；日後可加回錨點或為其開獨立頁再放進服務下拉）。
-- [ ] 補真實客戶 case study 細節（接手日期、量化成果、客戶授權），強化上述已升 production 的頁面
-- [ ] 申請 Wikidata 條目強化 GEO 訊號
-
-> **2026-06-29 全站定價調整（一律半價）**：所有「隼訊服務費」砍半，已同步更新全站每個價格出現點 — 9 個服務頁 `pricing[]` 與 `priceMin`、服務頁／在地頁 FAQ 文字價、`pricing.ts`（4 定價頁 + compare 起價表 + 預算建議）、`local-business.ts` 的 OfferCatalog 硬寫價（schema 同步）、`llms.txt`/`llms-full.txt`、`site-config.ts` 的 `priceRange`（`$$-$$$` → `$-$$`）。
->
-> **刻意未砍**（非隼訊服務費）：① AI 工具的 **API 費用**（OpenAI/Anthropic 實際用量成本）；② 廣告 **最低投放預算**（客戶投在平台上的錢、關乎演算法樣本數）；③ 廣告 **抽成 15-25%**（代操抽成率，砍半不合理）。
->
-> **連帶誠信修正**：移除 `llms-full.txt` 中「佑羲人力 月自然流量 +400%」（未授權、無來源）、「藍海窗口期 / GEO <5%」「完全不存在」「重疊約 60%」等與正式頁面文案矛盾的 AI-slop 用語；並把「30,000 是最低有效門檻」改為與新價一致（否則自打臉）。
->
-> **待你確認的宣稱**（我未動，可能需佐證或更新）：`llms-full.txt` 的「Lighthouse SEO 100 分基準」「台灣最早全面導入 GEO 的行銷公司之一」「比台北同等品質低 25-30%」「比 Intercom AI 省 70%+」。
+- [ ] 匯入 GSC、GA4、Bing Webmaster Tools 與 GBP 的近 16 個月資料，另保存發布前 90 天基準。
+- [ ] 取得城市案例完整公開同意、期間、基準、結果、來源、圖片與限制後，再逐頁解除 noindex。
+- [ ] 請案例客戶在其官網連回對應案例頁；不購買假提及或批量垃圾外鏈。
 
 ## 內容品質護欄
 
@@ -432,8 +445,7 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 
 ### 編輯部架構
 
-所有文章作者統一為 `siteConfig.editorial.teamName`（隼訊數位行銷編輯部），使用 Schema.org 的 Organization-as-Author 規範。
-blog 文章可選擇性顯示 `reviewedByRole`（如「資深 SEO 顧問」）強化 trust 訊號 — 不公開實名但表明審稿角色。
+所有文章作者統一使用 `src/lib/content/authors.ts` 的實名資料，作者頁連至 `/about`。禁止以未具名「資深顧問」、虛構審稿人或團隊 Person Schema 製造信任訊號。
 
 ### 撰寫指南
 
@@ -448,7 +460,7 @@ blog 文章可選擇性顯示 `reviewedByRole`（如「資深 SEO 顧問」）�
 **2026-07-10 首批補寫**（共 6 檔、+115 行、純新增無覆蓋，全數通過 `pnpm lint:content` 與 `tsc`）：
 - `services/seo.ts`：搜尋三階段白話（檢索→索引→排名）、SEO 自己做 vs 委外、長尾關鍵字、AI Overview 對流量的衝擊
 - `services/geo.ts`：加數據/引述/來源提升被引用率（引 Princeton GEO 研究並標限制）、品牌實體一致性＋第三方聲量、E-E-A-T 對 AI 引用、GA4 referral 成效衡量
-- `services/aeo.ts`：答案膠囊（開頭先給結論）、Query Fan-Out、各平台引用偏好差異
+- `services/geo.ts`：回答前置、Query Fan-Out 與各平台引用來源差異；AEO 舊頁已合併並永久轉址
 - `services/web-development.ts`：網站速度＝業績問題、三年總持有成本(TCO)、SSL 憑證、WordPress vs 客製（中立）、如何看報價單
 - `services/ai-tools.ts`：RAG 與幻覺控制、轉真人與對話流程設計、成效指標、維運迭代
 - `pricing.ts`：網站年度維護費行情、AI 導入的知識庫整理隱藏成本

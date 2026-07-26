@@ -1,13 +1,12 @@
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import type { Metadata } from 'next'
 import { PageShell } from '@/components/page-layout/PageShell'
 import { ServicePageTemplate } from '@/components/page-templates/ServicePageTemplate'
-import { services, serviceSlugs, getService } from '@/lib/content/services'
+import { serviceSlugs, getService, isIndexableService } from '@/lib/content/services'
+import { getPriceDefinition } from '@/lib/content/price-catalog'
 import {
   createMetadata,
   createServiceSchema,
-  createFAQSchema,
-  createHowToSchema,
   createBreadcrumbSchema,
   createWebPageSchema,
   siteConfig,
@@ -24,6 +23,14 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: ServicePageProps): Promise<Metadata> {
   const { slug } = await params
+  if (slug === 'aeo') {
+    return createMetadata({
+      title: 'AEO 已整合至 GEO',
+      description: 'AEO 內容已整合至 SEO／GEO 搜尋成長服務。',
+      path: '/services/geo',
+      noIndex: true,
+    })
+  }
   const service = getService(slug)
   if (!service) return {}
   return createMetadata({
@@ -31,23 +38,24 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     description: service.description,
     path: `/services/${slug}`,
     keywords: service.keywords,
-    noIndex: service.qualityTier !== 'production',
+    noIndex: service.qualityTier !== 'production' || !isIndexableService(slug),
   })
 }
 
 export default async function ServicePage({ params }: ServicePageProps) {
   const { slug } = await params
+  if (slug === 'aeo') permanentRedirect('/services/geo')
   const service = getService(slug)
   if (!service) notFound()
 
   const url = `${siteConfig.url}/services/${slug}`
+  const price = getPriceDefinition(slug)
 
   const schemas = [
     createWebPageSchema({
       name: service.title,
       description: service.description,
       url,
-      speakableSelectors: ['#service-hero', '#service-content'],
     }),
     createBreadcrumbSchema([
       { name: '首頁', path: '/' },
@@ -60,10 +68,8 @@ export default async function ServicePage({ params }: ServicePageProps) {
       description: service.description,
       serviceType: service.serviceType,
       url,
-      price: { min: service.priceMin, unitText: service.priceUnit },
+      ...(price ? { price: { min: String(price.from), unitText: price.unit } } : {}),
     }),
-    createFAQSchema(service.faq, `faq-${slug}`),
-    ...(service.howTo ? [createHowToSchema(service.howTo)] : []),
   ]
 
   return (

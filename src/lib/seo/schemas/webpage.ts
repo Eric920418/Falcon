@@ -4,11 +4,10 @@ export interface WebPageSchemaInput {
   name: string
   description: string
   url: string
-  speakableSelectors?: string[]
 }
 
 export function createWebPageSchema(input: WebPageSchemaInput) {
-  const schema: Record<string, unknown> = {
+  return {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     '@id': `${input.url}#webpage`,
@@ -19,11 +18,4 @@ export function createWebPageSchema(input: WebPageSchemaInput) {
     isPartOf: { '@id': websiteId },
     about: { '@id': orgId },
   }
-  if (input.speakableSelectors && input.speakableSelectors.length > 0) {
-    schema.speakable = {
-      '@type': 'SpeakableSpecification',
-      cssSelector: input.speakableSelectors,
-    }
-  }
-  return schema
 }

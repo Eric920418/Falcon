@@ -1,6 +1,6 @@
 import type { LocalContent, CaseStudy } from './types'
 
-const lastModified = '2026-06-29'
+const lastModified = '2026-07-26'
 
 const taoyuanCases: CaseStudy[] = [
   {
@@ -29,15 +29,15 @@ export const localPages: Record<string, LocalContent> = {
     slug: 'taoyuan-seo',
     city: '桃園',
     serviceFocus: 'SEO',
-    title: '桃園 SEO 公司｜在地團隊、可面對面諮詢',
+    title: '桃園 SEO 服務｜預約到府或線上諮詢',
     h1: '桃園 SEO 公司',
     description:
-      '隼訊數位行銷總部位於桃園市桃園區，服務桃園、中壢、龜山、八德等地企業的 SEO 需求。可面對面開會、實體簽約，定價全國統一不溢價。',
+      '隼訊以桃園為主要服務基地，提供桃園、中壢、龜山、八德等地企業 SEO 服務；採線上會議或預約前往客戶所在地，不設可直接到訪門市。',
     keywords: ['桃園 SEO', '桃園 SEO 公司', '桃園 SEO 推薦', '桃園搜尋引擎優化', '中壢 SEO'],
-    lastModified: '2026-06-29',
+    lastModified,
     qualityTier: 'production',
     intro:
-      '我們辦公室就在桃園市桃園區民權路 6 號 5 樓之 4，服務桃園、中壢、龜山、八德、楊梅、平鎮一帶的中小企業。講白話：找在地廠商最實在的好處不是「比較便宜」，而是能坐下來把策略當面講清楚、客戶看得到負責的人，而且不必替台北辦公室的租金溢價買單。我們的 SEO 定價全國統一，桃園客戶不會比較貴，也不會比較便宜——差別只在「能不能面對面」這個體驗。',
+      '我們以桃園為主要服務基地，服務桃園、中壢、龜山、八德、楊梅、平鎮一帶的中小企業。公司不設可直接到訪門市；日常溝通以線上會議為主，需要現場訪談時再預約前往客戶所在地。服務區只代表團隊可實際前往，不代表在各行政區設有分公司。',
     sections: [
       {
         heading: '隼訊在桃園的 SEO 服務範圍',
@@ -59,7 +59,7 @@ export const localPages: Record<string, LocalContent> = {
         heading: 'Google 商家檔案（GBP）優化清單',
         body: '想讓在地搜尋與地圖區塊更容易找到你，這幾件事建議逐項做到：',
         items: [
-          '基本資料填好填滿：名稱、地址、電話、營業時間、官網連結，並與官網、社群完全一致',
+          '基本資料如實填寫：名稱、電話、營業時間、官網連結；服務區商家必須隱藏非門市地址',
           '選對主要類別與次要類別（類別選錯，地圖區塊幾乎不會出現你）',
           '定期上傳實景、團隊、作品照片，讓檔案看起來是「有在經營的」',
           '認真回覆每一則評論——好評道謝、負評誠懇處理，回覆本身也是給潛在客戶看的',
@@ -79,7 +79,7 @@ export const localPages: Record<string, LocalContent> = {
       {
         question: '我公司在桃園，可以面對面開會嗎？',
         answer:
-          '可以。我們辦公室位於桃園市桃園區民權路 6 號 5 樓之 4，歡迎預約面議。桃園市內客戶我們也可前往您公司提案。',
+          '可以。公司不設可直接到訪門市；桃園市內可依案件需求預約前往客戶公司，日常溝通則以線上會議為主。',
       },
       {
         question: '桃園 SEO 費用大約多少？',
@@ -89,7 +89,7 @@ export const localPages: Record<string, LocalContent> = {
       {
         question: '桃園 SEO 多久看得到效果？',
         answer:
-          '已有基礎的網站約 2–3 個月可見排名變化，新網站 4–6 個月。GBP 與在地關鍵字的優化通常更快反映在地圖區塊的曝光上。任何承諾「一個月衝第一」的，請避開。',
+          '沒有可靠的固定週期。抓取與索引狀態、網站歷史、競爭度、內容品質及外部訊號都會影響結果；我們會用 GSC 與實際詢盤趨勢按月檢查，不承諾幾週內排名或 AI 引用。',
       },
       {
         question: '我做的是 B2B 桃園在地服務，SEO 真的有用嗎？',
@@ -117,7 +117,7 @@ export const localPages: Record<string, LocalContent> = {
     description:
       '隼訊提供桃園地區企業官網、電商平台、客製化系統開發。使用 Next.js 現代技術棧，永久售後保固，可面對面討論需求。',
     keywords: ['桃園網頁設計', '桃園網站建置', '桃園網頁設計公司', '中壢網頁設計', '桃園架站'],
-    lastModified: '2026-06-29',
+    lastModified,
     qualityTier: 'production',
     intro:
       '我們在桃園的客戶橫跨餐飲、室內設計、人力資源、電商等不同產業。網站建置不分區域定價，差別只在一件事：能不能坐下來面對面把需求講清楚。以我們的經驗，會卡住一個專案的從來不是技術，而是「老闆腦中想的」跟「寫進需求單的」對不上——這件事當面聊一小時，往往比來回十封 email 還有效，這也是在地廠商真正的價值。',
@@ -153,7 +153,7 @@ export const localPages: Record<string, LocalContent> = {
       {
         question: '可以面對面討論需求嗎？',
         answer:
-          '可以。歡迎到桃園市桃園區辦公室面議，或我們前往您公司提案（桃園市內）。',
+          '可以。公司不設可直接到訪門市；桃園市內可依案件需求預約前往客戶公司，日常討論也可使用線上會議。',
       },
       {
         question: '做一個網站大概要多久？',
@@ -179,13 +179,13 @@ export const localPages: Record<string, LocalContent> = {
     lastModified,
     qualityTier: 'production',
     intro:
-      '我們辦公室在桃園，多數溝通透過線上會議完成。需要面對面時可前往台北面議（依案件需求安排）。對台北客戶來說，差別在「實體拜訪頻率」，工作品質本身與在地廠商沒有差異。',
+      '我們以桃園為主要服務基地，多數溝通透過線上會議完成；依案件需求可預約前往台北客戶所在地。本頁不是台北分公司頁，沒有當地門市訊號。',
     sections: [
       {
         heading: '我們提供的服務組合',
         body: '',
         items: [
-          'SEO + GEO + AEO 三位一體搜尋優化',
+          'SEO 技術基礎與 GEO 內容優化',
           'Google Ads + Meta 廣告代操',
           '社群經營（IG、FB、LINE、TikTok）',
           'AI 工具導入',
@@ -196,7 +196,7 @@ export const localPages: Record<string, LocalContent> = {
       {
         heading: '我們的觀點：台北客戶找桃園廠商，差的是通勤不是品質',
         body:
-          '數位行銷的多數工作——SEO 健檢、廣告投放、內容產出、報告——都在線上完成，廠商在台北還是桃園不影響成果。對台北客戶來說，找我們的實際差別只有一個：實體拜訪要多花約 30 分鐘車程。但你省下的是台北辦公室的租金溢價，換來的是同一個團隊整合 SEO、廣告、社群、內容，不必為了協調好幾家廠商而開一堆會。',
+          'SEO 健檢、內容產出與報告主要在線上完成；需要訪談或工作坊時，再依案件需求預約前往客戶所在地。團隊所在地不等於成果保證，仍應比較工作範圍、量測方法、案例證據與負責人是否清楚。',
       },
     ],
     caseStudies: [],
@@ -225,7 +225,7 @@ export const localPages: Record<string, LocalContent> = {
     title: '台北 SEO 公司｜白帽手法、透明定價',
     h1: '台北 SEO 公司',
     description:
-      '隼訊提供台北地區企業 SEO 服務：技術健檢、關鍵字研究、內容優化、反向連結建立。整合 GEO 與 AEO。',
+      '隼訊提供台北地區企業 SEO 與 GEO 服務：技術健檢、關鍵字研究、內容優化、可驗證證據與搜尋成效量測。',
     keywords: ['台北 SEO', '台北 SEO 公司', '台北 SEO 推薦', '台北搜尋引擎優化'],
     lastModified,
     qualityTier: 'production',
@@ -241,13 +241,13 @@ export const localPages: Record<string, LocalContent> = {
           '月度深度內容（4-15 篇，依方案）',
           '反向連結建立（白帽手法）',
           '台北在地關鍵字優化',
-          '整合 GEO + AEO（為 AI 搜尋時代準備）',
+          '整合 GEO 的引用友善內容與來源揭露',
         ],
       },
       {
         heading: '我們的觀點：SEO 是線上工作，廠商在哪不重要',
         body:
-          'SEO 的健檢、關鍵字研究、內容生產、報告幾乎都在線上完成，這也是為什麼我們服務台北客戶完全沒有距離問題。真正該看的不是廠商離你多近，而是手法乾不乾淨——是白帽、可驗證、報告看得懂，還是靠買外鏈與 AI 灌量衝一時排名。我們做台北 SEO 跟做桃園、全國一樣一套白帽流程，定價也全國統一，不收台北辦公室的溢價。',
+          'SEO 的健檢、關鍵字研究、內容生產與報告多在線上完成。真正該比較的是方法是否可驗證、報告能否對應詢盤，以及是否使用違規外鏈或大量低品質內容；所在地本身不構成品質或價格優勢。',
       },
     ],
     caseStudies: [],
@@ -297,7 +297,7 @@ export const localPages: Record<string, LocalContent> = {
           '「行政區 + 服務」長尾關鍵字佈局',
           'Google Business Profile 完整化',
           '行動裝置體驗優化（在地查詢多半在手機上發生）',
-          '整合 GEO 與 AEO',
+          '整合 SEO 技術基礎與 GEO 內容優化',
         ],
       },
       {
@@ -393,4 +393,16 @@ export function getLocalPage(slug: string): LocalContent | null {
 
 export function getAllLocalPages(): LocalContent[] {
   return Object.values(localPages)
+}
+
+export function hasIndexableLocalEvidence(page: LocalContent): boolean {
+  return Boolean(
+    page.caseStudies?.some(
+      (study) =>
+        study.consentToPublish === 'full' &&
+        study.engagementStart &&
+        study.baseline?.length &&
+        study.result?.length,
+    ),
+  )
 }

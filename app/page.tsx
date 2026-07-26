@@ -1,100 +1,40 @@
-'use client'
-
-import { motion, useScroll, useSpring } from 'motion/react'
-import Image from 'next/image'
-import { Hero } from '@/components/Hero'
-import { About } from '@/components/About'
-import { Portfolio } from '@/components/Portfolio'
-import { TechServices } from '@/components/TechServices'
-import { AIVoiceDispatch } from '@/components/AIVoiceDispatch'
-import { GameServices } from '@/components/GameServices'
-import { MarketingServices } from '@/components/MarketingServices'
-import { ContentServices } from '@/components/ContentServices'
-import { Philosophy } from '@/components/Philosophy'
+import type { Metadata } from 'next'
 import { Contact } from '@/components/Contact'
 import { Navigation } from '@/components/Navigation'
+import { HomeHero } from '@/components/HomeHero'
+import { HomeHubs } from '@/components/HomeHubs'
+import { HomeCases } from '@/components/HomeCases'
+import { SitePageFooter } from '@/components/page-layout/SitePageFooter'
+import { createMetadata, createWebPageSchema, JsonLd, siteConfig } from '@/lib/seo'
+
+export const metadata: Metadata = createMetadata({
+  title: '台灣企業網站與 AI 系統開發｜SEO／GEO 搜尋成長',
+  description:
+    '隼訊提供台灣企業網站、AI 系統開發與 SEO／GEO 搜尋成長服務，以公開案例、實名責任與合格詢盤衡量成果。',
+  path: '/',
+})
 
 export default function HomePage() {
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  })
+  const url = siteConfig.url
 
   return (
     <div className="bg-stone-950 text-stone-100 overflow-x-hidden">
-      {/* Progress Bar - 使用品牌色 */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[3px] falcon-progress origin-left z-50"
-        style={{ scaleX }}
+      <JsonLd
+        data={createWebPageSchema({
+          name: '台灣企業網站與 AI 系統開發｜SEO／GEO 搜尋成長',
+          description:
+            '隼訊提供台灣企業網站、AI 系統開發與 SEO／GEO 搜尋成長服務。',
+          url,
+        })}
       />
-
-      {/* Navigation */}
       <Navigation />
-
-      {/* Main Content */}
-      <main className="relative">
-        <Hero />
-        <Portfolio />
-        <About />
-        <TechServices />
-        <AIVoiceDispatch />
-        <GameServices />
-        <MarketingServices />
-        <ContentServices />
-        <Philosophy />
+      <main>
+        <HomeHero />
+        <HomeHubs />
+        <HomeCases />
         <Contact />
       </main>
-
-      {/* Footer */}
-      <footer className="relative border-t border-stone-800 py-12 px-6 bg-stone-950">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="text-center md:text-left">
-              <p className="text-stone-400 text-sm">
-                &copy; 2026 隼訊數位行銷
-              </p>
-              <p className="text-stone-600 text-xs mt-1">
-                讓每個品牌都能被聽見
-              </p>
-            </div>
-            <div className="flex items-center gap-6">
-              <a
-                href="https://www.instagram.com/falcon.information"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-stone-500 hover:text-amber-500 transition-colors text-sm"
-              >
-                Instagram
-              </a>
-              <a
-                href="https://www.threads.net/@falcon.information"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-stone-500 hover:text-amber-500 transition-colors text-sm"
-              >
-                Threads
-              </a>
-              <a
-                href="https://lin.ee/7IjIYw2"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-stone-500 hover:text-amber-500 transition-colors text-sm"
-              >
-                <Image
-                  src="https://qr-official.line.me/gs/M_154wjvkx_GW.png?oat_content=qr"
-                  alt="隼訊數位行銷 LINE 官方帳號 QR Code"
-                  width={40}
-                  height={40}
-                  className="rounded"
-                />
-                <span>LINE</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SitePageFooter />
     </div>
   )
 }

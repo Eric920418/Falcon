@@ -1,6 +1,23 @@
-import type { FAQItem, HowToInput } from '@/lib/seo'
-
 export type QualityTier = 'production' | 'draft' | 'placeholder'
+
+export interface FAQItem {
+  question: string
+  answer: string
+}
+
+export interface HowToStep {
+  name: string
+  text: string
+  url?: string
+}
+
+export interface HowToInput {
+  name: string
+  description: string
+  steps: HowToStep[]
+  totalTime?: string
+  estimatedCost?: { value: string; currency?: string }
+}
 
 export interface ContentSection {
   heading: string
@@ -25,6 +42,53 @@ export interface SourcedNumber {
     url?: string
     date?: string
   }
+}
+
+export interface AuthorProfile {
+  id: string
+  name: string
+  nameEn: string
+  jobTitle: string
+  description: string
+  url: string
+  sameAs: string[]
+}
+
+export interface EvidenceMetric {
+  label: string
+  value: string
+  context: string
+  sourceUrl?: string
+}
+
+export interface CaseEvidence {
+  slug: string
+  title: string
+  clientName: string
+  location: string
+  period: string
+  summary: string
+  challenge: string
+  approach: string[]
+  metrics: EvidenceMetric[]
+  technologies: string[]
+  image: string
+  projectUrl?: string
+  updatedAt: string
+  disclosure: string
+  evidenceStatus: 'public-project' | 'client-approved' | 'anonymized'
+}
+
+export interface PriceDefinition {
+  serviceSlug: string
+  pricingSlug: string
+  name: string
+  from: number
+  currency: 'TWD'
+  unit: '月' | '專案'
+  scope: string
+  factors: string[]
+  tiers: PricingTier[]
 }
 
 export interface CaseStudy {
@@ -82,7 +146,6 @@ export interface BlogContent {
   keywords: string[]
   datePublished: string
   dateModified?: string
-  reviewedByRole?: string
   qualityTier: QualityTier
   intent: 'informational' | 'commercial' | 'transactional' | 'navigational'
   intro: string

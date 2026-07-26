@@ -179,8 +179,8 @@ export const resumeData: ResumeData = {
           en: 'Shipped 20+ production systems end-to-end across e-commerce, corporate sites, AI tooling, POS, and academic platforms — clients include legacy food brands, international consultancies, academic institutions, and startups',
         },
         {
-          zh: '精通 SEO / GEO / AEO 架構（JSON-LD schema、OpenGraph、llms.txt、多層 breadcrumb），協助客戶網站被 ChatGPT、Gemini、Perplexity 等 AI 引擎優先引用',
-          en: 'Expert in SEO / GEO / AEO architecture (JSON-LD schema, OpenGraph, llms.txt, layered breadcrumbs) — get client sites prioritized by ChatGPT, Gemini, Perplexity, and other AI engines',
+          zh: '熟悉技術 SEO、JSON-LD、OpenGraph、內容證據與 AI 搜尋引薦量測；不把 llms.txt 或特殊 Schema 包裝成引用保證',
+          en: 'Experienced in technical SEO, JSON-LD, OpenGraph, evidence-led content, and AI referral measurement without claiming that llms.txt or special schema guarantees citations',
         },
         {
           zh: '為翊珍香電商導入 Core Web Vitals 優化：圖片體積壓縮 88.8%、LCP 控制在 2.5s 內、企業級 SEO 後台，支撐 30 年老字號品牌數位轉型',

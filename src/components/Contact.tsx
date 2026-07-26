@@ -1,9 +1,10 @@
 'use client'
 
-import { motion } from 'motion/react'
 import { useRef, useState } from 'react'
-import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react'
+import { Mail, Phone, Send, MessageCircle } from 'lucide-react'
 import { siteConfig } from '@/lib/seo/site-config'
+import { trackEvent } from '@/lib/analytics'
+import { TrackedContactLink } from './TrackedContactLink'
 
 export function Contact() {
   const ref = useRef(null);
@@ -18,12 +19,14 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [errorCode, setErrorCode] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
     setErrorMessage('');
+    setErrorCode('');
 
     try {
       const response = await fetch('/api/contact', {
@@ -34,21 +37,39 @@ export function Contact() {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const rawBody = await response.text();
+      let data: { message?: string; error?: string; code?: string } = {};
+      try {
+        data = rawBody ? JSON.parse(rawBody) : {};
+      } catch {
+        data = {
+          error: rawBody || `伺服器回傳無法解析的內容（HTTP ${response.status}）`,
+          code: 'INVALID_RESPONSE',
+        };
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || '發送失敗');
+        const submitError = new Error(data.error || `發送失敗（HTTP ${response.status}）`) as Error & { code?: string };
+        submitError.code = data.code || `HTTP_${response.status}`;
+        throw submitError;
       }
 
       setSubmitStatus('success');
       setFormData({ name: '', email: '', company: '', message: '' });
+      trackEvent('generate_lead', { method: 'contact_form' });
 
       setTimeout(() => {
         setSubmitStatus('idle');
       }, 5000);
     } catch (error) {
+      const code =
+        error && typeof error === 'object' && 'code' in error && typeof error.code === 'string'
+          ? error.code
+          : 'CONTACT_FORM_FAILED';
       setSubmitStatus('error');
       setErrorMessage(error instanceof Error ? error.message : '發送失敗，請稍後再試');
+      setErrorCode(code);
+      trackEvent('form_error', { form_name: 'contact', error_code: code });
     } finally {
       setIsSubmitting(false);
     }
@@ -67,24 +88,21 @@ export function Contact() {
       title: "Email",
       content: siteConfig.email,
       link: `mailto:${siteConfig.email}`,
+      channel: 'email' as const,
     },
     {
       icon: Phone,
       title: "電話",
       content: phoneNumber,
       link: phoneHref,
+      channel: 'phone' as const,
     },
     {
       icon: MessageCircle,
       title: "LINE 官方帳號",
       content: "加入好友諮詢",
       link: "https://lin.ee/7IjIYw2",
-    },
-    {
-      icon: MapPin,
-      title: "地址",
-      content: "桃園市桃園區民權路6號5樓之4",
-      link: null,
+      channel: 'line' as const,
     },
   ];
 
@@ -96,40 +114,23 @@ export function Contact() {
 
       <div className="max-w-6xl mx-auto relative">
         {/* 標籤 */}
-        <motion.div
-          className="flex items-center gap-3 mb-6"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
+        <div className="flex items-center gap-3 mb-6">
           <div className="brand-line" />
           <span className="text-amber-500 text-sm tracking-widest uppercase">Contact</span>
-        </motion.div>
+        </div>
 
-        <motion.div
-          className="mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="mb-16">
           <h2 className="text-4xl md:text-5xl text-stone-100 mb-4">
             聯絡<span className="text-falcon-gradient">我們</span>
           </h2>
           <p className="text-lg text-stone-400 max-w-xl">
             準備好開始您的數位轉型之旅了嗎？讓我們一起討論如何幫助您的品牌成長
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.6 }}
-          >
+          <div>
             <h3 className="text-xl mb-8 text-stone-100" style={{ fontFamily: 'var(--font-display)' }}>取得聯繫</h3>
 
             <div className="space-y-6 mb-10">
@@ -146,12 +147,16 @@ export function Contact() {
                     <div>
                       <p className="text-stone-500 text-sm mb-1">{info.title}</p>
                       {info.link ? (
-                        <a
+                        <TrackedContactLink
                           href={info.link}
+                          channel={info.channel}
+                          placement="contact_section"
+                          target={info.channel === 'line' ? '_blank' : undefined}
+                          rel={info.channel === 'line' ? 'noopener noreferrer' : undefined}
                           className="text-stone-200 hover:text-amber-500 transition-colors"
                         >
                           {info.content}
-                        </a>
+                        </TrackedContactLink>
                       ) : (
                         <p className="text-stone-200">{info.content}</p>
                       )}
@@ -166,18 +171,13 @@ export function Contact() {
                 營業時間
               </h4>
               <div className="space-y-2 text-stone-400">
-                <p>24小時營業，全年無休</p>
+                <p>採預約制，以電話、Email、LINE 或表單安排線上／到場討論。</p>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-          >
+          <div>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-stone-400 text-sm mb-2">
@@ -243,8 +243,9 @@ export function Contact() {
               </div>
 
               {submitStatus === 'error' && (
-                <div className="p-4 bg-red-900/30 border border-red-800/50 rounded-lg text-red-400">
-                  {errorMessage}
+                <div role="alert" className="p-4 bg-red-900/30 border border-red-800/50 rounded-lg text-red-300">
+                  <p className="font-medium">送出失敗 [{errorCode}]</p>
+                  <p className="mt-1 break-words">{errorMessage}</p>
                 </div>
               )}
 
@@ -276,7 +277,7 @@ export function Contact() {
                 )}
               </button>
             </form>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -26,9 +26,8 @@ export const cardProfile = {
   line: siteConfig.lineUrl, // 公司 LINE 官方帳號 https://lin.ee/7IjIYw2
   personalLineId: 'eric0979369822', // 個人 LINE ID
   personalLineUrl: 'https://line.me/ti/p/~eric0979369822', // 個人 LINE 加好友
-  instagram: siteConfig.socialLinks[0],
+  instagram: 'https://www.instagram.com/falcon.information',
   location: resumeData.contact.location.zh, // 台灣桃園
-  address: siteConfig.address, // 公司地址（vCard 用）
 
   // 名片本身的分享網址（QR / vCard URL 用）
   cardUrl: `${siteConfig.url}/card`,

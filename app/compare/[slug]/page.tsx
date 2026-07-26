@@ -5,7 +5,6 @@ import { ComparePageTemplate } from '@/components/page-templates/ComparePageTemp
 import { comparePages, compareSlugs, getComparePage } from '@/lib/content/pricing'
 import {
   createMetadata,
-  createFAQSchema,
   createBreadcrumbSchema,
   createWebPageSchema,
   siteConfig,
@@ -44,14 +43,12 @@ export default async function ComparePage({ params }: CompareProps) {
       name: page.title,
       description: page.description,
       url,
-      speakableSelectors: ['#compare-hero', '#compare-table'],
     }),
     createBreadcrumbSchema([
       { name: '首頁', path: '/' },
       { name: '比較', path: `/compare/${slug}` },
       { name: page.h1, path: `/compare/${slug}` },
     ]),
-    createFAQSchema(page.faq, `compare-${slug}-faq`),
   ]
 
   return (

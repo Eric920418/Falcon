@@ -10,6 +10,8 @@ export interface MetadataInput {
   noIndex?: boolean
 }
 
+const defaultOgImage = `${siteConfig.url}/opengraph-image`
+
 export function createMetadata(input: MetadataInput): Metadata {
   const url = `${siteConfig.url}${input.path}`
   const fullTitle = input.title.includes(siteConfig.name)
@@ -19,7 +21,6 @@ export function createMetadata(input: MetadataInput): Metadata {
   return {
     title: input.title,
     description: input.description,
-    keywords: input.keywords ?? (siteConfig.keywords as unknown as string[]),
     alternates: {
       canonical: url,
       languages: {
@@ -29,7 +30,7 @@ export function createMetadata(input: MetadataInput): Metadata {
       },
     },
     robots: input.noIndex
-      ? { index: false, follow: false }
+      ? { index: false, follow: true }
       : {
           index: true,
           follow: true,
@@ -48,13 +49,13 @@ export function createMetadata(input: MetadataInput): Metadata {
       siteName: siteConfig.name,
       title: fullTitle,
       description: input.description,
-      ...(input.ogImage ? { images: [{ url: input.ogImage }] } : {}),
+      images: [{ url: input.ogImage ?? defaultOgImage, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title: fullTitle,
       description: input.description,
-      ...(input.ogImage ? { images: [input.ogImage] } : {}),
+      images: [input.ogImage ?? defaultOgImage],
     },
   }
 }

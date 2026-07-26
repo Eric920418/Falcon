@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Calendar, User, ArrowRight } from 'lucide-react'
+import { Calendar, ArrowRight } from 'lucide-react'
 import { PageShell } from '@/components/page-layout/PageShell'
 import { getAllBlogPosts } from '@/lib/content/blog'
 import {
@@ -13,9 +13,9 @@ import {
 
 export function generateMetadata(): Metadata {
   return createMetadata({
-    title: '部落格｜SEO、GEO、AEO、AI 行銷實戰知識庫',
+    title: '部落格｜網站、SEO／GEO 與 AI 系統實作',
     description:
-      '隼訊數位行銷部落格：SEO、GEO、AEO 搜尋優化教學、AI 行銷實戰、網站開發與 AI 工具導入指南。為台灣中小企業而寫。',
+      '隼訊實作文章：網站與 AI 系統開發、SEO／GEO 搜尋成長、結構化資料與量測，清楚區分官方規範、觀察與限制。',
     path: '/blog',
     keywords: ['行銷部落格', 'SEO 教學', 'GEO 教學', 'AI 行銷', '網站建置', '數位行銷'],
   })
@@ -30,7 +30,7 @@ export default function BlogIndexPage() {
   const schemas = [
     createWebPageSchema({
       name: '隼訊數位行銷部落格',
-      description: 'SEO、GEO、AEO、AI 行銷實戰知識庫',
+      description: '網站、AI 系統與 SEO／GEO 搜尋成長實作',
       url,
     }),
     createBreadcrumbSchema([
@@ -67,7 +67,7 @@ export default function BlogIndexPage() {
               部落格
             </h1>
             <p className="text-lg text-[#A8B6BC] max-w-2xl">
-              SEO、GEO、AEO 搜尋優化教學、AI 行銷實戰、網站開發指南。為台灣中小企業而寫。
+              網站、AI 系統與 SEO／GEO 搜尋成長實作。區分官方規範、觀察與限制，不販售捷徑。
             </p>
           </div>
         </section>

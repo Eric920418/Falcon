@@ -7,15 +7,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const serviceLinks = [
-  { label: 'SEO 搜尋引擎優化', href: '/services/seo' },
-  { label: 'GEO 生成式引擎優化', href: '/services/geo' },
-  { label: 'AEO 答案引擎優化', href: '/services/aeo' },
   { label: '網站建置與軟體開發', href: '/services/web-development' },
   { label: 'AI 工具開發', href: '/services/ai-tools' },
-  { label: '數位廣告投放', href: '/services/digital-ads' },
-  { label: '社群經營', href: '/services/social-media' },
-  { label: '短影音與影片製作', href: '/services/video' },
-  { label: '量化交易系統開發', href: '/services/quant-trading' },
+  { label: 'SEO 搜尋成長', href: '/services/seo' },
+  { label: 'GEO AI 搜尋', href: '/services/geo' },
 ]
 
 type NavItem =
@@ -24,13 +19,12 @@ type NavItem =
   | { label: string; kind: 'dropdown'; items: { label: string; href: string }[] }
 
 const navItems: NavItem[] = [
-  { label: '首頁', kind: 'scroll', id: 'hero' },
-  { label: '服務', kind: 'dropdown', items: serviceLinks },
-  { label: '定價', kind: 'link', href: '/pricing' },
-  { label: '部落格', kind: 'link', href: '/blog' },
-  { label: '作品案例', kind: 'scroll', id: 'portfolio' },
-  { label: '關於我們', kind: 'scroll', id: 'about' },
-  { label: '聯絡我們', kind: 'scroll', id: 'contact' },
+  { label: '網站與 AI 開發', kind: 'link', href: '/services/web-development' },
+  { label: 'SEO／GEO', kind: 'dropdown', items: serviceLinks },
+  { label: '案例', kind: 'link', href: '/case-studies' },
+  { label: '價格', kind: 'link', href: '/pricing' },
+  { label: '關於', kind: 'link', href: '/about' },
+  { label: '聯絡', kind: 'scroll', id: 'contact' },
 ]
 
 export function Navigation() {

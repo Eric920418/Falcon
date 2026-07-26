@@ -1,12 +1,15 @@
 import Link from 'next/link'
 import { ArrowRight, Check, ChevronRight } from 'lucide-react'
 import type { ServiceContent } from '@/lib/content/types'
+import { getPriceDefinition } from '@/lib/content/price-catalog'
 
 interface ServicePageTemplateProps {
   service: ServiceContent
 }
 
 export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
+  const pricing = getPriceDefinition(service.slug)?.tiers ?? []
+
   return (
     <div className="bg-stone-950">
       {/* Hero */}
@@ -96,7 +99,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
       )}
 
       {/* Pricing */}
-      {service.pricing && service.pricing.length > 0 && (
+      {pricing.length > 0 && (
         <section id="pricing" className="py-16 px-6">
           <div className="max-w-6xl mx-auto">
             <h2
@@ -108,7 +111,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
             <p className="text-[#A8B6BC] text-center mb-12">所有方案均含完整服務內容，無隱藏費用</p>
 
             <div className="grid md:grid-cols-3 gap-6">
-              {service.pricing.map((tier, i) => (
+              {pricing.map((tier, i) => (
                 <div
                   key={i}
                   className={`p-6 rounded-lg border ${

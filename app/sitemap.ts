@@ -1,37 +1,38 @@
 import { MetadataRoute } from 'next'
 import { siteConfig } from '@/lib/seo'
-import { getAllServices } from '@/lib/content/services'
-import { getAllLocalPages } from '@/lib/content/local'
+import { getIndexableServices } from '@/lib/content/services'
+import { getAllLocalPages, hasIndexableLocalEvidence } from '@/lib/content/local'
 import { getAllBlogPosts } from '@/lib/content/blog'
 import { pricingPages, comparePages } from '@/lib/content/pricing'
+import { getAllCaseStudies } from '@/lib/content/case-studies'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url
-  const now = new Date().toISOString()
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: baseUrl, lastModified: now, changeFrequency: 'weekly', priority: 1 },
-    { url: `${baseUrl}/pricing`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${baseUrl}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: baseUrl, lastModified: '2026-07-26' },
+    { url: `${baseUrl}/about`, lastModified: '2026-07-26' },
+    { url: `${baseUrl}/case-studies`, lastModified: '2026-07-26' },
+    { url: `${baseUrl}/pricing`, lastModified: '2026-07-26' },
+    { url: `${baseUrl}/blog`, lastModified: '2026-07-26' },
   ]
 
-  // 僅收錄 qualityTier === 'production' 的頁面
-  const serviceRoutes: MetadataRoute.Sitemap = getAllServices()
+  const serviceRoutes: MetadataRoute.Sitemap = getIndexableServices()
     .filter((s) => s.qualityTier === 'production')
     .map((s) => ({
       url: `${baseUrl}/services/${s.slug}`,
       lastModified: s.lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.95,
     }))
 
   const localRoutes: MetadataRoute.Sitemap = getAllLocalPages()
-    .filter((p) => p.qualityTier === 'production')
+    .filter(
+      (p) =>
+        p.qualityTier === 'production' &&
+        hasIndexableLocalEvidence(p),
+    )
     .map((p) => ({
       url: `${baseUrl}/local/${p.slug}`,
       lastModified: p.lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.85,
     }))
 
   const blogRoutes: MetadataRoute.Sitemap = getAllBlogPosts()
@@ -39,8 +40,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .map((p) => ({
       url: `${baseUrl}/blog/${p.slug}`,
       lastModified: p.dateModified ?? p.datePublished,
-      changeFrequency: 'monthly',
-      priority: 0.8,
     }))
 
   const pricingRoutes: MetadataRoute.Sitemap = Object.values(pricingPages)
@@ -48,8 +47,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .map((p) => ({
       url: `${baseUrl}/pricing/${p.slug}`,
       lastModified: p.lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.85,
     }))
 
   const compareRoutes: MetadataRoute.Sitemap = Object.values(comparePages)
@@ -57,9 +54,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .map((p) => ({
       url: `${baseUrl}/compare/${p.slug}`,
       lastModified: p.lastModified,
-      changeFrequency: 'monthly',
-      priority: 0.85,
     }))
+
+  const caseStudyRoutes: MetadataRoute.Sitemap = getAllCaseStudies().map((caseStudy) => ({
+    url: `${baseUrl}/case-studies/${caseStudy.slug}`,
+    lastModified: caseStudy.updatedAt,
+  }))
 
   return [
     ...staticRoutes,
@@ -68,5 +68,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...blogRoutes,
     ...pricingRoutes,
     ...compareRoutes,
+    ...caseStudyRoutes,
   ]
 }

@@ -1,7 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const runtime = 'edge'
-export const alt = '隼訊數位行銷 | 整合行銷服務平台 - SEO、GEO、AEO、網站建置'
+export const alt = '隼訊數位行銷｜網站與 AI 開發、SEO／GEO 搜尋成長'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -112,7 +111,7 @@ export default async function Image() {
               display: 'flex',
             }}
           >
-            讓每個品牌都能被聽見
+            網站與 AI 開發 · SEO／GEO 搜尋成長
           </div>
 
           {/* 服務標籤 */}
@@ -123,7 +122,7 @@ export default async function Image() {
               marginTop: '16px',
             }}
           >
-            {['SEO', 'GEO', 'AEO', '網站建置', 'AI 工具'].map((tag) => (
+            {['網站開發', 'AI 系統', 'SEO', 'GEO'].map((tag) => (
               <div
                 key={tag}
                 style={{
@@ -154,8 +153,6 @@ export default async function Image() {
           }}
         >
           <span>falconinformation.com</span>
-          <span>·</span>
-          <span>桃園市桃園區</span>
           <span>·</span>
           <span>0958-801-559</span>
         </div>

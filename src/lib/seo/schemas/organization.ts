@@ -9,9 +9,9 @@ export const organizationSchema = {
   url: siteConfig.url,
   logo: {
     '@type': 'ImageObject',
-    url: `${siteConfig.url}/logo.png`,
-    width: 512,
-    height: 512,
+    url: `${siteConfig.url}/icon.png`,
+    width: 256,
+    height: 256,
   },
   description: siteConfig.description,
   sameAs: siteConfig.socialLinks as unknown as string[],
@@ -25,4 +25,8 @@ export const organizationSchema = {
   },
   knowsAbout: siteConfig.knowsAbout as unknown as string[],
   foundingDate: siteConfig.foundingDate,
+  areaServed: {
+    '@type': 'Country',
+    name: '台灣',
+  },
 }

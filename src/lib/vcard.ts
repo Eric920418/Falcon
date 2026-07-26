@@ -8,7 +8,6 @@ import { cardProfile, telHref, type CardProfile } from './card-data'
  * iOS / Android / Outlook 通訊錄皆能匯入。
  */
 export function buildVCard(profile: CardProfile = cardProfile): string {
-  const { address } = profile
   const lines = [
     'BEGIN:VCARD',
     'VERSION:4.0',
@@ -23,8 +22,7 @@ export function buildVCard(profile: CardProfile = cardProfile): string {
     `URL:${profile.website}`,
     profile.github ? `URL:${profile.github}` : null,
     `URL:${profile.personalLineUrl}`,
-    // ADR: ;;街道;城市;區域;郵遞區號;國家
-    `ADR;TYPE=work:;;${address.streetAddress};${address.addressLocality};${address.addressRegion};${address.postalCode};台灣`,
+    'ADR;TYPE=work:;;;桃園市;;;台灣',
     `NOTE:${profile.org}｜${profile.title}｜LINE ID: ${profile.personalLineId}`,
     'END:VCARD',
   ].filter(Boolean) as string[]

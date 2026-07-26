@@ -245,7 +245,7 @@ const projects: Project[] = [
     id: 28,
     title: "invisible care 居家健康守護官網與 CMS",
     description:
-      "整合防霾紗網、全戶濾水、水塔清洗、冷氣與洗衣機深度拆洗、精緻居家清潔六大專業服務的居家清潔品牌官網。前台 7 頁完整 SEO 實體圖（LocalBusiness + Service + FAQPage + Review JSON-LD），後台 11 頁老人友善 CMS（業主 55-65 歲），支援 Section 動態區塊管理、Before/After 對比圖、Lightbox 圖片放大與 R2 圖片上傳。",
+      "整合防霾紗網、全戶濾水、水塔清洗、冷氣與洗衣機深度拆洗、精緻居家清潔六大專業服務的居家清潔品牌官網。前台 7 頁使用與可見內容一致的 metadata 與結構化資料，後台 11 頁老人友善 CMS（業主 55-65 歲），支援 Section 動態區塊管理、Before/After 對比圖、Lightbox 圖片放大與 R2 圖片上傳。",
     tech: [
       "Next.js 15",
       "React 18",
@@ -265,7 +265,7 @@ const projects: Project[] = [
       "11 頁後台老人友善 CMS",
     ],
     highlights: [
-      "完整 SEO 實體圖（LocalBusiness + Service + FAQPage + Review）",
+      "與可見內容一致的 SEO metadata 與結構化資料",
       "後台老人友善 UI（16px 字級、48px 按鈕、口語化措辭）",
       "Neon Serverless + Prisma Adapter WebSocket 架構",
     ],

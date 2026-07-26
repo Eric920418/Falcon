@@ -5,7 +5,6 @@ import { PricingPageTemplate } from '@/components/page-templates/PricingPageTemp
 import { pricingPages, pricingSlugs, getPricingPage } from '@/lib/content/pricing'
 import {
   createMetadata,
-  createFAQSchema,
   createBreadcrumbSchema,
   createWebPageSchema,
   siteConfig,
@@ -44,14 +43,12 @@ export default async function PricingDetailPage({ params }: PricingDetailProps) 
       name: page.title,
       description: page.description,
       url,
-      speakableSelectors: ['#pricing-hero', '#pricing-tiers'],
     }),
     createBreadcrumbSchema([
       { name: '首頁', path: '/' },
       { name: '透明定價', path: '/pricing' },
       { name: page.h1, path: `/pricing/${slug}` },
     ]),
-    createFAQSchema(page.faq, `pricing-${slug}-faq`),
     {
       '@context': 'https://schema.org',
       '@type': 'OfferCatalog',

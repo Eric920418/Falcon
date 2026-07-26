@@ -1,7 +1,6 @@
 import type { BlogContent } from './types'
 
 const datePublished = '2026-05-18'
-const reviewedByRole = '資深 SEO 顧問'
 
 export const blogPosts: Record<string, BlogContent> = {
   'geo-complete-guide-2026': {
@@ -9,71 +8,71 @@ export const blogPosts: Record<string, BlogContent> = {
     title: 'GEO 生成式引擎優化指南：技術與內容怎麼準備',
     h1: 'GEO 生成式引擎優化指南',
     description:
-      '生成式引擎優化（GEO）讓 ChatGPT、Claude、Gemini 等 AI 在回答用戶問題時能引用你的品牌。本文整理隼訊實際在做的技術與內容工作。',
+      '依 Google 2026 年官方指引整理 GEO：從搜尋索引、原創內容、實名案例、AI 爬蟲到量測，並拆解 llms.txt 與特殊 AI Schema 迷思。',
     keywords: ['GEO 怎麼做', 'GEO 完整指南', 'GEO 教學', 'AI 搜尋優化', '生成式引擎優化 教學'],
     datePublished,
-    reviewedByRole,
+    dateModified: '2026-07-26',
     qualityTier: 'production',
     intent: 'informational',
     intro:
-      'GEO（Generative Engine Optimization）是針對 ChatGPT、Claude、Gemini、Perplexity 等生成式 AI 搜尋的內容優化。傳統 SEO 競爭的是 Google 排名，GEO 競爭的是「用戶問 AI 時，AI 是否會講出你的品牌」。本文是我們實際在做的工作筆記，不討論未經驗證的假設。',
+      'GEO 是業界描述 AI 搜尋可見度的名稱，不是一組神祕標記。Google 2026 年官方指引明確表示：AI Overview 與 AI Mode 沒有額外技術門檻，Google 也不使用 llms.txt。真正能長期累積的，是搜尋索引、原創經驗、實名責任、外部信任與轉換量測。',
     sections: [
       {
         heading: 'GEO 與 SEO 的差別',
         body:
-          'SEO 訊號來自反向連結、TF-IDF、E-E-A-T 與站速等；GEO 訊號偏向結構化資料、可被擷取的句式、權威來源的引用密度、AI 訓練資料涵蓋度。兩者基礎重疊（一份好內容對兩邊都加分），但訊號權重不同。',
+          'Google 的生成式搜尋功能建立在搜尋索引與核心品質系統上，所以 GEO 不會繞過 SEO。差別主要在使用場景與量測：SEO 常看非品牌查詢、自然點擊與詢盤；GEO 另看 AI 功能曝光、ChatGPT／Perplexity 引薦與固定查詢集的來源出現狀況。',
       },
       {
         heading: '我們執行 GEO 的工作項目',
         body: '這是隼訊接案實際在做的事，依重要性排序：',
         items: [
-          '部署 llms.txt 與 llms-full.txt — AI 爬蟲的「快速簡介」',
-          '加入完整 Schema.org 結構化資料（Organization、LocalBusiness、FAQPage、HowTo、Speakable）',
-          '改寫內容為「可引用」格式 — 明確段落、直接陳述、不過度行銷化',
-          '建立主題集群 — 同一主題寫多篇深度文章，建立 AI 認可的領域權威',
-          '監測 AI 引用率 — 定期在 ChatGPT、Claude、Perplexity 測試品牌相關問題',
+          '先修抓取、索引、canonical、內鏈、速度與文字可見性',
+          '只部署與畫面一致的 Organization、Service、Article、Breadcrumb 等必要 Schema',
+          '補實名作者、真實案例、來源、日期與限制',
+          '依客戶問題建立主題集群，不為每個查詢變體批量生頁',
+          '用 GSC、GA4、AI 平台引薦與固定查詢集建立基準',
         ],
       },
       {
         heading: '常見誤解',
         body:
-          '「加個 llms.txt 就有 GEO 了」— 不對。llms.txt 只是發現機制，AI 是否會引用你還取決於整體內容權威與可讀性。「GEO 多久看到效果」— 視內容基礎而定，已有 SEO 基礎的網站約 4-8 週，從零開始的新品牌時間更長且難以預估。',
+          'llms.txt 對 Google Search 沒有排名或 AI 功能效果；結構化資料也不是 AI 引用資格。修正後多久被引用沒有固定答案，因為不同平台、查詢、競爭與品牌基礎都會改變結果。可驗證的是抓取、索引、引薦與詢盤，不是廠商口頭保證。',
       },
     ],
     faq: [
       {
         question: 'GEO 跟 SEO 衝突嗎？',
-        answer: '不衝突。優化 GEO 的工作（schema、內容結構化、權威累積）多數會同時強化 SEO。',
+        answer: '不衝突。技術 SEO、原創內容、清楚來源與品牌信任，同時是傳統搜尋與 AI 搜尋的共同基礎。',
       },
       {
         question: '我自己可以做嗎？',
         answer:
-          '部分可以。llms.txt、基礎 schema 自己部署即可。但主題集群內容生產、權威來源累積這類工作通常需要團隊長期投入。',
+          '可以先做：確認頁面可索引、補實名作者與案例、在 GSC／GA4 建立基準。若沒有原創資料，先整理第一手經驗，比增加更多標記更重要。',
       },
     ],
-    relatedServices: ['geo', 'aeo', 'seo'],
+    relatedServices: ['geo', 'seo'],
   },
   'seo-vs-geo-vs-aeo': {
     slug: 'seo-vs-geo-vs-aeo',
     title: 'SEO、GEO、AEO 差別與優先順序',
     h1: 'SEO、GEO、AEO 三者差異與優先順序',
     description:
-      'SEO、GEO、AEO 是三種不同搜尋優化策略，分別針對傳統搜尋引擎、生成式 AI、答案引擎。本文釐清三者差異、適用場景、預算分配建議。',
+      'SEO、GEO、AEO 是業界常用名稱，但共享搜尋索引、內容與信任基礎。本文依 Google 官方說明整理正確優先順序。',
     keywords: ['SEO GEO AEO 差別', 'GEO 是什麼', 'AEO 是什麼', 'SEO GEO AEO 優先順序', '搜尋優化差異'],
     datePublished,
-    reviewedByRole,
+    dateModified: '2026-07-26',
     qualityTier: 'production',
     intent: 'informational',
     intro:
-      '這三個縮寫常被混用，但目標、訊號、評量標準都不同。本文用最簡單方式釐清，並提供「預算有限時該優先做哪一個」的判斷依據。',
+      '這三個縮寫常被廠商拆成三份服務，但 Google 將 GEO／AEO 視為搜尋體驗優化的一部分。預算有限時，不應先買特殊標記，而應先完成索引、內容證據與轉換量測。',
     sections: [
       {
         heading: '三者各自的定義',
         body: '',
         items: [
           'SEO (Search Engine Optimization)：競爭 Google、Bing 等傳統搜尋引擎的排名',
-          'GEO (Generative Engine Optimization)：競爭 ChatGPT、Claude、Gemini 等生成式 AI 的品牌引用',
-          'AEO (Answer Engine Optimization)：競爭 Perplexity、Google AI Overview 等答案引擎的精選來源',
+          'GEO (Generative Engine Optimization)：描述 AI 搜尋中的來源、品牌與引薦可見度',
+          'AEO (Answer Engine Optimization)：以清楚回答使用者問題為內容方法，不需要另一套 Schema',
         ],
       },
       {
@@ -85,46 +84,45 @@ export const blogPosts: Record<string, BlogContent> = {
         heading: '預算有限時的優先順序',
         body: '這是我們對中小企業客戶常給的建議：',
         items: [
-          '預算 1.5 萬 / 月以下：先做 SEO（手法最成熟、效果最可預測）',
-          '預算 2.5 萬 / 月：SEO 為主，加部分 GEO 工作（為 AI 搜尋時代鋪路）',
-          '預算 5 萬 / 月以上：可以三者整合進行',
+          '先建立 GSC／GA4 基準，修正抓取、索引、canonical、速度與內鏈',
+          '再補真實案例、作者、來源與客戶真正會問的內容',
+          '最後分平台觀察搜尋點擊、AI 引薦與合格詢盤',
         ],
       },
     ],
     faq: [
       {
         question: 'GEO 跟 AEO 重疊很多嗎？',
-        answer: '工作項目大部分重疊（兩者都需要 schema、內容結構化、權威性建立）。建議整合執行避免重複投資。',
+        answer: '高度重疊。隼訊將 AEO 併入 GEO 的內容方法，不以 FAQPage、HowTo 或 Speakable 包裝成另一套服務。',
       },
     ],
-    relatedServices: ['seo', 'geo', 'aeo'],
+    relatedServices: ['seo', 'geo'],
   },
   'schema-org-tutorial': {
     slug: 'schema-org-tutorial',
     title: 'Schema.org 結構化資料部署實作',
     h1: 'Schema.org 結構化資料部署實作',
     description:
-      'Schema.org 結構化資料是 SEO 與 GEO 的共同基礎。本文整理 8 種必備 schema 的用途與部署方式，附 JSON-LD 範例。',
+      'Schema.org 用來描述頁面實體並支援特定搜尋功能。本文說明該用哪些類型、哪些已失效，以及內容一致性規則。',
     keywords: ['Schema.org', '結構化資料', 'JSON-LD', 'LocalBusiness schema', 'FAQ schema'],
     datePublished,
-    reviewedByRole,
+    dateModified: '2026-07-26',
     qualityTier: 'production',
     intent: 'informational',
     intro:
-      'Schema.org 結構化資料是搜尋引擎理解網站內容的工具。沒部署 schema 不等於完全沒 SEO，但會錯失多數 Rich Results、AI 引用機會、Knowledge Graph 條目。',
+      'Schema.org 是讓搜尋引擎以明確欄位理解頁面實體的格式，但不是排名保證，也不是 AI 搜尋必要條件。少而準比多而錯重要；標記內容必須能在頁面上看見。',
     sections: [
       {
-        heading: '常用的 8 種 Schema',
+        heading: '本網站實際使用的 Schema',
         body: '',
         items: [
           'Organization：品牌身份識別（多數網站必備）',
-          'LocalBusiness：本地商家（有實體地址時加）',
-          'WebSite：搜尋框 + sitelinks',
-          'FAQPage：FAQ 區塊（可觸發 Google rich snippet）',
-          'HowTo：步驟化內容（AI 引擎偏好擷取）',
+          'WebSite：網站實體與出版者關係',
+          'Service：可見的服務範圍與提供者',
           'Article：文章內容（含作者、發布日期）',
           'BreadcrumbList：麵包屑導航',
-          'Speakable：語音搜尋優化',
+          'ProfilePage／Person：實名作者與公開專業連結',
+          'CreativeWork：案例內容與證據揭露',
         ],
       },
       {
@@ -137,8 +135,9 @@ export const blogPosts: Record<string, BlogContent> = {
         body: '',
         items: [
           '加入不真實的 AggregateRating（如自填 4.9 星 / 50 評論）— 違反 Google Rich Results 政策',
-          '只在 client-side 渲染 schema — 部分爬蟲讀不到',
           'schema 內容與頁面實際內容不一致 — Google 會直接拒絕 rich results',
+          '沒有實體門市卻輸出 LocalBusiness 地址或營業時間',
+          '商業網站把 FAQPage、HowTo、Speakable 當成一般 rich result 或 AI 引用捷徑',
         ],
       },
     ],
@@ -149,31 +148,31 @@ export const blogPosts: Record<string, BlogContent> = {
           '會。「Spammy structured data」是 Google 明文列出的人工懲罰項目。最常見的觸發：自填 AggregateRating、宣稱頁面有實際上沒有的內容。',
       },
     ],
-    relatedServices: ['seo', 'geo', 'aeo'],
+    relatedServices: ['seo', 'geo'],
   },
   'perplexity-aeo-overview': {
     slug: 'perplexity-aeo-overview',
     title: 'Perplexity AI 的引用邏輯與 AEO 實作',
     h1: 'Perplexity 引用邏輯與 AEO 實作',
     description:
-      'Perplexity 在回答時會列出 3-5 個來源網站。本文整理 Perplexity 偏好引用的內容特徵，以及對應的 AEO 實作方向。',
+      'Perplexity 會列出引用來源。本文只採官方爬蟲規則與可重現量測，不宣稱任何無法證實的固定引用公式。',
     keywords: ['Perplexity', 'Perplexity 排名', 'Perplexity 引用', 'AEO 實作'],
     datePublished,
-    reviewedByRole,
+    dateModified: '2026-07-26',
     qualityTier: 'production',
     intent: 'informational',
     intro:
-      'Perplexity 不只回答問題，還會列出引用來源。被列為來源 = 流量 + 品牌權威訊號。本文整理我們觀察到 Perplexity 偏好的內容特徵。',
+      'Perplexity 會在答案中顯示來源，但被引用不等於一定帶來流量或成交。能確定的是 PerplexityBot 必須能抓取公開頁面；內容選擇仍會隨查詢與系統更新變動。',
     sections: [
       {
         heading: 'Perplexity 引用偏好的內容特徵',
-        body: '依我們監測的觀察：',
+        body: '以下是可長期採用、也能由站方驗證的基本條件：',
         items: [
           '主題相關性高（不是泛論文章）',
-          '內容具權威訊號（多反向連結、HTTPS、清楚作者）',
-          '結構清晰（明顯 H1 / H2 階層 + FAQ 區塊）',
-          '載入快速（LCP < 2.5s）',
-          '內容更新頻率穩定',
+          '頁面可由 PerplexityBot 抓取，且重要內容直接存在 HTML 中',
+          '主題具體、有實名作者、日期、來源與第一手經驗',
+          '標題與段落能讓人快速理解，但不為 AI 追求固定字數',
+          '更新日期反映真實修改，不在每次建置時偽造新時間',
         ],
       },
       {
@@ -181,8 +180,8 @@ export const blogPosts: Record<string, BlogContent> = {
         body: '',
         items: [
           '前 100 字直接回答主題問題（不要長篇鋪陳）',
-          '完整部署 FAQPage schema',
-          '建立網站整體權威（DA 30 以上為常見基準）',
+          '以公開案例、原始資料與可查來源增加內容獨特性',
+          '取得真實客戶、合作夥伴與專業社群的自然提及',
           '清楚的作者 / 編輯部標記（Person schema 或 Organization）',
           '定期更新內容（last-modified 時間戳）',
         ],
@@ -195,7 +194,7 @@ export const blogPosts: Record<string, BlogContent> = {
           '不完全一樣。Perplexity 強制列出來源（每個答案附 3-5 個網站），ChatGPT 是對話式回答、有時提及品牌但不一定附連結。優化方式有共同點但需分別測試。',
       },
     ],
-    relatedServices: ['aeo', 'geo'],
+    relatedServices: ['geo', 'seo'],
   },
   'google-ai-overview-basics': {
     slug: 'google-ai-overview-basics',
@@ -205,7 +204,7 @@ export const blogPosts: Record<string, BlogContent> = {
       'Google AI Overview 在搜尋結果頁直接顯示 AI 生成答案。本文說明它對傳統 SEO 的影響，以及該如何調整內容策略。',
     keywords: ['Google AI Overview', 'AI Overview 優化', 'SGE', 'Search Generative Experience'],
     datePublished,
-    reviewedByRole,
+    dateModified: '2026-07-26',
     qualityTier: 'production',
     intent: 'informational',
     intro:
@@ -216,9 +215,9 @@ export const blogPosts: Record<string, BlogContent> = {
         body: '',
         items: [
           '直接回答型內容（用戶問什麼、文章前段直接回答）',
-          '步驟化內容（HowTo 結構）',
           '比較表 / 條列式結構（便於 AI 擷取）',
           '具明確作者與發布日期的權威來源',
+          '可索引、可提供搜尋摘要且重要內容能被抓取的頁面',
         ],
       },
       {
@@ -228,7 +227,7 @@ export const blogPosts: Record<string, BlogContent> = {
           '純行銷話術（缺乏可驗證資訊）',
           '重點埋藏太深（要滑到底才出現）',
           '需要 JavaScript 渲染才會顯示的內容',
-          '完全沒有 schema 標記',
+          '重複整理網路常識、沒有第一手經驗或獨特價值',
         ],
       },
     ],
@@ -239,7 +238,7 @@ export const blogPosts: Record<string, BlogContent> = {
           '部分搜尋查詢的點擊率確實會下降。但若內容被列為 AI Overview 引用來源，仍能取得品牌曝光與部分點擊。策略重點是「成為引用來源」而非抗拒 AI Overview。',
       },
     ],
-    relatedServices: ['aeo', 'seo'],
+    relatedServices: ['geo', 'seo'],
   },
   'website-pricing-2026': {
     slug: 'website-pricing-2026',
@@ -249,7 +248,6 @@ export const blogPosts: Record<string, BlogContent> = {
       '網站建置費用從幾萬到幾百萬都有，差別在哪？本文拆解四個價格區間的實際內容、常被忽略的隱藏成本、轉換廠商時的注意事項。',
     keywords: ['網站建置費用區間', '網站建置費用怎麼算', '網站成本拆解', '網站建置隱藏成本', '網站維護費用'],
     datePublished,
-    reviewedByRole,
     qualityTier: 'production',
     intent: 'transactional',
     intro:
@@ -322,7 +320,6 @@ export const blogPosts: Record<string, BlogContent> = {
       'SEO 做了卻沒看到排名變化？多數情況問題出在技術面而非內容。本文整理我們接手客戶網站時最常發現的技術 SEO 問題。',
     keywords: ['SEO 沒效果', 'SEO 錯誤', '技術 SEO', 'SEO 問題'],
     datePublished,
-    reviewedByRole,
     qualityTier: 'production',
     intent: 'informational',
     intro:
@@ -382,7 +379,6 @@ export const blogPosts: Record<string, BlogContent> = {
       'AI 客服該自建還是用 Intercom AI、Zendesk AI 等 SaaS？本文比較兩種方案的長期成本、技術門檻、適用情境。',
     keywords: ['AI 客服自建', 'AI 客服 SaaS', 'AI 客服成本比較', 'Intercom AI', 'AI 客服 ROI'],
     datePublished,
-    reviewedByRole,
     qualityTier: 'production',
     intent: 'commercial',
     intro:
@@ -464,7 +460,6 @@ export const blogPosts: Record<string, BlogContent> = {
       '內容是 SEO 的核心，但「好內容」很難量化。本文整理隼訊在客戶內容生產時實際遵守的判斷標準。',
     keywords: ['SEO 內容', '內容行銷', 'E-E-A-T', '內容品質'],
     datePublished,
-    reviewedByRole,
     qualityTier: 'production',
     intent: 'informational',
     intro:
@@ -510,7 +505,7 @@ export const blogPosts: Record<string, BlogContent> = {
           '沒有這種魔法數字。內容該多長由搜尋意圖決定——有些問題兩三段就講完，硬灌到兩千字反而稀釋重點。關鍵字密度更是早就過時的概念，刻意塞關鍵字只會讓內容變難讀。我們看的是「有沒有把使用者的問題回答到位」，而不是湊字數或抓密度。',
       },
     ],
-    relatedServices: ['seo', 'geo', 'aeo'],
+    relatedServices: ['seo', 'geo'],
   },
   'how-we-pick-clients': {
     slug: 'how-we-pick-clients',
@@ -520,7 +515,6 @@ export const blogPosts: Record<string, BlogContent> = {
       '不是每個案子我們都接。本文說明哪幾種需求類型我們不接，避免雙方浪費時間。',
     keywords: ['行銷公司選擇', '行銷公司合作', '不接哪些案'],
     datePublished,
-    reviewedByRole,
     qualityTier: 'production',
     intent: 'informational',
     intro:

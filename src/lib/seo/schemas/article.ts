@@ -1,4 +1,5 @@
 import { siteConfig, orgId } from '../site-config'
+import { primaryAuthor } from '@/lib/content/authors'
 
 export interface ArticleSchemaInput {
   slug: string
@@ -7,7 +8,6 @@ export interface ArticleSchemaInput {
   url: string
   datePublished: string
   dateModified?: string
-  reviewedByRole?: string
   image?: string
   keywords?: string[]
 }
@@ -23,12 +23,14 @@ export function createArticleSchema(input: ArticleSchemaInput) {
     datePublished: input.datePublished,
     dateModified: input.dateModified ?? input.datePublished,
     inLanguage: 'zh-TW',
-    image: input.image ?? `${siteConfig.url}/logo.png`,
+    image: input.image ?? `${siteConfig.url}/opengraph-image`,
     author: {
-      '@type': 'Organization',
-      '@id': orgId,
-      name: siteConfig.editorial.teamName,
-      url: siteConfig.url,
+      '@type': 'Person',
+      '@id': `${siteConfig.url}/about#${primaryAuthor.id}`,
+      name: primaryAuthor.name,
+      url: `${siteConfig.url}${primaryAuthor.url}`,
+      jobTitle: primaryAuthor.jobTitle,
+      sameAs: primaryAuthor.sameAs,
     },
     publisher: {
       '@id': orgId,
@@ -36,24 +38,13 @@ export function createArticleSchema(input: ArticleSchemaInput) {
       name: siteConfig.name,
       logo: {
         '@type': 'ImageObject',
-        url: `${siteConfig.url}/logo.png`,
+        url: `${siteConfig.url}/icon.png`,
       },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': input.url,
     },
-  }
-
-  if (input.reviewedByRole) {
-    schema.reviewedBy = {
-      '@type': 'Role',
-      roleName: input.reviewedByRole,
-      author: {
-        '@type': 'Organization',
-        '@id': orgId,
-      },
-    }
   }
 
   if (input.keywords) {

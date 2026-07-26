@@ -7,12 +7,11 @@ import { motion, AnimatePresence } from 'motion/react'
 import { Menu, X } from 'lucide-react'
 
 const navItems = [
-  { label: '服務', href: '/services/seo' },
-  { label: 'GEO', href: '/services/geo' },
-  { label: '報價', href: '/pricing' },
-  { label: '部落格', href: '/blog' },
-  { label: '本地服務', href: '/local/taoyuan-seo' },
-  { label: '關於', href: '/#about' },
+  { label: '網站與 AI 開發', href: '/services/web-development' },
+  { label: 'SEO／GEO', href: '/services/seo' },
+  { label: '案例', href: '/case-studies' },
+  { label: '價格', href: '/pricing' },
+  { label: '關於', href: '/about' },
   { label: '聯絡', href: '/#contact' },
 ]
 

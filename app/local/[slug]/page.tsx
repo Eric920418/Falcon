@@ -2,10 +2,9 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { PageShell } from '@/components/page-layout/PageShell'
 import { LocalPageTemplate } from '@/components/page-templates/LocalPageTemplate'
-import { localPages, localSlugs, getLocalPage } from '@/lib/content/local'
+import { localSlugs, getLocalPage, hasIndexableLocalEvidence } from '@/lib/content/local'
 import {
   createMetadata,
-  createFAQSchema,
   createBreadcrumbSchema,
   createWebPageSchema,
   siteConfig,
@@ -29,7 +28,7 @@ export async function generateMetadata({ params }: LocalPageProps): Promise<Meta
     description: page.description,
     path: `/local/${slug}`,
     keywords: page.keywords,
-    noIndex: page.qualityTier !== 'production',
+    noIndex: page.qualityTier !== 'production' || !hasIndexableLocalEvidence(page),
   })
 }
 
@@ -45,14 +44,12 @@ export default async function LocalLandingPage({ params }: LocalPageProps) {
       name: page.title,
       description: page.description,
       url,
-      speakableSelectors: ['#local-hero', '#local-content'],
     }),
     createBreadcrumbSchema([
       { name: '首頁', path: '/' },
       { name: '本地服務', path: `/local/${slug}` },
       { name: page.h1, path: `/local/${slug}` },
     ]),
-    createFAQSchema(page.faq, `local-${slug}-faq`),
     {
       '@context': 'https://schema.org',
       '@type': 'Service',

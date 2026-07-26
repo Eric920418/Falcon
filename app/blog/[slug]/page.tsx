@@ -5,8 +5,6 @@ import { BlogPostTemplate } from '@/components/page-templates/BlogPostTemplate'
 import { blogPosts, blogSlugs, getBlogPost } from '@/lib/content/blog'
 import {
   createMetadata,
-  createFAQSchema,
-  createHowToSchema,
   createBreadcrumbSchema,
   createArticleSchema,
   siteConfig,
@@ -49,7 +47,6 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
       url,
       datePublished: post.datePublished,
       dateModified: post.dateModified,
-      reviewedByRole: post.reviewedByRole,
       keywords: post.keywords,
     }),
     createBreadcrumbSchema([
@@ -57,8 +54,6 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
       { name: '部落格', path: '/blog' },
       { name: post.title, path: `/blog/${slug}` },
     ]),
-    ...(post.faq ? [createFAQSchema(post.faq, `blog-${slug}-faq`)] : []),
-    ...(post.howTo ? [createHowToSchema(post.howTo)] : []),
   ]
 
   return (

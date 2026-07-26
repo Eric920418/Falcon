@@ -25,9 +25,9 @@ function buildCsp({ resume = false }: { resume?: boolean } = {}): string {
   const directives = [
     "default-src 'self'",
     `script-src 'self' 'unsafe-inline' 'unsafe-eval'${scriptExtra} https://www.googletagmanager.com https://www.google-analytics.com${live.script}`,
-    `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com${live.style}`,
-    `img-src 'self' data: blob: https://qr-official.line.me https://www.google-analytics.com https://www.googletagmanager.com${live.img}`,
-    `font-src 'self' https://fonts.gstatic.com${live.font}`,
+    `style-src 'self' 'unsafe-inline'${live.style}`,
+    `img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com${live.img}`,
+    `font-src 'self'${live.font}`,
     `connect-src 'self'${connectExtra} https://www.google-analytics.com https://www.googletagmanager.com${live.connect}`,
     `frame-src 'self'${live.frame}`,
     "base-uri 'self'",
@@ -82,19 +82,21 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     formats: ['image/avif', 'image/webp'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'qr-official.line.me',
-        pathname: '/gs/**',
-      },
-    ],
   },
   async headers() {
     // 順序重要：後面的規則同 key 會覆蓋前面的，所以 /resume 要放最後
     return [
       { source: '/(.*)', headers: securityHeaders },
       { source: '/resume', headers: resumeHeaders },
+    ]
+  },
+  async redirects() {
+    return [
+      {
+        source: '/services/aeo',
+        destination: '/services/geo',
+        statusCode: 301,
+      },
     ]
   },
 }

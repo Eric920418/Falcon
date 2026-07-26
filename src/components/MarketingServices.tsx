@@ -32,19 +32,19 @@ export function MarketingServices() {
       icon: Sparkles,
       title: 'GEO 生成式引擎優化',
       subtitle: 'Generative Engine Optimization',
-      description: '讓 AI 引擎優先引用您的品牌內容',
-      features: ['ChatGPT/Gemini 曝光優化', 'AI 引用策略', 'LLM 內容結構化', '品牌權威建立'],
+      description: '用可索引內容、實名證據與來源揭露提升引用機會',
+      features: ['搜尋索引基礎', '引用友善內容', '來源揭露', 'AI 引薦量測'],
       number: '02',
       href: '/services/geo'
     },
     {
       icon: Bot,
-      title: 'AEO 答案引擎優化',
-      subtitle: 'Answer Engine Optimization',
-      description: '成為 AI 搜尋的首選答案來源',
-      features: ['Google AI 優化', '結構化答案佈局', 'E-E-A-T 權威提升', '語意搜尋優化'],
+      title: 'GEO 回答設計',
+      subtitle: 'Answer-first content',
+      description: '清楚回答問題並標明證據與限制，不承諾引用',
+      features: ['答案前置', '問題覆蓋', '實名作者', '證據與限制'],
       number: '03',
-      href: '/services/aeo'
+      href: '/services/geo'
     },
     {
       icon: TrendingUp,

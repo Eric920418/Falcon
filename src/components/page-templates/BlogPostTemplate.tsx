@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { ArrowRight, Check, ChevronRight, Calendar, Users, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Check, ChevronRight, Calendar, User } from 'lucide-react'
 import type { BlogContent } from '@/lib/content/types'
-import { siteConfig } from '@/lib/seo'
+import { primaryAuthor } from '@/lib/content/authors'
 
 interface BlogPostTemplateProps {
   post: BlogContent
@@ -10,7 +10,6 @@ interface BlogPostTemplateProps {
 const serviceNames: Record<string, string> = {
   seo: 'SEO 搜尋引擎優化',
   geo: 'GEO 生成式引擎優化',
-  aeo: 'AEO 答案引擎優化',
   'web-development': '網站建置',
   'ai-tools': 'AI 工具開發',
   'digital-ads': '數位廣告',
@@ -41,7 +40,10 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
 
           <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-[#7A8A91]">
             <span className="inline-flex items-center gap-1">
-              <Users size={14} /> {siteConfig.editorial.teamName}
+              <User size={14} />
+              <Link href={primaryAuthor.url} className="hover:text-amber-500">
+                {primaryAuthor.name}｜{primaryAuthor.jobTitle}
+              </Link>
             </span>
             <span className="inline-flex items-center gap-1">
               <Calendar size={14} /> 發布 {post.datePublished}
@@ -49,11 +51,6 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
             {post.dateModified && post.dateModified !== post.datePublished && (
               <span className="inline-flex items-center gap-1">
                 <Calendar size={14} /> 最後更新 {post.dateModified}
-              </span>
-            )}
-            {post.reviewedByRole && (
-              <span className="inline-flex items-center gap-1">
-                <ShieldCheck size={14} /> 審稿：{post.reviewedByRole}
               </span>
             )}
           </div>

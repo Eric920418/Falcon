@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { ArrowRight, ChevronRight } from 'lucide-react'
 import { PageShell } from '@/components/page-layout/PageShell'
 import { pricingPages } from '@/lib/content/pricing'
-import { getAllServices } from '@/lib/content/services'
+import { primaryPriceDefinitions } from '@/lib/content/price-catalog'
 import {
   createMetadata,
   createBreadcrumbSchema,
@@ -14,8 +14,8 @@ import {
 
 export function generateMetadata(): Metadata {
   return createMetadata({
-    title: '透明定價｜隼訊數位行銷所有服務報價公開',
-    description: '隼訊所有服務透明定價：網站建置 8 萬起、SEO 3 萬/月、GEO 5 萬/月、AI 開發 12 萬起。比業界平均低 25-30%。',
+    title: '透明定價｜網站、AI、SEO／GEO 公開起價',
+    description: '隼訊公開起價：網站 4 萬／專案、AI 工具 6 萬／專案、SEO 1.5 萬／月、SEO／GEO 2.5 萬／月，並列出實際報價因素。',
     path: '/pricing',
     keywords: ['網站建置費用', 'SEO 多少錢', 'GEO 報價', 'AI 開發費用', '行銷公司報價', '透明定價'],
   })
@@ -23,8 +23,6 @@ export function generateMetadata(): Metadata {
 
 export default function PricingIndexPage() {
   const url = `${siteConfig.url}/pricing`
-  const services = getAllServices()
-
   const schemas = [
     createWebPageSchema({
       name: '透明定價',
@@ -47,7 +45,7 @@ export default function PricingIndexPage() {
               透明定價
             </h1>
             <p className="text-lg text-[#A8B6BC] max-w-2xl">
-              90% 的廠商會問你「預算多少」再殺到底。我們先公開定價，讓你看完再決定。
+              公開起價、基礎範圍與報價因素。正式報價仍會依需求逐項列出，不用模糊數字先吸引詢問。
             </p>
           </div>
         </section>
@@ -76,7 +74,7 @@ export default function PricingIndexPage() {
             </div>
 
             <h2 className="text-2xl text-[#E0E5E8] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
-              所有服務起價速覽
+              兩大獲客 Hub 起價速覽
             </h2>
             <div className="border border-[#344349] rounded-lg overflow-hidden bg-stone-900/30">
               <table className="w-full text-sm">
@@ -89,13 +87,13 @@ export default function PricingIndexPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {services.map((s) => (
-                    <tr key={s.slug} className="border-t border-[#344349]/50">
-                      <td className="px-6 py-4 text-[#A8B6BC]">{s.h1}</td>
-                      <td className="px-6 py-4 text-amber-500">NT$ {Number(s.priceMin).toLocaleString()}</td>
-                      <td className="px-6 py-4 text-[#7A8A91]">/ {s.priceUnit}</td>
+                  {primaryPriceDefinitions.map((price) => (
+                    <tr key={price.serviceSlug} className="border-t border-[#344349]/50">
+                      <td className="px-6 py-4 text-[#A8B6BC]">{price.name}</td>
+                      <td className="px-6 py-4 text-amber-500">NT$ {price.from.toLocaleString()}</td>
+                      <td className="px-6 py-4 text-[#7A8A91]">/ {price.unit}</td>
                       <td className="px-6 py-4 text-right">
-                        <Link href={`/services/${s.slug}`} className="text-sm text-amber-500 hover:underline inline-flex items-center gap-1">
+                        <Link href={`/services/${price.serviceSlug}`} className="text-sm text-amber-500 hover:underline inline-flex items-center gap-1">
                           詳情 <ChevronRight size={14} />
                         </Link>
                       </td>
@@ -104,6 +102,15 @@ export default function PricingIndexPage() {
                 </tbody>
               </table>
             </div>
+            <p className="mt-5 text-sm text-[#A8B6BC]">
+              不確定名詞差別？
+              <Link
+                href="/compare/seo-vs-geo-vs-aeo"
+                className="ml-2 text-amber-500 hover:underline"
+              >
+                查看 SEO、GEO、AEO 的共同基礎與量測差異
+              </Link>
+            </p>
           </div>
         </section>
 
