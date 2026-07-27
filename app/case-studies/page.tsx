@@ -1,10 +1,6 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 import { PageShell } from '@/components/page-layout/PageShell'
 import { Portfolio } from '@/components/Portfolio'
-import { getAllCaseStudies } from '@/lib/content/case-studies'
 import {
   createBreadcrumbSchema,
   createMetadata,
@@ -23,7 +19,6 @@ export function generateMetadata(): Metadata {
 }
 
 export default function CaseStudiesPage() {
-  const studies = getAllCaseStudies()
   const url = `${siteConfig.url}/case-studies`
 
   return (
@@ -47,39 +42,12 @@ export default function CaseStudiesPage() {
             <p className="text-amber-500 text-sm tracking-widest uppercase mb-4">Evidence-based work</p>
             <h1 className="text-4xl md:text-6xl text-[#E0E5E8] mb-6">公開案例與可驗證證據</h1>
             <p className="text-lg text-[#A8B6BC] max-w-3xl leading-relaxed">
-              Git 原始作品集的 29 項案例已完整保留。下方先列 3 個有獨立證據頁的案例，再列出全部作品紀錄；技術功能不是營收成果，沒有資料就不虛構成效。
+              Git 原始作品集的 29 項案例全部集中在同一區。有獨立量測或技術證據的案例會直接標示「查看證據」；其餘呈現實際交付功能，不把功能描述包裝成營收成果。
             </p>
           </div>
         </header>
 
-        <section className="max-w-5xl mx-auto px-6 py-16 grid lg:grid-cols-3 gap-6">
-          {studies.map((study) => (
-            <article key={study.slug} className="border border-[#344349] rounded-xl overflow-hidden bg-stone-900/40">
-              <div className="relative aspect-[16/10] bg-[#1E2A2E]">
-                <Image
-                  src={study.image}
-                  alt={`${study.clientName}公開案例畫面`}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <p className="text-amber-500 text-xs mb-2">{study.location}</p>
-                <h2 className="text-xl text-[#E0E5E8] mb-3">{study.title}</h2>
-                <p className="text-sm text-[#A8B6BC] leading-relaxed mb-5">{study.summary}</p>
-                <Link
-                  href={`/case-studies/${study.slug}`}
-                  className="inline-flex items-center gap-2 text-amber-500 hover:underline"
-                >
-                  查看證據與限制 <ArrowRight size={16} />
-                </Link>
-              </div>
-            </article>
-          ))}
-        </section>
-
-        <Portfolio />
+        <Portfolio showHeader={false} />
       </div>
     </PageShell>
   )

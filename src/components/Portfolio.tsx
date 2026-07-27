@@ -2,8 +2,9 @@
 
 import { motion } from 'motion/react'
 import { useState } from 'react'
-import { ExternalLink, ChevronDown, ChevronUp } from 'lucide-react'
+import { ExternalLink, ChevronDown, ChevronUp, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface Project {
   id: number
@@ -804,7 +805,13 @@ const projects: Project[] = [
 
 const categories = ['全部', '電商平台', '企業官網', '形象網站', 'App 開發', 'AI 應用', '遊戲製作', 'Bot / 自動化', '學術系統', '其他']
 
-export function Portfolio() {
+const evidencePaths: Record<number, string> = {
+  1: '/case-studies/yizhenxiang-commerce-performance',
+  20: '/case-studies/clinic-line-booking',
+  31: '/case-studies/gogocha-ai-dispatch',
+}
+
+export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
   const [selectedCategory, setSelectedCategory] = useState('全部')
   const [expandedProject, setExpandedProject] = useState<number | null>(null)
 
@@ -820,13 +827,14 @@ export function Portfolio() {
 
       <div className="max-w-7xl mx-auto relative">
         {/* Section Header */}
-        <motion.div
-          className="mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
-        >
+        {showHeader && (
+          <motion.div
+            className="mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
           {/* 標籤 */}
           <div className="flex items-center gap-3 mb-6">
             <div className="brand-line" />
@@ -860,7 +868,27 @@ export function Portfolio() {
               ))}
             </div>
           </div>
-        </motion.div>
+          </motion.div>
+        )}
+
+        {!showHeader && (
+          <div className="flex flex-wrap gap-2 mb-12" aria-label="案例分類">
+            {categories.map((category) => (
+              <button
+                key={category}
+                className={`px-4 py-2 text-sm transition-all ${
+                  selectedCategory === category
+                    ? 'bg-[#5F808B] text-[#1E2A2E]'
+                    : 'bg-[#2D3B40]/50 text-[#A8B6BC] hover:text-[#E0E5E8] hover:bg-[#2D3B40]'
+                }`}
+                onClick={() => setSelectedCategory(category)}
+                aria-pressed={selectedCategory === category}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -899,6 +927,11 @@ export function Portfolio() {
                   <div className="absolute top-3 right-3 falcon-badge">
                     {project.category}
                   </div>
+                  {evidencePaths[project.id] && (
+                    <div className="absolute top-3 left-3 bg-amber-500 text-stone-950 px-2 py-1 text-xs font-medium rounded">
+                      可驗證證據
+                    </div>
+                  )}
                 </div>
 
                 {/* Content */}
@@ -922,6 +955,15 @@ export function Portfolio() {
                   <p className="text-[#6D8F96] text-sm mb-4 line-clamp-3 leading-relaxed">
                     {project.description}
                   </p>
+
+                  {evidencePaths[project.id] && (
+                    <Link
+                      href={evidencePaths[project.id]}
+                      className="inline-flex items-center gap-2 text-sm text-amber-500 hover:underline mb-3"
+                    >
+                      查看證據與限制 <ArrowRight size={14} />
+                    </Link>
+                  )}
 
                   {/* Expandable Details */}
                   {expandedProject === project.id && (
