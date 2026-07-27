@@ -413,6 +413,7 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - JSON-LD 已改成每頁剛好一個 script／一個 `@graph`；Organization 與 WebSite 由 `JsonLd` 合併並依 `@id` 去重，頁面 schema 接在同一 graph。
 - `pnpm check:seo` 也會強制驗證 JSON-LD 可解析、script 數量為 1，且 Organization／WebSite 各只有一個節點。
 - 聯絡區塊已移除依賴 viewport 才顯示的 reveal 動畫，避免完整頁、弱 JS 或動畫尚未觸發時出現大片空白，並確保表單錯誤直接可見。
+- 2026-07-27：依 Git `HEAD^` 的原始 `Portfolio.tsx` 核對並恢復全部 29 項作品；`/case-studies` 先呈現 3 個證據化詳頁，再呈現完整作品集，首頁入口明示「完整 29 項作品」。
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 - [ ] 匯入 GSC、GA4、Bing Webmaster Tools 與 GBP 的近 16 個月資料，另保存發布前 90 天基準。
 - [ ] 取得城市案例完整公開同意、期間、基準、結果、來源、圖片與限制後，再逐頁解除 noindex。

@@ -836,10 +836,10 @@ export function Portfolio() {
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <div>
               <h2 className="text-4xl md:text-5xl text-[#E0E5E8] mb-4">
-                作品<span className="text-falcon-gradient">案例</span>
+                完整<span className="text-falcon-gradient">作品紀錄</span>
               </h2>
               <p className="text-lg text-[#A8B6BC] max-w-xl">
-                我們為各行各業打造高品質的數位解決方案，從電商平台到企業官網，從 AI 應用到行動 App
+                29 項 Git 原始作品資料完整恢復。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。
               </p>
             </div>
 

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { PageShell } from '@/components/page-layout/PageShell'
+import { Portfolio } from '@/components/Portfolio'
 import { getAllCaseStudies } from '@/lib/content/case-studies'
 import {
   createBreadcrumbSchema,
@@ -16,7 +17,7 @@ export function generateMetadata(): Metadata {
   return createMetadata({
     title: '網站、AI 與系統開發案例｜證據與限制完整揭露',
     description:
-      '查看隼訊網站效能、AI 派單與 LINE 預約案例；每個案例區分技術量測、產品能力與商業成果，不用無來源數字包裝。',
+      '查看隼訊 29 項完整作品紀錄，以及網站效能、AI 派單與 LINE 預約的證據化案例；清楚區分作品功能、技術量測與商業成果。',
     path: '/case-studies',
   })
 }
@@ -46,7 +47,7 @@ export default function CaseStudiesPage() {
             <p className="text-amber-500 text-sm tracking-widest uppercase mb-4">Evidence-based work</p>
             <h1 className="text-4xl md:text-6xl text-[#E0E5E8] mb-6">公開案例與可驗證證據</h1>
             <p className="text-lg text-[#A8B6BC] max-w-3xl leading-relaxed">
-              每個案例都標明資料來源與限制。技術功能不是營收成果，實驗室效能也不等於所有使用者的真實體驗。
+              Git 原始作品集的 29 項案例已完整保留。下方先列 3 個有獨立證據頁的案例，再列出全部作品紀錄；技術功能不是營收成果，沒有資料就不虛構成效。
             </p>
           </div>
         </header>
@@ -77,6 +78,8 @@ export default function CaseStudiesPage() {
             </article>
           ))}
         </section>
+
+        <Portfolio />
       </div>
     </PageShell>
   )
