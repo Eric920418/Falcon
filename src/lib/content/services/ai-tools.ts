@@ -86,7 +86,7 @@ export const aiToolsService: ServiceContent = {
     {
       question: 'AI 客服開發大概多少錢？',
       answer:
-        'MVP 版本約 6 萬一次性費用 + 每月 1–3 萬 API 費用（API 為實際用量成本，照原價計）。客製化複雜版本 15–25 萬。具體價格依需求功能、整合複雜度而定。',
+        'MVP 版本約 3 萬一次性費用 + 每月 1–3 萬 API 費用（API 為第三方實際用量成本，不打折）。客製化複雜版本 7.5–12.5 萬。具體價格依需求功能、整合複雜度而定。',
     },
     {
       question: 'AI 工具要做多久？',
@@ -127,27 +127,27 @@ export const aiToolsService: ServiceContent = {
   pricing: [
     {
       name: 'AI 客服 MVP',
-      price: '60,000',
+      price: '30,000',
       unit: '專案',
       includes: ['基礎 chatbot（GPT / Claude API）', '知識庫整合（50 題以內）', 'LINE / 網站嵌入', '3 個月技術支援'],
       bestFor: '中小企業、想試水溫',
     },
     {
       name: '客製化 AI 助理',
-      price: '150,000',
+      price: '75,000',
       unit: '專案起',
       includes: ['完整客製功能', 'CRM / 內部系統整合', '多語言', '客製化 UI', '6 個月技術支援'],
       bestFor: '中大型企業、特定流程需求',
     },
     {
       name: 'AI 顧問',
-      price: '25,000',
+      price: '12,500',
       unit: '月',
       includes: ['AI 策略諮詢', '導入順序規劃', '自建 vs SaaS 工具選型', '員工訓練', '定期模型更新'],
       bestFor: '上市櫃公司、全面導入 AI',
     },
   ],
   serviceType: 'AI 開發',
-  priceMin: '25000',
+  priceMin: '30000',
   priceUnit: '專案',
 }

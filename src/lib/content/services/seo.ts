@@ -126,27 +126,27 @@ export const seoService: ServiceContent = {
   pricing: [
     {
       name: '基礎 SEO',
-      price: '15,000',
+      price: '7,500',
       unit: '月',
       includes: ['月度健檢報告', '4 篇 SEO 內容（每篇 1500+ 字）', '技術 SEO 修正', 'GSC 監測'],
       bestFor: '中小企業、單一服務領域',
     },
     {
       name: '進階 SEO',
-      price: '30,000',
+      price: '15,000',
       unit: '月',
       includes: ['8 篇深度內容', '反向連結建立（每月 5 個）', '競品分析', '雙週優化會議'],
       bestFor: '中大型企業、競爭較激烈的產業',
     },
     {
       name: '企業 SEO',
-      price: '60,000',
+      price: '30,000',
       unit: '月',
       includes: ['15+ 篇內容', 'PR + 媒體外鏈（每月 2–3 篇）', '專屬 SEO 顧問', '即時報告儀表板'],
       bestFor: '上市櫃公司、競爭極激烈的產業',
     },
   ],
   serviceType: '搜尋引擎優化',
-  priceMin: '15000',
+  priceMin: '7500',
   priceUnit: '月',
 }

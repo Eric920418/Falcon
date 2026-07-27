@@ -79,7 +79,7 @@ export const socialMediaService: ServiceContent = {
     {
       question: '社群代操大概多少錢？',
       answer:
-        '基礎方案 0.75–1.25 萬 / 月（單平台、12 篇貼文）；進階方案 1.5–2.5 萬（多平台、Reels）；企業級 4 萬以上（含 KOL 合作、廣告整合）。差異在內容產量與是否含影音製作。',
+        '基礎方案 3,750–6,250 元 / 月（單平台、12 篇貼文）；進階方案 7,500–12,500 元（多平台、Reels）；企業級 2 萬以上（含 KOL 合作、廣告整合）。差異在內容產量與是否含影音製作。',
     },
     {
       question: '一定要拍短影音嗎？',
@@ -100,27 +100,27 @@ export const socialMediaService: ServiceContent = {
   pricing: [
     {
       name: '單平台經營',
-      price: '7,500',
+      price: '3,750',
       unit: '月',
       includes: ['12 篇貼文', '4 則限動', '基礎視覺設計', '月度報告'],
       bestFor: '小型品牌、新創',
     },
     {
       name: '雙平台經營',
-      price: '12,500',
+      price: '6,250',
       unit: '月',
       includes: ['IG + FB 各 12 篇', '2 支 Reels', '互動經營', '月度策略會議'],
       bestFor: '成長期中小企業',
     },
     {
       name: '全方位社群',
-      price: '25,000',
+      price: '12,500',
       unit: '月',
       includes: ['多平台整合', '4 支 Reels + TikTok', 'KOL 合作 1 次', '社群廣告整合'],
       bestFor: '中大型品牌、電商',
     },
   ],
   serviceType: '社群行銷',
-  priceMin: '7500',
+  priceMin: '3750',
   priceUnit: '月',
 }

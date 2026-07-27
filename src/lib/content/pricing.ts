@@ -63,7 +63,7 @@ export const comparePages: Record<string, ComparePageContent> = {
       { feature: '共同基礎', values: ['可抓取與可索引', 'SEO 基礎＋一手證據', '清楚回答＋可信來源'] },
       { feature: '主要量測', values: ['GSC 非品牌點擊與詢盤', 'AI 功能／引薦與詢盤', '答案曝光、引薦與詢盤'] },
       { feature: '特殊 AI Schema', values: ['沒有', '沒有', '沒有'] },
-      { feature: '隼訊起價', values: ['NT$ 15,000 / 月', 'NT$ 25,000 / 月', '併入 GEO，不另售'] },
+      { feature: '隼訊起價', values: ['NT$ 7,500 / 月', 'NT$ 12,500 / 月', '併入 GEO，不另售'] },
     ],
     sections: [
       {

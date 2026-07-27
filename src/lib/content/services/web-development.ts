@@ -89,7 +89,7 @@ export const webDevelopmentService: ServiceContent = {
     {
       question: '網站建置大概多少錢？',
       answer:
-        '依需求差異很大：企業形象官網 4–7.5 萬；電商平台 9–25 萬；客製化系統（CMS/ERP）15–50 萬以上。建議先諮詢，依需求複雜度提供報價。',
+        '依需求差異很大：企業形象官網 2–3.75 萬；電商平台 4.5–12.5 萬；客製化系統（CMS/ERP）7.5–25 萬以上。建議先諮詢，依需求複雜度提供報價。',
     },
     {
       question: '網站要做多久？',
@@ -130,27 +130,27 @@ export const webDevelopmentService: ServiceContent = {
   pricing: [
     {
       name: '形象官網',
-      price: '40,000',
+      price: '20,000',
       unit: '專案起',
       includes: ['5–10 頁客製化設計', 'CMS 後台', 'SEO 基礎部署', '響應式設計', '永久保固'],
       bestFor: '中小企業形象網站、專業服務業',
     },
     {
       name: '電商平台',
-      price: '90,000',
+      price: '45,000',
       unit: '專案起',
       includes: ['商品 / 購物車 / 結帳', '會員系統 + 訂單後台', '金流串接', '物流串接', '永久保固'],
       bestFor: '品牌電商、D2C',
     },
     {
       name: '客製化系統',
-      price: '150,000',
+      price: '75,000',
       unit: '專案起',
       includes: ['完整需求訪談 + 設計', 'CMS / ERP / SaaS 客製開發', 'API 開發', '6 個月技術支援'],
       bestFor: 'B2B、企業內部系統',
     },
   ],
   serviceType: '網站開發',
-  priceMin: '40000',
+  priceMin: '20000',
   priceUnit: '專案',
 }

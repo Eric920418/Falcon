@@ -72,7 +72,7 @@ export const digitalAdsService: ServiceContent = {
     {
       question: '廣告代操費怎麼算？',
       answer:
-        '兩種模式：(1) 固定月費 0.75–1.5 萬 + 廣告費另計，適合月廣告預算 10 萬以下；(2) 廣告費 15–25% 抽成，適合月廣告預算 10 萬以上。',
+        '兩種模式：(1) 固定月費 3,750–7,500 元 + 廣告費另計，適合月廣告預算 10 萬以下；(2) 廣告費 7.5–12.5% 抽成，適合月廣告預算 10 萬以上。',
     },
     {
       question: '最低廣告預算多少才划算？',
@@ -93,27 +93,27 @@ export const digitalAdsService: ServiceContent = {
   pricing: [
     {
       name: '基礎代操',
-      price: '10,000',
+      price: '5,000',
       unit: '月',
       includes: ['單一平台代操', '月度報告', 'GA4 設定', '創意建議（不含設計製作）'],
       bestFor: '廣告預算 10 萬以下',
     },
     {
       name: '進階代操',
-      price: '20,000',
+      price: '10,000',
       unit: '月',
       includes: ['多平台代操', '創意設計 + A/B 測試', '客製化 Landing Page', 'Server-side Tracking'],
       bestFor: '廣告預算 10–50 萬',
     },
     {
       name: '抽成方案',
-      price: '15-25%',
+      price: '7.5-12.5%',
       unit: '廣告費抽成',
       includes: ['全平台代操', '創意製作無上限', '專屬 PM', '即時數據儀表板'],
       bestFor: '廣告預算 50 萬以上',
     },
   ],
   serviceType: '數位廣告',
-  priceMin: '10000',
+  priceMin: '5000',
   priceUnit: '月',
 }

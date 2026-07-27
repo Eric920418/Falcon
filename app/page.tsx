@@ -4,6 +4,7 @@ import { Navigation } from '@/components/Navigation'
 import { HomeHero } from '@/components/HomeHero'
 import { HomeHubs } from '@/components/HomeHubs'
 import { HomeCases } from '@/components/HomeCases'
+import { HomeProofPricing } from '@/components/HomeProofPricing'
 import { SitePageFooter } from '@/components/page-layout/SitePageFooter'
 import { createMetadata, createWebPageSchema, JsonLd, siteConfig } from '@/lib/seo'
 
@@ -32,6 +33,7 @@ export default function HomePage() {
         <HomeHero />
         <HomeHubs />
         <HomeCases />
+        <HomeProofPricing />
         <Contact />
       </main>
       <SitePageFooter />

@@ -387,7 +387,7 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - `robots.txt` 明確允許 `OAI-SearchBot` 與 `PerplexityBot`；GPTBot 保留但只視為訓練爬蟲設定，不當作搜尋曝光保證。
 - `/about` 使用實名負責人與可核對的公開連結；`/case-studies` 與三個案例詳頁明確區分技術量測、產品能力與商業成效，並顯示資料限制。
 - 所有文章作者統一為實名蔡翊廉並連到 `/about`；已移除虛構的「資深 SEO 顧問」審稿者。
-- `/pricing` 與四個價格詳頁直接由 `price-catalog.ts` 產生，公開起價為網站 4 萬／專案、AI 工具 6 萬／專案、SEO 1.5 萬／月、SEO／GEO 2.5 萬／月；AEO 併入 GEO、不另售 Schema 套餐。
+- `/pricing` 與四個價格詳頁直接由 `price-catalog.ts` 產生；2026-07-27 依指示全部除以二，公開起價為網站 2 萬／專案、AI 工具 3 萬／專案、SEO 7,500／月、SEO／GEO 12,500／月。AEO 併入 GEO、不另售 Schema 套餐。
 - 服務頁的價格卡片與 `/pricing` 速覽也直接讀取同一價格目錄；各服務檔內的舊價格欄位不再作為前端或 Schema 輸出來源。
 - `/llms.txt` 與 `/llms-full.txt` 改為 App Router 純文字路由，直接讀取服務、價格、案例與作者資料；不再維護可能漂移的手寫靜態副本。
 - 首頁已移除遊戲、廣告、社群、影片等平鋪區塊與捲動進度動畫，只保留單一 H1、兩個獲客 Hub、三個證據化案例與聯絡轉換；子頁導覽同步收斂為六個主要入口。
@@ -408,12 +408,16 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - 內容 lint 標記的空泛絕對化用語已改為可驗證表述。
 - `/pricing` 已補上 SEO／GEO／AEO 比較頁的直接文字內鏈，避免比較頁成為孤兒頁。
 - 自託管 Noto Sans TC 已依網站實際字元產生 WOFF2 子集：Regular 約 220KB、Bold 約 224KB，取代初始載入的兩個 1.3MB 全字集檔。
-- 2026-07-26 冷快取 headless lab：首頁 Fast 4G 行動傳輸約 0.79MB、LCP 0.61s、CLS 0.0215、DOM 355；網站開發與 SEO Hub 傳輸約 0.79MB、LCP 0.66s 內。這是本機實驗室值，不等同 CrUX。
+- 冷快取 headless lab：2026-07-26 首頁 LCP 0.61s、CLS 0.0215；2026-07-27 新增案例／價格決策區後，Fast 4G 行動傳輸約 0.92MB、DOM 408，仍低於 1.5MB 與原 1,586 DOM 目標。這是本機實驗室值，不等同 CrUX。
 - 聯絡驗收涵蓋 `REQUIRED_FIELDS_MISSING`、`SMTP_NOT_CONFIGURED` 前端完整顯示、電話／Email／LINE `contact_click`、失敗 `form_error`、模擬成功 `generate_lead`；所有事件均未帶姓名、Email 或訊息內容。
 - JSON-LD 已改成每頁剛好一個 script／一個 `@graph`；Organization 與 WebSite 由 `JsonLd` 合併並依 `@id` 去重，頁面 schema 接在同一 graph。
 - `pnpm check:seo` 也會強制驗證 JSON-LD 可解析、script 數量為 1，且 Organization／WebSite 各只有一個節點。
 - 聯絡區塊已移除依賴 viewport 才顯示的 reveal 動畫，避免完整頁、弱 JS 或動畫尚未觸發時出現大片空白，並確保表單錯誤直接可見。
 - 2026-07-27：依 Git `HEAD^` 核對並恢復全部 29 項作品；案例頁使用單一「公開案例與可驗證證據」區塊，不再拆成兩段。翊珍香、GoGoCha、診所 LINE 預約在同一批卡片中標示可驗證證據並連至證據詳頁，首頁入口明示「完整 29 項作品」。
+- 2026-07-27：網站、AI、SEO、GEO 的服務內容、FAQ、`priceMin` 與方案價格同步除以二；第三方 AI API 用量費不屬於隼訊服務費，維持供應商實際成本。
+- 2026-07-27：保留但 `noindex` 的廣告、社群、影片與量化交易頁也同步將固定費、方案費、維護費及廣告代操抽成除以二；客戶直接支付給廣告平台的媒體預算不變。
+- 2026-07-27：六個城市頁 FAQ 與文章中的隼訊自建／維護價格同步除以二；市場行情、第三方 SaaS、AI API、網域主機與廣告平台成本不改寫。
+- 2026-07-27：首頁新增精簡「案例有廣度，價格不藏」區塊，顯示 29 項作品、3 個證據詳頁與四個砍半後起價；不重複渲染 29 張案例卡，維持首頁效能與主題聚焦。
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 - [ ] 匯入 GSC、GA4、Bing Webmaster Tools 與 GBP 的近 16 個月資料，另保存發布前 90 天基準。
 - [ ] 取得城市案例完整公開同意、期間、基準、結果、來源、圖片與限制後，再逐頁解除 noindex。

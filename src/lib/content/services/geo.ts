@@ -117,20 +117,20 @@ export const geoService: ServiceContent = {
   pricing: [
     {
       name: '基礎方案',
-      price: '25,000',
+      price: '12,500',
       unit: '月',
       includes: ['索引與爬蟲檢查', '必要 Schema', '實名與案例證據', 'AI 搜尋基準與月度監測'],
       bestFor: '中小企業、首次嘗試 GEO',
     },
     {
       name: '進階方案',
-      price: '50,000',
+      price: '25,000',
       unit: '月',
       includes: ['SEO／GEO 技術基礎', '案例與原創內容', '外部實體訊號建議', '雙週檢視'],
       bestFor: '有真實專業素材、要同時經營搜尋與 AI 引薦的企業',
     },
   ],
   serviceType: '生成式引擎優化',
-  priceMin: '25000',
+  priceMin: '12500',
   priceUnit: '月',
 }

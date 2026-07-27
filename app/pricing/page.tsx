@@ -15,7 +15,7 @@ import {
 export function generateMetadata(): Metadata {
   return createMetadata({
     title: '透明定價｜網站、AI、SEO／GEO 公開起價',
-    description: '隼訊公開起價：網站 4 萬／專案、AI 工具 6 萬／專案、SEO 1.5 萬／月、SEO／GEO 2.5 萬／月，並列出實際報價因素。',
+    description: '隼訊公開起價：網站 2 萬／專案、AI 工具 3 萬／專案、SEO 7,500／月、SEO／GEO 12,500／月，並列出實際報價因素。',
     path: '/pricing',
     keywords: ['網站建置費用', 'SEO 多少錢', 'GEO 報價', 'AI 開發費用', '行銷公司報價', '透明定價'],
   })
