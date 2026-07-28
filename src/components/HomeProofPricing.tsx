@@ -12,7 +12,7 @@ export function HomeProofPricing() {
             案例有廣度，價格不藏
           </h2>
           <p className="text-[#A8B6BC] leading-relaxed mb-8">
-            首頁保留重點，不代表只有三個案例。完整作品集共 29 項，其中三項提供獨立證據與限制頁；四個核心服務則公開砍半後起價。
+            完整作品集收錄 29 項網站、系統與 App，其中三項提供獨立證據與限制頁；四個核心服務公開目前起價與報價因素，先確認預算是否對得上。
           </p>
 
           <div className="grid grid-cols-3 gap-3 mb-8">

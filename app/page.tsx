@@ -3,8 +3,11 @@ import { Contact } from '@/components/Contact'
 import { Navigation } from '@/components/Navigation'
 import { HomeHero } from '@/components/HomeHero'
 import { HomeHubs } from '@/components/HomeHubs'
+import { HomeDeliverables } from '@/components/HomeDeliverables'
 import { HomeCases } from '@/components/HomeCases'
+import { HomeProcess } from '@/components/HomeProcess'
 import { HomeProofPricing } from '@/components/HomeProofPricing'
+import { HomeAuthorityInsights } from '@/components/HomeAuthorityInsights'
 import { SitePageFooter } from '@/components/page-layout/SitePageFooter'
 import { createMetadata, createWebPageSchema, JsonLd, siteConfig } from '@/lib/seo'
 
@@ -32,8 +35,11 @@ export default function HomePage() {
       <main>
         <HomeHero />
         <HomeHubs />
+        <HomeDeliverables />
         <HomeCases />
+        <HomeProcess />
         <HomeProofPricing />
+        <HomeAuthorityInsights />
         <Contact />
       </main>
       <SitePageFooter />

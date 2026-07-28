@@ -61,7 +61,7 @@ pnpm start
 │   └── api/contact/                  # 聯絡表單 API
 ├── src/
 │   ├── components/
-│   │   ├── Hero.tsx, About.tsx ...   # 首頁元件
+│   │   ├── Home*.tsx, Contact.tsx    # 首頁定位、交付、案例、流程、定價與信任元件
 │   │   ├── ui/                       # shadcn/ui 元件
 │   │   ├── page-layout/              # 子頁面共用 layout
 │   │   │   ├── PageShell.tsx
@@ -141,66 +141,8 @@ pnpm start
 - 流暢的頁面過渡動畫
 - **Hero 背景** - 工業網格 + 暖色光暈 + 大型漢字裝飾
 - **信任徽章** - 首屏展示「永久售後服務」與「快速交件保證」
-- **作品案例展示** - 包含 25+ 專案，支援分類篩選與展開詳情
-- **AI 語音客服區塊** - 首頁主打的新興服務 section（見下節）
-- **遊戲製作區塊** - 首頁主打的新興服務 section，以自研作品《Alive》為實績（見下節）
-
-## 首頁區塊：AI 語音客服・智慧派單系統（新興服務）
-
-首頁在「技術開發」之後新增一個主打 section，向客戶宣傳本公司**已實際導入運行**的 AI 電話語音派單服務（電信級 SIP Trunk + OpenAI Realtime 即時語音 + 自動派單）。此為公司新增業務的對外門面。
-
-### 相關檔案
-
-- `src/components/AIVoiceDispatch.tsx` — section 本體（`id="ai-voice"`）
-- `app/page.tsx` — 在 `<TechServices />` 與 `<MarketingServices />` 之間引入 `<AIVoiceDispatch />`
-- `src/components/Navigation.tsx` — `navItems` 在「技術開發」後加入 `{ label: 'AI 語音', id: 'ai-voice' }`
-
-### 區塊內容
-
-- **標題區**：`AI Voice Agent` 標籤 + 脈動「新興服務」徽章 + 漸層標題「AI 語音客服／智慧派單系統」
-- **AI 對話示意卡**：模擬一通真實電話（來電狀態列 + 計時），左 AI／右客人的對話氣泡逐則動畫浮現（自強路近遠百 → 花蓮火車站），底部「已自動建單派車・車號 888・ETA 5 分鐘」結果條
-- **數據格**：24h 不打烊接聽／即時語音雙向對話／3 通路（電話・App・LINE）／0 漏接訂單
-- **功能卡（6）**：24h AI 真人對話、在地口音辨識、智慧即時派單、全通路整合、電信級串接、全程留痕可稽核
-- **CTA**：捲動至 `#contact` 的「預約 AI 語音方案」按鈕
-
-### 設計一致性
-
-完全沿用既有設計系統，未新增任何 CSS token 或全域 class：
-
-- 背景 `bg-[#16201F]`（比 TechServices 的 `#1E2A2E` 略深一階以做區隔）+ `.industrial-grid`
-- 沿用 `.falcon-card`、`.brand-line`、`.text-falcon-gradient`、`.falcon-btn-outline`
-- 標題字體 `var(--font-display)`（Noto Serif TC）、配色取自 globals.css 的 falcon 色票（`#6D8F96`／`#A8B6BC`／`#E0E5E8`／`#2D3B40`／`#344349`）
-- 動畫用 `motion/react` 的 `whileInView`（`once: true`），與 TechServices 同模式
-
-> 對話內容為示意，刻意呼應實際導入案例（GoGoCha 花蓮計程車）。若要改文案，編輯 `AIVoiceDispatch.tsx` 上方的 `conversation` / `features` / `stats` 三個常數陣列即可，不需動 JSX。
-
-## 首頁區塊：遊戲製作・AI 互動遊戲開發（新興服務）
-
-首頁在「AI 語音」之後新增第二個新興業務 section，宣傳本公司的**遊戲製作**能力，並以自研作品《Alive》（具真實情緒的 AI 角色戀愛遊戲，已上架 iOS／Android 雙平台，Google Play `com.aliverole.app`）為實績佐證。
-
-### 相關檔案
-
-- `src/components/GameServices.tsx` — section 本體（`id="game-services"`）
-- `app/page.tsx` — 在 `<AIVoiceDispatch />` 與 `<MarketingServices />` 之間引入 `<GameServices />`
-- `src/components/Navigation.tsx` — `navItems` 在「AI 語音」後加入 `{ label: '遊戲製作', id: 'game-services' }`
-
-### 區塊內容
-
-- **標題區**：`Game Production` 標籤 + 脈動「新興服務」徽章 + 漸層標題「遊戲製作／AI 互動遊戲開發」，副標點明《Alive》已上架雙平台
-- **AI 角色對話示意卡**：模擬玩家與 AI 角色的戀愛互動（角色狀態列 + 好感度 + 輸入中），左角色／右玩家對話氣泡逐則動畫浮現，底部「好感 +3・信任 +2・解鎖角色主動私訊」結果條
-- **數據格**：雙平台（iOS・Android）／15 角色人格／7 維情緒狀態／AI 即時生成劇照
-- **功能卡（6）**：AI 角色對話系統、情緒與關係系統、跨平台上架、內容安全與審核、即時語音與圖像、即時後端與推播
-- **CTA**：捲動至 `#contact` 的「預約遊戲製作方案」按鈕
-
-### 設計一致性
-
-完全沿用既有設計系統，未新增任何 CSS token 或全域 class：
-
-- 背景 `bg-[#1E2A2E]`（夾在 AIVoice 的 `#16201F` 與 Marketing 的 `#2D3B40/50` 之間做漸層階）+ `.industrial-grid`
-- 沿用 `.falcon-card`、`.brand-line`、`.text-falcon-gradient`、`.falcon-btn-outline`，版型與 `AIVoiceDispatch.tsx` 一致
-- 動畫用 `motion/react` 的 `whileInView`（`once: true`），與其他 section 同模式
-
-> 對話內容為示意。若要改文案，編輯 `GameServices.tsx` 上方的 `conversation` / `features` / `stats` 三個常數陣列即可，不需動 JSX。
+- **作品案例展示** - 完整案例頁收錄 29 項作品，首頁精選三項可驗證案例
+- **決策型首頁內容** - 兩個獲客 Hub、實際交付、四步合作流程、適配條件、公開起價、實名負責人與精選實作文章
 
 ## 作品案例
 
@@ -390,7 +332,7 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - `/pricing` 與四個價格詳頁直接由 `price-catalog.ts` 產生；2026-07-27 依指示全部除以二，公開起價為網站 2 萬／專案、AI 工具 3 萬／專案、SEO 7,500／月、SEO／GEO 12,500／月。AEO 併入 GEO、不另售 Schema 套餐。
 - 服務頁的價格卡片與 `/pricing` 速覽也直接讀取同一價格目錄；各服務檔內的舊價格欄位不再作為前端或 Schema 輸出來源。
 - `/llms.txt` 與 `/llms-full.txt` 改為 App Router 純文字路由，直接讀取服務、價格、案例與作者資料；不再維護可能漂移的手寫靜態副本。
-- 首頁已移除遊戲、廣告、社群、影片等平鋪區塊與捲動進度動畫，只保留單一 H1、兩個獲客 Hub、三個證據化案例與聯絡轉換；子頁導覽同步收斂為六個主要入口。
+- 首頁已移除遊戲、廣告、社群、影片等稀釋主題的平鋪區塊與捲動進度動畫；保留單一 H1 與兩個獲客 Hub，並加入實際交付、三個證據化案例、四步合作流程、公開起價、實名負責人、精選文章與聯絡轉換。子頁導覽同步收斂為六個主要入口。
 - 全站 footer 已移除借址、AEO 舊連結、非主軸服務與外部 LINE QR 大圖，改為兩個 Hub、案例、價格、實名資料與直接聯絡入口。
 - 聯絡表單成功推送 `generate_lead`、電話／Email／LINE 推送 `contact_click`、失敗推送不含 PII 的 `form_error`；API 回傳穩定錯誤碼，前端完整顯示錯誤碼與訊息。
 - Logo 與 App icon 已由 2048×2048／約 2MB 改為 256×256／約 34KB；`public/favicon.ico` 已改為真正的 64×64 ICO（約 17KB）。
@@ -418,6 +360,8 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - 2026-07-27：保留但 `noindex` 的廣告、社群、影片與量化交易頁也同步將固定費、方案費、維護費及廣告代操抽成除以二；客戶直接支付給廣告平台的媒體預算不變。
 - 2026-07-27：六個城市頁 FAQ 與文章中的隼訊自建／維護價格同步除以二；市場行情、第三方 SaaS、AI API、網域主機與廣告平台成本不改寫。
 - 2026-07-27：首頁新增精簡「案例有廣度，價格不藏」區塊，顯示 29 項作品、3 個證據詳頁與四個砍半後起價；不重複渲染 29 張案例卡，維持首頁效能與主題聚焦。
+- 2026-07-28：首頁擴充為完整決策頁，新增 Build／Grow 實際交付、可驗收方式、四步合作流程、合作適配條件、實名負責人與三篇精選實作文章；採文字與分隔線為主的編輯式版面，不新增重型媒體或 viewport 動畫。
+- 2026-07-28：擴充後首頁以 production build 實測手機／平板／桌面三種尺寸：單一 H1、8 個主區塊、約 596 個 DOM 節點，手機冷載入約 0.76MB，無橫向溢位、主控台錯誤或失敗請求；5 張圖片均在捲動後完成延遲載入。數值為本機實驗室結果，不等同 CrUX。
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 - [ ] 匯入 GSC、GA4、Bing Webmaster Tools 與 GBP 的近 16 個月資料，另保存發布前 90 天基準。
 - [ ] 取得城市案例完整公開同意、期間、基準、結果、來源、圖片與限制後，再逐頁解除 noindex。
