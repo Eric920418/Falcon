@@ -2,6 +2,7 @@ import { notFound, permanentRedirect } from 'next/navigation'
 import type { Metadata } from 'next'
 import { PageShell } from '@/components/page-layout/PageShell'
 import { ServicePageTemplate } from '@/components/page-templates/ServicePageTemplate'
+import { AiVoiceServicePage } from '@/components/page-templates/AiVoiceServicePage'
 import { serviceSlugs, getService, isIndexableService } from '@/lib/content/services'
 import { getPriceDefinition } from '@/lib/content/price-catalog'
 import {
@@ -38,6 +39,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     description: service.description,
     path: `/services/${slug}`,
     keywords: service.keywords,
+    ...(slug === 'ai-voice-agent' ? { ogImage: `${siteConfig.url}/ai-voice-og` } : {}),
     noIndex: service.qualityTier !== 'production' || !isIndexableService(slug),
   })
 }
@@ -59,7 +61,9 @@ export default async function ServicePage({ params }: ServicePageProps) {
     }),
     createBreadcrumbSchema([
       { name: '首頁', path: '/' },
-      { name: '服務項目', path: '/services/seo' },
+      slug === 'ai-voice-agent'
+        ? { name: 'AI 工具開發', path: '/services/ai-tools' }
+        : { name: '服務項目', path: '/services/seo' },
       { name: service.h1, path: `/services/${slug}` },
     ]),
     createServiceSchema({
@@ -75,7 +79,11 @@ export default async function ServicePage({ params }: ServicePageProps) {
   return (
     <PageShell>
       <JsonLd data={schemas} />
-      <ServicePageTemplate service={service} />
+      {slug === 'ai-voice-agent' ? (
+        <AiVoiceServicePage service={service} />
+      ) : (
+        <ServicePageTemplate service={service} />
+      )}
     </PageShell>
   )
 }

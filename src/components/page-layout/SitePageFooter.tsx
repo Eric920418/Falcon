@@ -13,6 +13,7 @@ export function SitePageFooter() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/services/web-development" className="text-[#A8B6BC] hover:text-amber-500">網站與系統開發</Link></li>
               <li><Link href="/services/ai-tools" className="text-[#A8B6BC] hover:text-amber-500">AI 工具開發</Link></li>
+              <li><Link href="/services/ai-voice-agent" className="text-[#A8B6BC] hover:text-amber-500">企業 AI 語音客服</Link></li>
             </ul>
           </div>
           <div>

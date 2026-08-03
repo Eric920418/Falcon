@@ -3,6 +3,7 @@ import { Contact } from '@/components/Contact'
 import { Navigation } from '@/components/Navigation'
 import { HomeHero } from '@/components/HomeHero'
 import { HomeHubs } from '@/components/HomeHubs'
+import { HomeAiVoice } from '@/components/HomeAiVoice'
 import { HomeDeliverables } from '@/components/HomeDeliverables'
 import { HomeCases } from '@/components/HomeCases'
 import { HomeProcess } from '@/components/HomeProcess'
@@ -35,6 +36,7 @@ export default function HomePage() {
       <main>
         <HomeHero />
         <HomeHubs />
+        <HomeAiVoice />
         <HomeDeliverables />
         <HomeCases />
         <HomeProcess />

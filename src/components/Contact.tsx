@@ -1,10 +1,11 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Mail, Phone, Send, MessageCircle } from 'lucide-react'
 import { siteConfig } from '@/lib/seo/site-config'
 import { trackEvent } from '@/lib/analytics'
 import { TrackedContactLink } from './TrackedContactLink'
+import { isServiceInterest, serviceInterestOptions } from '@/lib/contact-service'
 
 export function Contact() {
   const ref = useRef(null);
@@ -14,12 +15,20 @@ export function Contact() {
     name: '',
     email: '',
     company: '',
+    serviceInterest: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [errorCode, setErrorCode] = useState('');
+
+  useEffect(() => {
+    const service = new URLSearchParams(window.location.search).get('service')
+    if (isServiceInterest(service)) {
+      setFormData((current) => ({ ...current, serviceInterest: service }))
+    }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,8 +64,11 @@ export function Contact() {
       }
 
       setSubmitStatus('success');
-      setFormData({ name: '', email: '', company: '', message: '' });
-      trackEvent('generate_lead', { method: 'contact_form' });
+      setFormData({ name: '', email: '', company: '', serviceInterest: '', message: '' });
+      trackEvent('generate_lead', {
+        method: 'contact_form',
+        service: formData.serviceInterest || 'unspecified',
+      });
 
       setTimeout(() => {
         setSubmitStatus('idle');
@@ -69,13 +81,17 @@ export function Contact() {
       setSubmitStatus('error');
       setErrorMessage(error instanceof Error ? error.message : '發送失敗，請稍後再試');
       setErrorCode(code);
-      trackEvent('form_error', { form_name: 'contact', error_code: code });
+      trackEvent('form_error', {
+        form_name: 'contact',
+        error_code: code,
+        service: formData.serviceInterest || 'unspecified',
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -224,6 +240,25 @@ export function Contact() {
                   className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors"
                   placeholder="您的公司名稱（選填）"
                 />
+              </div>
+
+              <div>
+                <label htmlFor="serviceInterest" className="block text-stone-400 text-sm mb-2">
+                  想討論的服務
+                </label>
+                <select
+                  id="serviceInterest"
+                  name="serviceInterest"
+                  value={formData.serviceInterest}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 focus:outline-none focus:border-amber-600 transition-colors"
+                >
+                  {serviceInterestOptions.map((option) => (
+                    <option key={option.value || 'unspecified'} value={option.value} className="bg-stone-900">
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div>

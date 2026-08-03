@@ -45,18 +45,48 @@ export const caseStudies: Record<string, CaseEvidence> = {
   },
   'gogocha-ai-dispatch': {
     slug: 'gogocha-ai-dispatch',
-    title: 'GoGoCha AI 接電話與派單系統案例',
+    title: '企業 AI 語音客服如何串接即時派單｜GoGoCha 技術案例',
     clientName: 'GoGoCha 花蓮計程車',
     location: '花蓮縣',
-    period: '公開上線產品，2026-07-26 更新',
+    period: '公開上線產品，2026-08-03 更新',
     summary:
       '整合品牌官網、AI 電話接聽、即時派單、LINE Bot 與司機／乘客 App，將分散的叫車入口接到同一套後端。',
     challenge:
       '叫車使用者包含長輩、旅客與企業客戶，入口可能來自電話、網站或 LINE；系統必須讓資訊進入同一條派單流程並保留人工介入能力。',
     approach: [
+      '將 AI 電話接聽取得的任務資訊送入共用後端，不讓電話入口成為獨立資料孤島。',
       '使用 Express、PostgreSQL、Redis、BullMQ 與 Socket.IO 建立即時派單後端。',
       '網站車資試算先呼叫真實費率 API，失敗時以本地規則提供清楚的替代結果。',
       '以大字級、語音優先與高對比方式處理長輩使用情境。',
+    ],
+    responsibilities: [
+      '品牌官網與車資試算介面',
+      'AI 電話接聽入口與任務資料結構',
+      'SmartDispatcherV2 即時派單後端',
+      'LINE Bot、司機／乘客 App 與營運後台整合',
+    ],
+    workflow: [
+      '使用者由電話、網站或 LINE 提出叫車需求。',
+      '系統整理地點、聯絡與任務欄位，送入共用派單流程。',
+      '後端以 PostgreSQL 保存狀態、BullMQ 處理佇列，並透過 Redis／Socket.IO 即時同步。',
+      '司機端、乘客端與營運介面取得同一筆任務狀態。',
+    ],
+    fallbacks: [
+      '資訊不足或 AI 無法可靠確認時保留人工介入，不把猜測直接當成派單資料。',
+      '網站費率 API 失敗時顯示本地規則估算與限制，不偽裝成正式報價成功。',
+      '佇列與即時通訊分層處理，避免單次連線問題直接等同任務消失。',
+    ],
+    gallery: [
+      {
+        src: '/GoGoChaWebsite.png',
+        alt: 'GoGoCha 公開品牌網站與 AI 派單服務畫面',
+        caption: '公開品牌網站：電話、網站與 LINE 入口導向共用派單流程。',
+      },
+      {
+        src: '/GoGoCha.png',
+        alt: 'GoGoCha 司機與乘客 App 公開畫面',
+        caption: '公開 App 畫面：司機與乘客端承接即時任務與通知。',
+      },
     ],
     metrics: [
       {
@@ -79,9 +109,9 @@ export const caseStudies: Record<string, CaseEvidence> = {
     technologies: ['Next.js', 'Express', 'PostgreSQL', 'Socket.IO', 'Redis', 'BullMQ', 'OpenAI'],
     image: '/GoGoChaWebsite.png',
     projectUrl: 'https://hualientaxi.taxi/',
-    updatedAt: '2026-07-26',
+    updatedAt: '2026-08-03',
     disclosure:
-      '本頁說明已公開的產品能力與技術範圍；未公開車隊營收、訂單量或人力節省數據。',
+      '本頁說明已公開的產品能力與隼訊技術範圍；未公開車隊營收、訂單量、人力節省、接通率、真實通話錄音或通話 SLA。「3 秒」是產品設計目標，不代表每筆叫車都能在三秒內由司機接單。',
     evidenceStatus: 'public-project',
   },
   'clinic-line-booking': {

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, Bot, Code2, Search, Sparkles } from 'lucide-react'
+import { ArrowRight, Bot, Code2, PhoneCall, Search, Sparkles } from 'lucide-react'
 
 const deliveryTracks = [
   {
@@ -26,6 +26,7 @@ const deliveryTracks = [
     links: [
       { label: '網站與系統開發', href: '/services/web-development', icon: Code2 },
       { label: 'AI 工具開發', href: '/services/ai-tools', icon: Bot },
+      { label: '企業 AI 電話', href: '/services/ai-voice-agent', icon: PhoneCall },
     ],
   },
   {

@@ -12,9 +12,14 @@ const serviceNames: Record<string, string> = {
   geo: 'GEO 生成式引擎優化',
   'web-development': '網站建置',
   'ai-tools': 'AI 工具開發',
+  'ai-voice-agent': '企業 AI 語音客服與電話自動化',
   'digital-ads': '數位廣告',
   'social-media': '社群經營',
   video: '短影音製作',
+}
+
+const caseStudyNames: Record<string, string> = {
+  'gogocha-ai-dispatch': 'GoGoCha AI 電話與即時派單技術案例',
 }
 
 export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
@@ -164,12 +169,33 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
         </section>
       )}
 
+      {post.relatedCaseStudies && post.relatedCaseStudies.length > 0 && (
+        <section className="px-6 py-10">
+          <div className="max-w-3xl mx-auto border border-emerald-800/50 bg-emerald-950/10 p-6">
+            <p className="text-xs uppercase tracking-[0.16em] text-emerald-400">公開案例與可驗證證據</p>
+            {post.relatedCaseStudies.map((slug) => (
+              <Link
+                key={slug}
+                href={`/case-studies/${slug}`}
+                className="mt-4 flex items-center justify-between gap-4 text-[#E0E5E8] hover:text-amber-500"
+              >
+                <span>{caseStudyNames[slug] ?? slug}</span>
+                <ArrowRight size={17} />
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
       <section className="py-12 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
             有相關需求？
           </h2>
-          <Link href="/#contact" className="falcon-btn-primary inline-flex items-center">
+          <Link
+            href={post.relatedServices?.includes('ai-voice-agent') ? '/?service=ai_voice#contact' : '/#contact'}
+            className="falcon-btn-primary inline-flex items-center"
+          >
             聯絡我們 <ArrowRight size={18} className="ml-2" />
           </Link>
         </div>

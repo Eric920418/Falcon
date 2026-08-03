@@ -39,6 +39,15 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
               查看完整定價
             </Link>
           </div>
+          {service.slug === 'ai-tools' && (
+            <Link
+              href="/services/ai-voice-agent"
+              className="mt-6 inline-flex items-center gap-2 text-sm text-amber-500 hover:underline"
+            >
+              需要電話接聽、派單或 CRM 串接？查看企業 AI 語音客服
+              <ArrowRight size={16} />
+            </Link>
+          )}
         </div>
       </section>
 

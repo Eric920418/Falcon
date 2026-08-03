@@ -77,6 +77,23 @@ export interface CaseEvidence {
   updatedAt: string
   disclosure: string
   evidenceStatus: 'public-project' | 'client-approved' | 'anonymized'
+  responsibilities?: string[]
+  workflow?: string[]
+  fallbacks?: string[]
+  gallery?: {
+    src: string
+    alt: string
+    caption: string
+  }[]
+}
+
+export type AiVoiceCapabilityStatus = 'demonstrated' | 'custom'
+
+export interface AiVoiceCapability {
+  title: string
+  description: string
+  status: AiVoiceCapabilityStatus
+  evidenceHref?: string
 }
 
 export interface PriceDefinition {
@@ -154,6 +171,7 @@ export interface BlogContent {
   howTo?: HowToInput
   faq?: FAQItem[]
   relatedServices?: string[]
+  relatedCaseStudies?: string[]
 }
 
 export interface PricingPageContent {

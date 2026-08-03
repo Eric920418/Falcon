@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 import { siteConfig } from '@/lib/seo/site-config'
+import { getServiceInterestLabel, isServiceInterest } from '@/lib/contact-service'
 
 function escapeHtml(value: unknown): string {
   return String(value ?? '')
@@ -14,12 +15,19 @@ function escapeHtml(value: unknown): string {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, email, company, message } = body
+    const { name, email, company, message, serviceInterest } = body
 
     // 驗證必填欄位
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: '請填寫姓名、Email 與訊息內容。', code: 'REQUIRED_FIELDS_MISSING' },
+        { status: 400 }
+      )
+    }
+
+    if (serviceInterest && !isServiceInterest(serviceInterest)) {
+      return NextResponse.json(
+        { error: '服務類別格式不正確，請重新選擇後再送出。', code: 'INVALID_SERVICE_INTEREST' },
         { status: 400 }
       )
     }
@@ -54,11 +62,12 @@ export async function POST(request: NextRequest) {
     const safeName = escapeHtml(name)
     const safeEmail = escapeHtml(email)
     const safeCompany = escapeHtml(company || '未提供')
+    const safeServiceInterest = escapeHtml(getServiceInterestLabel(serviceInterest))
     const safeMessage = escapeHtml(message)
     const mailOptions = {
       from: process.env.SMTP_USER,
       to: process.env.CONTACT_RECIPIENT || siteConfig.email,
-      subject: `[網站聯絡表單] 來自 ${String(name).replace(/[\r\n]/g, ' ')} 的新訊息`,
+      subject: `[網站聯絡表單][${getServiceInterestLabel(serviceInterest)}] 來自 ${String(name).replace(/[\r\n]/g, ' ')} 的新訊息`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #0891b2; border-bottom: 2px solid #0891b2; padding-bottom: 10px;">
@@ -69,6 +78,7 @@ export async function POST(request: NextRequest) {
             <p><strong>姓名：</strong> ${safeName}</p>
             <p><strong>Email：</strong> <a href="mailto:${safeEmail}">${safeEmail}</a></p>
             <p><strong>公司：</strong> ${safeCompany}</p>
+            <p><strong>服務需求：</strong> ${safeServiceInterest}</p>
           </div>
 
           <div style="background-color: #f1f5f9; padding: 20px; border-radius: 8px;">

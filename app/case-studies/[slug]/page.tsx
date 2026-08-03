@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ExternalLink } from 'lucide-react'
+import { ArrowRight, ExternalLink } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import { PageShell } from '@/components/page-layout/PageShell'
+import { ServiceCtaLink } from '@/components/ServiceCtaLink'
 import {
   caseStudySlugs,
   getCaseStudy,
@@ -63,22 +64,44 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       <JsonLd data={schemas} />
       <article className="bg-stone-950">
         <header className="max-w-5xl mx-auto px-6 py-16">
+          <p className="text-xs uppercase tracking-[0.18em] text-amber-500 mb-4">公開案例與可驗證證據</p>
           <p className="text-amber-500 text-sm mb-3">{caseStudy.location}｜{caseStudy.period}</p>
           <h1 className="text-4xl md:text-6xl text-[#E0E5E8] mb-6">{caseStudy.title}</h1>
           <p className="text-xl text-[#A8B6BC] max-w-3xl leading-relaxed">{caseStudy.summary}</p>
         </header>
 
         <div className="max-w-5xl mx-auto px-6 pb-20">
-          <div className="relative aspect-[16/9] rounded-xl overflow-hidden border border-[#344349] bg-[#1E2A2E]">
-            <Image
-              src={caseStudy.image}
-              alt={`${caseStudy.clientName}案例介面`}
-              fill
-              priority
-              sizes="(min-width: 1024px) 1024px, 100vw"
-              className="object-cover"
-            />
-          </div>
+          {caseStudy.gallery ? (
+            <div className="grid gap-4 md:grid-cols-2">
+              {caseStudy.gallery.map((item, index) => (
+                <figure key={item.src} className={`rounded-xl overflow-hidden border border-[#344349] bg-[#1E2A2E] ${index === 0 ? 'md:translate-y-6' : ''}`}>
+                  <div className="relative aspect-[16/10]">
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      priority={index === 0}
+                      loading={index === 0 ? undefined : 'lazy'}
+                      sizes="(min-width: 1024px) 500px, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <figcaption className="p-4 text-xs leading-relaxed text-[#A8B6BC]">{item.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          ) : (
+            <div className="relative aspect-[16/9] rounded-xl overflow-hidden border border-[#344349] bg-[#1E2A2E]">
+              <Image
+                src={caseStudy.image}
+                alt={`${caseStudy.clientName}案例介面`}
+                fill
+                priority
+                sizes="(min-width: 1024px) 1024px, 100vw"
+                className="object-cover"
+              />
+            </div>
+          )}
 
           <div className="grid lg:grid-cols-[2fr_1fr] gap-12 mt-14">
             <div className="space-y-12">
@@ -97,6 +120,42 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   ))}
                 </ul>
               </section>
+              {caseStudy.responsibilities && (
+                <section>
+                  <h2 className="text-3xl text-[#E0E5E8] mb-4">隼訊實際負責範圍</h2>
+                  <ul className="grid gap-3 text-[#A8B6BC] sm:grid-cols-2">
+                    {caseStudy.responsibilities.map((item) => (
+                      <li key={item} className="border border-[#344349] bg-stone-900/40 p-4 text-sm leading-relaxed">{item}</li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+              {caseStudy.workflow && (
+                <section>
+                  <h2 className="text-3xl text-[#E0E5E8] mb-4">AI 接聽至派單的資料流</h2>
+                  <ol className="space-y-3">
+                    {caseStudy.workflow.map((item, index) => (
+                      <li key={item} className="grid grid-cols-[2.5rem_1fr] gap-3 border-b border-[#344349] pb-3 text-sm leading-relaxed text-[#A8B6BC]">
+                        <span className="font-mono text-amber-500">0{index + 1}</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              )}
+              {caseStudy.fallbacks && (
+                <section>
+                  <h2 className="text-3xl text-[#E0E5E8] mb-4">失敗降級與人工接手</h2>
+                  <ul className="space-y-3 text-[#A8B6BC]">
+                    {caseStudy.fallbacks.map((item) => (
+                      <li key={item} className="flex gap-3 text-sm leading-relaxed">
+                        <span className="text-amber-500">—</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
               <section>
                 <h2 className="text-3xl text-[#E0E5E8] mb-5">可公開的量測與能力</h2>
                 <div className="grid md:grid-cols-3 gap-4">
@@ -133,12 +192,27 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   rel="noopener noreferrer"
                   className="falcon-btn-outline inline-flex items-center gap-2"
                 >
-                  查看公開專案 <ExternalLink size={16} />
+                  查看上線畫面證據 <ExternalLink size={16} />
                 </a>
               )}
-              <Link href="/#contact" className="falcon-btn-primary inline-flex">
-                討論類似需求
-              </Link>
+              {caseStudy.slug === 'gogocha-ai-dispatch' && (
+                <Link href="/services/ai-voice-agent" className="inline-flex items-center gap-2 text-amber-500 hover:underline">
+                  了解企業 AI 電話方案 <ArrowRight size={16} />
+                </Link>
+              )}
+              {caseStudy.slug === 'gogocha-ai-dispatch' ? (
+                <ServiceCtaLink
+                  href="/?service=ai_voice#contact"
+                  placement="case_gogocha_ai_dispatch"
+                  className="falcon-btn-primary inline-flex"
+                >
+                  討論類似需求
+                </ServiceCtaLink>
+              ) : (
+                <Link href="/#contact" className="falcon-btn-primary inline-flex">
+                  討論類似需求
+                </Link>
+              )}
             </aside>
           </div>
         </div>

@@ -6,7 +6,7 @@ export const aiToolsService: ServiceContent = {
   h1: 'AI 工具開發',
   description:
     '隼訊提供客製化 AI 工具開發：AI 客服、語音接聽、知識庫問答、文件處理自動化、銷售助理。整合 GPT、Claude、Gemini API，可部署在客戶自有伺服器。',
-  keywords: ['AI 工具', 'AI 開發', 'AI 客服', '聊天機器人', 'ChatGPT 整合', 'AI 自動化', 'AI 語音'],
+  keywords: ['AI 工具', 'AI 開發', 'AI 客服', '聊天機器人', 'ChatGPT 整合', 'AI 自動化'],
   intent: 'commercial',
   lastModified: '2026-06-29',
   qualityTier: 'production',

@@ -14,8 +14,8 @@ import {
 
 export function generateMetadata(): Metadata {
   return createMetadata({
-    title: '透明定價｜網站、AI、SEO／GEO 公開起價',
-    description: '隼訊公開起價：網站 2 萬／專案、AI 工具 3 萬／專案、SEO 7,500／月、SEO／GEO 12,500／月，並列出實際報價因素。',
+    title: '透明定價｜網站、AI、SEO／GEO 公開起價與 AI 電話客製報價',
+    description: '隼訊公開網站、AI 工具、SEO／GEO 起價與報價因素；企業 AI 語音客服因電話、併發、系統整合與人工席位採客製報價。',
     path: '/pricing',
     keywords: ['網站建置費用', 'SEO 多少錢', 'GEO 報價', 'AI 開發費用', '行銷公司報價', '透明定價'],
   })
@@ -72,6 +72,21 @@ export default function PricingIndexPage() {
                 </Link>
               ))}
             </div>
+            <Link
+              href="/services/ai-voice-agent"
+              className="mb-12 grid gap-5 border border-amber-600/40 bg-amber-950/10 p-6 hover:border-amber-500 md:grid-cols-[0.75fr_1.25fr] md:items-center"
+            >
+              <div>
+                <p className="text-xs uppercase tracking-[0.16em] text-amber-500">Custom quotation</p>
+                <h2 className="mt-3 text-2xl text-[#E0E5E8]">企業 AI 語音客服</h2>
+              </div>
+              <div>
+                <p className="text-sm leading-relaxed text-[#A8B6BC]">
+                  採客製報價，不沿用一般聊天機器人的起價。依通話方向、尖峰併發、PBX／SIP、企業 API、錄音、人工席位、部署與 SLA 估算。
+                </p>
+                <span className="mt-3 inline-flex items-center gap-1 text-sm text-amber-500">查看報價因素 <ArrowRight size={14} /></span>
+              </div>
+            </Link>
 
             <h2 className="text-2xl text-[#E0E5E8] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
               兩大獲客 Hub 起價速覽

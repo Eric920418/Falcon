@@ -6,9 +6,13 @@ import { Menu, X, ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const serviceLinks = [
+const buildLinks = [
   { label: '網站建置與軟體開發', href: '/services/web-development' },
   { label: 'AI 工具開發', href: '/services/ai-tools' },
+  { label: '企業 AI 語音客服', href: '/services/ai-voice-agent' },
+]
+
+const growthLinks = [
   { label: 'SEO 搜尋成長', href: '/services/seo' },
   { label: 'GEO AI 搜尋', href: '/services/geo' },
 ]
@@ -19,8 +23,8 @@ type NavItem =
   | { label: string; kind: 'dropdown'; items: { label: string; href: string }[] }
 
 const navItems: NavItem[] = [
-  { label: '網站與 AI 開發', kind: 'link', href: '/services/web-development' },
-  { label: 'SEO／GEO', kind: 'dropdown', items: serviceLinks },
+  { label: '網站與 AI 開發', kind: 'dropdown', items: buildLinks },
+  { label: 'SEO／GEO', kind: 'dropdown', items: growthLinks },
   { label: '案例', kind: 'link', href: '/case-studies' },
   { label: '價格', kind: 'link', href: '/pricing' },
   { label: '關於', kind: 'link', href: '/about' },
@@ -30,8 +34,8 @@ const navItems: NavItem[] = [
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
 
@@ -55,7 +59,7 @@ export function Navigation() {
 
   const closeMobile = () => {
     setIsMobileMenuOpen(false);
-    setMobileServicesOpen(false);
+    setMobileDropdown(null);
   };
 
   const scrollToSection = (id: string) => {
@@ -108,18 +112,22 @@ export function Navigation() {
                 <div
                   key={item.label}
                   className="relative"
-                  onMouseEnter={() => setServicesOpen(true)}
-                  onMouseLeave={() => setServicesOpen(false)}
+                  onMouseEnter={() => setOpenDropdown(item.label)}
+                  onMouseLeave={() => setOpenDropdown(null)}
+                  onFocus={() => setOpenDropdown(item.label)}
                 >
-                  <button className="flex items-center gap-1 px-4 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8] transition-colors">
+                  <button
+                    className="flex items-center gap-1 px-4 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8] transition-colors"
+                    aria-expanded={openDropdown === item.label}
+                  >
                     {item.label}
                     <ChevronDown
                       size={14}
-                      className={`transition-transform ${servicesOpen ? 'rotate-180' : ''}`}
+                      className={`transition-transform ${openDropdown === item.label ? 'rotate-180' : ''}`}
                     />
                   </button>
                   <AnimatePresence>
-                    {servicesOpen && (
+                    {openDropdown === item.label && (
                       <motion.div
                         className="absolute left-0 top-full w-64 pt-2"
                         initial={{ opacity: 0, y: 8 }}
@@ -208,16 +216,16 @@ export function Navigation() {
                   return (
                     <div key={item.label} className="border-b border-[#344349]/50">
                       <button
-                        onClick={() => setMobileServicesOpen((v) => !v)}
+                        onClick={() => setMobileDropdown((value) => value === item.label ? null : item.label)}
                         className="w-full flex items-center justify-between py-4 text-left text-lg text-[#C5CED2] hover:text-[#A8B6BC] transition-colors"
                       >
                         <span style={{ fontFamily: 'var(--font-display)' }}>{item.label}</span>
                         <ChevronDown
                           size={18}
-                          className={`transition-transform ${mobileServicesOpen ? 'rotate-180' : ''}`}
+                          className={`transition-transform ${mobileDropdown === item.label ? 'rotate-180' : ''}`}
                         />
                       </button>
-                      {mobileServicesOpen && (
+                      {mobileDropdown === item.label && (
                         <div className="pb-3 pl-3 flex flex-col">
                           {item.items.map((s) => (
                             <Link

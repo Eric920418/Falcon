@@ -8,6 +8,7 @@
 
 - 企業網站、電商、CMS 與客製系統開發
 - AI 工具、LINE／Telegram Bot 與流程自動化
+- 企業 AI 語音客服、電話自動化、派單／工單／CRM 整合
 - SEO 技術、內容與自然搜尋成長
 - GEO／AI 搜尋可引用內容、實體一致性與引薦量測
 
@@ -47,8 +48,9 @@ pnpm start
 │   ├── sitemap.ts                    # 動態 Sitemap（自動聚合所有 routes）
 │   ├── robots.ts                     # 動態 Robots.txt（含 AI 爬蟲規則）
 │   ├── opengraph-image.tsx           # 首頁 OG image 動態生成
+│   ├── ai-voice-og/                   # 企業 AI 電話專用 1200×630 OG image
 │   ├── globals.css                   # 全局樣式
-│   ├── services/[slug]/              # 4 個索引 Hub/子服務 + 4 個 noindex 舊服務 + AEO 轉址
+│   ├── services/[slug]/              # 5 個索引 Hub/子服務 + 4 個 noindex 舊服務 + AEO 轉址
 │   ├── about/                        # 實名負責人與工作方法
 │   ├── case-studies/[slug]/          # 證據、資料來源與限制
 │   ├── local/[slug]/                 # 6 個保留 URL；證據達標前一律 noindex
@@ -61,7 +63,7 @@ pnpm start
 │   └── api/contact/                  # 聯絡表單 API
 ├── src/
 │   ├── components/
-│   │   ├── Home*.tsx, Contact.tsx    # 首頁定位、交付、案例、流程、定價與信任元件
+│   │   ├── Home*.tsx, Contact.tsx    # 首頁定位、AI 電話、交付、案例、流程、定價與信任元件
 │   │   ├── ui/                       # shadcn/ui 元件
 │   │   ├── page-layout/              # 子頁面共用 layout
 │   │   │   ├── PageShell.tsx
@@ -69,6 +71,7 @@ pnpm start
 │   │   │   └── SitePageFooter.tsx
 │   │   └── page-templates/           # 共用內容渲染模板
 │   │       ├── ServicePageTemplate.tsx
+│   │       ├── AiVoiceServicePage.tsx
 │   │       ├── LocalPageTemplate.tsx
 │   │       ├── BlogPostTemplate.tsx
 │   │       ├── PricingPageTemplate.tsx
@@ -95,7 +98,7 @@ pnpm start
 │           ├── price-catalog.ts      # 單一價格來源
 │           ├── services/             # 服務內容
 │           ├── local.ts              # 6 個 local landing 內容
-│           ├── blog.ts               # 10 篇文章內容
+│           ├── blog.ts               # 14 篇文章內容
 │           └── pricing.ts            # pricing + compare 內容
 ├── public/
 │   ├── logo.png
@@ -142,7 +145,7 @@ pnpm start
 - **Hero 背景** - 工業網格 + 暖色光暈 + 大型漢字裝飾
 - **信任徽章** - 首屏展示「永久售後服務」與「快速交件保證」
 - **作品案例展示** - 完整案例頁收錄 29 項作品，首頁精選三項可驗證案例
-- **決策型首頁內容** - 兩個獲客 Hub、實際交付、四步合作流程、適配條件、公開起價、實名負責人與精選實作文章
+- **決策型首頁內容** - 兩個獲客 Hub、企業 AI 電話旗艦區、實際交付、四步合作流程、適配條件、公開起價、實名負責人與精選實作文章
 
 ## 作品案例
 
@@ -191,7 +194,7 @@ Portfolio 組件展示公司的專案作品，包含：
 
 | 路由群 | 路徑 | 數量 | 搜尋意圖 |
 | --- | --- | --- | --- |
-| 核心服務頁 | `/services/[slug]` | 4 | informational + commercial |
+| 核心服務頁 | `/services/[slug]` | 5 | informational + commercial |
 | 舊服務頁 | `/services/[slug]` | 4 | `noindex,follow` |
 | AEO 舊路徑 | `/services/aeo` | 1 | 永久轉址至 `/services/geo` |
 | 本地頁 | `/local/[slug]` | 6 | 證據達標前 `noindex,follow` |
@@ -314,7 +317,7 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - [ ] 申請並設定 Google Business Profile（本地 SEO 關鍵；含真實評論後可重新加入 AggregateRating，連結至 GBP）
 - [ ] 申請 Google Search Console 並提交新版 sitemap
 
-### SEO／GEO 架構（2026-07-26）
+### SEO／GEO 與企業 AI 電話架構（2026-08-03）
 
 - 網站獲客主軸收斂為「網站與 AI 開發」及「SEO／GEO 搜尋成長」。
 - 實名作者資料集中於 `src/lib/content/authors.ts`；公開案例證據集中於 `src/lib/content/case-studies.ts`。
@@ -324,17 +327,17 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - 全站 JSON-LD 只輸出單一 `@graph`；全站實體為 Organization + WebSite，借址不再輸出為 LocalBusiness、地理 meta 或 vCard 地址。
 - 已刪除失效的 `MarketingAgency`／`ProfessionalService`／重複 LocalBusiness Schema 實作，避免未被引用的檔案仍在型別檢查或日後誤用。
 - 字型改由 `next/font/local` 自託管 `public/fonts` 內的 Noto Sans TC，不再從瀏覽器重複請求 Google Fonts。
-- 可索引服務固定為 `/services/web-development`、`/services/ai-tools`、`/services/seo`、`/services/geo`；AEO 永久轉址至 GEO，其餘舊服務保留可讀但設為 `noindex,follow` 並移出 sitemap。
+- 可索引服務固定為 `/services/web-development`、`/services/ai-tools`、`/services/ai-voice-agent`、`/services/seo`、`/services/geo`；AEO 永久轉址至 GEO，其餘舊服務保留可讀但設為 `noindex,follow` 並移出 sitemap。
 - 沒有公開案例證據的城市頁會自動 `noindex,follow` 並移出 sitemap，避免把薄弱城市頁當成虛構據點或 doorway page。
 - `robots.txt` 明確允許 `OAI-SearchBot` 與 `PerplexityBot`；GPTBot 保留但只視為訓練爬蟲設定，不當作搜尋曝光保證。
 - `/about` 使用實名負責人與可核對的公開連結；`/case-studies` 與三個案例詳頁明確區分技術量測、產品能力與商業成效，並顯示資料限制。
 - 所有文章作者統一為實名蔡翊廉並連到 `/about`；已移除虛構的「資深 SEO 顧問」審稿者。
-- `/pricing` 與四個價格詳頁直接由 `price-catalog.ts` 產生；2026-07-27 依指示全部除以二，公開起價為網站 2 萬／專案、AI 工具 3 萬／專案、SEO 7,500／月、SEO／GEO 12,500／月。AEO 併入 GEO、不另售 Schema 套餐。
+- `/pricing` 與四個價格詳頁直接由 `price-catalog.ts` 產生；2026-07-27 依指示全部除以二，公開起價為網站 2 萬／專案、AI 工具 3 萬／專案、SEO 7,500／月、SEO／GEO 12,500／月。企業 AI 電話不沿用聊天機器人起價，依電話、併發、系統整合、人工席位與 SLA 客製報價；AEO 併入 GEO、不另售 Schema 套餐。
 - 服務頁的價格卡片與 `/pricing` 速覽也直接讀取同一價格目錄；各服務檔內的舊價格欄位不再作為前端或 Schema 輸出來源。
 - `/llms.txt` 與 `/llms-full.txt` 改為 App Router 純文字路由，直接讀取服務、價格、案例與作者資料；不再維護可能漂移的手寫靜態副本。
 - 首頁已移除遊戲、廣告、社群、影片等稀釋主題的平鋪區塊與捲動進度動畫；保留單一 H1 與兩個獲客 Hub，並加入實際交付、三個證據化案例、四步合作流程、公開起價、實名負責人、精選文章與聯絡轉換。子頁導覽同步收斂為六個主要入口。
 - 全站 footer 已移除借址、AEO 舊連結、非主軸服務與外部 LINE QR 大圖，改為兩個 Hub、案例、價格、實名資料與直接聯絡入口。
-- 聯絡表單成功推送 `generate_lead`、電話／Email／LINE 推送 `contact_click`、失敗推送不含 PII 的 `form_error`；API 回傳穩定錯誤碼，前端完整顯示錯誤碼與訊息。
+- 聯絡表單可由 `?service=ai_voice#contact` 預選服務；成功推送含非敏感 `service` 分類的 `generate_lead`、AI 電話 CTA 推送 `service_cta_click`、電話／Email／LINE 推送 `contact_click`、失敗推送不含 PII 的 `form_error`。API 回傳穩定錯誤碼，前端完整顯示錯誤碼與訊息。
 - Logo 與 App icon 已由 2048×2048／約 2MB 改為 256×256／約 34KB；`public/favicon.ico` 已改為真正的 64×64 ICO（約 17KB）。
 - 電子名片不再連到借址，只顯示「台灣桃園（非到訪門市）」作為主要服務區；vCard 同樣不輸出街道地址。
 - SEO／GEO 服務內容已依 Google 2026-07-10 官方指引重寫：明確說明 Google 忽略 llms.txt、沒有 AI 專用 Schema、沒有固定見效週期，並移除借址辦公室與 FAQ／HowTo／Speakable 成效宣稱。
@@ -362,6 +365,10 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - 2026-07-27：首頁新增精簡「案例有廣度，價格不藏」區塊，顯示 29 項作品、3 個證據詳頁與四個砍半後起價；不重複渲染 29 張案例卡，維持首頁效能與主題聚焦。
 - 2026-07-28：首頁擴充為完整決策頁，新增 Build／Grow 實際交付、可驗收方式、四步合作流程、合作適配條件、實名負責人與三篇精選實作文章；採文字與分隔線為主的編輯式版面，不新增重型媒體或 viewport 動畫。
 - 2026-07-28：擴充後首頁以 production build 實測手機／平板／桌面三種尺寸：單一 H1、8 個主區塊、約 596 個 DOM 節點，手機冷載入約 0.76MB，無橫向溢位、主控台錯誤或失敗請求；5 張圖片均在捲動後完成延遲載入。數值為本機實驗室結果，不等同 CrUX。
+- 2026-08-03：新增 `/services/ai-voice-agent` 企業 AI 語音客服核心頁與專用 OG 圖，首頁加入輕量 AI 電話旗艦區；導覽、AI Hub、Footer、價格頁及 GoGoCha 案例完成雙向內鏈。能力資料以 `demonstrated`／`custom` 分層，GoGoCha 只證明 AI 接聽、即時派單與多入口整合，PBX、多線、錄音、監控與席位列為需 POC 驗收的客製範圍。
+- 2026-08-03：AI 電話頁的畫面與 Breadcrumb schema 都以 `/services/ai-tools` 為父層；Service schema 只描述可見服務，不輸出固定 Offer。
+- 2026-08-03：發布 AI 語音客服導入、費用、IVR／真人比較及 PBX／CRM 串接四篇內容集群；文章共同連回核心服務與 GoGoCha 證據頁。FAQ 保留可讀內容但不輸出 FAQPage／HowTo／Speakable，AI 電話 Service schema 不輸出虛構 Offer 或固定價格。
+- 2026-08-03：本機 production 以 390×844、Fast 4G、4× CPU 節流量測：首頁 LCP 1.136s、CLS 0.0215、初始傳輸約 0.86MB、DOM 685；AI 電話頁 LCP 1.148s、CLS 0、初始傳輸約 0.89MB、DOM 698，兩頁均無水平溢位。此為實驗室數值，不等同 CrUX。
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 - [ ] 匯入 GSC、GA4、Bing Webmaster Tools 與 GBP 的近 16 個月資料，另保存發布前 90 天基準。
 - [ ] 取得城市案例完整公開同意、期間、基準、結果、來源、圖片與限制後，再逐頁解除 noindex。

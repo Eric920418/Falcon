@@ -8,6 +8,7 @@ export const siteConfig = {
   keywords: [
     '網站建置', '軟體開發', 'AI 工具開發', '企業網站', '客製化系統',
     'SEO', '搜尋引擎優化', 'GEO', '生成式引擎優化', 'AI 搜尋',
+    'AI 語音客服', 'AI 電話客服', 'AI 電話系統', 'VoiceBot',
     '台灣網站開發', '台灣 SEO 顧問',
   ],
   telephone: '+886958801559',
@@ -22,6 +23,7 @@ export const siteConfig = {
   priceRange: '$-$$',
   knowsAbout: [
     '網站建置', '軟體開發', 'CMS 系統', '企業系統', 'AI 工具開發', 'APP 開發',
+    'AI 語音客服系統', '企業 AI 電話', '即時派單系統', 'PBX 與 CRM 串接',
     'SEO 搜尋引擎優化', 'GEO 生成式引擎優化', 'AI 搜尋量測',
   ],
   areasServed: [
