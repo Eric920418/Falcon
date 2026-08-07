@@ -144,7 +144,7 @@ pnpm start
 - 流暢的頁面過渡動畫
 - **Hero 背景** - 工業網格 + 暖色光暈 + 大型漢字裝飾
 - **信任徽章** - 首屏展示「永久售後服務」與「快速交件保證」
-- **作品案例展示** - 完整案例頁收錄 29 項作品，首頁精選三項可驗證案例
+- **作品案例展示** - 完整案例頁收錄 30 項作品，首頁精選三項可驗證案例
 - **決策型首頁內容** - 兩個獲客 Hub、企業 AI 電話旗艦區、實際交付、四步合作流程、適配條件、公開起價、實名負責人與精選實作文章
 
 ## 作品案例
@@ -161,6 +161,7 @@ Portfolio 組件展示公司的專案作品，包含：
 - **POS 系統** - 餐飲 POS 機整合系統
 - **自由接案平台** - CosmosWork（https://falcontaskbridge.com/）（AI 智能媒合、人才履歷展示、需求追蹤）
 - **展覽管理系統** - 完整的展覽作品管理與預約系統（52 資料表、Craft.js 編輯器、任務看板、即時叫號）
+- **2026 上緯智聯自動化展 AI Explorer** - 行動優先展場互動平台（https://guangdian-2026.vercel.app/）（台智寶 TAIIBOT、會員登錄、六大任務集點、許願牆、限量禮物兌換）
 - **中醫診所 LINE 預約系統** - LINE LIFF 整合預約系統（Supabase Realtime、併發控制、130+ E2E 測試）
 - **茶客棧飲料店官網** - 茶飲品牌官網（東方墨韻視覺設計、CMS 後台管理、Cloudflare R2 圖片存儲）
 - **invisible care 居家健康守護官網與 CMS** - 居家清潔六大服務品牌官網（https://needfix.com.tw/）（Section CMS 動態區塊、Before/After 對比圖、完整 SEO 實體圖、老人友善後台 UI）
@@ -257,8 +258,9 @@ Portfolio 組件展示公司的專案作品，包含：
 2. **新增 blog 文章** — 在 `src/lib/content/blog.ts` 加一個物件條目。
 3. **新增 local landing** — 在 `src/lib/content/local.ts` 加條目。
 4. **新增定價頁** — 在 `src/lib/content/pricing.ts` 加條目。
+5. **新增作品** — 在 `src/components/Portfolio.tsx` 的 `projects` 陣列加條目，封面放在 `public/` 並同步更新首頁、案例頁與 README 的公開作品總數。
 
-每次新增，sitemap、navigation、JSON-LD、metadata 全部自動生效。
+前四類資料頁新增後，sitemap、navigation、JSON-LD、metadata 會由資料層自動生效；作品項目仍需依第 5 點同步公開總數與 sitemap 日期。
 
 ### 驗證指令
 
@@ -369,6 +371,7 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - 2026-08-03：AI 電話頁的畫面與 Breadcrumb schema 都以 `/services/ai-tools` 為父層；Service schema 只描述可見服務，不輸出固定 Offer。
 - 2026-08-03：發布 AI 語音客服導入、費用、IVR／真人比較及 PBX／CRM 串接四篇內容集群；文章共同連回核心服務與 GoGoCha 證據頁。FAQ 保留可讀內容但不輸出 FAQPage／HowTo／Speakable，AI 電話 Service schema 不輸出虛構 Offer 或固定價格。
 - 2026-08-03：本機 production 以 390×844、Fast 4G、4× CPU 節流量測：首頁 LCP 1.136s、CLS 0.0215、初始傳輸約 0.86MB、DOM 685；AI 電話頁 LCP 1.148s、CLS 0、初始傳輸約 0.89MB、DOM 698，兩頁均無水平溢位。此為實驗室數值，不等同 CrUX。
+- 2026-08-07：完整作品集新增「2026 上緯智聯自動化展 AI Explorer」，以公開首頁實際畫面製作橫幅封面，收錄會員登錄、六大任務集點、許願牆與兌獎流程；作品總數由 29 更新為 30，並同步首頁、案例頁 metadata／文案與 sitemap 更新日期。
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 - [ ] 匯入 GSC、GA4、Bing Webmaster Tools 與 GBP 的近 16 個月資料，另保存發布前 90 天基準。
 - [ ] 取得城市案例完整公開同意、期間、基準、結果、來源、圖片與限制後，再逐頁解除 noindex。

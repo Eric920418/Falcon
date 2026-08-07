@@ -21,6 +21,36 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: 34,
+    title: "2026 上緯智聯自動化展 AI Explorer",
+    description:
+      "為上緯智聯 2026 台北國際自動化工業大展打造的行動優先展場互動平台，以台智寶 TAIIBOT 作為入口，串聯會員登錄、六大任務集點、許願牆與限量禮物兌換。來賓可即時查看任務狀態與兌獎門檻，將現場參與流程集中在單一 Web App 完成。",
+    tech: [
+      "Next.js App Router",
+      "React",
+      "Server Actions",
+      "HTML Canvas",
+      "Responsive Web Design",
+      "Vercel",
+    ],
+    features: [
+      "會員資料登錄與集點卡建立",
+      "六大展場任務進度追蹤",
+      "兌獎門檻判定與兌換導流",
+      "公開許願牆與投稿流程",
+      "集點／許願／兌獎分頁導覽",
+      "台智寶 TAIIBOT 品牌入口",
+    ],
+    highlights: [
+      "App Router + Server Actions 串接現場登錄流程",
+      "Canvas 光束與字元矩陣品牌動效",
+      "展場情境的 mobile-first 單手操作介面",
+    ],
+    image: "/guangdian-2026.png",
+    url: "https://guangdian-2026.vercel.app/",
+    category: "形象網站",
+  },
+  {
     id: 33,
     title: "Alive AI 互動戀愛遊戲（雙平台）",
     description:
@@ -847,7 +877,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                 完整<span className="text-falcon-gradient">作品紀錄</span>
               </h2>
               <p className="text-lg text-[#A8B6BC] max-w-xl">
-                29 項 Git 原始作品資料完整恢復。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。
+                30 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。
               </p>
             </div>
 

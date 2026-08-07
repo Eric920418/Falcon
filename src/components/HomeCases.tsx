@@ -15,7 +15,7 @@ export function HomeCases() {
             <h2 className="text-3xl md:text-5xl text-[#E0E5E8]">案例先講證據，再講限制</h2>
           </div>
           <Link href="/case-studies" className="inline-flex items-center gap-2 text-amber-500 hover:underline">
-            查看完整 29 項作品 <ArrowRight size={17} />
+            查看完整 30 項作品 <ArrowRight size={17} />
           </Link>
         </div>
 

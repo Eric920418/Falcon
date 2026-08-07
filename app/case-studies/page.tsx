@@ -13,7 +13,7 @@ export function generateMetadata(): Metadata {
   return createMetadata({
     title: '網站、AI 與系統開發案例｜證據與限制完整揭露',
     description:
-      '查看隼訊 29 項完整作品紀錄，以及網站效能、AI 派單與 LINE 預約的證據化案例；清楚區分作品功能、技術量測與商業成果。',
+      '查看隼訊 30 項完整作品紀錄，以及網站效能、AI 派單與 LINE 預約的證據化案例；清楚區分作品功能、技術量測與商業成果。',
     path: '/case-studies',
   })
 }
@@ -42,7 +42,7 @@ export default function CaseStudiesPage() {
             <p className="text-amber-500 text-sm tracking-widest uppercase mb-4">Evidence-based work</p>
             <h1 className="text-4xl md:text-6xl text-[#E0E5E8] mb-6">公開案例與可驗證證據</h1>
             <p className="text-lg text-[#A8B6BC] max-w-3xl leading-relaxed">
-              Git 原始作品集的 29 項案例全部集中在同一區。有獨立量測或技術證據的案例會直接標示「查看證據」；其餘呈現實際交付功能，不把功能描述包裝成營收成果。
+              Git 原始作品集的 30 項案例全部集中在同一區。有獨立量測或技術證據的案例會直接標示「查看證據」；其餘呈現實際交付功能，不把功能描述包裝成營收成果。
             </p>
           </div>
         </header>
