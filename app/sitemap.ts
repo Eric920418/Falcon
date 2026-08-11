@@ -11,10 +11,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: '2026-08-07' },
-    { url: `${baseUrl}/about`, lastModified: '2026-07-26' },
+    { url: `${baseUrl}/about`, lastModified: '2026-08-11' },
     { url: `${baseUrl}/case-studies`, lastModified: '2026-08-07' },
-    { url: `${baseUrl}/pricing`, lastModified: '2026-08-03' },
-    { url: `${baseUrl}/blog`, lastModified: '2026-08-03' },
+    { url: `${baseUrl}/pricing`, lastModified: '2026-08-11' },
+    { url: `${baseUrl}/blog`, lastModified: '2026-08-11' },
   ]
 
   const serviceRoutes: MetadataRoute.Sitemap = getIndexableServices()

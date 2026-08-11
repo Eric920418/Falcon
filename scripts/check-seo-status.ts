@@ -1,6 +1,6 @@
 /**
  * 全站 SEO 驗收：以 production HTML 驗證 sitemap、索引狀態、metadata、
- * canonical、H1、JSON-LD @graph、內鏈與 AEO 301。
+ * canonical、H1、JSON-LD @graph、URL 結構、內鏈與永久轉址。
  *
  * 用法：
  *   pnpm check:seo
@@ -20,6 +20,8 @@ import { pricingPages, comparePages } from '../src/lib/content/pricing'
 import { getAllCaseStudies } from '../src/lib/content/case-studies'
 
 const baseUrl = (process.argv[2] ?? siteConfig.url).replace(/\/$/, '')
+const MAX_PATH_LENGTH = 100
+const URL_SEGMENT_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
 const colors = {
   reset: '\x1b[0m',
@@ -210,6 +212,48 @@ function extractSitemapPaths(xml: string): Set<string> {
   return paths
 }
 
+function extractSitemapUrls(xml: string): string[] {
+  return Array.from(xml.matchAll(/<loc>([^<]+)<\/loc>/g)).map((match) => match[1])
+}
+
+function validatePathStructure(path: string): string[] {
+  const problems: string[] = []
+
+  if (!path.startsWith('/')) problems.push('必須以 / 開頭')
+  if (path.length > MAX_PATH_LENGTH) {
+    problems.push(`路徑長度 ${path.length}，上限 ${MAX_PATH_LENGTH}`)
+  }
+  if (/[?#]/.test(path)) problems.push('內容路徑不得包含 query 或 fragment')
+  if (path !== '/' && path.endsWith('/')) problems.push('不得使用非必要尾斜線')
+  if (path.includes('//')) problems.push('不得包含重複斜線')
+  if (path.includes('_')) problems.push('單字必須使用連字號，不得使用底線')
+  if (/[A-Z]/.test(path)) problems.push('路徑必須使用小寫')
+  if (/\s/.test(path)) problems.push('路徑不得包含空白')
+
+  if (path !== '/') {
+    const segments = path.slice(1).split('/')
+    for (const segment of segments) {
+      if (!URL_SEGMENT_PATTERN.test(segment)) {
+        problems.push(`「${segment}」不是小寫 ASCII kebab-case`)
+      }
+    }
+  }
+
+  return [...new Set(problems)]
+}
+
+function validateAbsoluteContentUrl(value: string): string[] {
+  try {
+    const parsed = new URL(value, baseUrl)
+    const problems = validatePathStructure(parsed.pathname)
+    if (parsed.search) problems.push('不得包含 query parameter')
+    if (parsed.hash) problems.push('不得包含 fragment')
+    return [...new Set(problems)]
+  } catch {
+    return ['URL 無法解析']
+  }
+}
+
 async function auditPage(route: RouteSpec): Promise<PageAudit> {
   const result = await fetchText(`${baseUrl}${route.path}`)
   const problems: string[] = []
@@ -326,7 +370,10 @@ async function main() {
     ...routes.map(auditPage),
   ])
 
-  console.log(`${colors.cyan}[1/5] Sitemap 與 robots.txt${colors.reset}`)
+  console.log(`${colors.cyan}[1/6] Sitemap 與 robots.txt${colors.reset}`)
+  const sitemapUrls = sitemap?.status === 200
+    ? extractSitemapUrls(sitemap.text)
+    : []
   const sitemapPaths = sitemap?.status === 200
     ? extractSitemapPaths(sitemap.text)
     : new Set<string>()
@@ -359,7 +406,24 @@ async function main() {
   console.log(`  ${sitemap?.status === 200 ? tick : cross} sitemap：${sitemapPaths.size} 個 URL`)
   console.log(`  ${robots?.status === 200 ? tick : cross} robots.txt 可讀`)
 
-  console.log(`\n${colors.cyan}[2/5] HTTP、index/noindex 與 metadata${colors.reset}`)
+  console.log(`\n${colors.cyan}[2/6] URL 結構${colors.reset}`)
+  const routeUrlProblems = routes.flatMap((route) =>
+    validatePathStructure(route.path).map((problem) => `${route.path}：${problem}`),
+  )
+  const sitemapUrlProblems = sitemapUrls.flatMap((url) =>
+    validateAbsoluteContentUrl(url).map((problem) => `sitemap ${url}：${problem}`),
+  )
+  const urlProblems = [...routeUrlProblems, ...sitemapUrlProblems]
+  issues.push(...urlProblems)
+  console.log(
+    `  ${urlProblems.length ? cross : tick} ${
+      urlProblems.length
+        ? `${urlProblems.length} 個 URL 結構問題`
+        : `所有路徑皆為小寫 ASCII kebab-case、無參數且不超過 ${MAX_PATH_LENGTH} 字元`
+    }`,
+  )
+
+  console.log(`\n${colors.cyan}[3/6] HTTP、index/noindex 與 metadata${colors.reset}`)
   for (const audit of audits) {
     if (audit.problems.length) {
       for (const problem of audit.problems) {
@@ -371,7 +435,7 @@ async function main() {
     }
   }
 
-  console.log(`\n${colors.cyan}[3/5] 唯一 metadata 與 canonical${colors.reset}`)
+  console.log(`\n${colors.cyan}[4/6] 唯一 metadata 與 canonical${colors.reset}`)
   const indexAudits = audits.filter((audit) => audit.route.indexable)
   const duplicates = [
     ...findDuplicates(indexAudits, 'title'),
@@ -381,7 +445,7 @@ async function main() {
   issues.push(...duplicates)
   console.log(`  ${duplicates.length ? cross : tick} ${duplicates.length ? `${duplicates.length} 個重複問題` : 'title、description、canonical 皆唯一'}`)
 
-  console.log(`\n${colors.cyan}[4/5] 可抓取內鏈與孤兒頁${colors.reset}`)
+  console.log(`\n${colors.cyan}[5/6] 可抓取內鏈與孤兒頁${colors.reset}`)
   const linkedPaths = new Set(indexAudits.flatMap((audit) => Array.from(audit.internalLinks)))
   const orphanPaths = indexableRoutes
     .map((route) => route.path)
@@ -389,15 +453,54 @@ async function main() {
   for (const path of orphanPaths) issues.push(`孤兒頁：${path}`)
   console.log(`  ${orphanPaths.length ? cross : tick} ${orphanPaths.length ? orphanPaths.join(', ') : '所有索引頁都有可抓取內鏈'}`)
 
-  console.log(`\n${colors.cyan}[5/5] AEO 單次 301${colors.reset}`)
-  const aeo = await fetchText(`${baseUrl}/services/aeo`, 'manual')
-  const aeoLocation = aeo?.headers.get('location') ?? ''
-  const aeoTarget = normalizePath(aeoLocation)
-  if (aeo?.status !== 301 || aeoTarget !== '/services/geo') {
-    issues.push(`AEO 轉址錯誤：HTTP ${aeo?.status ?? 0} → ${aeoLocation || '無 Location'}`)
-    console.log(`  ${cross} HTTP ${aeo?.status ?? 0} → ${aeoLocation || '無 Location'}`)
-  } else {
-    console.log(`  ${tick} /services/aeo 301 → /services/geo`)
+  console.log(`\n${colors.cyan}[6/6] 永久轉址、單次跳轉與舊 URL 排除${colors.reset}`)
+  const redirects = [
+    { source: '/services/aeo', destination: '/services/geo' },
+    { source: '/blog/seo-vs-geo-vs-aeo', destination: '/compare/seo-vs-geo-vs-aeo' },
+    { source: '/blog/how-we-pick-clients', destination: '/about' },
+  ]
+
+  for (const redirect of redirects) {
+    const response = await fetchText(`${baseUrl}${redirect.source}`, 'manual')
+    const location = response?.headers.get('location') ?? ''
+    const target = normalizePath(location)
+    const destinationResponse = await fetchText(`${baseUrl}${redirect.destination}`, 'manual')
+    const inSitemap = sitemapPaths.has(redirect.source)
+    const inInternalLinks = audits.some((audit) => audit.internalLinks.has(redirect.source))
+    const usedAsCanonical = audits.some(
+      (audit) => audit.canonical && normalizePath(audit.canonical) === redirect.source,
+    )
+    const redirectUrlProblems = [
+      ...validatePathStructure(redirect.source),
+      ...validatePathStructure(redirect.destination),
+      ...(location ? validateAbsoluteContentUrl(location) : []),
+    ]
+
+    if (
+      response?.status !== 301 ||
+      target !== redirect.destination ||
+      destinationResponse?.status !== 200 ||
+      inSitemap ||
+      inInternalLinks ||
+      usedAsCanonical ||
+      redirectUrlProblems.length > 0
+    ) {
+      const details = [
+        `HTTP ${response?.status ?? 0} → ${location || '無 Location'}`,
+        destinationResponse?.status !== 200
+          ? `目的頁 HTTP ${destinationResponse?.status ?? 0}，疑似 redirect chain`
+          : '',
+        inSitemap ? '仍在 sitemap' : '',
+        inInternalLinks ? '仍有站內連結' : '',
+        usedAsCanonical ? '仍被 canonical 引用' : '',
+        ...redirectUrlProblems,
+      ].filter(Boolean)
+      const problem = `${redirect.source} 轉址錯誤：${details.join('；')}`
+      issues.push(problem)
+      console.log(`  ${cross} ${problem}`)
+    } else {
+      console.log(`  ${tick} ${redirect.source} 301 → ${redirect.destination}，目的頁 200 且無 sitemap／內鏈／canonical 殘留`)
+    }
   }
 
   console.log('')

@@ -98,7 +98,7 @@ pnpm start
 │           ├── price-catalog.ts      # 單一價格來源
 │           ├── services/             # 服務內容
 │           ├── local.ts              # 6 個 local landing 內容
-│           ├── blog.ts               # 14 篇文章內容
+│           ├── blog.ts               # 12 篇文章內容
 │           └── pricing.ts            # pricing + compare 內容
 ├── public/
 │   ├── logo.png
@@ -200,7 +200,7 @@ Portfolio 組件展示公司的專案作品，包含：
 | AEO 舊路徑 | `/services/aeo` | 1 | 永久轉址至 `/services/geo` |
 | 本地頁 | `/local/[slug]` | 6 | 證據達標前 `noindex,follow` |
 | 案例頁 | `/case-studies`、`/case-studies/[slug]` | 4 | commercial + evidence |
-| 部落格 | `/blog`、`/blog/[slug]` | 11 | informational + topical authority |
+| 部落格 | `/blog`、`/blog/[slug]` | 13 | 1 個索引頁＋12 篇 informational / commercial 文章 |
 | 定價頁 | `/pricing`、`/pricing/[slug]` | 5 | transactional |
 | 比較頁 | `/compare/[slug]` | 1+ | commercial investigation |
 | 公司頁 | `/about` | 1 | E-E-A-T / entity |
@@ -235,6 +235,13 @@ Portfolio 組件展示公司的專案作品，包含：
 ### 動態 Sitemap
 
 `app/sitemap.ts` 只聚合可索引 canonical URL，使用內容真實更新日期，不輸出 Google 不採用的 `priority` 或 `changefreq`。
+
+### URL 命名與驗收政策
+
+- 公開內容維持短、穩定、描述性的英文或產業通用縮寫，統一使用小寫 ASCII kebab-case；分類路徑固定為 `/about`、`/blog`、`/case-studies`、`/pricing`、`/services` 等既有層級。
+- 不為 Ubersuggest 等第三方工具的中文關鍵字逐字匹配警告更換已發布 canonical，也不建立中文 alias 或重複頁。URL 語意需由人工核對搜尋意圖，不能只靠字串比對判定。
+- 年份只用於確實具有年度意圖的內容；後續更新不為了刷新年份反覆搬移 URL。永久整併一律使用單次 301，舊 URL 必須自 sitemap、站內連結與 canonical 移除。
+- `pnpm check:seo` 會驗證所有內容路徑與 sitemap URL：小寫、連字號、無空白／底線／連續斜線／query／fragment／非必要尾斜線，路徑不得超過 100 字元；永久轉址的目的頁必須直接回傳 200，禁止 redirect chain。
 
 ### Local SEO
 
@@ -348,8 +355,8 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - FAQ 與步驟內容仍可供讀者閱讀，但 FAQPage／HowTo Schema 工廠已刪除；AEO 舊內容檔也已刪除，僅保留 `/services/aeo` 永久轉址。
 - 六個城市 URL 在缺少「完整客戶同意＋期間＋基準＋結果」前一律 `noindex,follow` 並排除 sitemap；不以 name-only 案例或借址通過索引門檻。
 - Footer 的電話、Email、LINE 入口均統一發送不含 PII 的 `contact_click` 事件；履歷也已移除「AI 引擎優先引用」的不實保證。
-- `/services/aeo` 由 Next.js redirects 明確回傳單次 301 至 `/services/geo`，文章與舊元件內鏈皆直接改連 GEO。
-- `pnpm check:seo` 會全站驗證 HTTP 200、index/noindex、sitemap、唯一 metadata/canonical、單一 H1、OG/Twitter、單一 JSON-LD `@graph`、孤兒頁與 AEO 301。
+- `/services/aeo`、`/blog/seo-vs-geo-vs-aeo`、`/blog/how-we-pick-clients` 由 Next.js redirects 明確回傳單次 301；後兩者分別整併至比較頁與 `/about`，不再留在 sitemap 或站內連結。
+- `pnpm check:seo` 會全站驗證 HTTP 200、index/noindex、sitemap、唯一 metadata/canonical、單一 H1、OG/Twitter、單一 JSON-LD `@graph`、孤兒頁與三條單次 301。
 - sitemap 已納入案例索引頁與三個案例詳頁；城市頁在證據達標前不會被列入。
 - SEO 服務 FAQ 已移除固定 2–6 個月見效區間；舊作品元件也不再把 FAQPage／Review JSON-LD 當作成果賣點。
 - 內容 lint 標記的空泛絕對化用語已改為可驗證表述。
@@ -372,6 +379,9 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - 2026-08-03：發布 AI 語音客服導入、費用、IVR／真人比較及 PBX／CRM 串接四篇內容集群；文章共同連回核心服務與 GoGoCha 證據頁。FAQ 保留可讀內容但不輸出 FAQPage／HowTo／Speakable，AI 電話 Service schema 不輸出虛構 Offer 或固定價格。
 - 2026-08-03：本機 production 以 390×844、Fast 4G、4× CPU 節流量測：首頁 LCP 1.136s、CLS 0.0215、初始傳輸約 0.86MB、DOM 685；AI 電話頁 LCP 1.148s、CLS 0、初始傳輸約 0.89MB、DOM 698，兩頁均無水平溢位。此為實驗室數值，不等同 CrUX。
 - 2026-08-07：完整作品集新增「2026 上緯智聯自動化展 AI Explorer」，以公開首頁實際畫面製作橫幅封面，收錄會員登錄、六大任務集點、許願牆與兌獎流程；作品總數由 29 更新為 30，並同步首頁、案例頁 metadata／文案與 sitemap 更新日期。
+- 2026-08-11：依 Ubersuggest 中文字數警告進行搜尋意圖審核，不設定全站最低字數。三篇企業 AI 電話文章補上架構／成本／選型表與失敗邊界；GEO、Google AI、Perplexity、Schema、技術 SEO 與內容品質文章改用官方來源並增加可見參考資料。`ContentSection` 支援語意表格，`BlogContent`／`ComparePageContent` 支援 `ContentReference`。
+- 2026-08-11：`/blog/seo-vs-geo-vs-aeo` 301 整併至比較頁，`/blog/how-we-pick-clients` 301 整併至 About 的合作適配區；三個案例補齊負責範圍、各自命名的實作流程、限制與證據核對，價格索引與四個價格頁補上報價形成方式與影響因素。第三方字數警告只作線索，正式驗收仍以索引、非品牌曝光、點擊與合格詢盤為準。
+- 2026-08-11：Ubersuggest 的「URL 對 SEO 不友善」清單實際只在中文關鍵字逐字匹配失敗，字元與動態參數皆通過；現有英文 canonical 保持不變。全站驗收新增 URL 語法、100 字元上限、sitemap 參數、尾斜線與 redirect chain 檢查，避免為工具分數製造不必要的 URL 遷移。
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 - [ ] 匯入 GSC、GA4、Bing Webmaster Tools 與 GBP 的近 16 個月資料，另保存發布前 90 天基準。
 - [ ] 取得城市案例完整公開同意、期間、基準、結果、來源、圖片與限制後，再逐頁解除 noindex。
@@ -405,6 +415,8 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 ### 編輯部架構
 
 所有文章作者統一使用 `src/lib/content/authors.ts` 的實名資料，作者頁連至 `/about`。禁止以未具名「資深顧問」、虛構審稿人或團隊 Person Schema 製造信任訊號。
+
+文章與比較頁可用 `ContentReference` 顯示官方或原始來源；複雜比較使用 `ContentSection.table` 輸出具 `caption`、表頭與行動版橫向捲動的語意表格。字數不是排名 KPI：中文第三方工具的斷詞結果只用來發現可能的主題缺口，不用來要求索引頁、價格頁與文章達到相同篇幅。
 
 ### 撰寫指南
 

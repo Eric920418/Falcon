@@ -6,7 +6,7 @@ export const caseStudies: Record<string, CaseEvidence> = {
     title: '翊珍香電商效能與營運系統案例',
     clientName: '翊珍香',
     location: '新北市汐止',
-    period: '公開專案資料，2026-07-26 更新',
+    period: '公開專案資料，2026-08-11 更新',
     summary:
       '為老字號食品品牌建置電商與營運後台，重點是可量測的網站效能、促銷彈性與資料自主權。',
     challenge:
@@ -15,6 +15,29 @@ export const caseStudies: Record<string, CaseEvidence> = {
       '以 Next.js、GraphQL、PostgreSQL 與 Redis 建立電商核心流程。',
       '先處理圖片輸出尺寸與格式，再檢查 LCP 資源載入鏈。',
       '將活動、會員與優惠券規則放入可由業主操作的後台。',
+    ],
+    responsibilities: [
+      '電商前台、商品與內容頁面',
+      '會員、活動與優惠券營運規則',
+      'GraphQL API、資料庫與快取整合',
+      '圖片輸出與主要載入路徑優化',
+    ],
+    workflow: [
+      '消費者由商品或活動頁進入購物流程。',
+      '前台透過 GraphQL 取得商品、會員與促銷所需資料。',
+      '後端依會員層級、活動與優惠券規則計算可用條件。',
+      '營運人員由後台維護內容與活動，不必直接修改程式。',
+    ],
+    workflowTitle: '購物與營運資料流',
+    fallbacks: [
+      '圖片優化數字只描述技術資產差異，不推導為營收成長。',
+      '效能表現會隨頁面、圖片、裝置、網路與第三方服務變動，不能視為永久固定值。',
+      '會員與活動功能數量代表系統範圍，不等於實際使用率或促銷成效。',
+    ],
+    verification: [
+      '可由公開網站核對品牌、商品與主要購物介面。',
+      '圖片體積、LCP 目標與功能規模來自既有公開作品紀錄。',
+      '未取得可公開的 GA4、GSC、轉換率、訂單或營收資料。',
     ],
     metrics: [
       {
@@ -38,7 +61,7 @@ export const caseStudies: Record<string, CaseEvidence> = {
     technologies: ['Next.js', 'TypeScript', 'GraphQL Yoga', 'PostgreSQL', 'Redis'],
     image: '/滷味.png',
     projectUrl: 'https://yizhenxiang.com.tw/zh-TW',
-    updatedAt: '2026-07-26',
+    updatedAt: '2026-08-11',
     disclosure:
       '本頁只引用已在隼訊作品集公開的技術資料；未取得並公開客戶 GA4、GSC 或營收資料，因此不宣稱商業成長幅度。',
     evidenceStatus: 'public-project',
@@ -48,7 +71,7 @@ export const caseStudies: Record<string, CaseEvidence> = {
     title: '企業 AI 語音客服如何串接即時派單｜GoGoCha 技術案例',
     clientName: 'GoGoCha 花蓮計程車',
     location: '花蓮縣',
-    period: '公開上線產品，2026-08-03 更新',
+    period: '公開上線產品，2026-08-11 更新',
     summary:
       '整合品牌官網、AI 電話接聽、即時派單、LINE Bot 與司機／乘客 App，將分散的叫車入口接到同一套後端。',
     challenge:
@@ -71,10 +94,16 @@ export const caseStudies: Record<string, CaseEvidence> = {
       '後端以 PostgreSQL 保存狀態、BullMQ 處理佇列，並透過 Redis／Socket.IO 即時同步。',
       '司機端、乘客端與營運介面取得同一筆任務狀態。',
     ],
+    workflowTitle: 'AI 接聽至派單的資料流',
     fallbacks: [
       '資訊不足或 AI 無法可靠確認時保留人工介入，不把猜測直接當成派單資料。',
       '網站費率 API 失敗時顯示本地規則估算與限制，不偽裝成正式報價成功。',
       '佇列與即時通訊分層處理，避免單次連線問題直接等同任務消失。',
+    ],
+    verification: [
+      '可由公開品牌網站核對電話、網站、LINE 與車資試算等入口。',
+      '公開 App 畫面與網站畫面用來證明跨入口產品範圍，不包含私人乘客或司機資料。',
+      '技術架構來自隼訊實際負責範圍；未公開營運量、接通率、節省工時或正式 SLA。',
     ],
     gallery: [
       {
@@ -109,7 +138,7 @@ export const caseStudies: Record<string, CaseEvidence> = {
     technologies: ['Next.js', 'Express', 'PostgreSQL', 'Socket.IO', 'Redis', 'BullMQ', 'OpenAI'],
     image: '/GoGoChaWebsite.png',
     projectUrl: 'https://hualientaxi.taxi/',
-    updatedAt: '2026-08-03',
+    updatedAt: '2026-08-11',
     disclosure:
       '本頁說明已公開的產品能力與隼訊技術範圍；未公開車隊營收、訂單量、人力節省、接通率、真實通話錄音或通話 SLA。「3 秒」是產品設計目標，不代表每筆叫車都能在三秒內由司機接單。',
     evidenceStatus: 'public-project',
@@ -119,7 +148,7 @@ export const caseStudies: Record<string, CaseEvidence> = {
     title: '診所 LINE 預約與併發控制案例',
     clientName: '中醫診所（依公開作品資料匿名）',
     location: '台灣',
-    period: '公開技術案例，2026-07-26 更新',
+    period: '公開技術案例，2026-08-11 更新',
     summary:
       '以 LINE LIFF 串接病患預約與診所管理後台，重點處理同時搶約、時段異動與前後台即時同步。',
     challenge:
@@ -128,6 +157,29 @@ export const caseStudies: Record<string, CaseEvidence> = {
       '以資料庫鎖定與交易處理同時預約，避免只在前端做表面檢查。',
       '使用 Supabase Realtime 同步可預約時段與後台變更。',
       '將病患流程、診所後台與例外情境納入端對端測試。',
+    ],
+    responsibilities: [
+      'LINE LIFF 病患預約流程',
+      '診所時段與預約管理後台',
+      'Supabase Realtime 即時同步',
+      '資料庫併發控制與端對端測試',
+    ],
+    workflow: [
+      '病患由 LINE 開啟 LIFF 預約介面並選擇可用時段。',
+      '後端在建立預約時重新檢查時段與規則，不以畫面顯示結果當最終依據。',
+      '資料庫交易處理同時預約衝突，成功後再保存正式狀態。',
+      'Realtime 將時段變化同步到病患端與診所管理介面。',
+    ],
+    workflowTitle: 'LINE 預約與併發控制流程',
+    fallbacks: [
+      '多人同時選擇同一時段時，由後端交易結果決定成功者，失敗端必須重新選擇。',
+      '即時連線中斷時不能假設預約成功，畫面需重新查詢後端正式狀態。',
+      '匿名案例不公開病患、診所、預約量與醫療資訊，也不宣稱醫療或營運成效。',
+    ],
+    verification: [
+      '130+ 只代表既有公開作品紀錄中的端對端測試案例數。',
+      '資料庫鎖定、交易與 Realtime 描述的是系統設計，不代表零缺陷。',
+      '客戶名稱、病患資料、預約量與營運指標均未公開。',
     ],
     metrics: [
       {
@@ -148,7 +200,7 @@ export const caseStudies: Record<string, CaseEvidence> = {
     ],
     technologies: ['Next.js', 'Supabase Realtime', 'LINE LIFF', 'Row-level locking', 'E2E testing'],
     image: '/TISCLLB.png',
-    updatedAt: '2026-07-26',
+    updatedAt: '2026-08-11',
     disclosure:
       '客戶名稱與內部營運數據未公開；本頁只呈現既有作品集中已揭露的技術範圍與測試數量。',
     evidenceStatus: 'anonymized',

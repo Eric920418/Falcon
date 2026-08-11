@@ -57,7 +57,7 @@ export function HomeProcess() {
                 <span>不適合：要求保證第一名、隱藏限制，或用遠低於範圍的預算假裝全做。</span>
               </p>
             </div>
-            <Link href="/blog/how-we-pick-clients" className="mt-7 inline-flex items-center gap-2 text-sm text-amber-500 hover:underline">
+            <Link href="/about#client-fit" className="mt-7 inline-flex items-center gap-2 text-sm text-amber-500 hover:underline">
               看完整合作標準 <ArrowRight size={15} aria-hidden="true" />
             </Link>
           </aside>

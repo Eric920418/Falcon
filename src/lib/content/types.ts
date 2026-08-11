@@ -5,6 +5,19 @@ export interface FAQItem {
   answer: string
 }
 
+export interface ContentReference {
+  name: string
+  url: string
+  publisher: string
+  updatedAt?: string
+}
+
+export interface ContentTable {
+  caption?: string
+  headers: string[]
+  rows: string[][]
+}
+
 export interface HowToStep {
   name: string
   text: string
@@ -23,6 +36,7 @@ export interface ContentSection {
   heading: string
   body: string
   items?: string[]
+  table?: ContentTable
 }
 
 export interface PricingTier {
@@ -79,7 +93,9 @@ export interface CaseEvidence {
   evidenceStatus: 'public-project' | 'client-approved' | 'anonymized'
   responsibilities?: string[]
   workflow?: string[]
+  workflowTitle?: string
   fallbacks?: string[]
+  verification?: string[]
   gallery?: {
     src: string
     alt: string
@@ -172,6 +188,7 @@ export interface BlogContent {
   faq?: FAQItem[]
   relatedServices?: string[]
   relatedCaseStudies?: string[]
+  references?: ContentReference[]
 }
 
 export interface PricingPageContent {
@@ -184,6 +201,7 @@ export interface PricingPageContent {
   qualityTier: QualityTier
   intro: string
   tiers: PricingTier[]
+  sections: ContentSection[]
   faq: FAQItem[]
 }
 
@@ -203,4 +221,5 @@ export interface ComparePageContent {
   comparisonHeaders: string[]
   sections: ContentSection[]
   faq: FAQItem[]
+  references?: ContentReference[]
 }

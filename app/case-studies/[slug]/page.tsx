@@ -132,7 +132,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               )}
               {caseStudy.workflow && (
                 <section>
-                  <h2 className="text-3xl text-[#E0E5E8] mb-4">AI 接聽至派單的資料流</h2>
+                  <h2 className="text-3xl text-[#E0E5E8] mb-4">{caseStudy.workflowTitle ?? '實作資料流'}</h2>
                   <ol className="space-y-3">
                     {caseStudy.workflow.map((item, index) => (
                       <li key={item} className="grid grid-cols-[2.5rem_1fr] gap-3 border-b border-[#344349] pb-3 text-sm leading-relaxed text-[#A8B6BC]">
@@ -145,11 +145,24 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               )}
               {caseStudy.fallbacks && (
                 <section>
-                  <h2 className="text-3xl text-[#E0E5E8] mb-4">失敗降級與人工接手</h2>
+                  <h2 className="text-3xl text-[#E0E5E8] mb-4">限制、失敗降級與替代方式</h2>
                   <ul className="space-y-3 text-[#A8B6BC]">
                     {caseStudy.fallbacks.map((item) => (
                       <li key={item} className="flex gap-3 text-sm leading-relaxed">
                         <span className="text-amber-500">—</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+              {caseStudy.verification && (
+                <section>
+                  <h2 className="text-3xl text-[#E0E5E8] mb-4">證據如何核對</h2>
+                  <ul className="space-y-3 text-[#A8B6BC]">
+                    {caseStudy.verification.map((item) => (
+                      <li key={item} className="flex gap-3 text-sm leading-relaxed">
+                        <span className="text-emerald-400">✓</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -164,6 +177,16 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                       <p className="text-sm text-[#7A8A91]">{metric.label}</p>
                       <p className="text-2xl text-amber-500 my-2">{metric.value}</p>
                       <p className="text-xs text-[#A8B6BC] leading-relaxed">{metric.context}</p>
+                      {metric.sourceUrl && (
+                        <a
+                          href={metric.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 inline-flex items-center gap-1 text-xs text-amber-500 hover:underline"
+                        >
+                          核對公開來源 <ExternalLink size={12} />
+                        </a>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -176,6 +199,9 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
             <aside className="space-y-8">
               <div>
+                <p className="mb-5 inline-flex border border-emerald-800/50 bg-emerald-950/20 px-3 py-1 text-xs text-emerald-300">
+                  證據狀態：{caseStudy.evidenceStatus === 'public-project' ? '公開專案' : caseStudy.evidenceStatus === 'client-approved' ? '客戶同意公開' : '匿名技術案例'}
+                </p>
                 <h2 className="text-lg text-[#E0E5E8] mb-3">技術範圍</h2>
                 <div className="flex flex-wrap gap-2">
                   {caseStudy.technologies.map((tech) => (

@@ -97,6 +97,16 @@ const nextConfig: NextConfig = {
         destination: '/services/geo',
         statusCode: 301,
       },
+      {
+        source: '/blog/seo-vs-geo-vs-aeo',
+        destination: '/compare/seo-vs-geo-vs-aeo',
+        statusCode: 301,
+      },
+      {
+        source: '/blog/how-we-pick-clients',
+        destination: '/about',
+        statusCode: 301,
+      },
     ]
   },
 }

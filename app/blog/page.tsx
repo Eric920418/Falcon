@@ -11,6 +11,39 @@ import {
   JsonLd,
 } from '@/lib/seo'
 
+const contentTracks = [
+  {
+    label: '企業 AI 電話',
+    description: '先理解架構，再比較成本與 IVR／真人客服，最後進入 PBX、CRM 與派單整合。',
+    links: [
+      ['AI 語音客服導入指南', '/blog/ai-voice-customer-service-guide'],
+      ['AI 語音客服費用', '/blog/ai-voice-customer-service-cost'],
+      ['AI、IVR 與真人比較', '/blog/ai-voice-vs-ivr-human-agent'],
+      ['PBX、CRM 與派單串接', '/blog/ai-phone-pbx-crm-integration'],
+    ],
+  },
+  {
+    label: 'SEO／GEO 搜尋成長',
+    description: '從技術收錄、內容品質與 Schema 開始，再理解 Google 與 Perplexity 的 AI 搜尋差異。',
+    links: [
+      ['GEO 生成式引擎優化指南', '/blog/geo-complete-guide-2026'],
+      ['Google AI Overview 與 SEO', '/blog/google-ai-overview-basics'],
+      ['Perplexity 爬蟲與引用量測', '/blog/perplexity-aeo-overview'],
+      ['Schema.org 部署實作', '/blog/schema-org-tutorial'],
+    ],
+  },
+  {
+    label: '網站與 AI 系統決策',
+    description: '比較網站建置與 AI 客服的成本結構，搭配實際案例判斷自建、整合與維護範圍。',
+    links: [
+      ['網站建置費用與成本', '/blog/website-pricing-2026'],
+      ['AI 客服自建與 SaaS', '/blog/ai-customer-service-cost'],
+      ['公開案例與可驗證證據', '/case-studies'],
+      ['透明定價與報價因素', '/pricing'],
+    ],
+  },
+] as const
+
 export function generateMetadata(): Metadata {
   return createMetadata({
     title: '部落格｜網站、SEO／GEO 與 AI 系統實作',
@@ -72,8 +105,41 @@ export default function BlogIndexPage() {
           </div>
         </section>
 
+        <section className="px-6 py-12 border-b border-[#344349]">
+          <div className="max-w-5xl mx-auto">
+            <div className="max-w-3xl mb-8">
+              <p className="text-xs uppercase tracking-[0.16em] text-amber-500">Start here</p>
+              <h2 className="mt-3 text-2xl md:text-3xl text-[#E0E5E8]" style={{ fontFamily: 'var(--font-display)' }}>
+                依你現在的決策問題開始閱讀
+              </h2>
+              <p className="mt-3 text-[#A8B6BC] leading-relaxed">
+                這裡不是依發布時間堆文章。每條路徑先回答原理，再進入成本、比較、整合或案例；如果只需要確認服務與報價，可直接前往對應頁面。
+              </p>
+            </div>
+            <div className="grid gap-5 lg:grid-cols-3">
+              {contentTracks.map((track) => (
+                <article key={track.label} className="border border-[#344349] bg-stone-900/35 p-6">
+                  <h3 className="text-xl text-[#E0E5E8]">{track.label}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[#A8B6BC]">{track.description}</p>
+                  <ul className="mt-5 space-y-3">
+                    {track.links.map(([label, href]) => (
+                      <li key={href}>
+                        <Link href={href} className="inline-flex items-center gap-2 text-sm text-amber-500 hover:underline">
+                          {label} <ArrowRight size={13} />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="py-12 px-6">
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="mb-6 text-2xl text-[#E0E5E8]" style={{ fontFamily: 'var(--font-display)' }}>全部實作文章</h2>
+            <div className="grid gap-6 md:grid-cols-2">
             {posts.map((post) => (
               <Link
                 key={post.slug}
@@ -99,6 +165,7 @@ export default function BlogIndexPage() {
                 </div>
               </Link>
             ))}
+            </div>
           </div>
         </section>
       </div>

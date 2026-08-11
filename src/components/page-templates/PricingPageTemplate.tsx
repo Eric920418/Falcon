@@ -74,6 +74,29 @@ export function PricingPageTemplate({ page }: PricingPageTemplateProps) {
         </div>
       </section>
 
+      <section id="pricing-details" className="px-6 py-12 bg-[#1E2A2E]/35">
+        <div className="max-w-4xl mx-auto space-y-10">
+          {page.sections.map((section) => (
+            <article key={section.heading}>
+              <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+                {section.heading}
+              </h2>
+              {section.body && <p className="text-[#A8B6BC] leading-relaxed mb-4">{section.body}</p>}
+              {section.items && (
+                <ul className="grid gap-3 md:grid-cols-2">
+                  {section.items.map((item) => (
+                    <li key={item} className="flex items-start gap-3 border border-[#344349] bg-stone-900/40 p-4 text-sm leading-relaxed text-[#A8B6BC]">
+                      <Check size={17} className="mt-0.5 shrink-0 text-amber-500" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section id="faq" className="py-12 px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-6" style={{ fontFamily: 'var(--font-display)' }}>

@@ -11,7 +11,7 @@ export const blogPosts: Record<string, BlogContent> = {
       '從電話、語音辨識、對話、企業 API 到人工接手，理解 AI 語音客服的完整架構、適用任務、風險與導入驗收方式。',
     keywords: ['AI 語音客服是什麼', 'AI 語音客服系統', 'AI 電話客服', 'VoiceBot', 'AI Voice Agent'],
     datePublished: '2026-08-03',
-    dateModified: '2026-08-03',
+    dateModified: '2026-08-11',
     qualityTier: 'production',
     intent: 'informational',
     intro:
@@ -22,6 +22,16 @@ export const blogPosts: Record<string, BlogContent> = {
         heading: '一套 AI 語音客服系統有哪些層？',
         body:
           '完整架構至少分成電話、語音、對話、工作流及企業系統五層。電話層處理代表號、PBX、SIP 與轉接；語音層負責辨識和合成；對話層判斷意圖與追問；工作流層驗證欄位、權限和狀態；最後才由 API 建立工單、預約、CRM 紀錄或派單。只展示自然對話，無法證明後面四層能穩定執行。',
+        table: {
+          caption: '從來電到企業系統動作的責任分層',
+          headers: ['層級', '主要責任', '不能省略的驗收'],
+          rows: [
+            ['電話與路由', '代表號、PBX／SIP、排隊、轉接與溢出', '尖峰來電、斷線、轉人工與號碼沿用'],
+            ['語音與對話', '語音辨識、合成、意圖判斷與追問', '口音、噪音、專有名詞與低信心處理'],
+            ['工作流', '欄位確認、權限、規則、狀態與重複請求', '資料不足、使用者改口、冪等與逾時'],
+            ['企業系統', 'CRM、工單、預約、派單或通知', '建立、查詢、取消、失敗回報與人工待辦'],
+          ],
+        },
       },
       {
         heading: '哪些電話任務適合先導入 AI？',
@@ -43,6 +53,11 @@ export const blogPosts: Record<string, BlogContent> = {
         heading: 'AI 聽錯或系統失敗時怎麼降級？',
         body:
           '重要欄位要讓使用者重述確認，後端再做格式與業務規則驗證。連續誤解、信心不足、敏感關鍵字或使用者要求時，系統應把已確認欄位與對話摘要一起交給人工。若企業 API 逾時，應進入重試、佇列或待辦狀態，不能先向使用者回報任務已完成。',
+      },
+      {
+        heading: '錄音、逐字稿與個資要先決定邊界',
+        body:
+          '電話流程可能接觸姓名、電話、地址、訂單與通話內容。導入前要由企業確認告知方式、蒐集目的、可存取角色、保存期限與刪除流程；開發端則把權限、遮罩、稽核與環境隔離落實。不是所有對話都需要永久保存，也不該把真實客戶錄音直接拿來當未隔離的測試資料。涉及特定產業法規時，仍應由企業法務或合規角色確認。',
       },
       {
         heading: 'GoGoCha 證明了什麼？',
@@ -82,7 +97,7 @@ export const blogPosts: Record<string, BlogContent> = {
       'AI 語音客服沒有單一公定價。本文拆解建置費、電信與模型用量、系統整合、併發容量、人工席位及後續維運成本。',
     keywords: ['AI 語音客服費用', 'AI 電話客服費用', '電話機器人價格', 'VoiceBot 費用', 'AI 電話系統報價'],
     datePublished: '2026-08-03',
-    dateModified: '2026-08-03',
+    dateModified: '2026-08-11',
     qualityTier: 'production',
     intent: 'commercial',
     intro:
@@ -104,6 +119,16 @@ export const blogPosts: Record<string, BlogContent> = {
         heading: '每月或每通電話會產生哪些成本？',
         body:
           '持續成本可能包含電話號碼與通話分鐘、語音辨識、語音合成、語言模型、伺服器、監控、錄音儲存及廠商維運。不同供應商的計價單位不同，不能只比較單一模型的每分鐘價格；一通電話可能同時使用電信、語音和模型服務。報價應清楚區分第三方實際用量與開發商的維運費。',
+        table: {
+          caption: 'AI 電話預算應拆成可核對的成本項目',
+          headers: ['成本類型', '常見計價方式', '估價前需要的資料'],
+          rows: [
+            ['電話與線路', '號碼月租、分鐘或同時線路', '進線／外撥、國內外、尖峰併發'],
+            ['語音與模型', '音訊分鐘、字元、token 或請求量', '語言、平均通話長度、任務複雜度'],
+            ['企業整合', '一次性開發與測試', 'PBX、API、權限、測試環境與資料契約'],
+            ['營運與維護', '月費、工時或 SLA 層級', '監控、錄音保存、席位、值班與變更頻率'],
+          ],
+        },
       },
       {
         heading: '為什麼尖峰併發比平均通話量更重要？',
@@ -125,6 +150,11 @@ export const blogPosts: Record<string, BlogContent> = {
         heading: '怎麼取得真正可比較的報價？',
         body:
           '請所有廠商用同一份範圍回覆：通話方向、號碼與 PBX、尖峰併發、語言、任務、必要欄位、企業 API、人工接手、錄音政策、部署方式、預估用量、維運責任及驗收標準。若其中一份只報語音模型，另一份包含電話與系統整合，兩個總價不能直接比較。',
+      },
+      {
+        heading: '估價情境應該怎麼寫才可比較？',
+        body:
+          '先用一個可被驗收的情境描述需求，例如「上班時間進線、尖峰同時三通、蒐集五個必要欄位、建立工單，低信心與客訴轉兩個人工席位」。再要求廠商分別列出 POC、正式建置、每月固定費、預估用量及超量單價。這不是公開報價承諾，而是把未知條件攤開，避免上線後才發現電話、錄音或人工席位不在範圍內。',
       },
       {
         heading: '為什麼隼訊不公開一個 AI 電話起價？',
@@ -153,7 +183,7 @@ export const blogPosts: Record<string, BlogContent> = {
       '比較 AI 語音客服、傳統按鍵式 IVR 與真人客服的優缺點、適用任務、錯誤風險及混合式導入方式。',
     keywords: ['AI 語音客服 IVR 比較', 'AI 電話 真人客服', '電話機器人 比較', 'AI IVR', 'VoiceBot 比較'],
     datePublished: '2026-08-03',
-    dateModified: '2026-08-03',
+    dateModified: '2026-08-11',
     qualityTier: 'production',
     intent: 'commercial',
     intro:
@@ -184,6 +214,16 @@ export const blogPosts: Record<string, BlogContent> = {
           '真人：處理例外、敏感決策、客訴與低信心對話',
           '後端：統一驗證權限、資料格式、重試、狀態與稽核',
         ],
+        table: {
+          caption: '依任務特性選擇 IVR、AI、真人或混合流程',
+          headers: ['判斷面向', 'IVR', 'AI 語音客服', '真人客服'],
+          rows: [
+            ['輸入方式', '按鍵或固定選項', '自然語句與多輪追問', '自然對話與彈性判斷'],
+            ['適合任務', '分機、編號、短分流', '資料蒐集、查詢、低風險系統動作', '客訴、例外、敏感或高權益決策'],
+            ['主要風險', '選單過深、找不到選項', '辨識與模型誤判、錯誤動作', '等待時間、人力容量與一致性'],
+            ['必要安全網', '隨時可轉人工', '欄位確認、後端驗證、低信心轉接', '知識、權限、紀錄與主管支援'],
+          ],
+        },
       },
       {
         heading: '企業選型前應回答哪些問題？',
@@ -200,6 +240,11 @@ export const blogPosts: Record<string, BlogContent> = {
         heading: 'GoGoCha 採用的是哪種思路？',
         body:
           'GoGoCha 的公開實作重點是讓電話、網站與 LINE 的叫車需求進入共用派單後端，而非做一個只會聊天的語音展示。這種架構仍保留人工介入，並以 App、後台和即時通知承接任務狀態，符合「AI 處理重複入口、後端控制任務、人工處理例外」的混合式方向。',
+      },
+      {
+        heading: '什麼情況只做 IVR 或只增加真人更合理？',
+        body:
+          '如果主要需求只是依部門分流、輸入固定編號或播放法定告知，既有 IVR 往往更便宜、可預期。若電話量不高但每通都涉及複雜客訴、談判或專業判斷，先改善真人席位、知識與 CRM 畫面可能更有效。AI 的價值應來自重複任務與系統整合，不是為了在採購簡報上出現 AI。',
       },
     ],
     faq: [
@@ -293,32 +338,62 @@ export const blogPosts: Record<string, BlogContent> = {
       '依 Google 2026 年官方指引整理 GEO：從搜尋索引、原創內容、實名案例、AI 爬蟲到量測，並拆解 llms.txt 與特殊 AI Schema 迷思。',
     keywords: ['GEO 怎麼做', 'GEO 完整指南', 'GEO 教學', 'AI 搜尋優化', '生成式引擎優化 教學'],
     datePublished,
-    dateModified: '2026-07-26',
+    dateModified: '2026-08-11',
     qualityTier: 'production',
     intent: 'informational',
     intro:
       'GEO 是業界描述 AI 搜尋可見度的名稱，不是一組神祕標記。Google 2026 年官方指引明確表示：AI Overview 與 AI Mode 沒有額外技術門檻，Google 也不使用 llms.txt。真正能長期累積的，是搜尋索引、原創經驗、實名責任、外部信任與轉換量測。',
     sections: [
       {
-        heading: 'GEO 與 SEO 的差別',
+        heading: 'GEO 與 SEO 的共同基礎和差別',
         body:
-          'Google 的生成式搜尋功能建立在搜尋索引與核心品質系統上，所以 GEO 不會繞過 SEO。差別主要在使用場景與量測：SEO 常看非品牌查詢、自然點擊與詢盤；GEO 另看 AI 功能曝光、ChatGPT／Perplexity 引薦與固定查詢集的來源出現狀況。',
+          'Google 的生成式搜尋功能建立在搜尋索引與核心品質系統上，所以 GEO 不會繞過 SEO。Google 官方文件指出，能成為 AI Overview 或 AI Mode 支援連結的頁面，必須先被索引並符合一般搜尋摘要資格，沒有額外的技術申請。差別主要在使用情境與量測：SEO 常看非品牌查詢、自然點擊與詢盤；GEO 另觀察 AI 引薦、固定問題集的來源出現與品牌被描述是否正確。',
       },
       {
-        heading: '我們執行 GEO 的工作項目',
-        body: '這是隼訊接案實際在做的事，依重要性排序：',
+        heading: '第一步不是寫更多，而是確認能被抓取與索引',
+        body:
+          '先檢查 robots.txt、CDN／WAF、HTTP 狀態、canonical、noindex、站內連結與 sitemap。重要資訊要以文字存在於可取得的 HTML 中，不能只放在圖片、登入後畫面或爬蟲無法執行的互動裡。技術條件只是參賽資格，不代表一定被索引或引用；若服務頁本身沒有清楚回答問題，增加 AI 專用檔案也不會補上內容缺口。',
+      },
+      {
+        heading: '第二步是建立可核對的一手價值',
+        body:
+          'AI 搜尋很容易重新整理網路上的共同知識，因此企業內容要說明「自己做過什麼、如何知道、限制在哪」。隼訊的作法是把服務說明、實名作者、公開案例、技術畫面、量測口徑與限制連起來。沒有客戶同意的營運數據就不推算效益；可客製能力也不冒充已驗證成果。這類證據同時改善真人採購判斷，不只是為了 AI。',
         items: [
-          '先修抓取、索引、canonical、內鏈、速度與文字可見性',
-          '只部署與畫面一致的 Organization、Service、Article、Breadcrumb 等必要 Schema',
-          '補實名作者、真實案例、來源、日期與限制',
-          '依客戶問題建立主題集群，不為每個查詢變體批量生頁',
-          '用 GSC、GA4、AI 平台引薦與固定查詢集建立基準',
+          '案例標示實際負責範圍、資料來源、期間與未公開項目',
+          '文章由實名作者負責，區分官方規則、專案經驗與推論',
+          '數字附來源與口徑，產品目標不寫成已達成 SLA',
+          '讓服務頁、文章、案例和 About 互相內鏈，形成可追溯的證據鏈',
         ],
       },
       {
-        heading: '常見誤解',
+        heading: '第三步是依問題建立主題集群',
         body:
-          'llms.txt 對 Google Search 沒有排名或 AI 功能效果；結構化資料也不是 AI 引用資格。修正後多久被引用沒有固定答案，因為不同平台、查詢、競爭與品牌基礎都會改變結果。可驗證的是抓取、索引、引薦與詢盤，不是廠商口頭保證。',
+          '不要把一個關鍵字拆成大量城市或產業近義頁。核心服務頁回答採購與交付，指南回答原理，成本頁回答預算，案例證明實作，整合文章處理技術細節。每頁要有不同的主要問題和下一步，並以描述性錨文字相連。若兩頁都在回答同一件事，應合併或重新分工，而不是各自補到兩千字。',
+      },
+      {
+        heading: '結構化資料能做什麼、不能做什麼？',
+        body:
+          'Organization、WebSite、Service、Article、Breadcrumb 等結構化資料可以協助描述頁面實體，且內容必須與使用者看得到的文字一致。Google 明確表示 AI 功能不需要特殊 Schema；正確標記也只代表有資格使用對應搜尋功能，不保證 rich result、排名或引用。沒有實體門市就不輸出 LocalBusiness，沒有公開評價也不自填 AggregateRating。',
+      },
+      {
+        heading: '怎麼量測 GEO，而不是靠截圖報喜？',
+        body:
+          '先保存發布前基準，再追蹤可重現指標。Google 的 AI 功能流量目前計入 Search Console 的 Web 搜尋類型，不能從一張總覽圖直接拆出所有 AI 曝光；因此還要搭配 GA4 的自然搜尋轉換、ChatGPT／Perplexity 引薦、核心頁與案例頁瀏覽，以及固定問題集的人工觀察。固定問題集只能看趨勢，不能宣稱代表所有使用者。',
+        table: {
+          caption: 'GEO 建議量測層級',
+          headers: ['層級', '觀察項目', '解讀限制'],
+          rows: [
+            ['可用性', '抓取、索引、canonical、AI 爬蟲存取', '通過不代表一定排名或引用'],
+            ['搜尋表現', '非品牌曝光、點擊、查詢與落地頁', 'Search Console 會省略部分匿名查詢'],
+            ['AI 引薦', 'ChatGPT、Perplexity 等 referrer 與到站行為', '無連結的品牌提及不一定可被分析工具取得'],
+            ['商業結果', 'Demo、表單、電話與合格詢盤', '要排除其他活動與季節性的影響'],
+          ],
+        },
+      },
+      {
+        heading: 'GEO 最常見的錯誤觀念',
+        body:
+          'Google 不要求 llms.txt、AI 文字檔或專用標記才能進入 AI Overview／AI Mode；結構化資料也不是 AI 引用資格。允許爬蟲只表示平台可以存取，不代表一定收錄。修正後多久被引用沒有固定答案，因為查詢、競爭、索引狀態與平台模型都會改變。真正可驗收的是技術可用性、內容證據、引薦與詢盤，而不是廠商保證的時程。',
       },
     ],
     faq: [
@@ -333,52 +408,24 @@ export const blogPosts: Record<string, BlogContent> = {
       },
     ],
     relatedServices: ['geo', 'seo'],
-  },
-  'seo-vs-geo-vs-aeo': {
-    slug: 'seo-vs-geo-vs-aeo',
-    title: 'SEO、GEO、AEO 差別與優先順序',
-    h1: 'SEO、GEO、AEO 三者差異與優先順序',
-    description:
-      'SEO、GEO、AEO 是業界常用名稱，但共享搜尋索引、內容與信任基礎。本文依 Google 官方說明整理正確優先順序。',
-    keywords: ['SEO GEO AEO 差別', 'GEO 是什麼', 'AEO 是什麼', 'SEO GEO AEO 優先順序', '搜尋優化差異'],
-    datePublished,
-    dateModified: '2026-07-26',
-    qualityTier: 'production',
-    intent: 'informational',
-    intro:
-      '這三個縮寫常被廠商拆成三份服務，但 Google 將 GEO／AEO 視為搜尋體驗優化的一部分。預算有限時，不應先買特殊標記，而應先完成索引、內容證據與轉換量測。',
-    sections: [
+    references: [
       {
-        heading: '三者各自的定義',
-        body: '',
-        items: [
-          'SEO (Search Engine Optimization)：競爭 Google、Bing 等傳統搜尋引擎的排名',
-          'GEO (Generative Engine Optimization)：描述 AI 搜尋中的來源、品牌與引薦可見度',
-          'AEO (Answer Engine Optimization)：以清楚回答使用者問題為內容方法，不需要另一套 Schema',
-        ],
+        name: 'AI features and your website',
+        url: 'https://developers.google.com/search/docs/appearance/ai-features',
+        publisher: 'Google Search Central',
+        updatedAt: '2025-12-10',
       },
       {
-        heading: '搜尋場景對比',
-        body:
-          '想像三種搜尋情境：(1) 用戶在 Google 看到 10 條結果並點擊 → SEO 戰場；(2) 用戶問 ChatGPT「桃園哪間 SEO 公司」並拿到對話式回答 → GEO 戰場；(3) 用戶用 Perplexity 拿到一段答案 + 3 個來源 → AEO 戰場。',
+        name: 'Creating helpful, reliable, people-first content',
+        url: 'https://developers.google.com/search/docs/fundamentals/creating-helpful-content',
+        publisher: 'Google Search Central',
       },
       {
-        heading: '預算有限時的優先順序',
-        body: '這是我們對中小企業客戶常給的建議：',
-        items: [
-          '先建立 GSC／GA4 基準，修正抓取、索引、canonical、速度與內鏈',
-          '再補真實案例、作者、來源與客戶真正會問的內容',
-          '最後分平台觀察搜尋點擊、AI 引薦與合格詢盤',
-        ],
+        name: 'Performance report: Common tasks and use cases',
+        url: 'https://support.google.com/webmasters/answer/17010961',
+        publisher: 'Google Search Console Help',
       },
     ],
-    faq: [
-      {
-        question: 'GEO 跟 AEO 重疊很多嗎？',
-        answer: '高度重疊。隼訊將 AEO 併入 GEO 的內容方法，不以 FAQPage、HowTo 或 Speakable 包裝成另一套服務。',
-      },
-    ],
-    relatedServices: ['seo', 'geo'],
   },
   'schema-org-tutorial': {
     slug: 'schema-org-tutorial',
@@ -388,17 +435,22 @@ export const blogPosts: Record<string, BlogContent> = {
       'Schema.org 用來描述頁面實體並支援特定搜尋功能。本文說明該用哪些類型、哪些已失效，以及內容一致性規則。',
     keywords: ['Schema.org', '結構化資料', 'JSON-LD', 'LocalBusiness schema', 'FAQ schema'],
     datePublished,
-    dateModified: '2026-07-26',
+    dateModified: '2026-08-11',
     qualityTier: 'production',
     intent: 'informational',
     intro:
       'Schema.org 是讓搜尋引擎以明確欄位理解頁面實體的格式，但不是排名保證，也不是 AI 搜尋必要條件。少而準比多而錯重要；標記內容必須能在頁面上看見。',
     sections: [
       {
-        heading: '本網站實際使用的 Schema',
-        body: '',
+        heading: '先分清 Schema.org 與 Google 搜尋功能',
+        body:
+          'Schema.org 提供描述實體與關係的通用詞彙；Google 只支援其中部分類型作為特定搜尋外觀的依據。網站可以使用有效的 Schema.org 屬性，但這不代表 Google 一定顯示 rich result。部署前先確認頁面主要內容、Google 是否支援對應功能，以及是否有足夠可見資料能如實標記。',
+      },
+      {
+        heading: '本網站實際使用哪些類型？',
+        body: '隼訊採少而一致的 @graph，讓品牌、網站、作者與頁面內容共用同一組實體識別：',
         items: [
-          'Organization：品牌身份識別（多數網站必備）',
+          'Organization：品牌身份與公開聯絡資料',
           'WebSite：網站實體與出版者關係',
           'Service：可見的服務範圍與提供者',
           'Article：文章內容（含作者、發布日期）',
@@ -408,9 +460,20 @@ export const blogPosts: Record<string, BlogContent> = {
         ],
       },
       {
-        heading: '部署位置與方式',
+        heading: 'JSON-LD 應如何部署？',
         body:
-          '在 HTML <head> 內加入 <script type="application/ld+json">{JSON 物件}</script>。Next.js 可用 metadata API 配合動態 script 標籤。WordPress 可用 Yoast SEO 或 Rank Math 等外掛產生。',
+          'Google 建議 JSON-LD，也支援 Microdata 與 RDFa。Next.js 可以在伺服器輸出的 HTML 中放置 application/ld+json script；重點不是放在 head 或 body 的形式差異，而是資料能被抓取、JSON 可解析、URL 使用正式 canonical，且每個欄位都能在頁面主要內容或明確相關資訊中核對。共用實體應使用穩定 @id，避免同頁產生多個互相衝突的公司。',
+      },
+      {
+        heading: '從畫面內容建立 Schema 的順序',
+        body: '不要先找一份產生器範本再回填文案。比較安全的工作順序是：',
+        items: [
+          '確認頁面主要目的、canonical 與實際可見內容',
+          '選擇 Google 支援且與主內容相符的類型',
+          '只映射已存在的作者、日期、圖片、服務或案例資料',
+          '以 Rich Results Test 檢查 Google 功能，以 Schema Markup Validator 檢查一般語法',
+          '上線後再用 URL Inspection 確認 Google 實際取得的 HTML',
+        ],
       },
       {
         heading: '常見錯誤',
@@ -422,15 +485,42 @@ export const blogPosts: Record<string, BlogContent> = {
           '商業網站把 FAQPage、HowTo、Speakable 當成一般 rich result 或 AI 引用捷徑',
         ],
       },
+      {
+        heading: 'FAQ、HowTo 與 Speakable 為什麼不能亂套？',
+        body:
+          '可見 FAQ 對使用者仍有價值，但 Google 的 FAQ rich result 主要限於具權威性的政府與健康網站；HowTo rich result 已不再顯示。Speakable 的 Google 文件則限定特定新聞使用情境。這不等於網站不能使用問答或步驟內容，而是不該向一般企業承諾加上標記就能取得 rich result 或 AI 引用。',
+      },
+      {
+        heading: '驗證通過仍不代表一定顯示',
+        body:
+          'Rich Results Test 通過只代表技術格式與部分資格符合，Google 仍會依搜尋情境、品質政策與頁面代表性決定是否顯示。若結構化資料誤導、標記隱藏內容或違反政策，頁面可能失去 rich result 資格，嚴重時也可能在 Search Console 出現結構化資料人工處置。它不等於一般自然排名必然下降，但足以讓錯誤標記失去價值。',
+      },
     ],
     faq: [
       {
         question: 'schema 加錯會被懲罰嗎？',
         answer:
-          '會。「Spammy structured data」是 Google 明文列出的人工懲罰項目。最常見的觸發：自填 AggregateRating、宣稱頁面有實際上沒有的內容。',
+          '誤導或違反政策的結構化資料可能失去 rich result 資格，也可能收到人工處置。常見風險包括自填 AggregateRating、標記使用者看不到的內容，以及建立虛構的商家或作者實體。',
       },
     ],
     relatedServices: ['seo', 'geo'],
+    references: [
+      {
+        name: 'General structured data guidelines',
+        url: 'https://developers.google.com/search/docs/appearance/structured-data/sd-policies',
+        publisher: 'Google Search Central',
+      },
+      {
+        name: 'Google Search structured data markup',
+        url: 'https://developers.google.com/search/docs/appearance/structured-data/search-gallery',
+        publisher: 'Google Search Central',
+      },
+      {
+        name: 'Changes to HowTo and FAQ rich results',
+        url: 'https://developers.google.com/search/blog/2023/08/howto-faq-changes',
+        publisher: 'Google Search Central Blog',
+      },
+    ],
   },
   'perplexity-aeo-overview': {
     slug: 'perplexity-aeo-overview',
@@ -440,43 +530,80 @@ export const blogPosts: Record<string, BlogContent> = {
       'Perplexity 會列出引用來源。本文只採官方爬蟲規則與可重現量測，不宣稱任何無法證實的固定引用公式。',
     keywords: ['Perplexity', 'Perplexity 排名', 'Perplexity 引用', 'AEO 實作'],
     datePublished,
-    dateModified: '2026-07-26',
+    dateModified: '2026-08-11',
     qualityTier: 'production',
     intent: 'informational',
     intro:
-      'Perplexity 會在答案中顯示來源，但被引用不等於一定帶來流量或成交。能確定的是 PerplexityBot 必須能抓取公開頁面；內容選擇仍會隨查詢與系統更新變動。',
+      'Perplexity 的回答通常會附來源連結，但被引用不等於一定帶來流量或成交。官方文件能確認的是爬蟲用途與存取方式，沒有公開一套讓網站保證被引用的排名公式。網站應先確保公開內容可被搜尋爬蟲取得，再以真實來源、第一手證據與可重現量測改善內容。',
     sections: [
       {
-        heading: 'Perplexity 引用偏好的內容特徵',
-        body: '以下是可長期採用、也能由站方驗證的基本條件：',
+        heading: 'PerplexityBot 與 Perplexity-User 不相同',
+        body:
+          'Perplexity 官方將兩個 user agent 分開：PerplexityBot 用於建立搜尋索引並呈現網站連結，不用於基礎模型訓練；Perplexity-User 則在使用者提出問題時即時存取頁面。前者遵循 robots.txt，後者屬使用者請求，官方文件說明其一般不受 robots.txt 控制。若網站使用 WAF，還要同時核對官方公布的 user agent 與 IP 範圍，避免只靠名稱放行偽造爬蟲。',
+        table: {
+          caption: 'Perplexity 官方爬蟲用途',
+          headers: ['User agent', '用途', '站方注意事項'],
+          rows: [
+            ['PerplexityBot', '建立搜尋索引並在結果中呈現連結', 'robots.txt 允許抓取，WAF 核對官方 IP'],
+            ['Perplexity-User', '回應使用者問題時存取頁面', '與索引爬蟲分開管理，依網站安全政策決定存取'],
+          ],
+        },
+      },
+      {
+        heading: '可被抓取只是起點，不是引用保證',
+        body: '以下條件能由站方自行驗證，也同時有利於一般搜尋與真人閱讀：',
         items: [
-          '主題相關性高（不是泛論文章）',
-          '頁面可由 PerplexityBot 抓取，且重要內容直接存在 HTML 中',
+          '頁面回傳 200、canonical 正確，重要內容存在可取得的 HTML 中',
           '主題具體、有實名作者、日期、來源與第一手經驗',
-          '標題與段落能讓人快速理解，但不為 AI 追求固定字數',
+          '標題與段落直接回答問題，但不為第三方分數追求固定字數',
           '更新日期反映真實修改，不在每次建置時偽造新時間',
+          '內容與其他網站相比有可引用的案例、方法或限制，而不是同義摘要',
         ],
       },
       {
-        heading: '提高被 Perplexity 引用的工作',
-        body: '',
+        heading: '內容端應該做哪些工作？',
+        body:
+          '隼訊把「答案先行」當成編輯方法，而不是 Perplexity 官方排名因子。先用一段話回答主題，再提供證據、步驟、比較與限制，讓真人能快速判斷資訊是否適用。外部來源要連到原始文件，內部經驗則連回案例或負責人頁，並清楚標示哪些是已實作、哪些只是建議。',
         items: [
-          '前 100 字直接回答主題問題（不要長篇鋪陳）',
-          '以公開案例、原始資料與可查來源增加內容獨特性',
-          '取得真實客戶、合作夥伴與專業社群的自然提及',
-          '清楚的作者 / 編輯部標記（Person schema 或 Organization）',
-          '定期更新內容（last-modified 時間戳）',
+          '用明確定義回答問題，再補條件與例外',
+          '以公開案例、原始資料和官方文件增加可核對性',
+          '取得真實客戶、合作夥伴或專業社群的自然提及',
+          '使用實名作者、穩定品牌名稱與一致的公司資訊',
+          '內容實質變更時才更新頁面日期與 sitemap 時間',
         ],
+      },
+      {
+        heading: '如何量測 Perplexity 可見度？',
+        body:
+          '先在 GA4 或伺服器紀錄中觀察 perplexity.ai 引薦、到站頁面、互動與詢盤，再用一組固定且貼近客戶決策的問題定期人工檢查來源。不要只測品牌名稱，否則結果只反映既有認知；也不要用單次截圖宣稱排名，因為回答可能隨時間、位置、模型與問題措辭變動。若平台沒有附連結，分析工具通常無法完整取得品牌提及。',
+      },
+      {
+        heading: '允許 Perplexity 會不會等於同意模型訓練？',
+        body:
+          '依 Perplexity 官方文件，PerplexityBot 用於搜尋索引，不用於 AI 基礎模型預訓練。這只說明該公司目前公開的爬蟲用途，不代表網站可以忽略自己的內容授權、隱私與存取政策。含有客戶資料、付費內容或內部資訊的路徑仍應以登入、權限與伺服器控制保護，不能只依賴 robots.txt。',
       },
     ],
     faq: [
       {
         question: 'Perplexity 跟 ChatGPT 引用邏輯一樣嗎？',
         answer:
-          '不完全一樣。Perplexity 強制列出來源（每個答案附 3-5 個網站），ChatGPT 是對話式回答、有時提及品牌但不一定附連結。優化方式有共同點但需分別測試。',
+          '不能視為同一套規則。平台的索引、查詢處理、回答與來源呈現方式不同，而且都會更新；共同基礎是公開可存取、主題相關、來源清楚且具一手價值的內容，成效仍要分平台量測。',
       },
     ],
     relatedServices: ['geo', 'seo'],
+    references: [
+      {
+        name: 'Perplexity Crawlers',
+        url: 'https://docs.perplexity.ai/docs/resources/perplexity-crawlers',
+        publisher: 'Perplexity Documentation',
+      },
+      {
+        name: 'How does Perplexity follow robots.txt?',
+        url: 'https://www.perplexity.ai/help-center/en/articles/10354969-how-does-perplexity-follow-robots-txt',
+        publisher: 'Perplexity Help Center',
+        updatedAt: '2026-07-16',
+      },
+    ],
   },
   'google-ai-overview-basics': {
     slug: 'google-ai-overview-basics',
@@ -486,25 +613,37 @@ export const blogPosts: Record<string, BlogContent> = {
       'Google AI Overview 在搜尋結果頁直接顯示 AI 生成答案。本文說明它對傳統 SEO 的影響，以及該如何調整內容策略。',
     keywords: ['Google AI Overview', 'AI Overview 優化', 'SGE', 'Search Generative Experience'],
     datePublished,
-    dateModified: '2026-07-26',
+    dateModified: '2026-08-11',
     qualityTier: 'production',
     intent: 'informational',
     intro:
-      'Google AI Overview（前身 SGE）會在搜尋結果頁上方直接顯示 AI 生成的答案。對 SEO 的影響是：用戶可能在不點進任何網站的情況下得到答案。本文討論如何在這個變化下保持流量。',
+      'Google AI Overview 會在部分搜尋中整理資訊並提供支援連結；AI Mode 則適合更複雜的探索、比較與追問。站方沒有專用提交表單或特殊 Schema，頁面必須先符合一般 Google Search 的技術與內容條件。與其猜測每次版面會怎麼變，更實際的是確保內容可索引、有一手價值，並追蹤搜尋與轉換結果。',
     sections: [
       {
-        heading: 'AI Overview 會抓取怎樣的內容',
-        body: '',
+        heading: 'AI Overview 與 AI Mode 怎麼使用網頁？',
+        body:
+          'Google 官方說明，兩項功能可能使用 query fan-out，把問題拆成多個相關搜尋並尋找支援頁面；不同功能可能使用不同模型與方法，因此顯示的回答和連結會變化。AI Overview 只在系統判斷能為一般搜尋增加價值時出現，不是每個查詢都固定觸發。這也代表單一「目標關鍵字」不足以涵蓋使用者會延伸詢問的子題。',
+      },
+      {
+        heading: '網站要符合哪些基本資格？',
+        body:
+          '要成為 AI Overview 或 AI Mode 的支援連結，頁面必須已被索引、能在 Google Search 顯示摘要，並符合搜尋技術要求與政策。Google 沒有額外的 AI 技術要求，也不需要新增 AI 文字檔或專用 Schema。符合條件仍不保證抓取、索引或呈現，因為 Google 會依查詢與品質系統決定結果。',
         items: [
-          '直接回答型內容（用戶問什麼、文章前段直接回答）',
-          '比較表 / 條列式結構（便於 AI 擷取）',
-          '具明確作者與發布日期的權威來源',
-          '可索引、可提供搜尋摘要且重要內容能被抓取的頁面',
+          'robots.txt、CDN 與 WAF 允許 Googlebot 抓取',
+          '頁面可索引、canonical 正確且能顯示搜尋摘要',
+          '重要內容以文字存在，並能由站內連結找到',
+          '結構化資料與使用者看得到的內容一致',
+          '頁面體驗、圖片與影片在適用時真正幫助理解',
         ],
       },
       {
-        heading: '不容易被引用的內容類型',
-        body: '',
+        heading: '內容怎麼增加被選為支援來源的機會？',
+        body:
+          'Google 不公布固定引用公式，但人本內容原則仍適用：直接回答問題、補上專案經驗、引用原始資料、清楚標示作者與限制。比較表和條列能改善理解，卻不是特殊排名訊號；真正差異在於資訊是否比現有結果更具體、更容易核對。若文章只重述別人的定義，即使篇幅很長也沒有新增價值。',
+      },
+      {
+        heading: '常見失敗原因',
+        body: '以下問題同時會降低一般搜尋與 AI 搜尋的可用性：',
         items: [
           '純行銷話術（缺乏可驗證資訊）',
           '重點埋藏太深（要滑到底才出現）',
@@ -512,15 +651,47 @@ export const blogPosts: Record<string, BlogContent> = {
           '重複整理網路常識、沒有第一手經驗或獨特價值',
         ],
       },
+      {
+        heading: 'Search Console 能看到多少 AI 資料？',
+        body:
+          'Google 官方目前將 AI Overview 與 AI Mode 帶來的搜尋表現計入 Search Console Performance 的 Web 搜尋類型。站方可依查詢、頁面、國家、裝置與日期觀察曝光、點擊和 CTR，但不應假設每一筆都能被單獨標記為 AI Overview。若要看商業價值，還要搭配 GA4 的到站行為、表單與聯絡事件，並在內容更新前保存可比較的基準。',
+        table: {
+          caption: '發布後的量測分工',
+          headers: ['資料來源', '適合回答', '不能單獨證明'],
+          rows: [
+            ['Search Console', '哪些查詢與頁面取得曝光、點擊及 CTR', '所有曝光是否來自 AI Overview'],
+            ['GA4／分析工具', '使用者進站後是否閱讀案例、點擊 CTA 或詢盤', '沒有點擊的品牌提及'],
+            ['固定問題集', '特定問題是否出現來源與品牌描述', '整體市場曝光或固定排名'],
+          ],
+        },
+      },
+      {
+        heading: '不要對流量影響下無來源結論',
+        body:
+          'AI Overview 可能讓部分使用者直接取得答案，也可能為複雜問題帶來新的支援連結。單一網站的結果會受查詢組合、品牌、版面、競爭與時間影響，不能在沒有自己的 Search Console 與轉換資料前，直接宣稱流量一定下降或「成為引用來源就能拿回點擊」。正確作法是按頁面與非品牌查詢建立基準，再觀察改版後的趨勢。',
+      },
     ],
     faq: [
       {
         question: 'AI Overview 會搶走我的流量嗎？',
         answer:
-          '部分搜尋查詢的點擊率確實會下降。但若內容被列為 AI Overview 引用來源，仍能取得品牌曝光與部分點擊。策略重點是「成為引用來源」而非抗拒 AI Overview。',
+          '不能一概而論。不同查詢與網站可能出現不同結果；應以自己的 Search Console 點擊、曝光、CTR 與詢盤基準判斷，而不是套用第三方平均數或保證引用後一定帶來流量。',
       },
     ],
     relatedServices: ['geo', 'seo'],
+    references: [
+      {
+        name: 'AI features and your website',
+        url: 'https://developers.google.com/search/docs/appearance/ai-features',
+        publisher: 'Google Search Central',
+        updatedAt: '2025-12-10',
+      },
+      {
+        name: 'How are you performing on Google?',
+        url: 'https://support.google.com/webmasters/answer/10268906',
+        publisher: 'Google Search Console Help',
+      },
+    ],
   },
   'website-pricing-2026': {
     slug: 'website-pricing-2026',
@@ -602,31 +773,42 @@ export const blogPosts: Record<string, BlogContent> = {
       'SEO 做了卻沒看到排名變化？多數情況問題出在技術面而非內容。本文整理我們接手客戶網站時最常發現的技術 SEO 問題。',
     keywords: ['SEO 沒效果', 'SEO 錯誤', '技術 SEO', 'SEO 問題'],
     datePublished,
+    dateModified: '2026-08-11',
     qualityTier: 'production',
     intent: 'informational',
     intro:
-      'SEO 沒見到變化，多數情況不是內容問題，是技術面的基本設定有錯。本文整理我們接手新客戶時最常發現的問題類型。',
+      'SEO 沒見到變化，不能先假設是文章不夠長，也不能一律歸咎技術。正確順序是確認搜尋需求、索引資格、頁面品質與量測是否成立，再看外部競爭。本文整理隼訊檢查網站時會先排除的技術問題，以及如何避免一次亂改整站。',
     sections: [
       {
         heading: '常見技術 SEO 問題',
-        body: '依出現頻率排序：',
+        body: '以下不是固定頻率或排名因素清單，而是網站改版與接手時值得優先排除的風險：',
         items: [
-          '站速過慢（LCP > 4 秒）— Google 演算法會降權',
+          '核心內容載入過慢或版面位移，讓行動使用者難以完成任務',
           '沒有手機版或手機版體驗差',
           'Robots.txt 把重要頁面意外擋掉',
           'Sitemap 不完整或沒提交',
           'Canonical 設錯（導致 Google 視為重複內容）',
           'HTTPS 設定有混合內容問題',
-          'Schema.org 完全沒部署',
-          '圖片缺 alt text',
+          '結構化資料與畫面不一致，或重複產生衝突實體',
+          '有資訊作用的圖片缺少適當替代文字或尺寸',
           '關鍵內容靠 JS 渲染，爬蟲讀不到',
-          'Internal linking 結構崩壞（孤兒頁面）',
+          '站內連結結構崩壞，重要頁面成為孤兒頁',
         ],
       },
       {
-        heading: '自我檢查工具',
+        heading: '先用證據判斷是哪一層出問題',
         body:
-          '可以用 Google Search Console、Lighthouse、Screaming Frog 這三項工具掃描，多數技術問題會被偵測出來。',
+          '先在 Search Console 查看 Page Indexing、URL Inspection 與 Performance，再用實際瀏覽器、Lighthouse 或爬蟲重現問題。第三方工具只能指出線索，不能取代 Google 實際取得的 canonical、索引狀態與查詢資料。若網站沒有曝光，先查索引和主題相關性；有曝光沒點擊，再檢查標題、摘要與搜尋意圖；有點擊沒詢盤，問題可能在服務內容、證據或轉換流程。',
+        table: {
+          caption: '依症狀選擇第一個檢查點',
+          headers: ['症狀', '先檢查', '不要先做'],
+          rows: [
+            ['重要頁完全沒有曝光', '索引、canonical、robots、內鏈與查詢相關性', '批量加長所有文章'],
+            ['有曝光但 CTR 低', '查詢意圖、title、description 與 SERP 競爭', '直接換網址或刪頁'],
+            ['點擊正常但沒有詢盤', '案例、價格、CTA、表單與服務適配', '只追平均排名'],
+            ['改版後整體下滑', '發布時間、轉址、noindex、內容差異與效能', '同時修改所有模板和文案'],
+          ],
+        },
       },
       {
         heading: '順手破解幾個常見的 SEO 迷思',
@@ -637,6 +819,11 @@ export const blogPosts: Record<string, BlogContent> = {
         heading: '排名突然掉了，先別急著怪內容',
         body:
           '排名波動時，第一步是判斷原因來自「外部」還是「自己」。外部是指 Google 的核心演算法更新——它不定期發生、會讓整個產業的排名重新洗牌，這種情況要看的是內容整體品質與 E-E-A-T，而不是某個單一頁面。自己的問題則像是：改版後不小心 noindex、網站搬家忘了做 301 轉址、頁面載入變慢、或被掛了垃圾連結。我們的處理順序是先用 Search Console 對時間軸——下滑的時間點有沒有對上已知的演算法更新、或對上你自己做過的某次改動，再決定要修技術還是補內容，而不是一看到掉就整站亂改。',
+      },
+      {
+        heading: '修復順序要降低二次傷害',
+        body:
+          '先保存改版前的 URL、canonical、索引與 Performance 基準，再一次修一類問題。影響抓取與索引的錯誤優先，其次是主要頁面的內容與內鏈，最後才處理低影響警告。每批發布都記錄日期、受影響 URL 與預期結果；發布後先確認爬蟲取得正確 HTML，再於數週至數月觀察搜尋趨勢。不要因為七天沒有上升就反覆更換 title、URL 或主題。',
       },
     ],
     faq: [
@@ -652,6 +839,23 @@ export const blogPosts: Record<string, BlogContent> = {
       },
     ],
     relatedServices: ['seo'],
+    references: [
+      {
+        name: 'Search technical requirements',
+        url: 'https://developers.google.com/search/docs/essentials/technical',
+        publisher: 'Google Search Central',
+      },
+      {
+        name: 'Performance report: Common tasks and use cases',
+        url: 'https://support.google.com/webmasters/answer/17010961',
+        publisher: 'Google Search Console Help',
+      },
+      {
+        name: 'Debugging drops in Google Search traffic',
+        url: 'https://developers.google.com/search/docs/monitor-debug/debugging-search-traffic-drops',
+        publisher: 'Google Search Central',
+      },
+    ],
   },
   'ai-customer-service-cost': {
     slug: 'ai-customer-service-cost',
@@ -742,6 +946,7 @@ export const blogPosts: Record<string, BlogContent> = {
       '內容是 SEO 的核心，但「好內容」很難量化。本文整理隼訊在客戶內容生產時實際遵守的判斷標準。',
     keywords: ['SEO 內容', '內容行銷', 'E-E-A-T', '內容品質'],
     datePublished,
+    dateModified: '2026-08-11',
     qualityTier: 'production',
     intent: 'informational',
     intro:
@@ -779,6 +984,27 @@ export const blogPosts: Record<string, BlogContent> = {
         body:
           '不是「用了 AI」就會被罰——Google 官方說法是，它針對的是「為了操弄排名而大量生產、對使用者沒有幫助的內容」，跟你用什麼工具寫沒有直接關係。換句話說，AI 幫你打草稿、整理結構完全沒問題，問題在於有沒有人把關：有沒有加入第一手經驗與觀點、有沒有查證事實、有沒有刪掉空話。我們的作法是把 AI 當助手而非作者——所有對外內容都會經過人工編輯與事實查核，這也是我們敢公開審稿標準的原因。真正危險的是那種「一鍵生成上百篇、沒人讀過就發佈」的做法，那才是會被演算法盯上的薄內容。',
       },
+      {
+        heading: '發布前的內容品質評分方式',
+        body:
+          '我們不使用單一字數或關鍵字密度決定發布，而是逐項檢查搜尋意圖、第一手價值、可核對性、責任與下一步。任何一項有明顯缺口，都應回到資料與採訪，而不是用更長的前言掩蓋。',
+        table: {
+          caption: '隼訊內容發布檢查表',
+          headers: ['面向', '通過條件', '不通過例子'],
+          rows: [
+            ['搜尋意圖', '標題、開頭與主要段落回答同一個決策問題', '標題談費用，內容只介紹優點'],
+            ['第一手價值', '有實作流程、案例、畫面、觀察或明確方法', '只重述搜尋結果中的共同定義'],
+            ['證據', '數字、平台規則與成果能追到原始來源', '引用無日期統計或把目標當成果'],
+            ['責任', '實名作者、更新日期、限制與修正邊界清楚', '匿名團隊、沒有日期、絕對承諾'],
+            ['行動', '讀者知道如何自查、比較或進入相關服務／案例', '結尾只剩空泛銷售 CTA'],
+          ],
+        },
+      },
+      {
+        heading: '發布後用什麼判斷要不要更新？',
+        body:
+          '先保存頁面的查詢、曝光、點擊與轉換基準。若開始取得不符合意圖的查詢，調整標題與內容邊界；若有曝光但 CTR 低，檢查搜尋結果上的承諾是否清楚；若讀者進站卻沒有下一步，補案例、比較或 CTA。只有官方規則、產品能力、價格或實作經驗真的變更時才更新日期，不用為了新鮮度每月重寫。',
+      },
     ],
     faq: [
       {
@@ -788,43 +1014,23 @@ export const blogPosts: Record<string, BlogContent> = {
       },
     ],
     relatedServices: ['seo', 'geo'],
-  },
-  'how-we-pick-clients': {
-    slug: 'how-we-pick-clients',
-    title: '我們選客戶的標準（誰不適合找隼訊）',
-    h1: '我們選客戶的標準',
-    description:
-      '不是每個案子我們都接。本文說明哪幾種需求類型我們不接，避免雙方浪費時間。',
-    keywords: ['行銷公司選擇', '行銷公司合作', '不接哪些案'],
-    datePublished,
-    qualityTier: 'production',
-    intent: 'informational',
-    intro:
-      '多數行銷公司網站只寫「為什麼選我們」，少數會寫「什麼客戶不該找我們」。我們認為後者對雙方比較公平，這篇是我們的版本。',
-    sections: [
+    references: [
       {
-        heading: '我們不接的案類型',
-        body: '',
-        items: [
-          '產業：博弈、傳直銷、未經主管機關核准的金融商品',
-          '預算明顯不符需求（例：5 萬預算要做電商 + 會員 + ERP 整合）',
-          '需要保證排名 / 保證 ROAS 的客戶',
-          '希望用 AI 大量灌水內容衝排名的客戶',
-          '預算低於方案起價（目前 SEO 月費 7,500），需先縮小範圍，不能假裝完整方案都做得到',
-        ],
+        name: 'Creating helpful, reliable, people-first content',
+        url: 'https://developers.google.com/search/docs/fundamentals/creating-helpful-content',
+        publisher: 'Google Search Central',
       },
       {
-        heading: '我們適合接的案類型',
-        body: '',
-        items: [
-          '中小企業主想長期經營品牌、願意投入 6-12 個月看效果',
-          '客戶對 SEO / GEO 已有基本理解（或願意花時間學）',
-          '客戶可提供基本內容素材（公司資料、案例、產品細節）',
-          '客戶願意採用透明定價、不殺價、按合約執行',
-        ],
+        name: 'Google Search spam policies',
+        url: 'https://developers.google.com/search/docs/essentials/spam-policies',
+        publisher: 'Google Search Central',
+      },
+      {
+        name: 'Performance report: Common tasks and use cases',
+        url: 'https://support.google.com/webmasters/answer/17010961',
+        publisher: 'Google Search Console Help',
       },
     ],
-    relatedServices: ['seo', 'geo'],
   },
 }
 

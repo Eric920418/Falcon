@@ -73,10 +73,56 @@ export function ComparePageTemplate({ page }: ComparePageTemplateProps) {
                   ))}
                 </ul>
               )}
+              {section.table && (
+                <div className="mt-6 overflow-x-auto rounded-lg border border-[#344349]">
+                  <table className="min-w-[680px] w-full border-collapse text-left text-sm">
+                    {section.table.caption && (
+                      <caption className="bg-stone-900/70 px-4 py-3 text-left text-sm text-[#A8B6BC]">
+                        {section.table.caption}
+                      </caption>
+                    )}
+                    <thead className="bg-[#1E2A2E]">
+                      <tr>
+                        {section.table.headers.map((header) => (
+                          <th key={header} scope="col" className="px-4 py-3 font-medium text-[#E0E5E8]">{header}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {section.table.rows.map((row, rowIndex) => (
+                        <tr key={`${section.heading}-${rowIndex}`} className="border-t border-[#344349] align-top">
+                          {row.map((cell, cellIndex) => (
+                            <td key={`${rowIndex}-${cellIndex}`} className="px-4 py-3 leading-relaxed text-[#A8B6BC]">{cell}</td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </article>
           ))}
         </div>
       </section>
+
+      {page.references && page.references.length > 0 && (
+        <section id="references" className="px-6 py-12">
+          <div className="max-w-4xl mx-auto border-t border-[#344349] pt-8">
+            <h2 className="text-2xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>參考資料</h2>
+            <ul className="space-y-3">
+              {page.references.map((reference) => (
+                <li key={reference.url} className="text-sm leading-relaxed text-[#A8B6BC]">
+                  <a href={reference.url} target="_blank" rel="noopener noreferrer" className="text-amber-500 hover:underline">
+                    {reference.name}
+                  </a>
+                  <span>｜{reference.publisher}</span>
+                  {reference.updatedAt && <span>｜{reference.updatedAt}</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <section id="faq" className="py-12 px-6 bg-[#1E2A2E]/50">
         <div className="max-w-4xl mx-auto">

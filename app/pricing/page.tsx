@@ -88,11 +88,34 @@ export default function PricingIndexPage() {
               </div>
             </Link>
 
+            <section className="mb-12 grid gap-6 md:grid-cols-2">
+              <div className="border border-[#344349] bg-stone-900/30 p-6">
+                <p className="text-xs uppercase tracking-[0.16em] text-amber-500">How we quote</p>
+                <h2 className="mt-3 text-2xl text-[#E0E5E8]">正式報價的形成方式</h2>
+                <ol className="mt-5 space-y-3 text-sm leading-relaxed text-[#A8B6BC]">
+                  <li><span className="mr-2 font-mono text-amber-500">01</span>確認目標、使用者、現況與必要整合。</li>
+                  <li><span className="mr-2 font-mono text-amber-500">02</span>拆出第一階段範圍、風險與驗收方式。</li>
+                  <li><span className="mr-2 font-mono text-amber-500">03</span>分列建置、持續費用與第三方實際用量。</li>
+                  <li><span className="mr-2 font-mono text-amber-500">04</span>在合作前寫清楚不包含項目、移交與維護責任。</li>
+                </ol>
+              </div>
+              <div className="border border-[#344349] bg-stone-900/30 p-6">
+                <p className="text-xs uppercase tracking-[0.16em] text-amber-500">Comparison rule</p>
+                <h2 className="mt-3 text-2xl text-[#E0E5E8]">比較報價要使用相同範圍</h2>
+                <p className="mt-5 text-sm leading-relaxed text-[#A8B6BC]">
+                  一份只列頁面或關鍵字數量的報價，不能直接和包含研究、設計、整合、測試、內容、部署及維護的報價比較。請逐項核對帳號與原始碼歸屬、第三方費用、修改輪次、資料提供責任、驗收與終止後移交。
+                </p>
+                <p className="mt-4 text-sm leading-relaxed text-[#A8B6BC]">
+                  若預算不足，應縮小第一階段或改做盤點／POC；把完整需求塞進最低起價，通常只會把必要工作延後成追加費用。
+                </p>
+              </div>
+            </section>
+
             <h2 className="text-2xl text-[#E0E5E8] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
               兩大獲客 Hub 起價速覽
             </h2>
-            <div className="border border-[#344349] rounded-lg overflow-hidden bg-stone-900/30">
-              <table className="w-full text-sm">
+            <div className="border border-[#344349] rounded-lg overflow-x-auto bg-stone-900/30">
+              <table className="min-w-[680px] w-full text-sm">
                 <thead className="bg-[#1E2A2E]">
                   <tr>
                     <th className="px-6 py-3 text-left text-[#E0E5E8]">服務</th>
