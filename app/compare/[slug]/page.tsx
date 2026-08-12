@@ -46,7 +46,6 @@ export default async function ComparePage({ params }: CompareProps) {
     }),
     createBreadcrumbSchema([
       { name: '首頁', path: '/' },
-      { name: '比較', path: `/compare/${slug}` },
       { name: page.h1, path: `/compare/${slug}` },
     ]),
   ]

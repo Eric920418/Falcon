@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { PageShell } from '@/components/page-layout/PageShell'
 import { LocalPageTemplate } from '@/components/page-templates/LocalPageTemplate'
-import { localSlugs, getLocalPage, hasIndexableLocalEvidence } from '@/lib/content/local'
+import { localSlugs, getLocalPage, isIndexableLocalPage } from '@/lib/content/local'
 import {
   createMetadata,
   createBreadcrumbSchema,
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: LocalPageProps): Promise<Meta
     description: page.description,
     path: `/local/${slug}`,
     keywords: page.keywords,
-    noIndex: page.qualityTier !== 'production' || !hasIndexableLocalEvidence(page),
+    noIndex: !isIndexableLocalPage(page),
   })
 }
 
@@ -47,7 +47,6 @@ export default async function LocalLandingPage({ params }: LocalPageProps) {
     }),
     createBreadcrumbSchema([
       { name: '首頁', path: '/' },
-      { name: '本地服務', path: `/local/${slug}` },
       { name: page.h1, path: `/local/${slug}` },
     ]),
     {

@@ -19,6 +19,7 @@ const contentTracks = [
       ['AI 語音客服導入指南', '/blog/ai-voice-customer-service-guide'],
       ['AI 語音客服費用', '/blog/ai-voice-customer-service-cost'],
       ['AI、IVR 與真人比較', '/blog/ai-voice-vs-ivr-human-agent'],
+      ['語音與文字客服比較', '/compare/ai-voice-vs-chatbot'],
       ['PBX、CRM 與派單串接', '/blog/ai-phone-pbx-crm-integration'],
     ],
   },
@@ -33,13 +34,23 @@ const contentTracks = [
     ],
   },
   {
+    label: 'AI 搜尋量測與爬蟲',
+    description: '從 llms.txt、AI 爬蟲控制到 ChatGPT 引用觀察與 GEO 成效量測的實作紀錄。',
+    links: [
+      ['llms.txt 格式與實作', '/blog/llms-txt-implementation-guide'],
+      ['AI 爬蟲與 robots.txt 決策', '/blog/ai-crawler-robots-guide'],
+      ['ChatGPT 搜尋引用觀察', '/blog/chatgpt-search-citation-observations'],
+      ['GEO 成效量測實作', '/blog/geo-measurement-guide'],
+    ],
+  },
+  {
     label: '網站與 AI 系統決策',
-    description: '比較網站建置與 AI 客服的成本結構，搭配實際案例判斷自建、整合與維護範圍。',
+    description: '比較網站建置與 AI 客服的成本結構，搭配廠商評估與實際案例做採購判斷。',
     links: [
       ['網站建置費用與成本', '/blog/website-pricing-2026'],
       ['AI 客服自建與 SaaS', '/blog/ai-customer-service-cost'],
+      ['SEO 廠商評估檢查清單', '/blog/seo-vendor-evaluation-guide'],
       ['公開案例與可驗證證據', '/case-studies'],
-      ['透明定價與報價因素', '/pricing'],
     ],
   },
 ] as const
@@ -116,7 +127,7 @@ export default function BlogIndexPage() {
                 這裡不是依發布時間堆文章。每條路徑先回答原理，再進入成本、比較、整合或案例；如果只需要確認服務與報價，可直接前往對應頁面。
               </p>
             </div>
-            <div className="grid gap-5 lg:grid-cols-3">
+            <div className="grid gap-5 sm:grid-cols-2">
               {contentTracks.map((track) => (
                 <article key={track.label} className="border border-[#344349] bg-stone-900/35 p-6">
                   <h3 className="text-xl text-[#E0E5E8]">{track.label}</h3>

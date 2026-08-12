@@ -7,7 +7,9 @@ export { createWebPageSchema, type WebPageSchemaInput } from './webpage'
 export { createProfilePageSchema } from './profile-page'
 export { createCaseStudySchema } from './case-study'
 export {
+  createItemListSchema,
   createPortfolioItemListSchema,
   defaultPortfolioItems,
   type ItemListEntry,
+  type ItemListSchemaInput,
 } from './item-list'

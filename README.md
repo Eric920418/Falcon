@@ -50,10 +50,10 @@ pnpm start
 │   ├── opengraph-image.tsx           # 首頁 OG image 動態生成
 │   ├── ai-voice-og/                   # 企業 AI 電話專用 1200×630 OG image
 │   ├── globals.css                   # 全局樣式
-│   ├── services/[slug]/              # 5 個索引 Hub/子服務 + 4 個 noindex 舊服務 + AEO 轉址
+│   ├── services/                     # 服務總覽頁 + [slug] 5 個索引服務 + 4 個 noindex 舊服務 + AEO 轉址
 │   ├── about/                        # 實名負責人與工作方法
 │   ├── case-studies/[slug]/          # 證據、資料來源與限制
-│   ├── local/[slug]/                 # 6 個保留 URL；證據達標前一律 noindex
+│   ├── local/[slug]/                 # 6 個城市服務指南；內容品質閘門達標才可索引
 │   ├── blog/                         # Blog index + blog/[slug] 動態文章頁
 │   ├── pricing/                      # 透明定價 index + 4 個 pricing/[slug]
 │   ├── compare/[slug]/               # SEO／GEO／AEO 名詞比較
@@ -97,9 +97,9 @@ pnpm start
 │           ├── case-studies.ts       # 公開案例證據
 │           ├── price-catalog.ts      # 單一價格來源
 │           ├── services/             # 服務內容
-│           ├── local.ts              # 6 個 local landing 內容
-│           ├── blog.ts               # 12 篇文章內容
-│           └── pricing.ts            # pricing + compare 內容
+│           ├── local.ts              # 6 個城市服務指南內容＋isIndexableLocalPage 閘門
+│           ├── blog.ts               # 17 篇文章內容
+│           └── pricing.ts            # pricing 逐頁手寫細節 + 3 個 compare 內容
 ├── public/
 │   ├── logo.png
 │   └── manifest.json
@@ -195,14 +195,15 @@ Portfolio 組件展示公司的專案作品，包含：
 
 | 路由群 | 路徑 | 數量 | 搜尋意圖 |
 | --- | --- | --- | --- |
+| 服務總覽頁 | `/services` | 1 | navigational |
 | 核心服務頁 | `/services/[slug]` | 5 | informational + commercial |
 | 舊服務頁 | `/services/[slug]` | 4 | `noindex,follow` |
 | AEO 舊路徑 | `/services/aeo` | 1 | 永久轉址至 `/services/geo` |
-| 本地頁 | `/local/[slug]` | 6 | 證據達標前 `noindex,follow` |
+| 本地頁 | `/local/[slug]` | 6 | 城市服務指南；`isIndexableLocalPage()` 內容品質閘門達標才可索引 |
 | 案例頁 | `/case-studies`、`/case-studies/[slug]` | 4 | commercial + evidence |
-| 部落格 | `/blog`、`/blog/[slug]` | 13 | 1 個索引頁＋12 篇 informational / commercial 文章 |
+| 部落格 | `/blog`、`/blog/[slug]` | 18 | 1 個索引頁＋17 篇 informational / commercial 文章 |
 | 定價頁 | `/pricing`、`/pricing/[slug]` | 5 | transactional |
-| 比較頁 | `/compare/[slug]` | 1+ | commercial investigation |
+| 比較頁 | `/compare/[slug]` | 3 | commercial investigation |
 | 公司頁 | `/about` | 1 | E-E-A-T / entity |
 | 首頁 | `/` | 1 | navigational + commercial |
 
@@ -227,10 +228,10 @@ Portfolio 組件展示公司的專案作品，包含：
 
 ### llms.txt 與 llms-full.txt
 
-- `/llms.txt`：品牌、核心服務與公開起價的精簡摘要
-- `/llms-full.txt`：加入實名作者、案例證據與限制
+- `/llms.txt`：品牌、服務、公開案例、起價，加上價格頁、比較頁、內容文章與服務地區的連結清單
+- `/llms-full.txt`：服務全文、案例證據與限制，加上價格頁方案與 FAQ、比較頁表格、各文章段落標題與 FAQ 題目、城市頁摘要
 
-兩者由 TypeScript 的服務、價格、案例與作者資料源生成，目的是降低內容漂移。Google 官方文件明確說明 Google Search 不使用 llms.txt，因此它不是排名、索引或 AI 引用保證。
+兩者由 TypeScript 內容資料源生成，目的是降低內容漂移；過濾條件與 sitemap 完全一致（production tier＋local 內容品質閘門），noindex 內容不會出現在摘要中。Google 官方文件明確說明 Google Search 不使用 llms.txt，因此它不是排名、索引或 AI 引用保證。
 
 ### 動態 Sitemap
 
@@ -245,7 +246,9 @@ Portfolio 組件展示公司的專案作品，包含：
 
 ### Local SEO
 
-6 個城市 URL 目前全部保留，但只有同時具備完整客戶同意、服務期間、基準與結果證據時才可索引。借址、name-only 案例或空白服務清單不構成索引資格，也不得暗示當地有分公司。
+6 個城市頁定位為「城市服務指南」：內容以服務方式、在地市場觀察、常接需求類型與城市限定 FAQ 為主，不依賴未授權的客戶數據。索引資格由 `src/lib/content/local.ts` 的 `isIndexableLocalPage()` 內容品質閘門機器判定：production tier、非空 `coverageDisclosure`（誠實的無門市／預約前往聲明，會渲染在頁面上）、段落 ≥4、FAQ ≥5、全頁文字量 ≥2,000 字。`consentToPublish` 只控制客戶案例的展示層級，不再控制索引。
+
+保留的紅線不變：不輸出 LocalBusiness、地理座標、地址或營業時間；不暗示當地有分公司或門市；name-only 案例只列名稱與一句話描述。
 
 ### Core Web Vitals 優化
 - `next/font/local` 自託管 Noto Sans TC
@@ -337,7 +340,7 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - 已刪除失效的 `MarketingAgency`／`ProfessionalService`／重複 LocalBusiness Schema 實作，避免未被引用的檔案仍在型別檢查或日後誤用。
 - 字型改由 `next/font/local` 自託管 `public/fonts` 內的 Noto Sans TC，不再從瀏覽器重複請求 Google Fonts。
 - 可索引服務固定為 `/services/web-development`、`/services/ai-tools`、`/services/ai-voice-agent`、`/services/seo`、`/services/geo`；AEO 永久轉址至 GEO，其餘舊服務保留可讀但設為 `noindex,follow` 並移出 sitemap。
-- 沒有公開案例證據的城市頁會自動 `noindex,follow` 並移出 sitemap，避免把薄弱城市頁當成虛構據點或 doorway page。
+- 城市頁索引由 `isIndexableLocalPage()` 內容品質閘門判定（詳見 Local SEO 段）；不達標的頁自動 `noindex,follow` 並移出 sitemap，避免薄弱城市頁成為 doorway page。
 - `robots.txt` 明確允許 `OAI-SearchBot` 與 `PerplexityBot`；GPTBot 保留但只視為訓練爬蟲設定，不當作搜尋曝光保證。
 - `/about` 使用實名負責人與可核對的公開連結；`/case-studies` 與三個案例詳頁明確區分技術量測、產品能力與商業成效，並顯示資料限制。
 - 所有文章作者統一為實名蔡翊廉並連到 `/about`；已移除虛構的「資深 SEO 顧問」審稿者。
@@ -353,7 +356,7 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - GEO 指南、SEO／GEO／AEO 比較、Schema、Perplexity 與 Google AI Overview 五篇文章已同步改寫；移除 TF-IDF、DA 門檻、固定週期、FAQ rich result 與「無 Schema 就不會被引用」等錯誤說法。
 - 預設 OG 圖已改為雙 Hub 定位並移除 AEO 與借址；拿掉 Edge runtime，讓 Next.js 可靜態產生分享圖。
 - FAQ 與步驟內容仍可供讀者閱讀，但 FAQPage／HowTo Schema 工廠已刪除；AEO 舊內容檔也已刪除，僅保留 `/services/aeo` 永久轉址。
-- 六個城市 URL 在缺少「完整客戶同意＋期間＋基準＋結果」前一律 `noindex,follow` 並排除 sitemap；不以 name-only 案例或借址通過索引門檻。
+- 2026-08-12 起，六個城市頁的索引改由內容品質閘門判定（取代原本的客戶授權證據閘門）；頁面重寫為不依賴客戶數據的城市服務指南後全數達標開放索引，並渲染誠實的 `coverageDisclosure` 服務方式聲明。
 - Footer 的電話、Email、LINE 入口均統一發送不含 PII 的 `contact_click` 事件；履歷也已移除「AI 引擎優先引用」的不實保證。
 - `/services/aeo`、`/blog/seo-vs-geo-vs-aeo`、`/blog/how-we-pick-clients` 由 Next.js redirects 明確回傳單次 301；後兩者分別整併至比較頁與 `/about`，不再留在 sitemap 或站內連結。
 - `pnpm check:seo` 會全站驗證 HTTP 200、index/noindex、sitemap、唯一 metadata/canonical、單一 H1、OG/Twitter、單一 JSON-LD `@graph`、孤兒頁與三條單次 301。
@@ -382,9 +385,16 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - 2026-08-11：依 Ubersuggest 中文字數警告進行搜尋意圖審核，不設定全站最低字數。三篇企業 AI 電話文章補上架構／成本／選型表與失敗邊界；GEO、Google AI、Perplexity、Schema、技術 SEO 與內容品質文章改用官方來源並增加可見參考資料。`ContentSection` 支援語意表格，`BlogContent`／`ComparePageContent` 支援 `ContentReference`。
 - 2026-08-11：`/blog/seo-vs-geo-vs-aeo` 301 整併至比較頁，`/blog/how-we-pick-clients` 301 整併至 About 的合作適配區；三個案例補齊負責範圍、各自命名的實作流程、限制與證據核對，價格索引與四個價格頁補上報價形成方式與影響因素。第三方字數警告只作線索，正式驗收仍以索引、非品牌曝光、點擊與合格詢盤為準。
 - 2026-08-11：Ubersuggest 的「URL 對 SEO 不友善」清單實際只在中文關鍵字逐字匹配失敗，字元與動態參數皆通過；現有英文 canonical 保持不變。全站驗收新增 URL 語法、100 字元上限、sitemap 參數、尾斜線與 redirect chain 檢查，避免為工具分數製造不必要的 URL 遷移。
+- 2026-08-12：新增 `/services` 服務總覽頁（WebPage＋BreadcrumbList＋通用 ItemList schema），修正 5 個服務頁與 compare、local 頁把父層指向 `/services/seo` 或自身的假麵包屑；header 兩個下拉與 footer 加入總覽入口。
+- 2026-08-12：四個價格頁由共用模板改為 `pricing.ts` 內逐頁手寫的 `pricingPageDetails`（各 4–5 段獨特內容＋4 題獨特 FAQ＋延伸閱讀內鏈）；價格數字仍由 `price-catalog.ts` 單一來源供給。`PricingPageContent` 新增 `relatedLinks`。
+- 2026-08-12：深化 `clinic-line-booking` 與 `yizhenxiang-commerce-performance` 兩個案例（具體失敗情境、實作細節、量測方法），維持既有揭露與限制模式；`website-pricing-2026` 與 `ai-customer-service-cost` 兩篇擴寫（報價單名目解讀、三年成本試算方法、轉換成本）；全站 blog FAQ 由 21 題補至 42 題（每篇 ≥3 題）。
+- 2026-08-12：新增五篇文章：`llms-txt-implementation-guide`、`chatgpt-search-citation-observations`、`geo-measurement-guide`、`ai-crawler-robots-guide`、`seo-vendor-evaluation-guide`；關鍵字經比對確認與既有 30+ 頁零競食（llms.txt／引用觀察／量測／爬蟲／採購字各自獨立）。blog 索引頁新增「AI 搜尋量測與爬蟲」內容路徑。
+- 2026-08-12：新增兩個比較頁：`ai-voice-vs-chatbot`（與 IVR 比較文分軸：語音 vs 文字模態）、`wordpress-vs-custom-website`（開頭揭露只做客製的立場，WordPress 陳述維持中性事實框架）。
+- 2026-08-12：六個城市頁重寫為城市服務指南並全數開放索引（詳見 Local SEO 段）；同步修正城市頁殘留的舊價格（企業方案 30,000、新竹 3.75 萬起等與 price-catalog 不一致的數字）。footer 新增「服務地區」欄。
+- 2026-08-12：`/llms.txt` 與 `/llms-full.txt` 擴充 blog／compare／pricing／local 四個內容群組，過濾條件與 sitemap 一致。`/card` 改為 noindex（比照 `/resume`），`/card` 與 `/resume` 納入 `check:seo` 稽核路由；`manifest.json` 修正重複的 icon 條目並改指向 `/icon.png`。sitemap 由 30 個 URL 增至 44 個。
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 - [ ] 匯入 GSC、GA4、Bing Webmaster Tools 與 GBP 的近 16 個月資料，另保存發布前 90 天基準。
-- [ ] 取得城市案例完整公開同意、期間、基準、結果、來源、圖片與限制後，再逐頁解除 noindex。
+- [ ] 取得城市案例完整公開同意、期間、基準、結果後，把城市頁的案例區從 name-only 升級為含量化證據的展示（索引已由內容品質閘門開放，此項只影響案例展示深度）。
 - [ ] 請案例客戶在其官網連回對應案例頁；不購買假提及或批量垃圾外鏈。
 
 ## 內容品質護欄

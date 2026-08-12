@@ -8,6 +8,7 @@ export const metadata: Metadata = createMetadata({
   title: `${cardProfile.nameZh}（${cardProfile.nameEn}）電子名片`,
   description: `${cardProfile.nameZh} · ${cardProfile.title}｜${cardProfile.org}。掃描或點擊即可儲存聯絡人、加 LINE、查看作品與聯絡方式。`,
   path: '/card',
+  noIndex: true,
 })
 
 export default function CardPage() {

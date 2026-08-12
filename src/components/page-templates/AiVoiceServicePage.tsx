@@ -67,6 +67,8 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
           <nav className="mb-10 flex flex-wrap items-center gap-2 text-sm text-[#7A8A91]" aria-label="麵包屑">
             <Link href="/" className="hover:text-amber-500">首頁</Link>
             <ChevronRight size={14} aria-hidden="true" />
+            <Link href="/services" className="hover:text-amber-500">服務項目</Link>
+            <ChevronRight size={14} aria-hidden="true" />
             <Link href="/services/ai-tools" className="hover:text-amber-500">AI 工具開發</Link>
             <ChevronRight size={14} aria-hidden="true" />
             <span className="text-[#A8B6BC]">AI 語音客服</span>

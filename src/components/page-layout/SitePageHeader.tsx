@@ -17,6 +17,7 @@ const navItems: NavItem[] = [
       { label: '網站建置與軟體開發', href: '/services/web-development' },
       { label: 'AI 工具開發', href: '/services/ai-tools' },
       { label: '企業 AI 語音客服', href: '/services/ai-voice-agent' },
+      { label: '所有服務項目', href: '/services' },
     ],
   },
   {
@@ -24,6 +25,7 @@ const navItems: NavItem[] = [
     items: [
       { label: 'SEO 搜尋成長', href: '/services/seo' },
       { label: 'GEO AI 搜尋', href: '/services/geo' },
+      { label: '所有服務項目', href: '/services' },
     ],
   },
   { label: '案例', href: '/case-studies' },

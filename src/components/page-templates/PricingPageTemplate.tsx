@@ -116,6 +116,29 @@ export function PricingPageTemplate({ page }: PricingPageTemplateProps) {
         </div>
       </section>
 
+      {page.relatedLinks && page.relatedLinks.length > 0 && (
+        <section id="related-links" className="px-6 pb-12">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+              延伸閱讀
+            </h2>
+            <ul className="flex flex-wrap gap-3">
+              {page.relatedLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="inline-flex items-center gap-2 rounded border border-[#344349] px-4 py-2 text-sm text-[#A8B6BC] transition-colors hover:border-amber-500/60 hover:text-amber-500"
+                  >
+                    {link.label}
+                    <ArrowRight size={14} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
       <section className="py-12 px-6 bg-[#1E2A2E]/50">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>

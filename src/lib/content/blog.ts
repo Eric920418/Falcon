@@ -85,6 +85,16 @@ export const blogPosts: Record<string, BlogContent> = {
         question: '需要先換掉公司現有電話系統嗎？',
         answer: '不一定。是否能沿用要看電信商、PBX、SIP、代表號與轉接方式，應先做環境盤點再決定。',
       },
+      {
+        question: 'AI 語音客服多久可以上線？',
+        answer:
+          '依環境而定：單一任務的 POC 通常以週計，含 PBX 與企業系統整合的正式版以月計。時程的關鍵變數是企業 API 的成熟度與資料整理進度，不是模型本身。',
+      },
+      {
+        question: 'AI 語音客服能處理台語或多種語言嗎？',
+        answer:
+          '取決於語音辨識引擎對該語言與口音的實際支援程度。導入前用真實客群的錄音樣本實測辨識率，比看供應商規格表可靠；實測沒過就先縮小服務範圍。',
+      },
     ],
     relatedServices: ['ai-voice-agent', 'ai-tools'],
     relatedCaseStudies: ['gogocha-ai-dispatch'],
@@ -171,6 +181,16 @@ export const blogPosts: Record<string, BlogContent> = {
         question: '模型費是不是全部成本？',
         answer: '不是。電話、語音辨識、語音合成、主機、儲存、監控、企業整合與維運都可能另外計費。',
       },
+      {
+        question: 'AI 語音客服一定比真人客服便宜嗎？',
+        answer:
+          '不一定。通話量大且任務重複時，攤薄後的每通成本優勢明顯；量小或例外情境多時，省下的人力可能補不回建置與維運成本。先用自己的通話量試算，再決定要不要做。',
+      },
+      {
+        question: '報價單上要出現哪些項目才算完整？',
+        answer:
+          '至少分開列出：一次性建置、電話與線路用量、語音與模型用量、維運月費與超量單價。只有一個總價的報價既無法跨廠商比較，也難以驗收。',
+      },
     ],
     relatedServices: ['ai-voice-agent', 'ai-tools'],
     relatedCaseStudies: ['gogocha-ai-dispatch'],
@@ -256,6 +276,11 @@ export const blogPosts: Record<string, BlogContent> = {
         question: '導入 AI 後還需要客服席位嗎？',
         answer: '通常需要，只是席位會更集中處理例外、敏感事項與高價值對話。接手規則應在上線前完成驗收。',
       },
+      {
+        question: '現有 IVR 可以跟 AI 並存嗎？',
+        answer:
+          '可以，而且常是最穩的路徑：IVR 保留法定告知與固定分流，AI 承接自然語句任務，兩者接到同一套後端與人工席位。不需要為了導入 AI 把運作正常的 IVR 全部換掉。',
+      },
     ],
     relatedServices: ['ai-voice-agent', 'ai-tools'],
     relatedCaseStudies: ['gogocha-ai-dispatch'],
@@ -325,6 +350,11 @@ export const blogPosts: Record<string, BlogContent> = {
       {
         question: 'SIP 串上就算完成 AI 電話系統嗎？',
         answer: '不是。SIP 只解決部分語音傳輸，後面仍有對話、資料驗證、企業系統動作、監控、失敗降級與人工接手。',
+      },
+      {
+        question: '整合時要開放哪些系統權限給開發商？',
+        answer:
+          '原則是最小權限：測試環境先行、正式環境只開必要的 API 範圍、每個動作留稽核紀錄。若對方要求整包管理員權限才能開工，應把它當成風險訊號，先問清楚用途。',
       },
     ],
     relatedServices: ['ai-voice-agent', 'ai-tools'],
@@ -405,6 +435,11 @@ export const blogPosts: Record<string, BlogContent> = {
         question: '我自己可以做嗎？',
         answer:
           '可以先做：確認頁面可索引、補實名作者與案例、在 GSC／GA4 建立基準。若沒有原創資料，先整理第一手經驗，比增加更多標記更重要。',
+      },
+      {
+        question: 'GEO 需要每個月持續做嗎？',
+        answer:
+          '技術基礎的修正是階段性的，但內容證據與量測是持續的：案例要更新、固定查詢集要定期重測、新內容要持續累積。一次性健檢能找出問題，長期可見度靠持續經營。',
       },
     ],
     relatedServices: ['geo', 'seo'],
@@ -502,6 +537,16 @@ export const blogPosts: Record<string, BlogContent> = {
         answer:
           '誤導或違反政策的結構化資料可能失去 rich result 資格，也可能收到人工處置。常見風險包括自填 AggregateRating、標記使用者看不到的內容，以及建立虛構的商家或作者實體。',
       },
+      {
+        question: 'JSON-LD、Microdata、RDFa 該選哪一種？',
+        answer:
+          'Google 三種都支援，官方建議 JSON-LD：與畫面 HTML 分離、容易維護、不會改壞版面。除非既有系統已大量使用 Microdata，新專案直接採用 JSON-LD 即可。',
+      },
+      {
+        question: '結構化資料需要每一頁都放嗎？',
+        answer:
+          '依頁面類型決定：Organization 與 WebSite 全站共用，文章頁加 Article、服務頁加 Service、有導航層級的頁面加 BreadcrumbList。與畫面內容無關的類型不要硬塞——錯誤標記比沒有標記更糟。',
+      },
     ],
     relatedServices: ['seo', 'geo'],
     references: [
@@ -588,6 +633,16 @@ export const blogPosts: Record<string, BlogContent> = {
         question: 'Perplexity 跟 ChatGPT 引用邏輯一樣嗎？',
         answer:
           '不能視為同一套規則。平台的索引、查詢處理、回答與來源呈現方式不同，而且都會更新；共同基礎是公開可存取、主題相關、來源清楚且具一手價值的內容，成效仍要分平台量測。',
+      },
+      {
+        question: '該封鎖 PerplexityBot 嗎？',
+        answer:
+          '看你的目標：想取得 AI 搜尋能見度就允許抓取；有付費內容或授權顧慮則封鎖，並搭配伺服器端存取控制。這是可隨時調整的政策決定，本站的選擇是全面開放並定期核對存取紀錄。',
+      },
+      {
+        question: '被 Perplexity 引用能帶來多少流量？',
+        answer:
+          '因查詢與產業而異，沒有可信的固定數字。可在 GA4 觀察 perplexity.ai 引薦的實際到站量與後續行為，用自己的數據判斷價值，不要套用第三方宣稱的平均值。',
       },
     ],
     relatedServices: ['geo', 'seo'],
@@ -677,6 +732,16 @@ export const blogPosts: Record<string, BlogContent> = {
         answer:
           '不能一概而論。不同查詢與網站可能出現不同結果；應以自己的 Search Console 點擊、曝光、CTR 與詢盤基準判斷，而不是套用第三方平均數或保證引用後一定帶來流量。',
       },
+      {
+        question: 'AI Overview 什麼時候會出現在搜尋結果？',
+        answer:
+          '由 Google 依查詢判斷，只在系統認為能為搜尋增加價值時顯示，站方無法主動觸發。同一查詢在不同時間、地區可能出現不同結果，所以量測要看趨勢，不是單次截圖。',
+      },
+      {
+        question: '要為 AI Overview 另外寫一版內容嗎？',
+        answer:
+          '不用。AI Overview 的支援連結來自一般搜尋索引，頁面符合一般搜尋資格即可。把同一頁內容寫得答案先行、可核對，比維護兩套內容實際得多。',
+      },
     ],
     relatedServices: ['geo', 'seo'],
     references: [
@@ -701,14 +766,16 @@ export const blogPosts: Record<string, BlogContent> = {
       '網站建置費用從幾萬到幾百萬都有，差別在哪？本文拆解四個價格區間的實際內容、常被忽略的隱藏成本、轉換廠商時的注意事項。',
     keywords: ['網站建置費用區間', '網站建置費用怎麼算', '網站成本拆解', '網站建置隱藏成本', '網站維護費用'],
     datePublished,
+    dateModified: '2026-08-12',
     qualityTier: 'production',
     intent: 'transactional',
     intro:
-      '網站建置費用差距很大。本文只談「實際費用包含什麼」，不貶低任何特定廠商或工具。',
+      '網站建置費用差距很大。本文只談「實際費用包含什麼」、報價單名目怎麼讀、三年總成本怎麼算，不貶低任何特定廠商或工具。',
     sections: [
       {
         heading: '台灣網站建置費用四個區間',
-        body: '',
+        body:
+          '價格區間之間會重疊，因為決定價格的不是「網站」兩個字，而是規格：頁數與流程數量、設計是套用還是客製、後台要管到什麼程度、要不要接金流或外部系統。同一個「公司形象網站」的需求，用模板自己拉和找團隊客製，費用可以差十倍——兩者都沒有錯，錯的是拿不同規格的報價互比。以下區間是我們接案與同業觀察的粗略分布，實際仍以規格為準：',
         items: [
           'NT$ 3,000-30,000：模板網站（Wix / Squarespace 等）— 適合個人 / 微型企業',
           'NT$ 30,000-100,000：WordPress 套版或半客製化',
@@ -718,7 +785,8 @@ export const blogPosts: Record<string, BlogContent> = {
       },
       {
         heading: '常被忽略的隱藏成本',
-        body: '',
+        body:
+          '報價單通常只寫「做好上線」那一筆，但網站是持續產生費用的資產。簽約前把下面每一項都問一次「這筆誰付、付給誰、一年多少」，可以避免上線後才發現的預算缺口。特別留意授權費：某些佈景主題、外掛與圖庫是按年計費，第一年可能包含在建置費裡，第二年開始就是你的持續支出：',
         items: [
           '主機 / 網域年費',
           'CMS 或 plugin 商業授權費（特別是 WordPress 商業套件）',
@@ -730,15 +798,26 @@ export const blogPosts: Record<string, BlogContent> = {
       },
       {
         heading: '簽約前要確認的事',
-        body: '',
+        body:
+          '下面這些問題在簽約前問，答案會寫進合約；上線後才問，答案就由對方決定。其中「原始碼歸屬」和「主機帳號在誰名下」兩項最關鍵——它們決定你未來換廠商時，帶得走的是完整網站，還是只有一堆截圖：',
         items: [
-          '原始碼歸誰所有（合約必寫，否則綁定）',
+          '原始碼歸誰所有（合約必寫，否則變更廠商時很被動）',
           '主機帳號是在你名下還是廠商代管',
           'CMS 後台你能不能自己改',
           'SEO 內建到什麼程度（Lighthouse SEO 分數可作基準）',
           '是否支援響應式設計',
           '售後保固範圍與年限',
         ],
+      },
+      {
+        heading: '報價單常見名目逐項解讀',
+        body:
+          '不同廠商的報價單名目差異很大，這裡把常見項目翻成白話。「視覺設計」：是套現成版型微調，還是從線框稿開始客製？兩者工作量差數倍，報價單應寫明。「前端切版／後端開發」：前端是把設計稿變成網頁，後端是會員、表單、後台這些看不見的邏輯；只有形象頁的網站後端占比低，有系統功能的網站後端才是大頭。「CMS 後台」：讓你自己改內容的介面，要確認能改的範圍（只有文字？還是版面與新頁面？）。「SEO 基礎設定」：合理範圍是 meta 標籤、sitemap、robots、結構化資料與速度基礎——若寫著「保證排名」就是紅旗。「專案管理費」：不是灌水，需求訪談、進度協調、驗收整理都是真實工時，但比例通常在總價一到兩成之間。看不懂的名目直接要求拆解，正規團隊都拆得出來。',
+      },
+      {
+        heading: '什麼時候該重做網站，什麼時候修就好？',
+        body:
+          '不是每個「網站很舊」都需要打掉重練。判斷方式是看問題出在哪一層：內容過時、圖片老舊，這是內容層，後台能改就不用重做；版面跑版、手機難用，這是樣式層，小規模改版可能就夠；但如果是技術層的問題——後台沒人會用、想加功能發現當初的系統加不了、原始碼拿不到、或建站工具已停止維護——修補的錢會一直丟進去卻換不到彈性，這時重做反而是止損。另一個常見的重做時機是商業模式變了：原本只要形象展示，現在要線上接單，這已經不是改版，是換一種網站。重做前記得盤點舊站資產：有排名的頁面要做 301 轉址、既有內容要搬遷，這些工作要出現在報價單上，沒出現就要問。',
       },
       {
         heading: '算網站要看三年，不是只看第一年報價',
@@ -761,6 +840,21 @@ export const blogPosts: Record<string, BlogContent> = {
         question: '網站上線後，每年維護費行情大概多少？',
         answer:
           '看你要維護到什麼程度。純放著不動，成本主要是網域（數百元）加主機（依流量從數千到數萬元不等）；若要持續改版、更新內容、修 bug，市場行情多半是月費制或按工時計。建議先問清楚：哪些屬於免費保固範圍、哪些要另計。這些數字只是行情參考，實際依網站規格與流量而定。',
+      },
+      {
+        question: '報價單上的「SEO 優化」到底包含什麼？',
+        answer:
+          '建站階段合理的範圍是技術基礎：meta 標籤、sitemap、robots、結構化資料、載入速度與行動版體驗。這些是「讓網站能被搜尋引擎正確讀取」，跟上線後持續的關鍵字內容經營是兩回事。報價單若承諾排名，建議把它當紅旗。',
+      },
+      {
+        question: '網站做到一半想換廠商，做得到嗎？',
+        answer:
+          '取決於合約與交付形式。原始碼與設計稿歸屬有寫清楚、主機網域在你名下，接手方通常能延續；反之若做到一半的成品全在廠商環境裡，多半只能重做。這也是為什麼歸屬條款要在簽約前談，而不是想換的時候才談。',
+      },
+      {
+        question: '先用模板網站，之後可以升級成客製化嗎？',
+        answer:
+          '可以，而且對很多微型企業是合理路徑：先用低成本驗證業務，流量與需求成長後再客製。要注意的是「升級」實際上是重做——模板平台的版型與功能通常搬不走，能搬的是網域、內容與既有排名（透過 301 轉址）。規劃時把網域買在自己名下，未來轉移就順利得多。',
       },
     ],
     relatedServices: ['web-development'],
@@ -837,6 +931,11 @@ export const blogPosts: Record<string, BlogContent> = {
         answer:
           '把它當成紅旗訊號。排名由 Google 的演算法決定，沒有任何廠商能對它下指令、保證特定名次；做得到「短期衝上去」的，多半用的是會被演算法懲罰的手法，賭輸的是你的網站。我們寧可把預期講保守，也不做這種承諾。',
       },
+      {
+        question: '技術問題修完，多久會反映在搜尋表現上？',
+        answer:
+          '從 Google 重新抓取到重新評估通常需要數週至數月，幅度取決於問題嚴重性與競爭環境。修完先用 URL 檢查工具確認 Google 取得新版本，再觀察趨勢——不要七天沒動靜就把 title 或 URL 又改一輪。',
+      },
     ],
     relatedServices: ['seo'],
     references: [
@@ -865,14 +964,16 @@ export const blogPosts: Record<string, BlogContent> = {
       'AI 客服該自建還是用 Intercom AI、Zendesk AI 等 SaaS？本文比較兩種方案的長期成本、技術門檻、適用情境。',
     keywords: ['AI 客服自建', 'AI 客服 SaaS', 'AI 客服成本比較', 'Intercom AI', 'AI 客服 ROI'],
     datePublished,
+    dateModified: '2026-08-12',
     qualityTier: 'production',
     intent: 'commercial',
     intro:
-      'AI 客服是 2026 年企業導入 AI 最常見的切入點。但「自建」與「用 SaaS」的長期成本差距可能很大，本文整理可參考的成本結構（實際費用依授權方案、用量而定）。',
+      'AI 客服是 2026 年企業導入 AI 最常見的切入點。但「自建」與「用 SaaS」的長期成本差距可能很大，本文整理可參考的成本結構與三年總成本的試算方法（實際費用依授權方案、用量而定）。',
     sections: [
       {
         heading: 'SaaS AI 客服費用參考',
-        body: '以下為各服務官方公開的牌價區間（請以該品牌最新報價為準）：',
+        body:
+          'SaaS 方案最大的比較困難在計價單位不同：有的按「每次成功解決的對話」收費、有的按座位月費、有的按方案組合，直接比單價沒有意義，要換算成「你的對話量之下每月付多少」才能比。以下為各服務官方公開的牌價區間（請以該品牌最新報價為準）：',
         items: [
           'Intercom Fin：每次解決對話約 USD 0.99 起',
           'Zendesk AI Agent：依授權方案，通常從 USD 50 / 座位 / 月起',
@@ -881,7 +982,8 @@ export const blogPosts: Record<string, BlogContent> = {
       },
       {
         heading: '自建 AI 客服的成本結構',
-        body: '',
+        body:
+          '自建的成本分三塊，性質完全不同：開發費是一次性的、API 費隨用量浮動、維護費看你要不要委外。三塊分開列的好處是每一塊都能獨立決策——例如維護可以先委外、團隊熟了再收回自己做。以隼訊的公開報價為例：',
         items: [
           '隼訊 MVP 開發：一次性 2.5-3.75 萬',
           'AI API 費用：每月 5,000-30,000（API 為實際用量成本，照原價計）',
@@ -889,8 +991,14 @@ export const blogPosts: Record<string, BlogContent> = {
         ],
       },
       {
+        heading: '三年總成本怎麼試算',
+        body:
+          '比較兩條路線時，建議用同一條公式各算一次三年總額，把你自己的數字代進去：SaaS 三年成本＝（月費或每次解決費 × 你的月對話量）× 36 個月＋導入設定費；自建三年成本＝一次性開發費＋（API 月費＋維護月費）× 36 個月。兩個提醒：第一，對話量是最關鍵的變數——量小的時候 SaaS 幾乎一定比較便宜，量大的時候自建的固定成本會被攤薄；第二，SaaS 的單價可能隨方案調整，自建的 API 單價也可能變動，試算時用區間而不是單點，結論才穩。我們在報價時會陪客戶把這條公式實際算一遍，而不是只給一句「長期比較划算」。',
+      },
+      {
         heading: '什麼情況該選 SaaS',
-        body: '',
+        body:
+          '誠實說，不少情境下 SaaS 是更合理的選擇，我們也會這樣建議：',
         items: [
           '需要立即上線（SaaS 通常 1 週內、自建需 3-4 週）',
           '團隊沒有 IT 人員可維護',
@@ -900,13 +1008,19 @@ export const blogPosts: Record<string, BlogContent> = {
       },
       {
         heading: '什麼情況自建較划算',
-        body: '',
+        body:
+          '反過來，出現以下條件時，自建的長期成本與彈性通常勝出：',
         items: [
           '對話量大（自建邊際成本低）',
           '需要連接內部系統 / 資料庫',
           '有資料合規要求（部分產業如金融、醫療）',
           '希望避免長期被授權費綁定',
         ],
+      },
+      {
+        heading: '從 SaaS 換到自建（或反過來）的轉換成本',
+        body:
+          '很多企業的實際路徑是先用 SaaS 驗證、量大了再自建，這條路可行，但轉換不是免費的，規劃時要把四筆成本算進去。一是知識庫可攜性：整理好的問答與文件是最有價值的資產，選 SaaS 時就先確認能不能完整匯出，格式是不是通用的。二是對話歷史：歷史對話是訓練與優化的素材，匯出限制要先問。三是流程重接：原本接在 SaaS 上的通知、轉真人、工單流程都要重新串。四是雙軌並行期：切換期間新舊系統並跑幾週，兩邊費用同時發生。反方向（自建換 SaaS）成本通常低一些，因為自建時資料本來就在你手上——這也是我們把「資料歸屬客戶」寫進交付標準的原因。',
       },
       {
         heading: '導入後怎麼看成效：該追的指標',
@@ -934,6 +1048,16 @@ export const blogPosts: Record<string, BlogContent> = {
         question: '聊天機器人有哪些類型？差在哪？',
         answer:
           '大致分三種：規則型（照設定好的流程走，精準但不靈活）、AI 生成型（用大型語言模型自由對話，靈活但要控制幻覺）、以及兩者混合型（固定流程走規則、開放問題交給 AI）。實務上跑得穩的多半是混合型——查訂單、預約這類走規則確保不出錯，開放問答才交給 AI，再搭配 RAG 與轉真人當安全網。',
+      },
+      {
+        question: '知識庫要準備到什麼程度才能上線？',
+        answer:
+          '不用等到完美，但要過最低門檻：高頻問題（通常是客服量前二三十題）有明確答案、過期資訊已清掉、答不了的問題有轉真人路徑。上線後每週檢視答錯的對話補內容，比上線前想做到一百分實際得多。',
+      },
+      {
+        question: 'LINE 官方帳號可以接 AI 客服嗎？',
+        answer:
+          '可以，LINE 是台灣企業最常見的接入口，透過 Messaging API 就能把 AI 客服接進官方帳號。要注意 LINE 官方帳號本身的訊息費用是另一筆（依 LINE 的方案計價），跟 AI 的 API 費用分開算。',
       },
     ],
     relatedServices: ['ai-tools'],
@@ -1012,6 +1136,16 @@ export const blogPosts: Record<string, BlogContent> = {
         answer:
           '沒有這種魔法數字。內容該多長由搜尋意圖決定——有些問題兩三段就講完，硬灌到兩千字反而稀釋重點。關鍵字密度更是早就過時的概念，刻意塞關鍵字只會讓內容變難讀。我們看的是「有沒有把使用者的問題回答到位」，而不是湊字數或抓密度。',
       },
+      {
+        question: '用 AI 寫的內容會被 Google 懲罰嗎？',
+        answer:
+          'Google 官方立場是看品質、不看產製方式：無論人寫或 AI 寫，大量缺乏原創價值的內容都會被品質系統降權。我們的做法是 AI 可以輔助整理草稿，但一手經驗、數據與專業判斷必須來自真人，發布前逐篇人工審核。',
+      },
+      {
+        question: '內容多久更新一次比較好？',
+        answer:
+          '沒有固定頻率。官方規則、價格、產品能力或實作經驗有變才更新，並如實標注修改日期。為了「新鮮度」把日期改新而內容沒變，短期看似有利，長期傷害的是讀者與搜尋引擎對網站的信任。',
+      },
     ],
     relatedServices: ['seo', 'geo'],
     references: [
@@ -1029,6 +1163,443 @@ export const blogPosts: Record<string, BlogContent> = {
         name: 'Performance report: Common tasks and use cases',
         url: 'https://support.google.com/webmasters/answer/17010961',
         publisher: 'Google Search Console Help',
+      },
+    ],
+  },
+  'llms-txt-implementation-guide': {
+    slug: 'llms-txt-implementation-guide',
+    title: 'llms.txt 是什麼？格式、實作與誠實的效果評估',
+    h1: 'llms.txt 是什麼？格式、實作與效果評估',
+    description:
+      'llms.txt 是給 AI 系統的網站導覽提案。本文說明它的由來與格式、本站用 Next.js 動態生成的實作方式，以及包含 Google 官方立場在內的誠實效果評估。',
+    keywords: ['llms.txt', 'llms.txt 是什麼', 'llms.txt 格式', 'llms-full.txt', 'llms.txt 教學'],
+    datePublished: '2026-08-12',
+    qualityTier: 'production',
+    intent: 'informational',
+    intro:
+      'llms.txt 是 2024 年由社群提出的檔案格式提案，用一份精簡的 Markdown 讓 AI 系統快速理解網站結構與重點內容。本站有部署它，但我們要先把話說在前面：Google 已表明不使用 llms.txt，它不是收錄或引用的門票。這篇文章教你怎麼做，也告訴你該對它抱多少期待。',
+    toc: ['由來與定位', '格式規範', '本站實作方式', '效果的誠實評估', '該不該部署', '部署後驗證'],
+    sections: [
+      {
+        heading: 'llms.txt 從哪來？定位是什麼？',
+        body:
+          'llms.txt 由 Answer.AI 的 Jeremy Howard 在 2024 年 9 月提出，動機很實際：網頁塞滿導覽、廣告與腳本，對上下文長度有限的語言模型不友善，不如提供一份乾淨的 Markdown 摘要，列出網站是什麼、重點頁面在哪。要注意它的身分：這是社群提案，不是任何搜尋引擎或 AI 平台的官方標準——這個定位決定了你該投資多少心力在上面。',
+      },
+      {
+        heading: '格式長什麼樣？',
+        body:
+          '規範刻意簡單，就是一份放在網站根目錄的 Markdown 檔。結構依序是：H1 寫網站名稱、引言區塊（blockquote）寫一段網站摘要、之後用 H2 分區放連結清單，每個連結附一句說明。另外有一個選配的 llms-full.txt，直接放入完整的頁面內容，給願意讀長文件的系統使用。兩個檔案都以純文字回應，不需要任何特殊標頭。',
+        items: [
+          'H1：網站或專案名稱（必要）',
+          'Blockquote：一段話的網站摘要',
+          'H2 區塊：分類的連結清單，每條附說明',
+          'llms-full.txt（選配）：完整內容的展開版本',
+        ],
+      },
+      {
+        heading: '本站的實作：動態生成，不手寫',
+        body:
+          '我們在 Next.js App Router 用 Route Handler 提供 /llms.txt 與 /llms-full.txt，內容不是手寫的靜態檔，而是從跟網頁同一份資料層（服務、案例、價格的 TypeScript 內容檔）動態組出來，並以 force-static 在建置時輸出。這個設計解決了手寫檔案最大的問題：內容漂移。價格改了、服務改了，llms.txt 在下次建置自動同步，不會出現網頁說一套、llms.txt 說另一套的情況——對 AI 系統輸出過期資訊，比沒有這個檔案更糟。',
+      },
+      {
+        heading: '效果的誠實評估：Google 不用它',
+        body:
+          '這是多數教學不會告訴你的部分。Google 官方文件明確說明 AI 功能沒有額外的技術門檻，搜尋團隊成員也公開表示不使用 llms.txt；其他 AI 平台是否讀取、讀了是否影響引用，目前都沒有官方承諾。我們檢視自己的伺服器紀錄，能看到部分 AI 爬蟲抓取過這兩個檔案，但「被抓取」與「影響引用」是兩件事，後者無法驗證。所以我們的結論是：llms.txt 是成本極低的補充措施，不是 GEO 的核心工作——真正的核心仍是可索引的內容與一手證據。',
+      },
+      {
+        heading: '該不該部署？判斷方式',
+        body:
+          '值得做的理由：成本極低（一個檔案）、沒有任何已知風險、萬一未來有平台正式採用你已就位。不值得投入的情況：有人要你為此付顧問費，或把它包裝成「AI 收錄必備」來賣——這與平台官方立場不符，可以直接當成判斷廠商誠信的試金石。我們對客戶的說法是一致的：做，但它排在技術 SEO、內容證據與量測之後，優先序很後面。',
+      },
+      {
+        heading: '部署後怎麼驗證？',
+        body:
+          '三件事：一是用 curl 或瀏覽器直接開 /llms.txt，確認回應 200、內容是最新的；二是檢查內容過濾與 sitemap 一致——noindex 的頁面不應該出現在 llms.txt 裡，否則等於把你不想曝光的內容主動遞給 AI；三是定期看伺服器紀錄，記錄哪些爬蟲實際抓取過，這是你判斷「有沒有人在讀」的唯一一手資料。',
+      },
+    ],
+    faq: [
+      {
+        question: 'llms.txt 跟 sitemap.xml 有什麼不同？',
+        answer:
+          'sitemap.xml 是搜尋引擎官方支援的標準，列出所有可索引 URL 供爬蟲發現；llms.txt 是社群提案，用人類可讀的 Markdown 描述網站重點。前者有明確的官方用途，後者目前沒有平台承諾使用——兩者不互相取代。',
+      },
+      {
+        question: '一定要有 llms-full.txt 嗎？',
+        answer:
+          '不一定。llms-full.txt 是選配的完整內容版本，適合內容量可控的網站；頁面很多的網站全文展開會過大，反而稀釋重點。本站的做法是 llms.txt 放結構化清單、llms-full.txt 放服務與案例的完整段落。',
+      },
+      {
+        question: '沒有 llms.txt 會影響 AI 引用嗎？',
+        answer:
+          '以目前各平台的公開文件來看，不會。Google 明確不使用；其他平台也沒有把它列為條件。決定引用的仍是內容能不能被抓取、有沒有可信的一手價值。把它當加分題，不要當必考題。',
+      },
+    ],
+    relatedServices: ['geo', 'seo'],
+    references: [
+      {
+        name: 'The /llms.txt file specification',
+        url: 'https://llmstxt.org/',
+        publisher: 'llmstxt.org（Answer.AI 社群提案）',
+      },
+      {
+        name: 'AI features and your website',
+        url: 'https://developers.google.com/search/docs/appearance/ai-features',
+        publisher: 'Google Search Central',
+        updatedAt: '2025-12-10',
+      },
+    ],
+  },
+  'chatgpt-search-citation-observations': {
+    slug: 'chatgpt-search-citation-observations',
+    title: 'ChatGPT 搜尋怎麼選引用來源？觀察方法與限制',
+    h1: 'ChatGPT 搜尋的引用來源：觀察方法與限制',
+    description:
+      '拆解 OpenAI 官方文件能確認的爬蟲機制（OAI-SearchBot、ChatGPT-User、GPTBot），以及我們用固定查詢集觀察 ChatGPT 引用行為的方法與限制。',
+    keywords: ['ChatGPT 搜尋 引用', 'ChatGPT 引用來源', 'OAI-SearchBot', 'ChatGPT 搜尋 SEO', 'ChatGPT 引用 網站'],
+    datePublished: '2026-08-12',
+    qualityTier: 'production',
+    intent: 'informational',
+    intro:
+      'ChatGPT 搜尋的回答會附來源連結，這讓「怎麼被 ChatGPT 引用」成為常見問題。誠實的答案是：OpenAI 沒有公開排名公式，任何宣稱掌握「引用演算法」的說法都是推測。本文整理官方文件能確認的機制，以及我們實際在用的觀察方法——包含它的限制。',
+    toc: ['官方能確認的機制', '引用怎麼產生', '固定查詢集方法', '方法的限制', '內容端可以做什麼', '流量怎麼量'],
+    sections: [
+      {
+        heading: '官方文件能確認的三個爬蟲',
+        body:
+          'OpenAI 公開了三個用途不同的 user agent，站方可以分開控制：OAI-SearchBot 用來建立搜尋索引、讓網站出現在 ChatGPT 搜尋結果的連結中；ChatGPT-User 是使用者在對話中要求讀取網頁時的即時代理；GPTBot 則用於模型訓練資料的收集。三者在 robots.txt 各自獨立——封了 GPTBot 不等於退出 ChatGPT 搜尋，想要搜尋能見度的網站至少要放行 OAI-SearchBot。',
+        table: {
+          caption: 'OpenAI 三個 user agent 的用途區分',
+          headers: ['User agent', '用途', '想被 ChatGPT 搜尋引用時'],
+          rows: [
+            ['OAI-SearchBot', '建立搜尋索引與呈現連結', '必須放行'],
+            ['ChatGPT-User', '使用者要求時即時讀取頁面', '建議放行'],
+            ['GPTBot', '收集模型訓練資料', '依內容授權政策自行決定'],
+          ],
+        },
+      },
+      {
+        heading: '引用是怎麼產生的？能確認與不能確認的',
+        body:
+          '能確認的：ChatGPT 搜尋會對查詢做檢索、綜合多個來源生成回答、在回答旁附上來源連結。不能確認的：來源怎麼排序、為什麼選 A 不選 B、內容特徵佔多少權重——這些 OpenAI 都沒有公開。市面上的「ChatGPT 引用因子研究」多半是第三方對樣本的逆向推測，參考可以，但引用這類結論時應標明它是推測，不能寫成平台規則。我們自己的立場：把可驗證的基礎做好，用觀察代替猜測。',
+      },
+      {
+        heading: '我們的觀察方法：固定查詢集',
+        body:
+          '做法是建立一組固定的問題清單，定期在 ChatGPT 重測並記錄結果。要點如下：問題選「客戶做決策時真的會問的」（例如比較服務、詢問費用行情），不要只測品牌名，因為品牌名只反映既有認知；每次都開新對話，避免上下文影響回答；每題記錄日期、品牌是否被提及、引用了哪些網域與頁面；同一組題目按月重測，看的是趨勢變化，不是單次結果。這個方法成本很低——一份表格加上固定的執行紀律。',
+      },
+      {
+        heading: '這個方法的限制，要先講清楚',
+        body:
+          '固定查詢集有明確的限制，我們在報告裡都會註明：AI 回答有隨機性，同一問題連問兩次可能得到不同來源；回答會受帳號、地區與模型版本影響，你測到的不等於所有使用者看到的；模型或產品改版時，整組基準可能重洗。所以它只能回答「我們的品牌在這組問題下的相對趨勢」，不能推論市占或曝光量。任何用單次截圖宣稱「已被 ChatGPT 推薦」的報告，都要打折看待。',
+      },
+      {
+        heading: '內容端可以做什麼？',
+        body:
+          '與其追逐未公開的演算法，不如做可驗證的基礎，這些工作同時服務傳統搜尋與所有 AI 平台：確認 OAI-SearchBot 能抓到頁面（robots.txt 與 WAF 都要查）；重要內容以文字存在 HTML 中，不藏在互動元件裡；答案先行的寫作結構，一段話先回答問題再展開；一手證據與實名作者，因為可核對的內容才有被綜合引用的價值；品牌名稱與公司資訊在全網一致，減少實體混淆。',
+      },
+      {
+        heading: '被引用之後，流量怎麼量？',
+        body:
+          '在 GA4 觀察 chatgpt.com 的引薦流量是最直接的訊號，可以建立專屬的探索報表長期追蹤。兩個注意事項：AI 平台引薦不帶 UTM 參數，來源判斷靠 referrer，部分情境（如 App 內開啟）會變成直接流量而被低估；引薦量通常不大，但意圖明確——使用者是帶著 AI 給的脈絡點進來的，所以更該看的是這群人的後續行為與詢盤轉換，而不是絕對數量。',
+      },
+    ],
+    faq: [
+      {
+        question: '封鎖 GPTBot 之後，內容就不會出現在 ChatGPT 了嗎？',
+        answer:
+          '不完全是。GPTBot 管的是訓練資料收集；搜尋引用走 OAI-SearchBot 的索引。封 GPTBot、留 OAI-SearchBot 的組合，理論上仍可能在 ChatGPT 搜尋被引用。另外歷史訓練資料與第三方轉載的內容不受你現在的 robots.txt 控制。',
+      },
+      {
+        question: 'ChatGPT 搜尋跟 Bing 的索引有關嗎？',
+        answer:
+          'OpenAI 與微軟有合作關係，ChatGPT 的檢索歷史上部分依賴 Bing 的基礎，但 OpenAI 也建立自己的索引（OAI-SearchBot），完整的現況沒有官方文件。務實作法：Bing Webmaster Tools 順手提交，但不要把「做 Bing SEO」當成進 ChatGPT 的保證路徑。',
+      },
+      {
+        question: '查詢集多久重測一次合理？',
+        answer:
+          '我們的節奏是每月一次，搭配季度回顧。太頻繁沒有意義——AI 回答的隨機波動會蓋過真實變化；太久則抓不到模型改版造成的斷點。重點是每次重測的條件（題目、措辭、新對話）保持一致。',
+      },
+    ],
+    relatedServices: ['geo'],
+    references: [
+      {
+        name: 'Overview of OpenAI crawlers',
+        url: 'https://platform.openai.com/docs/bots',
+        publisher: 'OpenAI Platform Documentation',
+      },
+      {
+        name: 'ChatGPT search',
+        url: 'https://help.openai.com/en/articles/9237897-chatgpt-search',
+        publisher: 'OpenAI Help Center',
+      },
+    ],
+  },
+  'geo-measurement-guide': {
+    slug: 'geo-measurement-guide',
+    title: 'GEO 成效怎麼衡量？AI 搜尋流量的量測實作',
+    h1: 'GEO 成效衡量：AI 搜尋流量的量測實作',
+    description:
+      'GEO 成效不能靠截圖報喜。本文示範三層量測架構的實作：GA4 的 AI 平台引薦流量、GSC 的能力與限制、固定查詢集基準線，以及向決策者報告的格式。',
+    keywords: ['GEO 成效衡量', 'AI 搜尋 流量 追蹤', 'AI 引薦 GA4', 'GEO 量測', 'AI 流量 分析'],
+    datePublished: '2026-08-12',
+    qualityTier: 'production',
+    intent: 'informational',
+    intro:
+      'GEO 這個領域的最大問題不是做法，是量測——AI 平台不提供站長工具，於是市場上充斥著無法驗證的成效宣稱。本文整理我們實際在用的量測架構：哪些數據拿得到、怎麼拿、拿不到的怎麼誠實處理。這套方法在我們的 GEO 服務報告中實際運作。',
+    toc: ['為什麼 GEO 量測難', '三層量測架構', 'GA4 實作', 'GSC 的能與不能', '查詢集基準線', '報告格式'],
+    sections: [
+      {
+        heading: '為什麼 GEO 量測比 SEO 難？',
+        body:
+          'SEO 有 Search Console：曝光、點擊、查詢、頁面都有官方數據。GEO 沒有對等工具——ChatGPT、Perplexity、Gemini 都不提供「你的品牌被提及幾次」的後台。你能拿到的只有三種東西：使用者點擊來源連結後產生的引薦流量、你自己主動測試的觀察紀錄，以及詢盤時客戶的自述。承認這個限制是量測誠實的起點：任何宣稱能給你「AI 曝光總量」的報告，都該先問數據從哪來。',
+      },
+      {
+        heading: '三層量測架構',
+        body:
+          '我們把 GEO 量測拆成三層，每層回答不同的問題、有不同的可信度。第一層是平台可見度：固定查詢集的重測紀錄，回答「AI 有沒有提到我們、引用哪頁」；第二層是引薦流量：GA4 的 AI 平台 referral，回答「有多少人從 AI 點過來、進來後做了什麼」；第三層是商業結果：詢盤與成交的來源歸因，回答「這件事有沒有帶來生意」。三層都要標示口徑與限制，缺一層就補不齊因果鏈。',
+      },
+      {
+        heading: 'GA4 的實作：把 AI 引薦獨立出來',
+        body:
+          '實作方式是在 GA4 的探索報表以工作階段來源／媒介篩選 AI 平台的網域，長期追蹤。常見的引薦來源包括 chatgpt.com、perplexity.ai、copilot.microsoft.com、gemini.google.com 等（清單會隨平台改版變動，需定期檢視）。兩個實務注意：一是 AI 引薦不帶 UTM，來源全靠 referrer，App 內開啟或隱私設定可能讓部分流量變成 direct，所以實際量通常被低估；二是別只看工作階段數，要看這群使用者的參與度、讀了哪些頁、有沒有進到聯絡表單——AI 引薦的價值在意圖濃度，不在數量。',
+      },
+      {
+        heading: 'Search Console 能看到什麼、看不到什麼',
+        body:
+          'Google 官方說明 AI Overview 與 AI Mode 的成效目前計入 Search Console Performance 的 Web 搜尋類型——這代表你的 GSC 數據「已包含」AI 功能帶來的曝光與點擊，但無法把它們單獨拆出來。所以 GSC 在 GEO 量測中的角色是：守住整體搜尋趨勢的基準線，觀察非品牌查詢的曝光與點擊變化，而不是拆分 AI 流量。Bing Webmaster Tools 對 Copilot 的情況類似。把「GSC 拆不出 AI 流量」寫進報告的限制聲明，比假裝拆得出來專業得多。',
+      },
+      {
+        heading: '固定查詢集：低成本的基準線',
+        body:
+          '在沒有官方後台的情況下，固定查詢集是建立「平台可見度」基準的務實方法。實作要點：選十到二十個客戶決策情境的問題（服務比較、費用行情、廠商評估），固定措辭；每月在各平台用新對話重測；每筆記錄日期、平台、品牌是否被提及、引用的網域與頁面；用表格累積，看季度趨勢。它的限制（回答隨機性、帳號與地區差異）在本站的 ChatGPT 引用觀察一文有完整討論，這裡不重複——重點是所有結論只談趨勢，不談絕對值。',
+      },
+      {
+        heading: '向決策者報告的格式',
+        body:
+          '我們的月報固定四個區塊：AI 平台查詢集的變化摘要（附原始紀錄連結）、GA4 的 AI 引薦流量與行為、整體搜尋基準線的變化（GSC）、以及本月量測限制聲明。最後一項不是免責套話，是具體寫出「這個月哪些數字可能失真、為什麼」——例如平台改版造成的斷點。老闆遲早會從別的管道知道 AI 數據量不準；先講限制的人建立信任，只報好消息的人透支信任。',
+      },
+    ],
+    faq: [
+      {
+        question: 'GA4 裡的 AI 流量要去哪裡看？',
+        answer:
+          '報表：探索（Explore）建自訂報表，維度用「工作階段來源」，篩選 chatgpt.com、perplexity.ai 等網域。想長期追蹤可以把這些來源建立成自訂管道群組，月報就不用每次手動篩。',
+      },
+      {
+        question: '品牌被 AI 提到但沒附連結，量得到嗎？',
+        answer:
+          '幾乎量不到——沒有點擊就沒有 referrer，分析工具拿不到資料。這正是固定查詢集存在的原因：用主動觀測補被動數據的盲區。報告裡應把「無連結提及」列為已知量測盲點。',
+      },
+      {
+        question: '需要買 AI 可見度追蹤工具嗎？',
+        answer:
+          '先用手動查詢集跑三個月再說。多數工具做的事本質相同（批量查詢＋記錄），數據一樣是抽樣不是母體。查詢量大、平台多到手動吃不消時，工具才有性價比；一開始就買，容易把工具輸出當成官方數據誤用。',
+      },
+    ],
+    relatedServices: ['geo', 'seo'],
+    references: [
+      {
+        name: 'How are you performing on Google?',
+        url: 'https://support.google.com/webmasters/answer/10268906',
+        publisher: 'Google Search Console Help',
+      },
+      {
+        name: 'AI features and your website',
+        url: 'https://developers.google.com/search/docs/appearance/ai-features',
+        publisher: 'Google Search Central',
+        updatedAt: '2025-12-10',
+      },
+      {
+        name: '[GA4] Default channel group',
+        url: 'https://support.google.com/analytics/answer/9756891',
+        publisher: 'Google Analytics Help',
+      },
+    ],
+  },
+  'ai-crawler-robots-guide': {
+    slug: 'ai-crawler-robots-guide',
+    title: 'AI 爬蟲有哪些？robots.txt 開放與封鎖的決策',
+    h1: 'AI 爬蟲清單與 robots.txt 決策',
+    description:
+      '整理 GPTBot、OAI-SearchBot、ClaudeBot、PerplexityBot、Google-Extended 等主要 AI 爬蟲的用途差異，以及依內容商業模式決定開放或封鎖的框架——附本站的實際決策。',
+    keywords: ['AI 爬蟲', 'GPTBot robots.txt', 'ClaudeBot', 'Google-Extended', '封鎖 AI 爬蟲'],
+    datePublished: '2026-08-12',
+    qualityTier: 'production',
+    intent: 'informational',
+    intro:
+      '該不該讓 AI 爬蟲抓你的網站？這個問題沒有通用答案，因為「AI 爬蟲」不是一種東西——訓練用、搜尋索引用、使用者即時讀取用的代理，控制方式與封鎖後果完全不同。本文先把類型分清楚，再給決策框架，最後公開本站自己的選擇與理由。',
+    toc: ['三種爬蟲類型', '主要爬蟲清單', '決策框架', '本站的選擇', '實作細節與常見錯誤'],
+    sections: [
+      {
+        heading: '先分清三種用途，再談開放或封鎖',
+        body:
+          '第一類是訓練型：收集內容用於模型訓練，如 GPTBot、ClaudeBot；封鎖它表達的是「不同意內容進入未來的訓練資料」，但管不到已經發生的訓練與第三方轉載。第二類是搜尋索引型：建立 AI 搜尋的索引與來源連結，如 OAI-SearchBot、PerplexityBot；封鎖它等於退出該平台的搜尋能見度。第三類是使用者代理型：使用者在對話中要求讀取特定網址時的即時抓取，如 ChatGPT-User、Perplexity-User；依 Perplexity 官方說明，這類請求屬使用者行為，一般不受 robots.txt 控制，要擋只能靠伺服器端。另外有兩個特例：Google-Extended 與 Applebot-Extended 不是獨立爬蟲，而是 robots.txt 中的控制代號，分別管內容能否用於 Gemini 訓練與 Apple 的模型訓練——實際抓取的仍是 Googlebot 與 Applebot。',
+      },
+      {
+        heading: '主要 AI 爬蟲清單',
+        body: '依各平台官方文件整理（用途定義以官方文件為準，會隨平台政策更新）：',
+        table: {
+          caption: '主要 AI 爬蟲與封鎖影響',
+          headers: ['名稱', '所屬', '類型', '封鎖的主要影響'],
+          rows: [
+            ['GPTBot', 'OpenAI', '訓練', '內容不用於模型訓練；不影響 ChatGPT 搜尋'],
+            ['OAI-SearchBot', 'OpenAI', '搜尋索引', '退出 ChatGPT 搜尋的來源連結'],
+            ['ChatGPT-User', 'OpenAI', '使用者代理', '使用者要求讀取時被拒'],
+            ['ClaudeBot', 'Anthropic', '訓練', '內容不用於 Claude 訓練'],
+            ['PerplexityBot', 'Perplexity', '搜尋索引', '退出 Perplexity 的來源呈現'],
+            ['Google-Extended', 'Google', '訓練控制代號', '不用於 Gemini 訓練；不影響 Google 搜尋與 AI Overview'],
+            ['Applebot-Extended', 'Apple', '訓練控制代號', '不用於 Apple 模型訓練'],
+            ['Amazonbot', 'Amazon', '索引／助理', 'Alexa 等服務的引用受限'],
+            ['CCBot', 'Common Crawl', '公開資料集', '退出 Common Crawl（許多模型的訓練資料源）'],
+          ],
+        },
+      },
+      {
+        heading: '決策框架：看內容的商業模式',
+        body:
+          '判斷的軸線是「內容被 AI 讀取後，你得到什麼、失去什麼」。公開行銷內容（服務說明、案例、文章）：目的本來就是被找到，開放搜尋型與使用者代理型幾乎沒有下檔風險，訓練型看品牌立場。付費內容與原創資料庫：內容本身就是商品，封鎖訓練型是合理預設，搜尋型看導流價值是否大於內容外洩。媒體與出版：授權談判是核心考量，封鎖常是談判籌碼的一部分。共通原則：這是可逆的政策決定，不是一次性的技術決定——先選一個立場，每季檢視。',
+      },
+      {
+        heading: '本站的選擇：全面開放，理由如下',
+        body:
+          '本站的 robots.txt 對 GPTBot、OAI-SearchBot、ChatGPT-User、ClaudeBot、PerplexityBot、Google-Extended、Applebot-Extended、Amazonbot 全部開放。理由很直接：我們是 B2B 服務網站，內容的唯一目的是讓潛在客戶找到我們、判斷我們可不可信——AI 平台引用我們的內容回答使用者問題，對我們是曝光不是損失。同時要說明：不想被索引的頁面（如草稿、個人頁）我們用頁面層級的 noindex 控制，而不是 robots.txt——這兩個機制的差異在下一段。',
+      },
+      {
+        heading: '實作細節與常見錯誤',
+        body:
+          '第一個常見錯誤：把 robots.txt 當成隱私工具。robots.txt 只擋守規矩的爬蟲抓取，不是存取控制——敏感內容要用登入與權限保護。第二個：搞混抓取與索引。robots.txt 擋抓取；不想被收錄要用 noindex，而且被 robots.txt 擋住的頁面 Google 反而讀不到它的 noindex 標記。第三個：封錯對象。封 Google-Extended 不影響搜尋，但誤封 Googlebot 會直接掉出搜尋結果，改 robots.txt 前後都要用 GSC 的 robots.txt 報告驗證。第四個：WAF 誤擋。防火牆規則可能在 robots.txt 放行的同時把爬蟲擋在門外，要用伺服器紀錄與官方 IP 清單核對實際存取。',
+      },
+    ],
+    faq: [
+      {
+        question: '封了 GPTBot，內容就完全不會出現在 ChatGPT 嗎？',
+        answer:
+          '不會完全消失。GPTBot 只管未來的訓練資料收集；ChatGPT 搜尋的引用走 OAI-SearchBot 索引，已訓練進模型的歷史資料與第三方網站轉載的內容也不受影響。要分別控制，先想清楚你要擋的是哪一種使用。',
+      },
+      {
+        question: '封鎖 Google-Extended 會影響 Google 搜尋排名嗎？',
+        answer:
+          '依 Google 官方文件，不會。Google-Extended 只控制內容是否用於 Gemini 等模型訓練，不影響 Google 搜尋的抓取、索引與排名，也不影響 AI Overview——後者用的是一般 Googlebot 的索引。',
+      },
+      {
+        question: 'robots.txt 改了多久生效？',
+        answer:
+          '要等爬蟲下次重新抓取 robots.txt，各家頻率不同，Google 通常在 24 小時內。改完可以用 GSC 的 robots.txt 報告確認 Google 取得的版本，其他平台則觀察伺服器紀錄的實際存取變化。',
+      },
+      {
+        question: '怎麼確認來的是真爬蟲不是冒名的？',
+        answer:
+          'User agent 字串可以偽造。OpenAI、Google、Perplexity 都公布官方 IP 範圍，嚴謹做法是在伺服器或 WAF 用 IP 反查驗證，只對通過驗證的請求套用放行規則。',
+      },
+    ],
+    relatedServices: ['geo', 'seo'],
+    references: [
+      {
+        name: 'Overview of OpenAI crawlers',
+        url: 'https://platform.openai.com/docs/bots',
+        publisher: 'OpenAI Platform Documentation',
+      },
+      {
+        name: 'Overview of Google crawlers and fetchers',
+        url: 'https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers',
+        publisher: 'Google Search Central',
+      },
+      {
+        name: 'Does Anthropic crawl data from the web, and how can site owners block the crawler?',
+        url: 'https://support.claude.com/en/articles/8896518',
+        publisher: 'Anthropic Support',
+      },
+      {
+        name: 'Perplexity Crawlers',
+        url: 'https://docs.perplexity.ai/docs/resources/perplexity-crawlers',
+        publisher: 'Perplexity Documentation',
+      },
+    ],
+  },
+  'seo-vendor-evaluation-guide': {
+    slug: 'seo-vendor-evaluation-guide',
+    title: 'SEO 公司怎麼選？合約、報表與驗收的檢查清單',
+    h1: 'SEO 公司怎麼選？合約、報表與驗收檢查清單',
+    description:
+      '從簡報話術、合約條款、報表口徑到驗收設計，整理評估 SEO 廠商的實用檢查清單。由同樣賣 SEO 服務的我們來寫——包含你該拿來檢驗我們的標準。',
+    keywords: ['SEO 公司 怎麼選', 'SEO 廠商 評估', 'SEO 合約 注意事項', 'SEO 外包', 'SEO 報表 怎麼看'],
+    datePublished: '2026-08-12',
+    qualityTier: 'production',
+    intent: 'commercial',
+    intro:
+      '這篇由賣 SEO 服務的我們來寫，立場要先揭露：我們有利益衝突，但也因此知道這個行業的話術長什麼樣。文中每一條檢查標準，你都可以拿來檢驗包括我們在內的任何廠商——這正是我們敢寫它的原因。',
+    toc: ['先想清楚要買什麼', '簡報階段的紅旗', '合約條款', '報表口徑', '驗收設計', '你自己要做的事'],
+    sections: [
+      {
+        heading: '先想清楚你要買的是什麼',
+        body:
+          '「SEO 服務」這個詞涵蓋了完全不同的工作：技術修復（網站體質、索引問題，偏一次性）、內容產出（持續的文章與頁面經營）、還是全包顧問（策略、執行、量測都管）。需求不同，適合的廠商型態就不同——技術強的團隊不一定會寫你產業的內容，內容農場式的量產也修不了你的網站。先對內確認要買哪一塊、預算多少，再去比廠商，否則比價根本不在同一個基準上。各型態的費用結構可以參考我們公開的 SEO 費用頁。',
+      },
+      {
+        heading: '簡報階段的紅旗話術',
+        body: '聽到以下說法時提高警覺，每一條都有具體原因：',
+        items: [
+          '「保證排名第一」——排名由演算法決定，沒有廠商能保證；能短期衝上去的手法多半伴隨懲罰風險',
+          '「保證被 AI 引用」——沒有任何平台提供這種管道，這是把 GEO 話術化的典型',
+          '「我們跟 Google 有特殊關係」——Google 不提供任何付費或關係型的自然排名通道',
+          '「一個月見效」——重新抓取與評估以週、月計，承諾快速見效通常靠的是操弄短期指標',
+          '「超低月費全包」——低價全包的常見實情是模板化內容量產，不動技術也不做量測',
+        ],
+      },
+      {
+        heading: '合約要盯的條款',
+        body:
+          '簽約前逐條確認，這些條款決定合作結束時你剩下什麼：資產歸屬——GSC、GA4 帳號開在誰名下？內容版權歸誰？外部連結資源會不會隨約終止而撤掉？退場條件——提前終止的通知期與費用、交接內容清單。範圍定義——每月做哪些工作、產出多少內容、誰負責審稿。轉包揭露——內容與連結是否轉包給第三方執行。我們的立場寫在自己的費用頁裡：帳號從第一天就該在客戶名下，這一條你可以要求任何廠商比照。',
+      },
+      {
+        heading: '報表怎麼看才不會被唬',
+        body:
+          '第一原則：要求開 GSC 權限給你自己。廠商報表可以美化，GSC 的原始數據不能——你隨時可以自己核對。第二原則：分清虛榮指標與商業指標。總曝光、平均排名這類數字容易衝高（多發長尾頁就有），真正該追的是非品牌查詢的點擊、到站後的行為與詢盤數。第三原則：警惕排名截圖——單次搜尋結果受個人化與地區影響，截圖可以挑時間挑條件；請廠商用 GSC 的查詢數據代替截圖。報表裡若從不提「這個月哪些沒做好」，也是一種訊號。',
+      },
+      {
+        heading: '驗收與試用期怎麼設計',
+        body:
+          '合理的驗收設計要區分「可承諾」與「不可承諾」：技術修復可驗收——索引問題數、修復清單、抓取狀態，這些有客觀標準；排名與流量不可承諾——能驗收的是工作有沒有做、口徑有沒有透明。實務建議：把合作拆成先做一次性的技術健檢與修復（一到三個月、產出明確），滿意再進入月費內容經營；一開始就簽長約全包的結構，議價能力全在對方。第一次檢視會議看兩件事：對方能不能講清楚「為什麼做這些」，以及數據口徑是否跟簽約時說的一致。',
+      },
+      {
+        heading: '你自己要做的事：好廠商也需要好客戶',
+        body:
+          '最後這段是很多採購指南不寫的：SEO 外包不是把問題丟出去就結束。有效的內容需要你的一手素材——案例、專業判斷、客戶常問的問題，這些廠商編不出來；每月留半小時到一小時受訪或審稿，內容品質會差很多。決策節奏也要配合——網站要改的技術項目卡在你這邊三個月，怪不了廠商沒成效。合作前先確認內部有人能對接：給素材、審內容、拍板技術修改。這個人不需要懂 SEO，需要懂你的業務。',
+      },
+    ],
+    faq: [
+      {
+        question: '月費很便宜的全包方案能買嗎？',
+        answer:
+          '先問清楚範圍再說。把「每月做哪些具體工作、產出什麼、誰執行」列出來對比，低價方案的常見實情是模板化內容、不碰技術、報表只給截圖。範圍攤開後，有些低價方案其實不便宜。',
+      },
+      {
+        question: '簽約前可以要求廠商提供什麼證明？',
+        answer:
+          '可驗證的公開案例（能實際搜尋核對的頁面與內容，而非只有成效截圖）、作法說明（願意講清楚會做哪些事、不做哪些事）、以及資產歸屬的書面承諾。截圖式的成功案例最容易造假，可核對性是關鍵。',
+      },
+      {
+        question: '自己學 SEO 跟外包，怎麼選？',
+        answer:
+          '網站小、時間多、產業競爭低：自學基礎（GSC、技術健檢、內容原則）通常夠用，本站的文章就是為此寫的。競爭產業、沒時間、或網站有累積的技術債：外包較實際——但無論選哪條路，帳號都握在自己手上。',
+      },
+      {
+        question: '換 SEO 廠商時要注意什麼？',
+        answer:
+          '交接清單至少包含：GSC／GA4 權限移轉、內容清單與版權確認、已建外部連結的清單、進行中工作的狀態。最怕的是帳號在前廠商名下——這也是為什麼資產歸屬要在簽約時就談好，而不是分手時才發現。',
+      },
+    ],
+    relatedServices: ['seo'],
+    references: [
+      {
+        name: 'Do you need an SEO?',
+        url: 'https://developers.google.com/search/docs/fundamentals/do-i-need-seo',
+        publisher: 'Google Search Central',
+      },
+      {
+        name: 'Google Search spam policies',
+        url: 'https://developers.google.com/search/docs/essentials/spam-policies',
+        publisher: 'Google Search Central',
       },
     ],
   },

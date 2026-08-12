@@ -61,9 +61,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
     }),
     createBreadcrumbSchema([
       { name: '首頁', path: '/' },
-      slug === 'ai-voice-agent'
-        ? { name: 'AI 工具開發', path: '/services/ai-tools' }
-        : { name: '服務項目', path: '/services/seo' },
+      { name: '服務項目', path: '/services' },
+      ...(slug === 'ai-voice-agent'
+        ? [{ name: 'AI 工具開發', path: '/services/ai-tools' }]
+        : []),
       { name: service.h1, path: `/services/${slug}` },
     ]),
     createServiceSchema({

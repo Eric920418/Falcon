@@ -6,6 +6,36 @@ export interface ItemListEntry {
   url?: string
 }
 
+export interface ItemListSchemaInput {
+  id: string
+  name: string
+  description: string
+  itemType?: 'Service' | 'CreativeWork' | 'Thing'
+  items: ItemListEntry[]
+}
+
+export function createItemListSchema(input: ItemListSchemaInput) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': input.id,
+    name: input.name,
+    description: input.description,
+    numberOfItems: input.items.length,
+    itemListElement: input.items.map((item, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      item: {
+        '@type': input.itemType ?? 'Thing',
+        name: item.name,
+        description: item.description,
+        ...(item.url ? { url: item.url } : {}),
+        ...(input.itemType === 'Service' ? { provider: { '@id': orgId } } : {}),
+      },
+    })),
+  }
+}
+
 export function createPortfolioItemListSchema(items: ItemListEntry[]) {
   return {
     '@context': 'https://schema.org',

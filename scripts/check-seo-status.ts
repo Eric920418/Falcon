@@ -13,7 +13,7 @@ import {
 } from '../src/lib/content/services'
 import {
   getAllLocalPages,
-  hasIndexableLocalEvidence,
+  isIndexableLocalPage,
 } from '../src/lib/content/local'
 import { getAllBlogPosts } from '../src/lib/content/blog'
 import { pricingPages, comparePages } from '../src/lib/content/pricing'
@@ -61,10 +61,13 @@ interface PageAudit {
 function collectExpectedRoutes(): RouteSpec[] {
   const routes: RouteSpec[] = [
     { path: '/', indexable: true, source: 'static' },
+    { path: '/services', indexable: true, source: 'static' },
     { path: '/about', indexable: true, source: 'static' },
     { path: '/case-studies', indexable: true, source: 'static' },
     { path: '/pricing', indexable: true, source: 'static' },
     { path: '/blog', indexable: true, source: 'static' },
+    { path: '/card', indexable: false, source: 'static' },
+    { path: '/resume', indexable: false, source: 'static' },
   ]
 
   for (const service of getAllServices()) {
@@ -80,9 +83,7 @@ function collectExpectedRoutes(): RouteSpec[] {
   for (const page of getAllLocalPages()) {
     routes.push({
       path: `/local/${page.slug}`,
-      indexable:
-        page.qualityTier === 'production' &&
-        hasIndexableLocalEvidence(page),
+      indexable: isIndexableLocalPage(page),
       source: 'local',
     })
   }

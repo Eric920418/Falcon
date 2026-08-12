@@ -166,6 +166,8 @@ export interface LocalContent {
   lastModified: string
   qualityTier: QualityTier
   intro: string
+  /** 誠實的服務方式聲明：無門市、線上為主、預約前往；索引閘門要求非空。 */
+  coverageDisclosure: string
   sections: ContentSection[]
   caseStudies?: CaseStudy[]
   faq: FAQItem[]
@@ -191,6 +193,11 @@ export interface BlogContent {
   references?: ContentReference[]
 }
 
+export interface RelatedLink {
+  label: string
+  href: string
+}
+
 export interface PricingPageContent {
   slug: string
   title: string
@@ -203,6 +210,7 @@ export interface PricingPageContent {
   tiers: PricingTier[]
   sections: ContentSection[]
   faq: FAQItem[]
+  relatedLinks?: RelatedLink[]
 }
 
 export interface ComparePageContent {

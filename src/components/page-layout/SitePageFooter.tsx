@@ -5,7 +5,7 @@ export function SitePageFooter() {
   return (
     <footer className="relative border-t border-[#344349]/50 py-12 px-6 bg-[#1E2A2E]">
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-8">
           <div>
             <h3 className="text-[#E0E5E8] mb-3 text-sm" style={{ fontFamily: 'var(--font-display)' }}>
               網站與 AI 開發
@@ -14,6 +14,7 @@ export function SitePageFooter() {
               <li><Link href="/services/web-development" className="text-[#A8B6BC] hover:text-amber-500">網站與系統開發</Link></li>
               <li><Link href="/services/ai-tools" className="text-[#A8B6BC] hover:text-amber-500">AI 工具開發</Link></li>
               <li><Link href="/services/ai-voice-agent" className="text-[#A8B6BC] hover:text-amber-500">企業 AI 語音客服</Link></li>
+              <li><Link href="/services" className="text-[#A8B6BC] hover:text-amber-500">所有服務項目</Link></li>
             </ul>
           </div>
           <div>
@@ -34,6 +35,19 @@ export function SitePageFooter() {
               <li><Link href="/case-studies" className="text-[#A8B6BC] hover:text-amber-500">公開案例</Link></li>
               <li><Link href="/about" className="text-[#A8B6BC] hover:text-amber-500">實名負責人</Link></li>
               <li><Link href="/pricing" className="text-[#A8B6BC] hover:text-amber-500">公開起價</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-[#E0E5E8] mb-3 text-sm" style={{ fontFamily: 'var(--font-display)' }}>
+              服務地區
+            </h3>
+            <ul className="space-y-2 text-sm">
+              <li><Link href="/local/taoyuan-seo" className="text-[#A8B6BC] hover:text-amber-500">桃園 SEO</Link></li>
+              <li><Link href="/local/taoyuan-web-design" className="text-[#A8B6BC] hover:text-amber-500">桃園網頁設計</Link></li>
+              <li><Link href="/local/taipei-seo" className="text-[#A8B6BC] hover:text-amber-500">台北 SEO</Link></li>
+              <li><Link href="/local/taipei-digital-marketing" className="text-[#A8B6BC] hover:text-amber-500">台北數位行銷</Link></li>
+              <li><Link href="/local/xinbei-seo" className="text-[#A8B6BC] hover:text-amber-500">新北 SEO</Link></li>
+              <li><Link href="/local/hsinchu-web-design" className="text-[#A8B6BC] hover:text-amber-500">新竹網頁設計</Link></li>
             </ul>
           </div>
           <div>

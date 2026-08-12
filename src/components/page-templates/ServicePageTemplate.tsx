@@ -18,7 +18,7 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
           <nav className="text-sm text-[#7A8A91] mb-6 flex flex-wrap items-center gap-2">
             <Link href="/" className="hover:text-amber-500">首頁</Link>
             <ChevronRight size={14} />
-            <Link href="/services/seo" className="hover:text-amber-500">服務項目</Link>
+            <Link href="/services" className="hover:text-amber-500">服務項目</Link>
             <ChevronRight size={14} />
             <span className="text-[#A8B6BC]">{service.h1}</span>
           </nav>

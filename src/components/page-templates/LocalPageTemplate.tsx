@@ -95,6 +95,10 @@ export function LocalPageTemplate({ page }: LocalPageTemplateProps) {
           </h1>
           <p className="text-lg text-[#A8B6BC] leading-relaxed max-w-3xl">{page.intro}</p>
 
+          <p className="mt-5 max-w-3xl border-l-2 border-amber-500/50 bg-stone-900/40 px-4 py-3 text-sm leading-relaxed text-[#7A8A91]">
+            {page.coverageDisclosure}
+          </p>
+
           <div className="mt-8 flex flex-wrap gap-4">
             <Link href="/#contact" className="falcon-btn-primary">
               立即聯絡 <ArrowRight size={18} className="ml-2 inline" />
