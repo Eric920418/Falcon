@@ -3,10 +3,10 @@ import type { CaseEvidence } from './types'
 export const caseStudies: Record<string, CaseEvidence> = {
   'yizhenxiang-commerce-performance': {
     slug: 'yizhenxiang-commerce-performance',
-    title: '翊珍香電商效能與營運系統案例',
+    title: '翊珍香電商系統案例｜圖片效能、會員與促銷後台',
     clientName: '翊珍香',
     location: '新北市汐止',
-    period: '公開專案資料，2026-08-12 更新',
+    period: '公開專案資料，2026-08-26 更新',
     summary:
       '為老字號食品品牌建置電商與營運後台，重點是可量測的網站效能、促銷彈性與資料自主權。',
     challenge:
@@ -64,7 +64,7 @@ export const caseStudies: Record<string, CaseEvidence> = {
     technologies: ['Next.js', 'TypeScript', 'GraphQL Yoga', 'PostgreSQL', 'Redis'],
     image: '/滷味.png',
     projectUrl: 'https://yizhenxiang.com.tw/zh-TW',
-    updatedAt: '2026-08-12',
+    updatedAt: '2026-08-26',
     disclosure:
       '本頁只引用已在隼訊作品集公開的技術資料；未取得並公開客戶 GA4、GSC 或營收資料，因此不宣稱商業成長幅度。',
     evidenceStatus: 'public-project',
@@ -148,10 +148,10 @@ export const caseStudies: Record<string, CaseEvidence> = {
   },
   'clinic-line-booking': {
     slug: 'clinic-line-booking',
-    title: '診所 LINE 預約與併發控制案例',
+    title: '診所 LINE 預約系統案例｜併發控制、即時同步與 130+ 測試',
     clientName: '中醫診所（依公開作品資料匿名）',
     location: '台灣',
-    period: '公開技術案例，2026-08-12 更新',
+    period: '公開技術案例，2026-08-26 更新',
     summary:
       '以 LINE LIFF 串接病患預約與診所管理後台，重點處理同時搶約、時段異動與前後台即時同步。',
     challenge:
@@ -206,7 +206,7 @@ export const caseStudies: Record<string, CaseEvidence> = {
     ],
     technologies: ['Next.js', 'Supabase Realtime', 'LINE LIFF', 'Row-level locking', 'E2E testing'],
     image: '/TISCLLB.png',
-    updatedAt: '2026-08-12',
+    updatedAt: '2026-08-26',
     disclosure:
       '客戶名稱與內部營運數據未公開；本頁只呈現既有作品集中已揭露的技術範圍與測試數量。',
     evidenceStatus: 'anonymized',

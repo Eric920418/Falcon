@@ -9,6 +9,19 @@ import { primaryPriceDefinitions } from './price-catalog'
 
 const lastModified = '2026-08-12'
 
+const pricingTitles: Record<string, string> = {
+  'web-development': '網站建置費用｜企業官網、電商與客製系統報價',
+  'ai-development': 'AI 工具開發費用｜客服 MVP、模型成本與系統串接報價',
+  seo: 'SEO 服務費用｜月費方案、工作內容與退場方式',
+  geo: 'SEO／GEO 搜尋成長費用｜公開起價與報價因素',
+}
+
+const pricingTitleUpdatedAt: Record<string, string> = {
+  'web-development': '2026-08-26',
+  'ai-development': '2026-08-26',
+  seo: '2026-08-26',
+}
+
 const pricingKeywords: Record<string, string[]> = {
   'web-development': ['網站建置費用', '網頁設計費用', '網站報價'],
   'ai-tools': ['AI 開發報價', 'AI 客服費用', 'AI 工具費用'],
@@ -291,11 +304,13 @@ export const pricingPages: Record<string, PricingPageContent> = Object.fromEntri
       definition.pricingSlug,
       {
         slug: definition.pricingSlug,
-        title: `${definition.name}費用｜公開起價與報價因素`,
+        title:
+          pricingTitles[definition.pricingSlug] ??
+          `${definition.name}費用｜公開起價與報價因素`,
         h1: `${definition.name}費用`,
         description: details.description,
         keywords: pricingKeywords[definition.serviceSlug] ?? [],
-        lastModified,
+        lastModified: pricingTitleUpdatedAt[definition.pricingSlug] ?? lastModified,
         qualityTier: 'production',
         intro: details.intro,
         tiers: definition.tiers,

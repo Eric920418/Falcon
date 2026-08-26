@@ -392,6 +392,7 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - 2026-08-12：新增兩個比較頁：`ai-voice-vs-chatbot`（與 IVR 比較文分軸：語音 vs 文字模態）、`wordpress-vs-custom-website`（開頭揭露只做客製的立場，WordPress 陳述維持中性事實框架）。
 - 2026-08-12：六個城市頁重寫為城市服務指南並全數開放索引（詳見 Local SEO 段）；同步修正城市頁殘留的舊價格（企業方案 30,000、新竹 3.75 萬起等與 price-catalog 不一致的數字）。footer 新增「服務地區」欄。
 - 2026-08-12：`/llms.txt` 與 `/llms-full.txt` 擴充 blog／compare／pricing／local 四個內容群組，過濾條件與 sitemap 一致。`/card` 改為 noindex（比照 `/resume`），`/card` 與 `/resume` 納入 `check:seo` 稽核路由；`manifest.json` 修正重複的 icon 條目並改指向 `/icon.png`。sitemap 由 30 個 URL 增至 44 個。
+- 2026-08-26：依 Ubersuggest「title 過短」清單逐頁審核 14 個 URL；首頁、服務總覽、三篇文章、兩個案例、四個城市頁與三個價格頁改為查詢意圖優先的描述性 title，品牌仍由共用 metadata 模板附加。未設定全站最低字數，避免為第三方門檻灌入關鍵字；驗收以 title 唯一、頁面語意一致與搜尋點擊表現為準。
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 - [ ] 匯入 GSC、GA4、Bing Webmaster Tools 與 GBP 的近 16 個月資料，另保存發布前 90 天基準。
 - [ ] 取得城市案例完整公開同意、期間、基準、結果後，把城市頁的案例區從 name-only 升級為含量化證據的展示（索引已由內容品質閘門開放，此項只影響案例展示深度）。

@@ -13,7 +13,7 @@ import { SitePageFooter } from '@/components/page-layout/SitePageFooter'
 import { createMetadata, createWebPageSchema, JsonLd, siteConfig } from '@/lib/seo'
 
 export const metadata: Metadata = createMetadata({
-  title: '台灣企業網站與 AI 系統開發｜SEO／GEO 搜尋成長',
+  title: '台灣企業網站、AI 系統開發與 SEO／GEO 搜尋成長服務',
   description:
     '隼訊提供台灣企業網站、AI 系統開發與 SEO／GEO 搜尋成長服務，以公開案例、實名責任與合格詢盤衡量成果。',
   path: '/',
@@ -26,7 +26,7 @@ export default function HomePage() {
     <div className="bg-stone-950 text-stone-100 overflow-x-hidden">
       <JsonLd
         data={createWebPageSchema({
-          name: '台灣企業網站與 AI 系統開發｜SEO／GEO 搜尋成長',
+          name: '台灣企業網站、AI 系統開發與 SEO／GEO 搜尋成長服務',
           description:
             '隼訊提供台灣企業網站、AI 系統開發與 SEO／GEO 搜尋成長服務。',
           url,

@@ -29,12 +29,12 @@ export const localPages: Record<string, LocalContent> = {
     slug: 'taoyuan-seo',
     city: '桃園',
     serviceFocus: 'SEO',
-    title: '桃園 SEO 服務｜預約到府或線上諮詢',
+    title: '桃園 SEO 公司｜在地搜尋、GBP 優化與透明成效量測',
     h1: '桃園 SEO 公司',
     description:
       '隼訊以桃園為主要服務基地，提供桃園、中壢、龜山、八德等地企業 SEO 服務；採線上會議或預約前往客戶所在地，不設可直接到訪門市。',
     keywords: ['桃園 SEO', '桃園 SEO 公司', '桃園 SEO 推薦', '桃園搜尋引擎優化', '中壢 SEO'],
-    lastModified,
+    lastModified: '2026-08-26',
     qualityTier: 'production',
     intro:
       '桃園是我們的主場：團隊就在這裡，服務桃園、中壢、龜山、八德、楊梅、平鎮一帶的中小企業。這一頁不是套模板的城市頁——我們把在桃園接案時實際觀察到的搜尋行為、常見需求與作法寫在下面，你可以用這些內容判斷我們懂不懂在地生意。',
@@ -130,12 +130,12 @@ export const localPages: Record<string, LocalContent> = {
     slug: 'taoyuan-web-design',
     city: '桃園',
     serviceFocus: '網頁設計',
-    title: '桃園網頁設計｜客製化網站開發',
+    title: '桃園網頁設計公司｜企業官網、電商與客製系統開發',
     h1: '桃園網頁設計',
     description:
       '隼訊提供桃園地區企業官網、電商平台、客製化系統開發。使用 Next.js 現代技術棧，原始碼完整交付，可面對面討論需求。',
     keywords: ['桃園網頁設計', '桃園網站建置', '桃園網頁設計公司', '中壢網頁設計', '桃園架站'],
-    lastModified,
+    lastModified: '2026-08-26',
     qualityTier: 'production',
     intro:
       '我們在桃園的客戶橫跨餐飲、室內設計、人力資源、電商等不同產業。網站建置不分區域定價，差別只在一件事：能不能坐下來面對面把需求講清楚。以我們的經驗，會卡住一個專案的從來不是技術，而是「老闆腦中想的」跟「寫進需求單的」對不上——這件事當面聊一小時，往往比來回十封 email 還有效，這也是在地廠商真正的價值。這一頁把我們在桃園接案的實際做法、流程與價格全部攤開，方便你逐項比較。',
@@ -331,12 +331,12 @@ export const localPages: Record<string, LocalContent> = {
     slug: 'taipei-seo',
     city: '台北',
     serviceFocus: 'SEO',
-    title: '台北 SEO 公司｜白帽手法、透明定價',
+    title: '台北 SEO 公司｜技術健檢、內容策略與透明成效量測',
     h1: '台北 SEO 公司',
     description:
       '隼訊提供台北地區企業 SEO 與 GEO 服務：技術健檢、關鍵字研究、內容優化、可驗證證據與搜尋成效量測。線上協作為主，可預約面議。',
     keywords: ['台北 SEO', '台北 SEO 公司', '台北 SEO 推薦', '台北搜尋引擎優化'],
-    lastModified,
+    lastModified: '2026-08-26',
     qualityTier: 'production',
     intro:
       'SEO 工作的多數環節（健檢、關鍵字研究、內容生產、報告）都在線上完成，與廠商地點關係不大。這一頁除了說明服務方式，也寫下我們對台北 SEO 市場的實際觀察——在全台競爭最激烈的搜尋市場，內容門檻跟其他城市完全不同。頁尾的費用段落與常見問題，也適合當成你比較其他廠商時的提問清單。',
@@ -540,12 +540,12 @@ export const localPages: Record<string, LocalContent> = {
     slug: 'hsinchu-web-design',
     city: '新竹',
     serviceFocus: '網頁設計',
-    title: '新竹網頁設計｜科技業、新創官網',
+    title: '新竹網頁設計公司｜科技業官網、雙語網站與 NDA 協作',
     h1: '新竹網頁設計',
     description:
       '隼訊為新竹科學園區企業、新創、研發中心提供客製化網站開發。Next.js 現代技術、英文版整合、可簽 NDA。',
     keywords: ['新竹網頁設計', '新竹網站建置', '竹科網站', '科技業網站'],
-    lastModified,
+    lastModified: '2026-08-26',
     qualityTier: 'production',
     intro:
       '新竹企業多數是科技業，對網站的需求與一般企業不同：常需要英文版、招募頁、技術文件下載、投資人專區。這一頁說明我們在新竹接案時的工作方式，以及跟工程師背景的窗口合作學到的事——包含常見需求清單、協作節奏、多語架構的作法與費用，都是實際專案累積下來的注意事項，供你在內部提案時參考。',

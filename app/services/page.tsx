@@ -13,7 +13,8 @@ import {
   JsonLd,
 } from '@/lib/seo'
 
-const pageTitle = '服務項目'
+const pageTitle = '企業網站、AI 系統開發與 SEO／GEO 搜尋成長服務'
+const pageHeading = '企業網站、AI 開發與搜尋成長服務'
 const pageDescription =
   '隼訊數位行銷的完整服務清單：網站與系統開發、AI 工具開發、企業 AI 語音客服、SEO 搜尋成長與 GEO AI 搜尋優化。每項服務都公開起價與交付內容。'
 
@@ -96,7 +97,7 @@ export default function ServicesPage() {
               className="mb-6 text-4xl leading-tight text-[#E0E5E8] md:text-5xl"
               style={{ fontFamily: 'var(--font-display)' }}
             >
-              服務項目
+              {pageHeading}
             </h1>
             <p className="max-w-3xl text-lg leading-relaxed text-[#A8B6BC]">
               我們的工作分成兩條主軸：一條是「把東西做出來」——網站、系統、AI 工具與語音客服的開發建置；

@@ -464,13 +464,13 @@ export const blogPosts: Record<string, BlogContent> = {
   },
   'schema-org-tutorial': {
     slug: 'schema-org-tutorial',
-    title: 'Schema.org 結構化資料部署實作',
-    h1: 'Schema.org 結構化資料部署實作',
+    title: 'Schema.org 結構化資料教學｜JSON-LD、驗證與常見錯誤',
+    h1: 'Schema.org 結構化資料教學｜JSON-LD、驗證與常見錯誤',
     description:
       'Schema.org 用來描述頁面實體並支援特定搜尋功能。本文說明該用哪些類型、哪些已失效，以及內容一致性規則。',
     keywords: ['Schema.org', '結構化資料', 'JSON-LD', 'LocalBusiness schema', 'FAQ schema'],
     datePublished,
-    dateModified: '2026-08-11',
+    dateModified: '2026-08-26',
     qualityTier: 'production',
     intent: 'informational',
     intro:
@@ -760,13 +760,13 @@ export const blogPosts: Record<string, BlogContent> = {
   },
   'website-pricing-2026': {
     slug: 'website-pricing-2026',
-    title: '網站建置費用區間：台灣行情與成本拆解',
-    h1: '網站建置費用區間與成本拆解',
+    title: '2026 台灣網站建置費用｜行情區間、隱藏成本與報價比較',
+    h1: '2026 台灣網站建置費用｜行情區間、隱藏成本與報價比較',
     description:
       '網站建置費用從幾萬到幾百萬都有，差別在哪？本文拆解四個價格區間的實際內容、常被忽略的隱藏成本、轉換廠商時的注意事項。',
     keywords: ['網站建置費用區間', '網站建置費用怎麼算', '網站成本拆解', '網站建置隱藏成本', '網站維護費用'],
     datePublished,
-    dateModified: '2026-08-12',
+    dateModified: '2026-08-26',
     qualityTier: 'production',
     intent: 'transactional',
     intro:
@@ -1064,13 +1064,13 @@ export const blogPosts: Record<string, BlogContent> = {
   },
   'how-we-define-good-seo-content': {
     slug: 'how-we-define-good-seo-content',
-    title: '我們對「好 SEO 內容」的定義',
-    h1: '我們對「好 SEO 內容」的定義',
+    title: 'SEO 內容品質怎麼判斷？E-E-A-T、證據與驗收標準',
+    h1: 'SEO 內容品質怎麼判斷？E-E-A-T、證據與驗收標準',
     description:
       '內容是 SEO 的核心，但「好內容」很難量化。本文整理隼訊在客戶內容生產時實際遵守的判斷標準。',
     keywords: ['SEO 內容', '內容行銷', 'E-E-A-T', '內容品質'],
     datePublished,
-    dateModified: '2026-08-11',
+    dateModified: '2026-08-26',
     qualityTier: 'production',
     intent: 'informational',
     intro:
