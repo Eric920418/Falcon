@@ -87,6 +87,26 @@ export const aiVoiceArticles = [
     title: 'AI 電話如何串接 PBX、CRM、工單與派單系統',
     description: '整理電話層、AI 層與企業系統層的責任邊界。',
   },
+  {
+    slug: 'ai-voice-agent-poc-acceptance-checklist',
+    title: 'AI 語音客服 POC 怎麼驗收？測試情境、指標與上線門檻',
+    description: '用黃金測試案例、失敗路徑與系統結果決定是否值得進入正式建置。',
+  },
+  {
+    slug: 'ai-voice-latency-barge-in-turn-taking',
+    title: 'AI 語音客服延遲與打斷怎麼測？',
+    description: '拆解 VAD、Barge-in、工具呼叫與端到端延遲，不用單一秒數掩蓋問題。',
+  },
+  {
+    slug: 'ai-call-recording-privacy-security',
+    title: 'AI 電話錄音與個資怎麼處理？',
+    description: '盤點錄音、逐字稿、權限、保存、供應商與測試資料的風險邊界。',
+  },
+  {
+    slug: 'ai-voice-human-handoff-escalation',
+    title: 'AI 語音客服怎麼轉真人？',
+    description: '設計觸發條件、上下文交接，以及滿線、斷線與系統失敗的降級流程。',
+  },
 ] as const
 
 export const aiVoiceService: ServiceContent = {
@@ -106,7 +126,7 @@ export const aiVoiceService: ServiceContent = {
     'AI 電話系統',
   ],
   intent: 'commercial',
-  lastModified: '2026-08-03',
+  lastModified: '2026-08-30',
   qualityTier: 'production',
   intro:
     'AI 語音客服不是把聊天機器人接上電話而已。企業真正需要的是讓來電內容進入可控工作流：取得必要資訊、查詢規則、建立派單或工單、同步既有系統，並在 AI 無法確認時交給人工。隼訊提供這類客製整合，GoGoCha 是我們已公開的實作證據。',

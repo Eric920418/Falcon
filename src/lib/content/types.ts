@@ -188,6 +188,7 @@ export interface BlogContent {
   sections: ContentSection[]
   howTo?: HowToInput
   faq?: FAQItem[]
+  relatedLinks?: RelatedLink[]
   relatedServices?: string[]
   relatedCaseStudies?: string[]
   references?: ContentReference[]

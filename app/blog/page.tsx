@@ -14,13 +14,16 @@ import {
 const contentTracks = [
   {
     label: '企業 AI 電話',
-    description: '先理解架構，再比較成本與 IVR／真人客服，最後進入 PBX、CRM 與派單整合。',
+    description: '從原理與 POC 開始，再進入技術、成本、選型、整合、資料風險與人工接手。',
     links: [
       ['AI 語音客服導入指南', '/blog/ai-voice-customer-service-guide'],
+      ['POC 測試與上線驗收', '/blog/ai-voice-agent-poc-acceptance-checklist'],
+      ['延遲、VAD 與插話測試', '/blog/ai-voice-latency-barge-in-turn-taking'],
       ['AI 語音客服費用', '/blog/ai-voice-customer-service-cost'],
       ['AI、IVR 與真人比較', '/blog/ai-voice-vs-ivr-human-agent'],
-      ['語音與文字客服比較', '/compare/ai-voice-vs-chatbot'],
       ['PBX、CRM 與派單串接', '/blog/ai-phone-pbx-crm-integration'],
+      ['電話錄音、個資與資安', '/blog/ai-call-recording-privacy-security'],
+      ['人工轉接與失敗降級', '/blog/ai-voice-human-handoff-escalation'],
     ],
   },
   {

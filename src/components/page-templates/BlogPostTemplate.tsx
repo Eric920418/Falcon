@@ -206,6 +206,26 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
         </section>
       )}
 
+      {post.relatedLinks && post.relatedLinks.length > 0 && (
+        <section className="px-6 py-10">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-xl text-[#E0E5E8] mb-4">延伸閱讀</h2>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {post.relatedLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="flex items-center justify-between gap-4 border border-[#344349] bg-stone-900/30 p-4 text-sm text-[#A8B6BC] transition-colors hover:border-amber-500 hover:text-[#E0E5E8]"
+                >
+                  <span>{link.label}</span>
+                  <ArrowRight size={16} className="shrink-0" aria-hidden="true" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {post.relatedServices && post.relatedServices.length > 0 && (
         <section className="py-12 px-6 bg-[#1E2A2E]/50">
           <div className="max-w-3xl mx-auto">

@@ -6,7 +6,7 @@ import { blogPosts } from '@/lib/content/blog'
 const featuredPostSlugs = [
   'website-pricing-2026',
   'geo-complete-guide-2026',
-  'how-we-define-good-seo-content',
+  'ai-voice-agent-poc-acceptance-checklist',
 ]
 
 function formatDate(value: string) {

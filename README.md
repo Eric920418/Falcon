@@ -648,6 +648,14 @@ export default function SomePage() {
 - 產圖路由用 **Node.js runtime**（非 edge），以 `fs` 讀取 `@fontsource/noto-sans-tc` 的 **`.woff`** 字體傳入 `next/og` — satori 支援 woff/ttf/otf 但**不支援 woff2**，且預設字體不含中文，未載入會變豆腐□
 - vCard 以 `Blob` + `<a download>` 觸發下載；產生失敗時於前端完整顯示錯誤，符合 CLAUDE.md 規範
 
+## 企業 AI 電話內容集群
+
+- Blog 共 21 篇正式文章，其中 8 篇組成企業 AI 電話決策集群：原理、POC 驗收、延遲與插話、費用、IVR／真人比較、PBX／CRM 串接、錄音個資，以及人工轉接。
+- AI 電話文章使用 `relatedLinks` 建立文章間內鏈，並固定回連 `/services/ai-voice-agent` 與 GoGoCha 公開案例；服務頁、Blog 閱讀路徑與首頁精選提供主要入口。
+- 法規與供應商技術內容只引用可見的官方來源；未公開的 GoGoCha SLA、辨識率、PBX／客服席位與營運成果不得寫成已驗證能力。
+- 文章不設定通用 POC 及格數字，門檻必須依任務風險、企業基準與可補救性決定。
+- 驗收順序：`pnpm lint:content`、`pnpm build`，啟動 production server 後執行 `pnpm check:seo http://127.0.0.1:3000`。
+
 ## 部署
 
 本專案支援 Vercel 部署：
