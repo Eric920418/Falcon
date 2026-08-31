@@ -20,6 +20,7 @@ const pricingTitleUpdatedAt: Record<string, string> = {
   'web-development': '2026-08-26',
   'ai-development': '2026-08-26',
   seo: '2026-08-26',
+  geo: '2026-08-31',
 }
 
 const pricingKeywords: Record<string, string[]> = {
@@ -248,7 +249,7 @@ const pricingPageDetails: Record<string, PricingPageDetails> = {
       {
         heading: '成效怎麼量測、報告裡有什麼？',
         body:
-          '我們的量測分三層：AI 平台查詢集的定期重測結果（品牌有沒有被提到、引用了哪些頁面）、GSC 與 GA4 中來自 AI 平台的引薦流量，以及詢盤來源記錄。報告會誠實標明量測的限制——AI 平台的回答有隨機性，同一問題不同時間可能得到不同答案，所以我們看的是多次重測的趨勢，不是單次截圖。量不到的東西（例如 AI 平台內部的曝光次數）我們直接說量不到。',
+          '報告分五個訊號：帳號可用時的 Search Console Generative AI 曝光與呈現頁面、Bing AI Performance 的 citations 與 grounding queries、GA4 的 AI 來源與站內行為、固定查詢集的抽樣，以及合格詢盤。Google 專用報表仍在分批開放；Bing citation 不代表排名、權威或呈現位置；固定查詢也只是抽樣。所有資料都附口徑與限制，不會把平台局部數據包裝成 AI 總市占。',
       },
       {
         heading: '我們明確不販售的項目',
@@ -281,7 +282,7 @@ const pricingPageDetails: Record<string, PricingPageDetails> = {
       {
         question: 'AI 曝光在報告裡怎麼呈現？',
         answer:
-          '三個來源：固定查詢集在各 AI 平台的重測記錄（提及與引用情況）、GSC／GA4 的 AI 平台引薦流量，以及詢盤時客戶自述的來源。每一項都附原始數據，不做無法驗證的推估。',
+          '帳號可用時會附 Google Generative AI 的 impressions 與呈現頁面、Bing AI Performance 的 citations 與 grounding queries；另外列出 GA4 的 ChatGPT UTM／AI referrer、固定查詢抽樣與詢盤來源。每項都附原始資料與限制，不把 citations 當排名，也不反推平台未公開的總曝光。',
       },
       {
         question: '做 GEO 需要改我的網站嗎？',

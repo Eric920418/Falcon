@@ -8,7 +8,7 @@ export const geoService: ServiceContent = {
     '隼訊以技術 SEO、實名作者、原創案例與 AI 搜尋量測執行 GEO；不販售 llms.txt、特殊 AI Schema 或保證引用。',
   keywords: ['GEO', '生成式引擎優化', 'GEO 服務', 'GEO 優化公司', 'Generative Engine Optimization', 'ChatGPT 優化'],
   intent: 'commercial',
-  lastModified: '2026-07-26',
+  lastModified: '2026-08-31',
   qualityTier: 'production',
   intro:
     'GEO 是業界用來描述 AI 搜尋可見度工作的名稱。依 Google 2026 年官方指引，AI Overview 與 AI Mode 沒有額外技術門檻，也沒有專用 AI Schema；頁面仍須先能被搜尋引擎抓取、索引並提供摘要。隼訊把 GEO 視為 SEO 的延伸：用一手案例、實名責任、清楚來源與量測，增加內容在 Google AI、ChatGPT Search 與 Perplexity 被找到的機會，但不保證引用。',
@@ -26,7 +26,7 @@ export const geoService: ServiceContent = {
         'Organization、WebSite、Service、Article、Breadcrumb 等與畫面一致的必要 Schema',
         '實名作者、案例證據、更新日期、來源與限制揭露',
         '依真實客戶問題規劃主題集群，不批量建立查詢變體頁',
-        '以 GSC、GA4、AI 平台引薦與固定查詢集建立可重現基準',
+        '以可用的 GSC Generative AI、Bing AI Performance、GA4、固定查詢集與詢盤建立可核對基準',
       ],
     },
     {
@@ -72,7 +72,7 @@ export const geoService: ServiceContent = {
       },
       {
         name: '重測與量化',
-        text: '一段時間後用同一組問題重測，比較品牌提及前後的變化，依結果調整內容與結構。',
+        text: '對照 Google／Bing 官方 AI 報表（帳號可用時）、GA4、固定查詢集與合格詢盤，依落地頁與意圖調整現有內容。',
       },
     ],
     totalTime: 'P60D',
@@ -91,7 +91,7 @@ export const geoService: ServiceContent = {
     {
       question: '如何驗證 GEO 真的有效？',
       answer:
-        '每月在 ChatGPT、Claude、Gemini、Perplexity 上用一組固定問題測試品牌提及率，量化比較。所有測試記錄留檔可重現——我們不交「感覺有效」的報告。',
+        '優先使用帳號可見的 Search Console Generative AI 報表與 Bing AI Performance，再對照 GA4 的 AI 來源、固定查詢抽樣與合格詢盤。各項數據分開標示口徑；citations 不當排名，抽樣也不冒充平台總曝光。',
     },
     {
       question: '我已經有 SEO 廠商，可以只找你們做 GEO 嗎？',
@@ -111,7 +111,7 @@ export const geoService: ServiceContent = {
     {
       question: 'GEO 做了之後，怎麼看有沒有帶來流量？',
       answer:
-        '除了每月用固定問題組測品牌在 ChatGPT、Perplexity 的提及率，我們也建議在 GA4 追蹤來自 AI 平台的 referral 流量（例如 chatgpt.com、perplexity.ai 的來源），觀察引用是否真的帶人進站。要誠實說：AI 引用常是「看到答案就滿足、不一定點連結」，所以曝光與引用本身也是要看的指標，不能只用點擊評斷。',
+        '先看 Google AI 曝光與 Bing 引用頁面，再在 GA4 同時追蹤 ChatGPT 的 utm_source=chatgpt.com、AI 平台 referrer、落地頁、CTA 與詢盤。無連結提及與部分 App 流量仍可能量不到，因此報告必須保留限制，不把曝光或 citations 當成已轉換。',
     },
   ],
   pricing: [

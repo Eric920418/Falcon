@@ -847,7 +847,7 @@ export const blogPosts: Record<string, BlogContent> = {
       '依 Google 2026 年官方指引整理 GEO：從搜尋索引、原創內容、實名案例、AI 爬蟲到量測，並拆解 llms.txt 與特殊 AI Schema 迷思。',
     keywords: ['GEO 怎麼做', 'GEO 完整指南', 'GEO 教學', 'AI 搜尋優化', '生成式引擎優化 教學'],
     datePublished,
-    dateModified: '2026-08-11',
+    dateModified: '2026-08-31',
     qualityTier: 'production',
     intent: 'informational',
     intro:
@@ -887,14 +887,15 @@ export const blogPosts: Record<string, BlogContent> = {
       {
         heading: '怎麼量測 GEO，而不是靠截圖報喜？',
         body:
-          '先保存發布前基準，再追蹤可重現指標。Google 的 AI 功能流量目前計入 Search Console 的 Web 搜尋類型，不能從一張總覽圖直接拆出所有 AI 曝光；因此還要搭配 GA4 的自然搜尋轉換、ChatGPT／Perplexity 引薦、核心頁與案例頁瀏覽，以及固定問題集的人工觀察。固定問題集只能看趨勢，不能宣稱代表所有使用者。',
+          '先保存發布前基準，再用官方報表、到站行為與商業結果交叉驗證。Google 已推出 Search Console Generative AI performance report，可查看 AI Overviews 與 AI Mode 的曝光、呈現頁面、國家、裝置與日期，但目前仍只對部分網站開放。Bing Webmaster Tools 也有 AI Performance，可看引用次數、被引用頁面與 grounding queries；這些數字不代表排名、權威或回答中的位置。尚未取得官方報表時，就明確回退到一般 Web Performance、GA4、固定查詢集與詢盤來源，不把抽樣包裝成平台總曝光。',
         table: {
           caption: 'GEO 建議量測層級',
           headers: ['層級', '觀察項目', '解讀限制'],
           rows: [
             ['可用性', '抓取、索引、canonical、AI 爬蟲存取', '通過不代表一定排名或引用'],
-            ['搜尋表現', '非品牌曝光、點擊、查詢與落地頁', 'Search Console 會省略部分匿名查詢'],
-            ['AI 引薦', 'ChatGPT、Perplexity 等 referrer 與到站行為', '無連結的品牌提及不一定可被分析工具取得'],
+            ['Google AI 可見度', 'Generative AI 曝光、呈現頁面、國家、裝置與日期', '報表仍在分批開放，且不是查詢排名報表'],
+            ['Bing AI 引用', 'citations、cited pages、grounding queries 與趨勢', '引用次數不代表排名、權威或呈現位置'],
+            ['AI 引薦', 'ChatGPT、Perplexity 等來源與到站行為', '無連結提及、App 與隱私限制可能使數據低估'],
             ['商業結果', 'Demo、表單、電話與合格詢盤', '要排除其他活動與季節性的影響'],
           ],
         },
@@ -924,10 +925,10 @@ export const blogPosts: Record<string, BlogContent> = {
     relatedServices: ['geo', 'seo'],
     references: [
       {
-        name: 'AI features and your website',
-        url: 'https://developers.google.com/search/docs/appearance/ai-features',
+        name: 'Optimizing your website for generative AI features on Google Search',
+        url: 'https://developers.google.com/search/docs/fundamentals/ai-optimization-guide',
         publisher: 'Google Search Central',
-        updatedAt: '2025-12-10',
+        updatedAt: '2026-07-10',
       },
       {
         name: 'Creating helpful, reliable, people-first content',
@@ -935,9 +936,15 @@ export const blogPosts: Record<string, BlogContent> = {
         publisher: 'Google Search Central',
       },
       {
-        name: 'Performance report: Common tasks and use cases',
-        url: 'https://support.google.com/webmasters/answer/17010961',
+        name: 'Generative AI performance report (Search)',
+        url: 'https://support.google.com/webmasters/answer/16984139',
         publisher: 'Google Search Console Help',
+      },
+      {
+        name: 'Introducing AI Performance in Bing Webmaster Tools Public Preview',
+        url: 'https://blogs.bing.com/webmaster/February-2026/Introducing-AI-Performance-in-Bing-Webmaster-Tools-Public-Preview',
+        publisher: 'Microsoft Bing Webmaster Blog',
+        updatedAt: '2026-02-10',
       },
     ],
   },
@@ -1147,7 +1154,7 @@ export const blogPosts: Record<string, BlogContent> = {
       'Google AI Overview 在搜尋結果頁直接顯示 AI 生成答案。本文說明它對傳統 SEO 的影響，以及該如何調整內容策略。',
     keywords: ['Google AI Overview', 'AI Overview 優化', 'SGE', 'Search Generative Experience'],
     datePublished,
-    dateModified: '2026-08-11',
+    dateModified: '2026-08-31',
     qualityTier: 'production',
     intent: 'informational',
     intro:
@@ -1188,12 +1195,13 @@ export const blogPosts: Record<string, BlogContent> = {
       {
         heading: 'Search Console 能看到多少 AI 資料？',
         body:
-          'Google 官方目前將 AI Overview 與 AI Mode 帶來的搜尋表現計入 Search Console Performance 的 Web 搜尋類型。站方可依查詢、頁面、國家、裝置與日期觀察曝光、點擊和 CTR，但不應假設每一筆都能被單獨標記為 AI Overview。若要看商業價值，還要搭配 GA4 的到站行為、表單與聯絡事件，並在內容更新前保存可比較的基準。',
+          'Google 已推出獨立的 Search Console Generative AI performance report，顯示網站在 AI Overviews 與 AI Mode 的曝光、呈現頁面、國家、裝置與日期。這份報表仍分批對部分網站開放，而且目前不提供查詢、點擊、CTR 或平均排名；相關曝光同時仍包含在一般 Web Performance 報表。若帳號尚未看到專用報表，就以 Web Performance 的非品牌查詢與落地頁趨勢，搭配 GA4 轉換作為基準，不應使用第三方抽樣反推 Google 的平台總曝光。',
         table: {
           caption: '發布後的量測分工',
           headers: ['資料來源', '適合回答', '不能單獨證明'],
           rows: [
-            ['Search Console', '哪些查詢與頁面取得曝光、點擊及 CTR', '所有曝光是否來自 AI Overview'],
+            ['Generative AI 報表', 'AI 功能曝光、呈現頁面、國家、裝置與日期', '查詢、點擊、CTR、排名或尚未開放的網站'],
+            ['Web Performance', '非品牌查詢、落地頁、點擊、CTR 與整體趨勢', '每一筆曝光是否來自 AI 功能'],
             ['GA4／分析工具', '使用者進站後是否閱讀案例、點擊 CTA 或詢盤', '沒有點擊的品牌提及'],
             ['固定問題集', '特定問題是否出現來源與品牌描述', '整體市場曝光或固定排名'],
           ],
@@ -1225,14 +1233,14 @@ export const blogPosts: Record<string, BlogContent> = {
     relatedServices: ['geo', 'seo'],
     references: [
       {
-        name: 'AI features and your website',
-        url: 'https://developers.google.com/search/docs/appearance/ai-features',
+        name: 'Optimizing your website for generative AI features on Google Search',
+        url: 'https://developers.google.com/search/docs/fundamentals/ai-optimization-guide',
         publisher: 'Google Search Central',
-        updatedAt: '2025-12-10',
+        updatedAt: '2026-07-10',
       },
       {
-        name: 'How are you performing on Google?',
-        url: 'https://support.google.com/webmasters/answer/10268906',
+        name: 'Generative AI performance report (Search)',
+        url: 'https://support.google.com/webmasters/answer/16984139',
         publisher: 'Google Search Console Help',
       },
     ],
@@ -1736,6 +1744,7 @@ export const blogPosts: Record<string, BlogContent> = {
       '拆解 OpenAI 官方文件能確認的爬蟲機制（OAI-SearchBot、ChatGPT-User、GPTBot），以及我們用固定查詢集觀察 ChatGPT 引用行為的方法與限制。',
     keywords: ['ChatGPT 搜尋 引用', 'ChatGPT 引用來源', 'OAI-SearchBot', 'ChatGPT 搜尋 SEO', 'ChatGPT 引用 網站'],
     datePublished: '2026-08-12',
+    dateModified: '2026-08-31',
     qualityTier: 'production',
     intent: 'informational',
     intro:
@@ -1779,7 +1788,7 @@ export const blogPosts: Record<string, BlogContent> = {
       {
         heading: '被引用之後，流量怎麼量？',
         body:
-          '在 GA4 觀察 chatgpt.com 的引薦流量是最直接的訊號，可以建立專屬的探索報表長期追蹤。兩個注意事項：AI 平台引薦不帶 UTM 參數，來源判斷靠 referrer，部分情境（如 App 內開啟）會變成直接流量而被低估；引薦量通常不大，但意圖明確——使用者是帶著 AI 給的脈絡點進來的，所以更該看的是這群人的後續行為與詢盤轉換，而不是絕對數量。',
+          'OpenAI 官方說明 ChatGPT 搜尋的引薦 URL 會自動加上 utm_source=chatgpt.com，因此可在 GA4 用 campaign source 與 session source 一起建立 ChatGPT 群組，再觀察落地頁、閱讀案例、CTA 與詢盤。這不代表所有 ChatGPT 曝光都能被量到：沒有點擊就沒有到站資料，App 開啟、隱私限制、重新導向或參數被移除時，仍可能被歸到 referral 或 direct。報告應同時檢查 UTM 與 referrer，並以後續詢盤而不是單純 session 數判斷價值。',
       },
     ],
     faq: [
@@ -1802,9 +1811,10 @@ export const blogPosts: Record<string, BlogContent> = {
     relatedServices: ['geo'],
     references: [
       {
-        name: 'Overview of OpenAI crawlers',
-        url: 'https://platform.openai.com/docs/bots',
-        publisher: 'OpenAI Platform Documentation',
+        name: 'Publishers and Developers FAQ',
+        url: 'https://help.openai.com/en/articles/12627856-publishers-and-developers-faq',
+        publisher: 'OpenAI Help Center',
+        updatedAt: '2026-08-29',
       },
       {
         name: 'ChatGPT search',
@@ -1815,54 +1825,71 @@ export const blogPosts: Record<string, BlogContent> = {
   },
   'geo-measurement-guide': {
     slug: 'geo-measurement-guide',
-    title: 'GEO 成效怎麼衡量？AI 搜尋流量的量測實作',
-    h1: 'GEO 成效衡量：AI 搜尋流量的量測實作',
+    title: 'GEO 成效怎麼衡量？Google AI、Bing AI 與 GA4 量測實作',
+    h1: 'GEO 成效怎麼衡量？Google AI、Bing AI 與 GA4 量測實作',
     description:
-      'GEO 成效不能靠截圖報喜。本文示範三層量測架構的實作：GA4 的 AI 平台引薦流量、GSC 的能力與限制、固定查詢集基準線，以及向決策者報告的格式。',
+      '以 Google Generative AI、Bing AI Performance、GA4、固定查詢集與詢盤建立 GEO 量測架構，並說明每種資料的限制。',
     keywords: ['GEO 成效衡量', 'AI 搜尋 流量 追蹤', 'AI 引薦 GA4', 'GEO 量測', 'AI 流量 分析'],
     datePublished: '2026-08-12',
+    dateModified: '2026-08-31',
     qualityTier: 'production',
     intent: 'informational',
     intro:
-      'GEO 這個領域的最大問題不是做法，是量測——AI 平台不提供站長工具，於是市場上充斥著無法驗證的成效宣稱。本文整理我們實際在用的量測架構：哪些數據拿得到、怎麼拿、拿不到的怎麼誠實處理。這套方法在我們的 GEO 服務報告中實際運作。',
-    toc: ['為什麼 GEO 量測難', '三層量測架構', 'GA4 實作', 'GSC 的能與不能', '查詢集基準線', '報告格式'],
+      'GEO 量測不再只能靠截圖：Google 於 2026 年推出 Search Console Generative AI performance report，Bing Webmaster Tools 也提供 AI Performance。但這些工具仍無法回答「所有平台總共提到品牌幾次」，更不能單獨證明成交。本文把官方可見度、到站行為、抽樣觀測與詢盤整合成一套可核對的架構。',
+    toc: ['官方 AI 報表的現況', '五個量測訊號', 'Google Generative AI 報表', 'Bing AI Performance', 'GA4 與 ChatGPT UTM', '固定查詢與詢盤', '用資料決定下一步'],
     sections: [
       {
-        heading: '為什麼 GEO 量測比 SEO 難？',
+        heading: '官方 AI 報表已經出現，但不是完整市占',
         body:
-          'SEO 有 Search Console：曝光、點擊、查詢、頁面都有官方數據。GEO 沒有對等工具——ChatGPT、Perplexity、Gemini 都不提供「你的品牌被提及幾次」的後台。你能拿到的只有三種東西：使用者點擊來源連結後產生的引薦流量、你自己主動測試的觀察紀錄，以及詢盤時客戶的自述。承認這個限制是量測誠實的起點：任何宣稱能給你「AI 曝光總量」的報告，都該先問數據從哪來。',
+          'Google 專用報表量的是網站在 Google AI 功能的曝光；Bing 報表量的是支援的 Microsoft AI 體驗中的引用。它們的平台、口徑與可用欄位都不同，不能相加成「AI 市占」。ChatGPT、Perplexity 與其他平台也沒有提供跨平台的完整品牌提及後台。所以報告要將「官方曝光」、「官方引用」、「到站流量」、「查詢抽樣」與「商業結果」分開，不用一個漂亮總數掩蓋限制。',
       },
       {
-        heading: '三層量測架構',
+        heading: '五個量測訊號，分別回答不同問題',
         body:
-          '我們把 GEO 量測拆成三層，每層回答不同的問題、有不同的可信度。第一層是平台可見度：固定查詢集的重測紀錄，回答「AI 有沒有提到我們、引用哪頁」；第二層是引薦流量：GA4 的 AI 平台 referral，回答「有多少人從 AI 點過來、進來後做了什麼」；第三層是商業結果：詢盤與成交的來源歸因，回答「這件事有沒有帶來生意」。三層都要標示口徑與限制，缺一層就補不齊因果鏈。',
+          '沒有單一指標可以證明 GEO 帶來生意。有官方可見度卻沒有點擊，可能是使用者已在回答中解決問題，也可能是頁面沒有足夠的點擊理由。有引薦卻沒有詢盤，則應先檢查案例、CTA 與服務適配，而不是繼續加文章。',
+        table: {
+          caption: 'GEO 量測的五個訊號',
+          headers: ['訊號', '能回答的問題', '主要限制'],
+          rows: [
+            ['Google Generative AI', '哪些頁面在 Google AI 功能取得曝光', '只對部分網站開放，目前不提供查詢、點擊、CTR 與排名'],
+            ['Bing AI Performance', '哪些 URL 被引用、對應哪些 grounding queries', '引用次數不是排名、權威或呈現位置'],
+            ['GA4', '使用者從哪個 AI 來源進站、後續做了什麼', '沒有點擊就沒有到站資料，部分流量可能被低估'],
+            ['固定查詢集', '抽樣問題是否出現品牌、來源與描述', '回答受帳號、地區、模型與隨機性影響'],
+            ['詢盤來源', 'AI 可見度是否轉成 Demo、表單或合格機會', '需排除其他活動、延遲轉換與客戶自述誤差'],
+          ],
+        },
       },
       {
-        heading: 'GA4 的實作：把 AI 引薦獨立出來',
+        heading: 'Google Generative AI 報表：看曝光與頁面，不假裝有查詢排名',
         body:
-          '實作方式是在 GA4 的探索報表以工作階段來源／媒介篩選 AI 平台的網域，長期追蹤。常見的引薦來源包括 chatgpt.com、perplexity.ai、copilot.microsoft.com、gemini.google.com 等（清單會隨平台改版變動，需定期檢視）。兩個實務注意：一是 AI 引薦不帶 UTM，來源全靠 referrer，App 內開啟或隱私設定可能讓部分流量變成 direct，所以實際量通常被低估；二是別只看工作階段數，要看這群使用者的參與度、讀了哪些頁、有沒有進到聯絡表單——AI 引薦的價值在意圖濃度，不在數量。',
+          '專用報表顯示 AI Overviews 與 AI Mode 的 impressions，並可按頁面、國家、裝置與日期查看。最新數據可能是 preliminary，圖表與表格也可能因為 property 與 page 的彙總方式不同而有差異。目前報表不提供查詢、點擊、CTR 或平均排名，所以不能用它說「哪個 AI 查詢帶來多少點擊」。相關曝光仍包含在一般 Web Performance 報表；若帳號尚未獲得專用報表，就保存 Web Performance 的非品牌查詢、落地頁、點擊與 CTR 作為替代基準。',
       },
       {
-        heading: 'Search Console 能看到什麼、看不到什麼',
+        heading: 'Bing AI Performance：引用次數不是排名',
         body:
-          'Google 官方說明 AI Overview 與 AI Mode 的成效目前計入 Search Console Performance 的 Web 搜尋類型——這代表你的 GSC 數據「已包含」AI 功能帶來的曝光與點擊，但無法把它們單獨拆出來。所以 GSC 在 GEO 量測中的角色是：守住整體搜尋趨勢的基準線，觀察非品牌查詢的曝光與點擊變化，而不是拆分 AI 流量。Bing Webmaster Tools 對 Copilot 的情況類似。把「GSC 拆不出 AI 流量」寫進報告的限制聲明，比假裝拆得出來專業得多。',
+          'Bing Webmaster Tools 的 AI Performance 公開預覽提供 Total Citations、Average Cited Pages、grounding queries、URL 層級引用活動與時間趨勢。它可以幫助找出「哪些頁已被 Microsoft AI 體驗當作來源」與「擷取時使用什麼詞組」。官方同時明確說明，citation 不代表頁面權威、排名或在單一回答中的位置。有引用但沒有點擊或詢盤時，報告要保留這個差距，不能把 citations 包裝成營收成果。',
       },
       {
-        heading: '固定查詢集：低成本的基準線',
+        heading: 'GA4 與 ChatGPT UTM：同時查 campaign source 與 referrer',
         body:
-          '在沒有官方後台的情況下，固定查詢集是建立「平台可見度」基準的務實方法。實作要點：選十到二十個客戶決策情境的問題（服務比較、費用行情、廠商評估），固定措辭；每月在各平台用新對話重測；每筆記錄日期、平台、品牌是否被提及、引用的網域與頁面；用表格累積，看季度趨勢。它的限制（回答隨機性、帳號與地區差異）在本站的 ChatGPT 引用觀察一文有完整討論，這裡不重複——重點是所有結論只談趨勢，不談絕對值。',
+          'OpenAI 表示 ChatGPT 搜尋引薦會自動加上 utm_source=chatgpt.com，所以 GA4 應同時檢查 campaign source 與 session source，不能再只靠 chatgpt.com referrer。Perplexity、Copilot、Gemini 與其他平台的參數與網域可能改變，需定期檢視真實來源值。報告不只看 sessions，還要依落地頁觀察案例瀏覽、service_cta_click、contact_click 與 generate_lead。App 開啟、隱私限制、重新導向或參數被移除時，部分流量仍可能被歸到 referral 或 direct，所以 GA4 是「到站行為」證據，不是「平台總曝光」。',
       },
       {
-        heading: '向決策者報告的格式',
+        heading: '固定查詢與詢盤：補官方報表的空白',
         body:
-          '我們的月報固定四個區塊：AI 平台查詢集的變化摘要（附原始紀錄連結）、GA4 的 AI 引薦流量與行為、整體搜尋基準線的變化（GSC）、以及本月量測限制聲明。最後一項不是免責套話，是具體寫出「這個月哪些數字可能失真、為什麼」——例如平台改版造成的斷點。老闆遲早會從別的管道知道 AI 數據量不準；先講限制的人建立信任，只報好消息的人透支信任。',
+          '對 ChatGPT、Perplexity 或無連結品牌提及，固定查詢集仍有用，但它只是抽樣。題目要選客戶真正的決策情境，每月使用新對話、固定措辭，並記錄日期、平台、模型、品牌提及、引用網域與頁面。結果只能用來觀察這組題目的相對趨勢，不能推論市占。同一期間再比對表單的 service=ai_voice、聯絡點擊與客戶自述來源，才能判斷 AI 電話集群是否帶來合格詢盤。',
+      },
+      {
+        heading: '用資料決定下一步，不用文章數量代替判斷',
+        body:
+          '每月先依落地頁與搜尋意圖分類。已有頁面曝光高但點擊低，先修 title、description 與搜尋摘要；查詢與現有頁意圖相同但排名尚未穩定，先補證據、決策資訊與內鏈，不另開 URL；只有出現明確不同的購買或技術意圖、且站內沒有可合理擴寫的頁面時，才建新文章。若 AI 引薦已有瀏覽卻沒有詢盤，優先改案例證據、CTA 與表單流程，不繼續堆內容。',
       },
     ],
     faq: [
       {
         question: 'GA4 裡的 AI 流量要去哪裡看？',
         answer:
-          '報表：探索（Explore）建自訂報表，維度用「工作階段來源」，篩選 chatgpt.com、perplexity.ai 等網域。想長期追蹤可以把這些來源建立成自訂管道群組，月報就不用每次手動篩。',
+          '在探索（Explore）建自訂報表，同時使用 session source 與 campaign source 篩選 AI 來源。ChatGPT 要包含 utm_source=chatgpt.com 與 chatgpt.com referrer；其他平台再依實際收到的網域與參數維護自訂管道群組。報表要與 generate_lead、contact_click 及落地頁一起看。',
       },
       {
         question: '品牌被 AI 提到但沒附連結，量得到嗎？',
@@ -1878,15 +1905,21 @@ export const blogPosts: Record<string, BlogContent> = {
     relatedServices: ['geo', 'seo'],
     references: [
       {
-        name: 'How are you performing on Google?',
-        url: 'https://support.google.com/webmasters/answer/10268906',
+        name: 'Generative AI performance report (Search)',
+        url: 'https://support.google.com/webmasters/answer/16984139',
         publisher: 'Google Search Console Help',
       },
       {
-        name: 'AI features and your website',
-        url: 'https://developers.google.com/search/docs/appearance/ai-features',
-        publisher: 'Google Search Central',
-        updatedAt: '2025-12-10',
+        name: 'Introducing AI Performance in Bing Webmaster Tools Public Preview',
+        url: 'https://blogs.bing.com/webmaster/February-2026/Introducing-AI-Performance-in-Bing-Webmaster-Tools-Public-Preview',
+        publisher: 'Microsoft Bing Webmaster Blog',
+        updatedAt: '2026-02-10',
+      },
+      {
+        name: 'Publishers and Developers FAQ',
+        url: 'https://help.openai.com/en/articles/12627856-publishers-and-developers-faq',
+        publisher: 'OpenAI Help Center',
+        updatedAt: '2026-08-29',
       },
       {
         name: '[GA4] Default channel group',

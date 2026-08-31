@@ -393,8 +393,11 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - 2026-08-12：六個城市頁重寫為城市服務指南並全數開放索引（詳見 Local SEO 段）；同步修正城市頁殘留的舊價格（企業方案 30,000、新竹 3.75 萬起等與 price-catalog 不一致的數字）。footer 新增「服務地區」欄。
 - 2026-08-12：`/llms.txt` 與 `/llms-full.txt` 擴充 blog／compare／pricing／local 四個內容群組，過濾條件與 sitemap 一致。`/card` 改為 noindex（比照 `/resume`），`/card` 與 `/resume` 納入 `check:seo` 稽核路由；`manifest.json` 修正重複的 icon 條目並改指向 `/icon.png`。sitemap 由 30 個 URL 增至 44 個。
 - 2026-08-26：依 Ubersuggest「title 過短」清單逐頁審核 14 個 URL；首頁、服務總覽、三篇文章、兩個案例、四個城市頁與三個價格頁改為查詢意圖優先的描述性 title，品牌仍由共用 metadata 模板附加。未設定全站最低字數，避免為第三方門檻灌入關鍵字；驗收以 title 唯一、頁面語意一致與搜尋點擊表現為準。
+- 2026-08-31：依 Google Search Console Generative AI performance report、Bing Webmaster Tools AI Performance 與 OpenAI 發布者文件，更新 GEO 完整指南、Google AI Overview、ChatGPT 引用觀察與 GEO 量測指南。`/blog/geo-measurement-guide` 保留原 URL 並成為唯一量測核心頁；Google AI 曝光、Bing citations、GA4、固定查詢與詢盤分開呈現，不把局部數據當市占或排名。
+- 2026-08-31：ChatGPT 搜尋引薦改以 `utm_source=chatgpt.com` 與 referrer 交叉量測；GEO 服務與價格頁的交付口徑同步改為帳號可用的 Google／Bing 官方 AI 報表、GA4、抽樣與合格詢盤。後續新文章必須先由 GSC 的不同搜尋意圖證明站內無合適落地頁；否則優先修現有頁面。
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
-- [ ] 匯入 GSC、GA4、Bing Webmaster Tools 與 GBP 的近 16 個月資料，另保存發布前 90 天基準。
+- [ ] 從已有 GSC／GA4 匯出近 16 個月與發布前 90 天基準；原始匯出檔只放 `/Users/eric/Downloads`，不提交至 Git。
+- [ ] 從 GSC 匯入 Bing Webmaster Tools、提交 sitemap 並保存首份 AI Performance 基準；若 GSC Generative AI 報表尚未開放，明確以 Web Performance＋GA4 替代。
 - [ ] 取得城市案例完整公開同意、期間、基準、結果後，把城市頁的案例區從 name-only 升級為含量化證據的展示（索引已由內容品質閘門開放，此項只影響案例展示深度）。
 - [ ] 請案例客戶在其官網連回對應案例頁；不購買假提及或批量垃圾外鏈。
 
