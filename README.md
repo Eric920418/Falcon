@@ -655,6 +655,19 @@ export default function SomePage() {
 
 ## 企業 AI 電話內容集群
 
+### 2026-09-07 詢盤轉換修正
+
+- 沿用 21 篇文章及既有 URL，八篇 AI 電話文章導向方案與流程 Demo 需求，不新增近義內容。GoGoCha 公開證據與可客製能力繼續分開標示；送出需求不等於完成預約，POC 範圍與報價另行確認。
+- 既有 `ServiceCtaLink` 使用 `service_cta_click`＋`service=ai_voice`＋固定 `placement`，可選 `action=view_service|request_demo`（預設 `request_demo`）。同頁 CTA 透過 `falcon:service-interest` 同步服務白名單，跨頁由網址初始化；重複點擊不清除已填文字。
+- 聯絡區 `contact_click` 可帶白名單服務，Footer 不強制歸因。表單只接受 HTTP 成功＋JSON 物件＋`CONTACT_SENT`，才清空欄位並送 `generate_lead`；此事件只代表成功送出，不代表合格商機。失敗保留輸入、完整顯示錯誤；分析只送白名單錯誤碼，不送姓名、Email、電話、需求、回應或堆疊。
+- 本地 dataLayer 不代表 GA4 已收到。匯出僅留 Downloads，不進 Git；第 28／56／90 天比較文章至方案、Demo CTA、有效表單與人工確認的合格詢盤，低樣本不推算改善百分比。已完成本機測試不表示已部署或已 push。
+- 首頁與 AI 電話服務頁的實質文案更新日期為 2026-09-07；文章／案例僅修改共用 CTA，不批次刷新文章日期。首頁靜態展示正名為「流程示意」，不加入互動模擬器或大型媒體。
+- 轉換回歸：production server 啟動後執行 `pnpm check:conversion http://127.0.0.1:3000`。沿用 `puppeteer-core` 與本機 Chrome（可指定 `CHROME_PATH`），只允許 loopback 網域、攔截全部聯絡 API 與外部網路，不實際寄信或污染 GA4；截圖寫入系統暫存目錄。涵蓋八篇文章 CTA、服務預選／手動選擇、失敗保留、成功防重複、分析白名單及桌面／手機／鍵盤。
+- 本機驗收：`lint:content`、production build、`check:seo` 已通過（48 個索引 URL、6 個 noindex、3 條單次 301）。轉換回歸涵蓋 15 種失敗、成功碼與同輪重複提交防護；Chrome 使用 Locator 等候連結位置穩定，並保存表單失敗／成功、390px／1440px 截圖。錯誤文字保留換行，長字串可換行，避免手機溢出。
+- 帳號端待補：2026-09-07 已在 Falcon GSC 設定 2026-06-08 至 2026-09-05 的 90 天報表，但官方 CSV 匯出被 Chrome 以 `ERR_BLOCKED_BY_CLIENT` 封鎖，未成功下載；目前登入的 GA4 資源搜尋不到 Falcon，且 Google SEO API 憑證未設定。未取得完整基準、不使用其他網站數據、不將缺資料當作零詢盤。需在可匯出的瀏覽器操作 GSC，並切換具有 Falcon 權限的 GA4 帳號；部署後再驗證 DebugView 與固定事件參數。
+- 方法參考：[Google AI 搜尋指引](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)、[GA4 generate_lead 事件](https://developers.google.com/analytics/devguides/collection/ga4/reference/events#generate_lead)。Google SEO 技能在未設定 API 時改用已登入的官方報表，不新增憑證或擴大權限。
+- 最終驗收結果：`pnpm lint:content`、`pnpm build`、production server 的 `pnpm check:seo http://127.0.0.1:3000` 與 `pnpm check:conversion http://127.0.0.1:3000` 全部通過；所有測試表單均被攔截，沒有實際寄信或傳送 GA4 測試事件。正式站 DebugView 與基準原始匯出仍待上述帳號／瀏覽器問題解決。
+
 - Blog 共 21 篇正式文章，其中 8 篇組成企業 AI 電話決策集群：原理、POC 驗收、延遲與插話、費用、IVR／真人比較、PBX／CRM 串接、錄音個資，以及人工轉接。
 - AI 電話文章使用 `relatedLinks` 建立文章間內鏈，並固定回連 `/services/ai-voice-agent` 與 GoGoCha 公開案例；服務頁、Blog 閱讀路徑與首頁精選提供主要入口。
 - 法規與供應商技術內容只引用可見的官方來源；未公開的 GoGoCha SLA、辨識率、PBX／客服席位與營運成果不得寫成已驗證能力。

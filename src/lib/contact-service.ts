@@ -1,3 +1,5 @@
+export const serviceInterestEvent = 'falcon:service-interest'
+
 export const serviceInterestOptions = [
   { value: '', label: '請選擇服務（選填）' },
   { value: 'ai_voice', label: '企業 AI 語音客服／電話自動化' },

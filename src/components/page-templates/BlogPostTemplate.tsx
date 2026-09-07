@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { ArrowRight, Check, ChevronRight, Calendar, User } from 'lucide-react'
 import type { BlogContent } from '@/lib/content/types'
 import { primaryAuthor } from '@/lib/content/authors'
+import { ServiceCtaLink } from '@/components/ServiceCtaLink'
 
 interface BlogPostTemplateProps {
   post: BlogContent
@@ -231,7 +232,18 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
           <div className="max-w-3xl mx-auto">
             <h2 className="text-xl text-[#E0E5E8] mb-4">相關服務</h2>
             <div className="grid sm:grid-cols-2 gap-3">
-              {post.relatedServices.map((slug) => (
+              {post.relatedServices.map((slug) => slug === 'ai-voice-agent' ? (
+                <ServiceCtaLink
+                  key={slug}
+                  href="/services/ai-voice-agent"
+                  action="view_service"
+                  placement={`blog_${post.slug}_related_service`}
+                  className="block p-4 border border-[#344349] rounded-lg hover:border-amber-500 transition-colors text-[#A8B6BC] hover:text-[#E0E5E8]"
+                >
+                  <span className="text-sm">{serviceNames[slug]}</span>
+                  <ArrowRight size={16} className="inline ml-2" />
+                </ServiceCtaLink>
+              ) : (
                 <Link
                   key={slug}
                   href={`/services/${slug}`}
@@ -264,17 +276,35 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
         </section>
       )}
 
-      <section className="py-12 px-6">
+      <section id="post-contact" className="py-12 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
-            有相關需求？
-          </h2>
-          <Link
-            href={post.relatedServices?.includes('ai-voice-agent') ? '/?service=ai_voice#contact' : '/#contact'}
-            className="falcon-btn-primary inline-flex items-center"
-          >
-            聯絡我們 <ArrowRight size={18} className="ml-2" />
-          </Link>
+          {post.relatedServices?.includes('ai-voice-agent') ? (
+            <>
+              <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+                評估你的企業 AI 電話流程
+              </h2>
+              <p className="mb-6 leading-relaxed text-[#A8B6BC]">
+                從目前接聽方式、通話後的系統動作與例外處理開始討論。提出需求後，再確認 Demo 時間、展示範圍及是否需要 POC。
+              </p>
+              <div className="flex flex-col justify-center gap-3 sm:flex-row">
+                <ServiceCtaLink href="/services/ai-voice-agent" action="view_service" placement={`blog_${post.slug}_service`} className="falcon-btn-outline inline-flex items-center justify-center">
+                  了解企業 AI 電話方案 <ArrowRight size={18} className="ml-2" aria-hidden="true" />
+                </ServiceCtaLink>
+                <ServiceCtaLink href="/?service=ai_voice#contact" placement={`blog_${post.slug}_demo`} className="falcon-btn-primary inline-flex items-center justify-center">
+                  提出流程 Demo 需求 <ArrowRight size={18} className="ml-2" aria-hidden="true" />
+                </ServiceCtaLink>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+                有相關需求？
+              </h2>
+              <Link href="/#contact" className="falcon-btn-primary inline-flex items-center">
+                聯絡我們 <ArrowRight size={18} className="ml-2" />
+              </Link>
+            </>
+          )}
         </div>
       </section>
     </div>

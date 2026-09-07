@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "lint:content": "tsx scripts/lint-content.ts",
-    "check:seo": "tsx scripts/check-seo-status.ts"
+    "check:seo": "tsx scripts/check-seo-status.ts",
+    "check:conversion": "node scripts/check-conversion.mjs"
   },
   "dependencies": {
     "@fontsource/noto-sans-tc": "^5.2.9",

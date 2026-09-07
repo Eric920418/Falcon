@@ -5,10 +5,15 @@ import { Mail, Phone, Send, MessageCircle } from 'lucide-react'
 import { siteConfig } from '@/lib/seo/site-config'
 import { trackEvent } from '@/lib/analytics'
 import { TrackedContactLink } from './TrackedContactLink'
-import { isServiceInterest, serviceInterestOptions } from '@/lib/contact-service'
+import { isServiceInterest, serviceInterestEvent, serviceInterestOptions } from '@/lib/contact-service'
+
+const safeErrorCodes = new Set([
+  'REQUIRED_FIELDS_MISSING', 'INVALID_SERVICE_INTEREST', 'SMTP_NOT_CONFIGURED',
+  'SMTP_SEND_FAILED', 'INVALID_RESPONSE', 'HTTP_ERROR', 'CONTACT_FORM_FAILED',
+])
 
 export function Contact() {
-  const ref = useRef(null);
+  const submitLock = useRef(false);
   const phoneNumber = '0958801559';
   const phoneHref = 'tel:+886958801559';
   const [formData, setFormData] = useState({
@@ -24,14 +29,21 @@ export function Contact() {
   const [errorCode, setErrorCode] = useState('');
 
   useEffect(() => {
-    const service = new URLSearchParams(window.location.search).get('service')
-    if (isServiceInterest(service)) {
-      setFormData((current) => ({ ...current, serviceInterest: service }))
+    const selectService = (service: unknown) => {
+      if (isServiceInterest(service)) {
+        setFormData((current) => ({ ...current, serviceInterest: service }))
+      }
     }
+    selectService(new URLSearchParams(window.location.search).get('service'))
+    const onServiceInterest = (event: Event) => selectService((event as CustomEvent<unknown>).detail)
+    window.addEventListener(serviceInterestEvent, onServiceInterest)
+    return () => window.removeEventListener(serviceInterestEvent, onServiceInterest)
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitLock.current || submitStatus === 'success') return;
+    submitLock.current = true;
     setIsSubmitting(true);
     setSubmitStatus('idle');
     setErrorMessage('');
@@ -47,19 +59,21 @@ export function Contact() {
       });
 
       const rawBody = await response.text();
-      let data: { message?: string; error?: string; code?: string } = {};
+      let parsed: unknown;
       try {
-        data = rawBody ? JSON.parse(rawBody) : {};
+        parsed = JSON.parse(rawBody);
       } catch {
-        data = {
-          error: rawBody || `伺服器回傳無法解析的內容（HTTP ${response.status}）`,
-          code: 'INVALID_RESPONSE',
-        };
+        parsed = null;
       }
-
-      if (!response.ok) {
-        const submitError = new Error(data.error || `發送失敗（HTTP ${response.status}）`) as Error & { code?: string };
-        submitError.code = data.code || `HTTP_${response.status}`;
+      const data = parsed && typeof parsed === 'object' && !Array.isArray(parsed)
+        ? parsed as Record<string, unknown> : null;
+      if (!response.ok || !data || data.code !== 'CONTACT_SENT') {
+        const detail = typeof data?.error === 'string' ? data.error : rawBody;
+        const submitError = new Error(
+          `${response.ok ? '未收到有效的送出確認，請重試或改用電話、Email、LINE 聯繫' : '發送失敗'}（HTTP ${response.status}）${detail ? `：${detail}` : '：伺服器回應為空白'}`
+        ) as Error & { code?: string };
+        submitError.code = response.ok || !data ? 'INVALID_RESPONSE'
+          : typeof data.code === 'string' && data.code !== 'CONTACT_SENT' ? data.code : 'HTTP_ERROR';
         throw submitError;
       }
 
@@ -70,9 +84,6 @@ export function Contact() {
         service: formData.serviceInterest || 'unspecified',
       });
 
-      setTimeout(() => {
-        setSubmitStatus('idle');
-      }, 5000);
     } catch (error) {
       const code =
         error && typeof error === 'object' && 'code' in error && typeof error.code === 'string'
@@ -83,15 +94,18 @@ export function Contact() {
       setErrorCode(code);
       trackEvent('form_error', {
         form_name: 'contact',
-        error_code: code,
+        error_code: safeErrorCodes.has(code) ? code : 'CONTACT_FORM_FAILED',
         service: formData.serviceInterest || 'unspecified',
       });
     } finally {
+      submitLock.current = false;
       setIsSubmitting(false);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    if (e.target.name === 'serviceInterest' && e.target.value !== '' && !isServiceInterest(e.target.value)) return;
+    if (submitStatus === 'success') setSubmitStatus('idle');
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -123,7 +137,7 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" ref={ref} className="relative py-32 px-6 bg-stone-950">
+    <section id="contact" className="relative py-32 px-6 bg-stone-950">
       {/* 背景 */}
       <div className="absolute inset-0 industrial-grid opacity-20" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-stone-800 to-transparent" />
@@ -167,6 +181,7 @@ export function Contact() {
                           href={info.link}
                           channel={info.channel}
                           placement="contact_section"
+                          service={isServiceInterest(formData.serviceInterest) ? formData.serviceInterest : undefined}
                           target={info.channel === 'line' ? '_blank' : undefined}
                           rel={info.channel === 'line' ? 'noopener noreferrer' : undefined}
                           className="text-stone-200 hover:text-amber-500 transition-colors"
@@ -195,6 +210,7 @@ export function Contact() {
           {/* Contact Form */}
           <div>
             <form onSubmit={handleSubmit} className="space-y-6">
+              <fieldset disabled={isSubmitting} className="min-w-0 space-y-6">
               <div>
                 <label htmlFor="name" className="block text-stone-400 text-sm mb-2">
                   姓名 *
@@ -203,6 +219,7 @@ export function Contact() {
                   type="text"
                   id="name"
                   name="name"
+                  autoComplete="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
@@ -219,6 +236,7 @@ export function Contact() {
                   type="email"
                   id="email"
                   name="email"
+                  autoComplete="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -235,6 +253,7 @@ export function Contact() {
                   type="text"
                   id="company"
                   name="company"
+                  autoComplete="organization"
                   value={formData.company}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors"
@@ -268,6 +287,7 @@ export function Contact() {
                 <textarea
                   id="message"
                   name="message"
+                  aria-describedby={formData.serviceInterest === 'ai_voice' ? 'ai-voice-form-help' : undefined}
                   value={formData.message}
                   onChange={handleChange}
                   required
@@ -275,14 +295,23 @@ export function Contact() {
                   className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors resize-none"
                   placeholder="請告訴我們您的需求..."
                 />
+                {formData.serviceInterest === 'ai_voice' && (
+                  <div id="ai-voice-form-help" className="mt-3 space-y-2 text-sm leading-relaxed text-stone-400">
+                    <p>可以先說明：目前如何接聽？通話後需要做什麼？最需要避免什麼錯誤？</p>
+                    <p>送出的是流程 Demo 需求，時間與展示範圍將另行確認；請勿提供私人錄音、客戶個資或系統密碼。</p>
+                  </div>
+                )}
               </div>
 
               {submitStatus === 'error' && (
-                <div role="alert" className="p-4 bg-red-900/30 border border-red-800/50 rounded-lg text-red-300">
+                <div role="alert" className="p-4 bg-red-900/30 border border-red-800/50 rounded-lg text-red-300 [overflow-wrap:anywhere]">
                   <p className="font-medium">送出失敗 [{errorCode}]</p>
-                  <p className="mt-1 break-words">{errorMessage}</p>
+                  <p className="mt-1 whitespace-pre-wrap">{errorMessage}</p>
                 </div>
               )}
+              <div role="status" aria-live="polite" aria-atomic="true" className="text-sm text-emerald-300">
+                {submitStatus === 'success' && '需求已送出，後續聯絡確認。這不代表預約時間已確定。'}
+              </div>
 
               <button
                 type="submit"
@@ -302,7 +331,7 @@ export function Contact() {
                 ) : submitStatus === 'success' ? (
                   <>
                     <span>✓</span>
-                    已送出！我們會盡快回覆您
+                    需求已送出
                   </>
                 ) : (
                   <>
@@ -311,6 +340,7 @@ export function Contact() {
                   </>
                 )}
               </button>
+              </fieldset>
             </form>
           </div>
         </div>

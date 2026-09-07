@@ -46,15 +46,15 @@ export function HomeAiVoice() {
             </div>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link href="/services/ai-voice-agent" className="falcon-btn-primary inline-flex items-center justify-center gap-2">
+              <ServiceCtaLink href="/services/ai-voice-agent" action="view_service" placement="home_ai_voice_service" className="falcon-btn-primary inline-flex items-center justify-center gap-2">
                 了解 AI 電話方案 <ArrowRight size={17} aria-hidden="true" />
-              </Link>
+              </ServiceCtaLink>
               <ServiceCtaLink
                 href="/?service=ai_voice#contact"
                 placement="home_ai_voice"
                 className="falcon-btn-outline inline-flex items-center justify-center gap-2"
               >
-                預約流程 Demo <PhoneCall size={17} aria-hidden="true" />
+                提出流程 Demo 需求 <PhoneCall size={17} aria-hidden="true" />
               </ServiceCtaLink>
             </div>
           </div>
@@ -63,7 +63,7 @@ export function HomeAiVoice() {
             <div className="border border-[#46616a] bg-[#131d20] p-5">
               <div className="mb-5 flex items-center justify-between border-b border-[#344349] pb-4">
                 <span className="font-mono text-xs uppercase tracking-[0.16em] text-[#7A8A91]">Call → Action</span>
-                <span className="text-xs text-amber-500">互動流程示意</span>
+                <span className="text-xs text-amber-500">流程示意</span>
               </div>
               <div className="grid gap-2 sm:grid-cols-2">
                 {flow.map(([title, description], index) => (

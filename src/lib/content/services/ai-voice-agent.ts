@@ -126,7 +126,7 @@ export const aiVoiceService: ServiceContent = {
     'AI 電話系統',
   ],
   intent: 'commercial',
-  lastModified: '2026-08-30',
+  lastModified: '2026-09-07',
   qualityTier: 'production',
   intro:
     'AI 語音客服不是把聊天機器人接上電話而已。企業真正需要的是讓來電內容進入可控工作流：取得必要資訊、查詢規則、建立派單或工單、同步既有系統，並在 AI 無法確認時交給人工。隼訊提供這類客製整合，GoGoCha 是我們已公開的實作證據。',

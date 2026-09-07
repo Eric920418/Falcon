@@ -1,3 +1,5 @@
+import { isServiceInterest, type ServiceInterest } from './contact-service'
+
 declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown>>
@@ -12,6 +14,6 @@ export function trackEvent(event: string, parameters: Record<string, string | nu
   window.dataLayer.push({ event, ...parameters })
 }
 
-export function trackContactClick(channel: ContactChannel, placement: string) {
-  trackEvent('contact_click', { channel, placement })
+export function trackContactClick(channel: ContactChannel, placement: string, service?: ServiceInterest) {
+  trackEvent('contact_click', { channel, placement, ...(isServiceInterest(service) ? { service } : {}) })
 }

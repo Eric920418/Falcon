@@ -90,7 +90,7 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
                   placement="ai_voice_hero_demo"
                   className="falcon-btn-primary inline-flex items-center justify-center gap-2"
                 >
-                  預約流程 Demo <ArrowRight size={18} aria-hidden="true" />
+                  提出流程 Demo 需求 <ArrowRight size={18} aria-hidden="true" />
                 </ServiceCtaLink>
                 <Link
                   href="/case-studies/gogocha-ai-dispatch"
@@ -106,7 +106,7 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
 
             <div className="relative border border-[#46616a] bg-[#131d20] p-4 shadow-2xl shadow-black/30 md:p-6">
               <div className="mb-5 flex items-center justify-between border-b border-[#344349] pb-4 font-mono text-xs uppercase tracking-[0.14em] text-[#7A8A91]">
-                <span>Call flow simulator</span>
+                <span>Call flow illustration</span>
                 <span className="inline-flex items-center gap-2 text-emerald-400">
                   <span className="h-2 w-2 rounded-full bg-emerald-400" /> 流程示意
                 </span>
@@ -407,16 +407,24 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
         <div className="absolute inset-0 industrial-grid opacity-25" aria-hidden="true" />
         <div className="relative mx-auto max-w-3xl">
           <PhoneCall size={34} className="mx-auto text-amber-500" aria-hidden="true" />
-          <h2 className="mt-6 text-3xl md:text-5xl">拿一條真實電話流程來談</h2>
+          <h2 className="mt-6 text-3xl md:text-5xl">評估你的企業 AI 電話流程</h2>
           <p className="mx-auto mt-5 max-w-2xl leading-relaxed text-[#A8B6BC]">
-            告訴我們目前怎麼接、接完要做什麼、最怕哪種錯誤。我們會先判斷適不適合自動化，再決定 POC 範圍。
+            告訴我們目前如何接聽、通話後要建立什麼紀錄，以及最需要避免哪種錯誤。我們會以 GoGoCha 公開畫面與工作流為討論起點，對照你的流程、系統介面與人工接手邊界，判斷是否值得進入 POC。
+          </p>
+          <ul className="mx-auto mt-6 max-w-2xl space-y-3 text-left text-sm leading-relaxed text-[#A8B6BC]">
+            <li>需求盤點：目前電話如何分流、誰接手，以及通話後的派單、工單或 CRM 動作。</li>
+            <li>例外處理：AI 無法確認、API 失敗或無人工席位時，哪些情況必須停止或降級。</li>
+            <li>下一步：確認可展示的範圍與 POC 待驗證項目；PBX、客服席位與客戶系統串接不視為已完成能力。</li>
+          </ul>
+          <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#7A8A91]">
+            送出表單只是提出流程 Demo 需求，時間與展示範圍另行確認，不包含現場接入你的正式系統。POC 範圍、費用與驗收條件另外討論；請勿提供私人錄音、客戶個資或系統密碼。
           </p>
           <ServiceCtaLink
             href="/?service=ai_voice#contact"
             placement="ai_voice_final"
             className="falcon-btn-primary mt-8 inline-flex items-center gap-2"
           >
-            預約流程 Demo <ArrowRight size={18} aria-hidden="true" />
+            提出流程 Demo 需求 <ArrowRight size={18} aria-hidden="true" />
           </ServiceCtaLink>
         </div>
       </section>

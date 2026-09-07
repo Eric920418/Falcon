@@ -222,9 +222,9 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 </a>
               )}
               {caseStudy.slug === 'gogocha-ai-dispatch' && (
-                <Link href="/services/ai-voice-agent" className="inline-flex items-center gap-2 text-amber-500 hover:underline">
+                <ServiceCtaLink href="/services/ai-voice-agent" action="view_service" placement="case_gogocha_service" className="inline-flex items-center gap-2 text-amber-500 hover:underline">
                   了解企業 AI 電話方案 <ArrowRight size={16} />
-                </Link>
+                </ServiceCtaLink>
               )}
               {caseStudy.slug === 'gogocha-ai-dispatch' ? (
                 <ServiceCtaLink
@@ -232,7 +232,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   placement="case_gogocha_ai_dispatch"
                   className="falcon-btn-primary inline-flex"
                 >
-                  討論類似需求
+                  提出流程 Demo 需求
                 </ServiceCtaLink>
               ) : (
                 <Link href="/#contact" className="falcon-btn-primary inline-flex">
