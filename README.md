@@ -144,7 +144,7 @@ pnpm start
 - 流暢的頁面過渡動畫
 - **Hero 背景** - 工業網格 + 暖色光暈 + 大型漢字裝飾
 - **信任徽章** - 首屏展示「永久售後服務」與「快速交件保證」
-- **作品案例展示** - 完整案例頁收錄 31 項作品，首頁精選三項可驗證案例
+- **作品案例展示** - 完整案例頁收錄 32 項作品，首頁精選三項可驗證案例
 - **決策型首頁內容** - 兩個獲客 Hub、企業 AI 電話旗艦區、實際交付、四步合作流程、適配條件、公開起價、實名負責人與精選實作文章
 
 ## 作品案例
@@ -152,6 +152,7 @@ pnpm start
 Portfolio 組件展示公司的專案作品，包含：
 
 - **電商平台** - 翊珍香電商、財神賣鞋球鞋電商（https://www.xn--cjzl80byf571b.tw/）、燒烤訂餐服務
+- **YUHE 品牌服飾電商（測試版）** - 服飾品牌電商（https://yuhe.studio/）（分類選購、完整尺寸資訊、會員登入、購物車、Vercel Blob 圖片與安全標頭；公開站目前 noindex，商品圖片為暫代素材）
 - **企業官網** - 佑羲人力（https://yoshi3166.com）、R collectives 室內設計、ROLL ON. 外商顧問官網（https://www.rollgrp.com/）
 - **形象網站** - 書籍形象網站
 - **遊戲官網** - 破浪三國（https://www.kingdoms.blog/）
@@ -397,6 +398,7 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - 2026-08-31：依 Google Search Console Generative AI performance report、Bing Webmaster Tools AI Performance 與 OpenAI 發布者文件，更新 GEO 完整指南、Google AI Overview、ChatGPT 引用觀察與 GEO 量測指南。`/blog/geo-measurement-guide` 保留原 URL 並成為唯一量測核心頁；Google AI 曝光、Bing citations、GA4、固定查詢與詢盤分開呈現，不把局部數據當市占或排名。
 - 2026-08-31：ChatGPT 搜尋引薦改以 `utm_source=chatgpt.com` 與 referrer 交叉量測；GEO 服務與價格頁的交付口徑同步改為帳號可用的 Google／Bing 官方 AI 報表、GA4、抽樣與合格詢盤。後續新文章必須先由 GSC 的不同搜尋意圖證明站內無合適落地頁；否則優先修現有頁面。
 - 2026-09-06：完整作品集新增「車輛履歷管理系統」，使用隔離的本機固定種子資料製作 Dashboard 示意封面，並標示為 DEMO；收錄車籍、維修履歷、成本報表、AI 單據辨識、到期／重複維修警示、角色權限與稽核紀錄。作品總數由 30 更新為 31，並同步首頁、案例頁 metadata／文案與 sitemap 更新日期。
+- 2026-09-07：完整作品集新增「YUHE 品牌服飾電商（測試版）」，以公開首頁實際畫面製作封面，收錄分類選購、商品資訊、會員登入、購物車與政策頁面；作品總數由 31 更新為 32，並同步首頁、案例頁 metadata／文案與 sitemap 更新日期。公開站維持 noindex，且如實標示商品圖片為暫代素材。
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 - [ ] 從已有 GSC／GA4 匯出近 16 個月與發布前 90 天基準；原始匯出檔只放 `/Users/eric/Downloads`，不提交至 Git。
 - [ ] 從 GSC 匯入 Bing Webmaster Tools、提交 sitemap 並保存首份 AI Performance 基準；若 GSC Generative AI 報表尚未開放，明確以 Web Performance＋GA4 替代。

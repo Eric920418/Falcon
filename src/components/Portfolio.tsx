@@ -21,6 +21,36 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: 36,
+    title: "YUHE 品牌服飾電商（測試版）",
+    description:
+      "為 YUHE 打造的品牌服飾電商測試版，以編輯式留白與商品情境照建立日常衣著的品牌調性，整合分類選購、商品資訊、會員登入、購物車與政策頁面。公開站目前以 noindex 隔離測試流量，並明示商品圖片為暫代素材。",
+    tech: [
+      "Next.js",
+      "React",
+      "Vercel",
+      "Vercel Blob",
+      "Responsive Web Design",
+      "Content Security Policy",
+    ],
+    features: [
+      "商品分類、列表與詳情頁",
+      "價格、尺碼、色系與庫存提示",
+      "會員登入與購物車",
+      "首頁主視覺與本季精選",
+      "完整尺寸表與洗滌資訊",
+      "隱私權、服務條款與退換貨政策",
+    ],
+    highlights: [
+      "克制留白與時裝編輯式商品陳列",
+      "Vercel Blob 圖片儲存與 Next.js 圖片最佳化",
+      "CSP、HSTS 與防嵌入等安全標頭",
+    ],
+    image: "/yuhe-studio-cover.png",
+    url: "https://yuhe.studio/",
+    category: "電商平台",
+  },
+  {
     id: 35,
     title: "車輛履歷管理系統",
     description:
@@ -909,7 +939,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                 完整<span className="text-falcon-gradient">作品紀錄</span>
               </h2>
               <p className="text-lg text-[#A8B6BC] max-w-xl">
-                31 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。
+                32 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。
               </p>
             </div>
 
