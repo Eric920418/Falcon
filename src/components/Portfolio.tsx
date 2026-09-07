@@ -21,6 +21,38 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: 35,
+    title: "車輛履歷管理系統",
+    description:
+      "為租車與旅遊接駁業者打造的車隊營運系統，集中管理車籍、里程、維修保養、附件與到期提醒。提供維修成本儀表板、每公里成本報表、AI 單據辨識、重複維修警示、角色權限與稽核紀錄，並支援 Excel 匯出、Google Sheets 同步與備份。",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Prisma 7",
+      "Neon PostgreSQL",
+      "Auth.js v5",
+      "Gemini",
+      "Vercel Blob",
+    ],
+    features: [
+      "車籍、里程與完整維修履歷",
+      "AI 單據辨識與人工核對",
+      "到期提醒與重複維修警示",
+      "維修成本、每公里成本與車況報表",
+      "Owner／Manager／Staff 三角色權限",
+      "Excel 匯出與 Google Sheets 同步",
+    ],
+    highlights: [
+      "零件／名稱／分類三級回退的重複維修比對",
+      "里程觀測窗與同期成本計算，避免分子分母期間錯置",
+      "稽核紀錄、私人附件與可還原備份的資料保護",
+    ],
+    image: "/vehicle-history-dashboard-demo.png",
+    url: "https://vehicle-history-eight.vercel.app/",
+    category: "其他",
+  },
+  {
     id: 34,
     title: "2026 上緯智聯自動化展 AI Explorer",
     description:
@@ -877,7 +909,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                 完整<span className="text-falcon-gradient">作品紀錄</span>
               </h2>
               <p className="text-lg text-[#A8B6BC] max-w-xl">
-                30 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。
+                31 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。
               </p>
             </div>
 

@@ -144,7 +144,7 @@ pnpm start
 - 流暢的頁面過渡動畫
 - **Hero 背景** - 工業網格 + 暖色光暈 + 大型漢字裝飾
 - **信任徽章** - 首屏展示「永久售後服務」與「快速交件保證」
-- **作品案例展示** - 完整案例頁收錄 30 項作品，首頁精選三項可驗證案例
+- **作品案例展示** - 完整案例頁收錄 31 項作品，首頁精選三項可驗證案例
 - **決策型首頁內容** - 兩個獲客 Hub、企業 AI 電話旗艦區、實際交付、四步合作流程、適配條件、公開起價、實名負責人與精選實作文章
 
 ## 作品案例
@@ -162,6 +162,7 @@ Portfolio 組件展示公司的專案作品，包含：
 - **自由接案平台** - CosmosWork（https://falcontaskbridge.com/）（AI 智能媒合、人才履歷展示、需求追蹤）
 - **展覽管理系統** - 完整的展覽作品管理與預約系統（52 資料表、Craft.js 編輯器、任務看板、即時叫號）
 - **2026 上緯智聯自動化展 AI Explorer** - 行動優先展場互動平台（https://guangdian-2026.vercel.app/）（台智寶 TAIIBOT、會員登錄、六大任務集點、許願牆、限量禮物兌換）
+- **車輛履歷管理系統** - 租車與旅遊接駁業者的車籍、里程、維修保養、成本與到期提醒管理系統（https://vehicle-history-eight.vercel.app/）（AI 單據辨識、重複維修警示、角色權限、稽核紀錄、Excel 匯出、Google Sheets 同步與備份）
 - **中醫診所 LINE 預約系統** - LINE LIFF 整合預約系統（Supabase Realtime、併發控制、130+ E2E 測試）
 - **茶客棧飲料店官網** - 茶飲品牌官網（東方墨韻視覺設計、CMS 後台管理、Cloudflare R2 圖片存儲）
 - **invisible care 居家健康守護官網與 CMS** - 居家清潔六大服務品牌官網（https://needfix.com.tw/）（Section CMS 動態區塊、Before/After 對比圖、完整 SEO 實體圖、老人友善後台 UI）
@@ -395,6 +396,7 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - 2026-08-26：依 Ubersuggest「title 過短」清單逐頁審核 14 個 URL；首頁、服務總覽、三篇文章、兩個案例、四個城市頁與三個價格頁改為查詢意圖優先的描述性 title，品牌仍由共用 metadata 模板附加。未設定全站最低字數，避免為第三方門檻灌入關鍵字；驗收以 title 唯一、頁面語意一致與搜尋點擊表現為準。
 - 2026-08-31：依 Google Search Console Generative AI performance report、Bing Webmaster Tools AI Performance 與 OpenAI 發布者文件，更新 GEO 完整指南、Google AI Overview、ChatGPT 引用觀察與 GEO 量測指南。`/blog/geo-measurement-guide` 保留原 URL 並成為唯一量測核心頁；Google AI 曝光、Bing citations、GA4、固定查詢與詢盤分開呈現，不把局部數據當市占或排名。
 - 2026-08-31：ChatGPT 搜尋引薦改以 `utm_source=chatgpt.com` 與 referrer 交叉量測；GEO 服務與價格頁的交付口徑同步改為帳號可用的 Google／Bing 官方 AI 報表、GA4、抽樣與合格詢盤。後續新文章必須先由 GSC 的不同搜尋意圖證明站內無合適落地頁；否則優先修現有頁面。
+- 2026-09-06：完整作品集新增「車輛履歷管理系統」，使用隔離的本機固定種子資料製作 Dashboard 示意封面，並標示為 DEMO；收錄車籍、維修履歷、成本報表、AI 單據辨識、到期／重複維修警示、角色權限與稽核紀錄。作品總數由 30 更新為 31，並同步首頁、案例頁 metadata／文案與 sitemap 更新日期。
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 - [ ] 從已有 GSC／GA4 匯出近 16 個月與發布前 90 天基準；原始匯出檔只放 `/Users/eric/Downloads`，不提交至 Git。
 - [ ] 從 GSC 匯入 Bing Webmaster Tools、提交 sitemap 並保存首份 AI Performance 基準；若 GSC Generative AI 報表尚未開放，明確以 Web Performance＋GA4 替代。
