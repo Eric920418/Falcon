@@ -144,7 +144,7 @@ pnpm start
 - 流暢的頁面過渡動畫
 - **Hero 背景** - 工業網格 + 暖色光暈 + 大型漢字裝飾
 - **信任徽章** - 首屏展示「永久售後服務」與「快速交件保證」
-- **作品案例展示** - 完整案例頁收錄 32 項作品，首頁精選三項可驗證案例
+- **作品案例展示** - 完整案例頁收錄 33 項作品，首頁精選三項可驗證案例
 - **決策型首頁內容** - 兩個獲客 Hub、企業 AI 電話旗艦區、實際交付、四步合作流程、適配條件、公開起價、實名負責人與精選實作文章
 
 ## 作品案例
@@ -157,6 +157,7 @@ Portfolio 組件展示公司的專案作品，包含：
 - **形象網站** - 書籍形象網站
 - **遊戲官網** - 破浪三國（https://www.kingdoms.blog/）
 - **App 開發** - 接案媒合平台（Web + iOS + Android）、GoGoCha 花蓮計程車雙模式 App（Kotlin + Jetpack Compose，已上架 Google Play）
+- **翻譯蒟蒻 CLASP 原生協作 App** - 大學跨領域課程的學生協作工具（App Store：https://apps.apple.com/tw/app/id6798919455；Google Play：https://play.google.com/store/apps/details?id=art.jichiu.clasp）（SwiftUI iOS 與 Kotlin／Jetpack Compose Android 皆有公開商店頁；手動觸發 AI 跨域概念轉譯、即時群聊、人才搜尋與六大工作室工具）
 - **AI 應用** - 現場 AI 智能客服系統
 - **學術系統** - 會議論文投稿審查系統、國際學術研討會（https://icte2025.ntue.edu.tw/）
 - **POS 系統** - 餐飲 POS 機整合系統
@@ -399,6 +400,7 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 - 2026-08-31：ChatGPT 搜尋引薦改以 `utm_source=chatgpt.com` 與 referrer 交叉量測；GEO 服務與價格頁的交付口徑同步改為帳號可用的 Google／Bing 官方 AI 報表、GA4、抽樣與合格詢盤。後續新文章必須先由 GSC 的不同搜尋意圖證明站內無合適落地頁；否則優先修現有頁面。
 - 2026-09-06：完整作品集新增「車輛履歷管理系統」，使用隔離的本機固定種子資料製作 Dashboard 示意封面，並標示為 DEMO；收錄車籍、維修履歷、成本報表、AI 單據辨識、到期／重複維修警示、角色權限與稽核紀錄。作品總數由 30 更新為 31，並同步首頁、案例頁 metadata／文案與 sitemap 更新日期。
 - 2026-09-07：完整作品集新增「YUHE 品牌服飾電商（測試版）」，以公開首頁實際畫面製作封面，收錄分類選購、商品資訊、會員登入、購物車與政策頁面；作品總數由 31 更新為 32，並同步首頁、案例頁 metadata／文案與 sitemap 更新日期。公開站維持 noindex，且如實標示商品圖片為暫代素材。
+- 2026-09-07：完整作品集新增「翻譯蒟蒻 CLASP 原生協作 App」，以三張匿名化 App Store 宣傳畫面組合 App-first 封面，聚焦原生 iOS／Android、手動觸發 AI 跨域概念轉譯、即時群聊、人才搜尋與六大工作室工具；作品總數由 32 更新為 33，並同步首頁與案例頁 metadata／文案。雙平台皆有公開商店頁，不宣稱下載量、評分或使用成效。
 - [ ] 設定 GTM 容器 ID（`NEXT_PUBLIC_GTM_ID` 環境變數）
 - [ ] 從已有 GSC／GA4 匯出近 16 個月與發布前 90 天基準；原始匯出檔只放 `/Users/eric/Downloads`，不提交至 Git。
 - [ ] 從 GSC 匯入 Bing Webmaster Tools、提交 sitemap 並保存首份 AI Performance 基準；若 GSC Generative AI 報表尚未開放，明確以 Web Performance＋GA4 替代。

@@ -21,6 +21,36 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: 37,
+    title: "翻譯蒟蒻 CLASP 原生協作 App",
+    description:
+      "為大學跨領域課程打造的原生學生協作 App，iOS 與 Android 皆已有公開商店頁。以即時群組對話為核心，讓學生手動觸發 AI 進行跨域概念轉譯，再銜接人才搜尋與六大工作室工具；AI 於共用後端執行。",
+    tech: [
+      "SwiftUI",
+      "Kotlin",
+      "Jetpack Compose",
+      "Socket.IO",
+      "REST API",
+      "Keychain / DataStore",
+    ],
+    features: [
+      "Email／Google 登入，iOS 另支援 Apple",
+      "即時群組聊天、提及、回覆與附件",
+      "手動觸發逐則 AI 跨域概念轉譯",
+      "發想、任務、紀錄、資源、記帳、約時間",
+      "能力地圖與合作人才搜尋",
+      "物件引用、訊息交接與斜線指令",
+    ],
+    highlights: [
+      "App Store／Google Play 皆有公開商店頁",
+      "原生雙平台共用 REST API 與伺服器端 AI",
+      "Socket.IO 即時事件、輪詢備援與冪等重試",
+    ],
+    image: "/clasp-native-app-cover.png",
+    url: "https://apps.apple.com/tw/app/%E7%BF%BB%E8%AD%AF%E8%92%9F%E8%92%BB-clasp/id6798919455",
+    category: "App 開發",
+  },
+  {
     id: 36,
     title: "YUHE 品牌服飾電商（測試版）",
     description:
@@ -939,7 +969,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                 完整<span className="text-falcon-gradient">作品紀錄</span>
               </h2>
               <p className="text-lg text-[#A8B6BC] max-w-xl">
-                32 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。
+                33 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。
               </p>
             </div>
 
