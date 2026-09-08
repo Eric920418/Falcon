@@ -1,3 +1,5 @@
+import { translateData } from '@/lib/i18n/server'
+import type { Locale } from '@/lib/i18n/config'
 import type { BlogContent } from './types'
 
 const datePublished = '2026-05-18'
@@ -2119,10 +2121,10 @@ export const blogPosts: Record<string, BlogContent> = {
 
 export const blogSlugs = Object.keys(blogPosts)
 
-export function getBlogPost(slug: string): BlogContent | null {
-  return blogPosts[slug] ?? null
+export function getBlogPost(slug: string, locale: Locale = 'zh-tw'): BlogContent | null {
+  return translateData(blogPosts[slug] ?? null, locale)
 }
 
-export function getAllBlogPosts(): BlogContent[] {
-  return Object.values(blogPosts)
+export function getAllBlogPosts(locale: Locale = 'zh-tw'): BlogContent[] {
+  return translateData(Object.values(blogPosts), locale)
 }

@@ -1,3 +1,5 @@
+import { locales, localizedPath } from '@/lib/i18n/config'
+import { languageAlternates } from '@/lib/i18n/seo'
 import { MetadataRoute } from 'next'
 import { siteConfig } from '@/lib/seo'
 import { getIndexableServices } from '@/lib/content/services'
@@ -58,7 +60,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: caseStudy.updatedAt,
   }))
 
-  return [
+  const routes = [
     ...staticRoutes,
     ...serviceRoutes,
     ...localRoutes,
@@ -67,4 +69,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...compareRoutes,
     ...caseStudyRoutes,
   ]
+  return routes.flatMap(route => {
+    const path = route.url.slice(baseUrl.length) || '/'
+    return locales.map(locale => ({
+      ...route,
+      url: localizedPath(path, locale) === '/' ? baseUrl : baseUrl + localizedPath(path, locale),
+      alternates: { languages: languageAlternates(path) },
+    }))
+  })
 }

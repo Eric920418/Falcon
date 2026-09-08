@@ -1,3 +1,5 @@
+import { translateData } from '@/lib/i18n/server'
+import type { Locale } from '@/lib/i18n/config'
 import type { PriceDefinition } from './types'
 
 export const priceCatalog: Record<string, PriceDefinition> = {
@@ -121,6 +123,6 @@ export const primaryPriceDefinitions = [
   priceCatalog.geo,
 ]
 
-export function getPriceDefinition(serviceSlug: string): PriceDefinition | null {
-  return priceCatalog[serviceSlug] ?? null
+export function getPriceDefinition(serviceSlug: string, locale: Locale = 'zh-tw'): PriceDefinition | null {
+  return translateData(priceCatalog[serviceSlug] ?? null, locale)
 }

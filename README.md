@@ -42,34 +42,37 @@ pnpm start
 ## 專案結構
 
 ```
-├── app/                              # Next.js App Router
-│   ├── layout.tsx                    # 根布局（全站級 schema + metadata）
-│   ├── page.tsx                      # 首頁
-│   ├── sitemap.ts                    # 動態 Sitemap（自動聚合所有 routes）
-│   ├── robots.ts                     # 動態 Robots.txt（含 AI 爬蟲規則）
-│   ├── opengraph-image.tsx           # 首頁 OG image 動態生成
-│   ├── ai-voice-og/                   # 企業 AI 電話專用 1200×630 OG image
-│   ├── globals.css                   # 全局樣式
-│   ├── services/                     # 服務總覽頁 + [slug] 5 個索引服務 + 4 個 noindex 舊服務 + AEO 轉址
-│   ├── about/                        # 實名負責人與工作方法
-│   ├── case-studies/[slug]/          # 證據、資料來源與限制
-│   ├── local/[slug]/                 # 6 個城市服務指南；內容品質閘門達標才可索引
-│   ├── blog/                         # Blog index + blog/[slug] 動態文章頁
-│   ├── pricing/                      # 透明定價 index + 4 個 pricing/[slug]
-│   ├── compare/[slug]/               # SEO／GEO／AEO 名詞比較
-│   ├── llms.txt/                     # 共用內容資料源生成的低成本摘要
-│   ├── llms-full.txt/                # 共用內容資料源生成的完整摘要
-│   ├── resume/                       # 履歷頁（noindex）
-│   └── api/contact/                  # 聯絡表單 API
+├── app/                               # Next.js App Router
+│   ├── [locale]/                      # 官網語系根布局，伺服器輸出 html lang
+│   │   ├── page.tsx                   # 首頁
+│   │   ├── services/                  # 服務總覽與詳細頁
+│   │   ├── about/                     # 實名負責人與工作方法
+│   │   ├── case-studies/              # 作品集與公開案例
+│   │   ├── local/[slug]/              # 城市服務指南
+│   │   ├── blog/                      # 文章索引與完整文章
+│   │   ├── pricing/                   # 定價索引與詳細頁
+│   │   ├── compare/[slug]/            # SEO／GEO／AEO 比較
+│   │   ├── llms.txt/                  # 同一內容來源產生摘要
+│   │   └── llms-full.txt/             # 同一內容來源產生完整摘要
+│   ├── (tools)/                       # 獨立繁中根布局
+│   │   ├── resume/                    # 履歷與 PDF 工具，原網址不變
+│   │   └── card/                      # 名片與社群圖，原網址不變
+│   ├── sitemap.ts                     # 九語 sitemap 與對等版本
+│   ├── robots.ts                      # Robots.txt 與 AI 爬蟲規則
+│   ├── opengraph-image.tsx            # 既有繁中社群圖
+│   ├── ai-voice-og/                   # 企業 AI 電話專用社群圖
+│   ├── brand-og/                      # 外語共用純品牌社群圖
+│   ├── globals.css                    # 全局樣式與多語排版
+│   └── api/                           # 聯絡、履歷與名片工具 API
 ├── src/
 │   ├── components/
-│   │   ├── Home*.tsx, Contact.tsx    # 首頁定位、AI 電話、交付、案例、流程、定價與信任元件
-│   │   ├── ui/                       # shadcn/ui 元件
-│   │   ├── page-layout/              # 子頁面共用 layout
+│   │   ├── Home*.tsx, Contact.tsx     # 首頁定位、AI 電話、交付、案例、流程、定價與信任元件
+│   │   ├── ui/                        # shadcn/ui 元件
+│   │   ├── page-layout/               # 子頁面共用 layout
 │   │   │   ├── PageShell.tsx
 │   │   │   ├── SitePageHeader.tsx
 │   │   │   └── SitePageFooter.tsx
-│   │   └── page-templates/           # 共用內容渲染模板
+│   │   └── page-templates/            # 共用內容渲染模板
 │   │       ├── ServicePageTemplate.tsx
 │   │       ├── AiVoiceServicePage.tsx
 │   │       ├── LocalPageTemplate.tsx
@@ -77,29 +80,30 @@ pnpm start
 │   │       ├── PricingPageTemplate.tsx
 │   │       └── ComparePageTemplate.tsx
 │   └── lib/
-│       ├── seo/                      # metadata 與精簡結構化資料工廠
-│       │   ├── site-config.ts        # 全站常數
-│       │   ├── metadata.ts           # createMetadata() 統一 metadata 產生器
-│       │   ├── json-ld.tsx           # <JsonLd> 元件
-│       │   └── schemas/              # 9 種 schema 工廠
-│       │       ├── organization.ts   # 全站級
-│       │       ├── website.ts        # 全站級
-│       │       ├── breadcrumb.ts     # 頁面級（工廠）
-│       │       ├── service.ts        # 頁面級（工廠）
-│       │       ├── article.ts        # 頁面級（工廠）
-│       │       ├── webpage.ts        # 頁面級（工廠）
-│       │       ├── profile-page.ts   # 實名作者頁
-│       │       ├── case-study.ts     # 案例 CreativeWork
-│       │       └── item-list.ts      # portfolio 列表
-│       └── content/                  # 內容資料層（data-driven UI）
-│           ├── types.ts              # 共用 content schema
-│           ├── authors.ts            # 實名作者資料
-│           ├── case-studies.ts       # 公開案例證據
-│           ├── price-catalog.ts      # 單一價格來源
-│           ├── services/             # 服務內容
-│           ├── local.ts              # 6 個城市服務指南內容＋isIndexableLocalPage 閘門
-│           ├── blog.ts               # 17 篇文章內容
-│           └── pricing.ts            # pricing 逐頁手寫細節 + 3 個 compare 內容
+│       ├── i18n/                      # 語系、網址、翻譯、Intl 與分類 JSON 字典
+│       ├── seo/                       # metadata 與精簡結構化資料工廠
+│       │   ├── site-config.ts         # 全站常數
+│       │   ├── metadata.ts            # createMetadata() 統一 metadata 產生器
+│       │   ├── json-ld.tsx            # <JsonLd> 元件
+│       │   └── schemas/               # 9 種 schema 工廠
+│       │       ├── organization.ts    # 全站級
+│       │       ├── website.ts         # 全站級
+│       │       ├── breadcrumb.ts      # 頁面級（工廠）
+│       │       ├── service.ts         # 頁面級（工廠）
+│       │       ├── article.ts         # 頁面級（工廠）
+│       │       ├── webpage.ts         # 頁面級（工廠）
+│       │       ├── profile-page.ts    # 實名作者頁
+│       │       ├── case-study.ts      # 案例 CreativeWork
+│       │       └── item-list.ts       # portfolio 列表
+│       └── content/                   # 內容資料層（data-driven UI）
+│           ├── types.ts               # 共用 content schema
+│           ├── authors.ts             # 實名作者資料
+│           ├── case-studies.ts        # 公開案例證據
+│           ├── price-catalog.ts       # 單一價格來源
+│           ├── services/              # 服務內容
+│           ├── local.ts               # 6 個城市服務指南內容＋isIndexableLocalPage 閘門
+│           ├── blog.ts                # 21 篇文章內容
+│           └── pricing.ts             # pricing 逐頁手寫細節 + 3 個 compare 內容
 ├── public/
 │   ├── logo.png
 │   └── manifest.json
@@ -204,7 +208,7 @@ Portfolio 組件展示公司的專案作品，包含：
 | AEO 舊路徑 | `/services/aeo` | 1 | 永久轉址至 `/services/geo` |
 | 本地頁 | `/local/[slug]` | 6 | 城市服務指南；`isIndexableLocalPage()` 內容品質閘門達標才可索引 |
 | 案例頁 | `/case-studies`、`/case-studies/[slug]` | 4 | commercial + evidence |
-| 部落格 | `/blog`、`/blog/[slug]` | 18 | 1 個索引頁＋17 篇 informational / commercial 文章 |
+| 部落格 | `/blog`、`/blog/[slug]` | 22 | 1 個索引頁＋21 篇 informational / commercial 文章 |
 | 定價頁 | `/pricing`、`/pricing/[slug]` | 5 | transactional |
 | 比較頁 | `/compare/[slug]` | 3 | commercial investigation |
 | 公司頁 | `/about` | 1 | E-E-A-T / entity |
@@ -317,7 +321,7 @@ curl -s http://localhost:3000/sitemap.xml | grep -c "<loc>"
 
 ### Google Tag Manager (GTM)
 
-GTM 已整合至 `app/layout.tsx`，透過環境變數控制。部署時需設定：
+GTM 已整合至 `src/components/SiteRoot.tsx`，透過環境變數控制。部署時需設定：
 
 ```env
 NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
@@ -577,8 +581,8 @@ SMTP_PASSWORD=你的Gmail應用程式密碼
 
 ### 相關檔案
 
-- `app/resume/page.tsx` — 產生器 UI（客戶端元件）
-- `app/resume/layout.tsx` — 設定 noindex metadata
+- `app/(tools)/resume/page.tsx` — 產生器 UI（客戶端元件）
+- `app/(tools)/resume/layout.tsx` — 設定 noindex metadata
 - `src/components/resume/ResumeDocument.tsx` — `@react-pdf/renderer` 的 PDF 版面定義
 - `src/lib/resume-data.ts` — 履歷內容（中英雙語結構化資料）
 - `public/fonts/NotoSansTC-{Regular,Bold}.woff` — 繁中字型（來源：`@fontsource/noto-sans-tc` 的 `chinese-traditional` 子集，共 ~2.7MB）
@@ -635,17 +639,17 @@ export default function SomePage() {
 | 橫式 | `/api/card-image/landscape` | 1200×630 | 社群預覽 |
 | 印刷 | `/api/card-image/print` | 1063×638 | 90×54mm @300DPI 名片印刷 |
 
-分享 `/card` 連結時，社群預覽圖由 `app/card/opengraph-image.tsx` 自動產生（同橫式版面）。
+分享 `/card` 連結時，社群預覽圖由 `app/(tools)/card/opengraph-image.tsx` 自動產生（同橫式版面）。
 
 ### 相關檔案
 
-- `app/card/page.tsx` — `/card` 分享頁（`PageShell` 包名片）
+- `app/(tools)/card/page.tsx` — `/card` 分享頁（`PageShell` 包名片）
 - `src/components/card/BusinessCard.tsx` — 可重用名片元件（QR、vCard 下載、行動按鈕）
 - `src/lib/card-data.ts` — 名片資料**單一來源**，從 `resume-data.ts`（個人）+ `seo/site-config.ts`（公司）組裝
 - `src/lib/vcard.ts` — vCard 4.0（RFC 6350）`.vcf` 產生器（純函式）
 - `src/lib/card-og.tsx` — 三種名片圖共用版面（next/og）
 - `src/lib/og-fonts.ts` — 名片圖中文字體載入器
-- `app/card/opengraph-image.tsx`、`app/api/card-image/[format]/route.tsx` — 產圖路由
+- `app/(tools)/card/opengraph-image.tsx`、`app/api/card-image/[format]/route.tsx` — 產圖路由
 
 ### 修改名片內容
 
@@ -690,3 +694,60 @@ pnpm build
 **重要**：部署時需在 Vercel 後台設定環境變數 `SMTP_HOST`、`SMTP_PORT`、`SMTP_USER`、`SMTP_PASSWORD`（選填 `CONTACT_RECIPIENT`）。
 
 **注意**：UI 組件使用 shadcn/ui，import 語句不應包含版本號（如 `@radix-ui/react-dialog` 而非 `@radix-ui/react-dialog@1.1.6`）。
+
+## 官網九語系
+
+繁中沿用原網址；英文 `/en`、日文 `/ja`、韓文 `/ko`、簡中 `/zh-hans`、西班牙文 `/es`、法文 `/fr`、德文 `/de`、葡萄牙文 `/pt` 使用相同 slug。葡萄牙文以巴西用語為基準；品牌、客戶專名、台灣案例與法規背景維持原意。這是第一版市場組合，後續以各語言的有效詢價決定投入，不宣稱涵蓋大部分潛在客戶。
+
+### 路由與使用體驗
+
+- 官網使用 `[locale]` 靜態產生，繁中原網址由 `next.config.ts` 內部 rewrite；直接存取 `/zh-tw/...` 單次 301 至原網址。三條舊網址的九語版本直接 301 至最終對應頁。
+- 履歷、名片與下載工具使用獨立根布局。API、圖片、靜態資源及工具網址不加語言前綴。未知語言與不存在的 slug 回傳 404。
+- `src/lib/i18n/config.ts` 統一產生公開網址；導覽、麵包屑、相關文章、詢價 CTA 與切換器保留目前語言。切換語言保留 query／hash，未送出表單會先提醒可能遺失輸入。
+- 首次造訪根據 `navigator.languages` 提供可關閉的建議，不自動跳轉；明確選擇或關閉會記錄於 localStorage，儲存不可用仍能手動切換。桌面及手機原生選單支援鍵盤與 Escape。
+- 外語使用各語言系統字體後備，韓文保留單字斷行，歐語長字可換行；桌面導覽使用 xl 分界。金額透過原生 Intl 明確標示 TWD，不換匯；首頁文章日期使用 Intl，其餘既有 ISO 日期保留。
+
+### 翻譯與維護
+
+`src/lib/i18n/messages/{locale}/{category}.json` 依 common、home、pages、services、pricing、articles、cases、portfolio、local 分類，以正規化的繁中原文為鍵。九語字典合計 30,915 筆文案（含繁中來源；新增八語共 27,480 筆），包含完整內容、FAQ、表格、圖片替代文字與無障礙標籤；重要互動短句由 `overrides.ts`、`language-ui.ts`、`contact-messages.ts` 管理。
+
+價格數字、聯絡資訊、識別碼、案例證據及日期沿用既有內容資料；只翻譯描述。新增或修改原文時，同步補齊八語字典並執行內容檢查；缺少必要翻譯、數字不一致、插值遺失或原文未抽出會使檢查失敗，不以繁中回填外語頁。
+
+伺服器頁面與 metadata 先 `await initLocale(params.locale)`，再呼叫預設繁中的內容讀取函式並傳入 locale（非繁中讀取依賴已初始化的當次請求字典）；語言狀態使用 React request cache 隔離。Route Handler 明確傳入 locale／messages。客戶端只取得共用介面字典，作品集另接收該頁字典，長篇文章字典留在伺服器。
+
+初稿以本機離線工具輔助，並逐語檢查數字、技術術語、品牌、案例限制及可疑段落；網站執行時不依賴模型、翻譯 API、翻譯平台或資料庫。翻譯未經母語者校稿。
+
+### 海外詢價與 SEO
+
+- 海外聯絡區優先 Email、表單與 +886 電話，說明接受九語文字詢價、可用翻譯協助溝通，不承諾九語電話客服。
+- `/api/contact` 接受選填的白名單 locale，舊請求預設繁中。通知信維持繁中並附訪客語言及原始訊息；既有回應代碼不變。前端顯示當頁語言與完整公開診斷，敏感設定、憑證與 Bearer 權杖先遮蔽。
+- 保留失敗輸入、成功確認、防重複提交與服務預選；原生必填／Email 驗證也使用當頁語言。分析事件加入白名單 locale，繼續排除個資。
+- canonical 指向各版本自身，雙向 hreflang 列出九語完整版本，x-default 指向繁中。Metadata、Open Graph、Twitter、JSON-LD 與 sitemap 共用網址規則；外語社群圖使用純品牌圖，既有 noindex 與地區品質門檻不變。
+- 九語 llms.txt／llms-full.txt 從相同服務、文章、案例、價格與地區來源產生，沒有另存維護副本。已翻譯正文直接輸出，來源價格單位另外翻譯，避免重複處理或混入中文單位。
+- 路由與索引規則參考 [Next.js 國際化指南](https://nextjs.org/docs/app/guides/internationalization) 與 [Google 多語版本指南](https://developers.google.com/search/docs/specialty/international/localized-versions)。
+
+### 本機驗收
+
+```bash
+pnpm lint:content
+pnpm exec tsc --noEmit --incremental false
+pnpm build
+pnpm start --hostname 127.0.0.1 --port 3007
+# 另開終端
+pnpm check:seo http://127.0.0.1:3007
+pnpm check:conversion http://127.0.0.1:3007
+```
+
+內容檢查涵蓋字典與實際元件／資料來源、必要術語、數值、幣別、插值、網址、瀏覽器語言匹配，另有 17 個 API 驗證及 18 個九語寄信成功／失敗替身測試。SEO 檢查所有語言頁面的狀態、canonical、hreflang、sitemap、JSON-LD、內鏈、社群圖、404、llms 摘要與單次轉址。瀏覽器檢查九語表單、服務預選、語言切換／建議／停用儲存，以及九種主要頁型的手機／桌面溢出與導覽鍵盤操作。
+
+驗收只允許本機表單；SMTP 以記憶體替身處理，Chrome 攔截聯絡及第三方請求，不產生真實郵件或分析數據。需本機 Chrome，可使用 `CHROME_PATH` 指定，不另安裝瀏覽器套件。截圖寫入系統暫存目錄，路徑由檢查腳本輸出。Chrome 關閉快取以確認新回應狀態；不存在頁面由伺服器回傳 404，Next.js 錯誤邊界完成九語顯示，另以瀏覽器驗證。
+
+2026-09-08 本機驗收全部通過：
+
+- `pnpm lint:content`：30,915 筆九語字典、17 個 API 邊界驗證與 18 個九語成功／失敗隔離測試。
+- `pnpm exec tsc --noEmit --incremental false` 與 `pnpm build`：型別與正式建置通過，共產生 498 個靜態頁面／端點。
+- `pnpm check:seo http://127.0.0.1:3007`：432 個索引頁、38 個 noindex 頁（含兩個工具頁），以及 sitemap、雙向 hreflang、JSON-LD、摘要與轉址全部通過。
+- `pnpm check:conversion http://127.0.0.1:3007`：8 篇文章 CTA、15 種表單失敗、成功防重複、事件隱私、九語詢價／404／語言切換與建議、停用儲存，以及九語九種主要頁型在 1440px／390px 的排版與鍵盤檢查通過；另檢視各語言手機／桌面截圖，無缺字或橫向溢出。
+- `git diff --check`：通過。瀏覽器截圖保留於 `/var/folders/_2/0cgnyjy96gq7clyqpvzrx0vm0000gn/T/falcon-conversion-svnJPn`；這是本次本機暫存產物，重跑會使用新目錄。
+
+本次沒有新增套件、修改資料庫、正式部署或調整 GA4 帳號設定。正式環境的搜尋收錄與實際詢價成效仍需上線後觀察。

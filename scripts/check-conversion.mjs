@@ -14,9 +14,11 @@ assert(executablePath, '找不到 Chrome；請設定 CHROME_PATH 指向已安裝
 const screenshots = mkdtempSync(join(tmpdir(), 'falcon-conversion-'))
 const browser = await puppeteer.launch({ executablePath, headless: true })
 const page = await browser.newPage()
+await page.setCacheEnabled(false)
 page.setDefaultTimeout(15000)
 let mock = { status: 500, body: '{"code":"SMTP_SEND_FAILED","error":"測試攔截：不寄信"}' }
 let requestCount = 0
+let lastContactBody
 const pageErrors = []
 page.on('pageerror', (error) => pageErrors.push(error.message))
 await page.setRequestInterception(true)
@@ -24,6 +26,7 @@ page.on('request', (request) => {
   const url = new URL(request.url())
   if (url.pathname === '/api/contact') {
     requestCount++
+    lastContactBody = JSON.parse(request.postData() || "{}")
     if (mock.abort) return void request.abort('failed')
     return void request.respond({ contentType: 'application/json', ...mock })
   }
@@ -33,8 +36,12 @@ page.on('request', (request) => {
 })
 
 const go = (path) => page.goto(new URL(path, base).href, { waitUntil: 'networkidle0' })
-const events = () => page.evaluate(() => (window.dataLayer || []).filter((item) =>
+const rawEvents = () => page.evaluate(() => (window.dataLayer || []).filter((item) =>
   ['generate_lead', 'contact_click', 'service_cta_click', 'form_error'].includes(item.event)))
+const events = async () => (await rawEvents()).map(({ locale, ...event }) => {
+  assert.equal(locale, (['en','ja','ko','zh-hans','es','fr','de','pt'].includes(new URL(page.url()).pathname.split('/')[1]) ? new URL(page.url()).pathname.split('/')[1] : 'zh-tw'))
+  return event
+})
 const resetEvents = () => page.evaluate(() => { window.dataLayer = [] })
 const cta = (placement) => `[data-cta-placement="${placement}"]`
 const click = (selector) => page.locator(selector).click()
@@ -184,8 +191,129 @@ try {
     await page.$eval('#contact button[type="submit"]', (element) => element.scrollIntoView({ block: 'end' }))
     await page.screenshot({ path: join(screenshots, `${width}-contact-help.png`) })
   }
+  for (const locale of ['en', 'ja', 'ko', 'zh-hans', 'es', 'fr', 'de', 'pt']) {
+    await page.setViewport({ width: 390, height: 900 })
+    await go(`/${locale}?service=ai_voice#contact`)
+    await waitService('ai_voice')
+    assert.equal(await page.$eval('html', element => element.lang), locale === 'zh-hans' ? 'zh-Hans' : locale)
+    assert.equal(await page.$eval('nav select', element => element.value), locale)
+    assert(await page.$eval('#name', element => { element.reportValidity(); return element.validity.customError && element.validationMessage.length > 0 }), '必填提示必須使用頁面語系')
+    await page.type('#email', 'invalid-email')
+    assert(await page.$eval('#email', element => { element.reportValidity(); return element.validity.customError && element.validationMessage.length > 0 }), 'Email 格式提示必須使用頁面語系')
+    await page.$eval('#email', element => element.select())
+    await page.keyboard.press('Backspace')
+
+    await fill()
+    const before = requestCount
+    mock = { status: 500, body: JSON.stringify({ code: 'SMTP_SEND_FAILED', error: 'TEST_PRIVATE_MESSAGE', detail: 'HTTP diagnostic retained' }) }
+    await resetEvents()
+    await click('#contact button[type="submit"]')
+    await page.waitForSelector('#contact [role="alert"]')
+    await assertPreserved()
+    assert.equal(requestCount, before + 1)
+    assert.equal(lastContactBody.locale, locale)
+    assert((await page.$eval('#contact [role="alert"]', element => element.textContent)).includes('HTTP diagnostic retained'))
+    await assertSafeEvents()
+    let warned = false
+    page.once('dialog', async dialog => { warned = true; await dialog.dismiss() })
+    await page.select('nav select', 'en' === locale ? 'ja' : 'en')
+    assert(warned, '有未送出內容時切換必須提示')
+    assert.equal(new URL(page.url()).pathname, `/${locale}`)
+    await assertPreserved()
+    mock = { status: 200, body: '{"code":"CONTACT_SENT"}' }
+    await resetEvents()
+    await click('#contact button[type="submit"]')
+    await page.waitForFunction(() => document.querySelector('#name')?.value === '')
+    assert.equal((await rawEvents()).filter(event => event.event === 'generate_lead').length, 1)
+    assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${locale} 手機首頁溢出`)
+    await page.screenshot({ path: join(screenshots, `${locale}-mobile-contact.png`) })
+    await go(`/${locale}/blog/ai-voice-agent-poc-acceptance-checklist`)
+    assert.equal(await page.$eval('#post-contact [data-cta-action="request_demo"]', link => link.getAttribute('href')), `/${locale}?service=ai_voice#contact`)
+  }
+  // Suggestion never redirects, dismissal persists, and storage is optional.
+  const languageScript = await page.evaluateOnNewDocument(() => {
+    Object.defineProperty(navigator, 'languages', { get: () => ['ja-JP', 'en'] })
+  })
+  await page.evaluate(() => localStorage.removeItem('falcon-language-choice'))
+  await go('/services/seo?campaign=language-check#service-faq')
+  await page.waitForSelector('aside[lang="ja"]')
+  assert.equal(new URL(page.url()).pathname, '/services/seo', '建議不可自動跳轉')
+  await click('aside[lang="ja"] button[aria-label]')
+  await go('/services/seo?campaign=language-check#service-faq')
+  assert(!(await page.$('aside[lang="ja"]')), '關閉建議後不可反覆出現')
+  await Promise.all([
+    page.waitForNavigation({ waitUntil: 'networkidle0' }),
+    page.select('header select, nav select', 'fr'),
+  ])
+  assert.equal(new URL(page.url()).pathname, '/fr/services/seo')
+  assert.equal(new URL(page.url()).search, '?campaign=language-check')
+  assert.equal(new URL(page.url()).hash, '#service-faq')
+  assert.equal(await page.evaluate(() => localStorage.getItem('falcon-language-choice')), 'fr')
+  const storageScript = await page.evaluateOnNewDocument(() => {
+    Object.defineProperty(window, 'localStorage', { get: () => { throw new DOMException('Storage unavailable', 'SecurityError') } })
+  })
+  await go('/fr/services/seo?campaign=storage-check#service-faq')
+  await Promise.all([
+    page.waitForNavigation({ waitUntil: 'networkidle0' }),
+    page.select('header select, nav select', 'de'),
+  ])
+  assert.equal(new URL(page.url()).pathname, '/de/services/seo')
+  assert.equal(new URL(page.url()).search, '?campaign=storage-check')
+  assert.equal(new URL(page.url()).hash, '#service-faq')
+  await page.removeScriptToEvaluateOnNewDocument(languageScript.identifier)
+  await page.removeScriptToEvaluateOnNewDocument(storageScript.identifier)
+
+  // Every public page type at both widths, including longer European labels.
+  for (const locale of ['zh-tw', 'en', 'ja', 'ko', 'zh-hans', 'es', 'fr', 'de', 'pt']) {
+    const prefix = locale === 'zh-tw' ? '' : `/${locale}`
+    const missing = await go(`${prefix}/services/not-a-service`)
+    assert.equal(missing.status(), 404)
+    assert.equal(await page.$eval('html', element => element.lang), locale === 'zh-tw' ? 'zh-TW' : locale === 'zh-hans' ? 'zh-Hans' : locale)
+    const missingTitles = { 'zh-tw': '找不到這個頁面', en: 'Page not found', ja: 'ページが見つかりません', ko: '페이지를 찾을 수 없습니다', 'zh-hans': '找不到这个页面', es: 'Página no encontrada', fr: 'Page introuvable', de: 'Seite nicht gefunden', pt: 'Página não encontrada' }
+    assert.equal(await page.$eval('h1', element => element.textContent), missingTitles[locale])
+    for (const width of [1440, 390]) {
+      await page.setViewport({ width, height: 900 })
+      for (const path of ['', '/services/ai-voice-agent', '/pricing', '/case-studies', '/case-studies/gogocha-ai-dispatch', '/about', '/blog/ai-voice-agent-poc-acceptance-checklist', '/compare/seo-vs-geo-vs-aeo', '/local/taoyuan-seo']) {
+        const response = await go(prefix + path || '/')
+        assert.equal(response.status(), 200, `${locale} ${path} HTTP`)
+        assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${locale} ${width}px ${path} 溢出`)
+        assert.equal(await page.$eval('header select, nav select', element => element.options.length), 9)
+        if (!path || path === '/pricing') {
+          await page.focus('header select, nav select')
+          assert(await page.evaluate(() => document.activeElement?.tagName === 'SELECT'), '語言切換器必須可取得焦點')
+          await page.keyboard.press('Tab')
+          assert(await page.evaluate(() => document.activeElement?.tagName !== 'BODY'), '語言切換器不可困住鍵盤焦點')
+          if (width === 1440) {
+            const dropdown = 'header nav button[aria-expanded], nav > div > div.hidden button[aria-expanded]'
+            await page.mouse.move(1, 899)
+            await page.focus(dropdown)
+            await page.keyboard.press('Enter')
+            assert.equal(await page.$eval(dropdown, element => element.getAttribute('aria-expanded')), 'true')
+            await page.keyboard.press('Escape')
+            assert.equal(await page.$eval(dropdown, element => element.getAttribute('aria-expanded')), 'false')
+          } else {
+            const toggle = path ? '#page-menu-toggle' : '#home-menu-toggle'
+            const menu = path ? '#page-mobile-menu' : '#home-mobile-menu'
+            await page.focus(toggle)
+            await page.keyboard.press('Enter')
+            await page.waitForSelector(menu)
+            await page.focus(`${menu} button`)
+            await page.keyboard.press('Enter')
+            assert.equal(await page.$eval(`${menu} button`, element => element.getAttribute('aria-expanded')), 'true')
+            await page.waitForFunction(selector => getComputedStyle(document.querySelector(selector)).opacity === '1', {}, menu)
+            await page.screenshot({ path: join(screenshots, `${locale}-${path ? 'page' : 'home'}-mobile-menu.png`) })
+            await page.keyboard.press('Escape')
+            assert.equal(await page.$eval(toggle, element => element.getAttribute('aria-expanded')), 'false')
+            assert.equal(await page.evaluate(() => document.activeElement?.id), toggle.slice(1))
+            await page.waitForSelector(menu, { hidden: true })
+          }
+        }
+        if (!path || path === '/pricing') await page.screenshot({ path: join(screenshots, `${locale}-${width}-${path ? 'pricing' : 'home'}.png`) })
+      }
+    }
+  }
   assert.deepEqual(pageErrors, [], '瀏覽器不可有未處理錯誤')
-  console.log(`PASS：8 篇文章、同頁／跨頁 CTA、${failures.length} 種失敗、成功防重複、事件隱私、桌面／手機與鍵盤。`)
+  console.log(`PASS：8 篇文章、同頁／跨頁 CTA、${failures.length} 種失敗、成功防重複、事件隱私、九語表單、語言切換／建議／停用儲存、九語主要頁型桌面／手機與鍵盤。`)
   console.log(`截圖：${screenshots}；所有聯絡請求均已攔截，未寄信／送出第三方分析。`)
 } finally {
   await browser.close()

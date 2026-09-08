@@ -1,4 +1,6 @@
-import Link from 'next/link'
+
+import { getI18n } from '@/lib/i18n/server'
+import Link from '@/lib/i18n/link'
 import { ArrowRight, Check, ChevronRight } from 'lucide-react'
 import type { ComparePageContent } from '@/lib/content/types'
 
@@ -7,21 +9,23 @@ interface ComparePageTemplateProps {
 }
 
 export function ComparePageTemplate({ page }: ComparePageTemplateProps) {
+  const { t, locale } = getI18n()
+
   return (
     <div className="bg-stone-950">
       <section id="compare-hero" className="relative py-16 px-6 bg-gradient-to-b from-[#1E2A2E] to-stone-950">
         <div className="max-w-4xl mx-auto">
           <nav className="text-sm text-[#7A8A91] mb-6 flex flex-wrap items-center gap-2">
-            <Link href="/" className="hover:text-amber-500">首頁</Link>
+            <Link href="/" className="hover:text-amber-500">{t("首頁")}</Link>
             <ChevronRight size={14} />
-            <span className="text-[#A8B6BC]">比較</span>
+            <span className="text-[#A8B6BC]">{t("比較")}</span>
             <ChevronRight size={14} />
-            <span className="text-[#A8B6BC]">{page.h1}</span>
+            <span className="text-[#A8B6BC]">{t(page.h1)}</span>
           </nav>
           <h1 className="text-4xl md:text-5xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
-            {page.h1}
+            {t(page.h1)}
           </h1>
-          <p className="text-lg text-[#A8B6BC] leading-relaxed">{page.intro}</p>
+          <p className="text-lg text-[#A8B6BC] leading-relaxed">{t(page.intro)}</p>
         </div>
       </section>
 
@@ -36,7 +40,7 @@ export function ComparePageTemplate({ page }: ComparePageTemplateProps) {
                     className="px-4 py-3 text-left text-[#E0E5E8]"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
-                    {header}
+                    {t(header)}
                   </th>
                 ))}
               </tr>
@@ -44,9 +48,9 @@ export function ComparePageTemplate({ page }: ComparePageTemplateProps) {
             <tbody>
               {page.comparisonTable.map((row, i) => (
                 <tr key={i} className="border-b border-[#344349]/50 hover:bg-stone-900/30 transition-colors">
-                  <td className="px-4 py-3 text-[#A8B6BC] font-medium">{row.feature}</td>
+                  <td className="px-4 py-3 text-[#A8B6BC] font-medium">{t(row.feature)}</td>
                   {row.values.map((value, j) => (
-                    <td key={j} className="px-4 py-3 text-[#A8B6BC]">{value}</td>
+                    <td key={j} className="px-4 py-3 text-[#A8B6BC]">{t(value)}</td>
                   ))}
                 </tr>
               ))}
@@ -60,15 +64,15 @@ export function ComparePageTemplate({ page }: ComparePageTemplateProps) {
           {page.sections.map((section, i) => (
             <article key={i}>
               <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
-                {section.heading}
+                {t(section.heading)}
               </h2>
-              {section.body && <p className="text-[#A8B6BC] leading-relaxed mb-4">{section.body}</p>}
+              {section.body && <p className="text-[#A8B6BC] leading-relaxed mb-4">{t(section.body)}</p>}
               {section.items && (
                 <ul className="space-y-2">
                   {section.items.map((item, j) => (
                     <li key={j} className="flex items-start gap-3 text-[#A8B6BC]">
                       <Check size={20} className="text-amber-500 flex-shrink-0 mt-1" />
-                      <span>{item}</span>
+                      <span>{t(item)}</span>
                     </li>
                   ))}
                 </ul>
@@ -78,13 +82,13 @@ export function ComparePageTemplate({ page }: ComparePageTemplateProps) {
                   <table className="min-w-[680px] w-full border-collapse text-left text-sm">
                     {section.table.caption && (
                       <caption className="bg-stone-900/70 px-4 py-3 text-left text-sm text-[#A8B6BC]">
-                        {section.table.caption}
+                        {t(section.table.caption)}
                       </caption>
                     )}
                     <thead className="bg-[#1E2A2E]">
                       <tr>
                         {section.table.headers.map((header) => (
-                          <th key={header} scope="col" className="px-4 py-3 font-medium text-[#E0E5E8]">{header}</th>
+                          <th key={header} scope="col" className="px-4 py-3 font-medium text-[#E0E5E8]">{t(header)}</th>
                         ))}
                       </tr>
                     </thead>
@@ -92,7 +96,7 @@ export function ComparePageTemplate({ page }: ComparePageTemplateProps) {
                       {section.table.rows.map((row, rowIndex) => (
                         <tr key={`${section.heading}-${rowIndex}`} className="border-t border-[#344349] align-top">
                           {row.map((cell, cellIndex) => (
-                            <td key={`${rowIndex}-${cellIndex}`} className="px-4 py-3 leading-relaxed text-[#A8B6BC]">{cell}</td>
+                            <td key={`${rowIndex}-${cellIndex}`} className="px-4 py-3 leading-relaxed text-[#A8B6BC]">{t(cell)}</td>
                           ))}
                         </tr>
                       ))}
@@ -108,15 +112,15 @@ export function ComparePageTemplate({ page }: ComparePageTemplateProps) {
       {page.references && page.references.length > 0 && (
         <section id="references" className="px-6 py-12">
           <div className="max-w-4xl mx-auto border-t border-[#344349] pt-8">
-            <h2 className="text-2xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>參考資料</h2>
+            <h2 className="text-2xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>{t("參考資料")}</h2>
             <ul className="space-y-3">
               {page.references.map((reference) => (
                 <li key={reference.url} className="text-sm leading-relaxed text-[#A8B6BC]">
                   <a href={reference.url} target="_blank" rel="noopener noreferrer" className="text-amber-500 hover:underline">
-                    {reference.name}
+                    {t(reference.name)}
                   </a>
-                  <span>｜{reference.publisher}</span>
-                  {reference.updatedAt && <span>｜{reference.updatedAt}</span>}
+                  <span>{t("｜")}{t(reference.publisher)}</span>
+                  {reference.updatedAt && <span>{t("｜")}{t(reference.updatedAt)}</span>}
                 </li>
               ))}
             </ul>
@@ -127,16 +131,15 @@ export function ComparePageTemplate({ page }: ComparePageTemplateProps) {
       <section id="faq" className="py-12 px-6 bg-[#1E2A2E]/50">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
-            常見問題
-          </h2>
+            {t("常見問題")}</h2>
           <div className="space-y-4">
             {page.faq.map((item, i) => (
               <details key={i} className="group border border-[#344349] rounded-lg overflow-hidden bg-stone-900/30">
                 <summary className="px-6 py-4 cursor-pointer text-[#E0E5E8] hover:bg-[#344349]/30 flex justify-between items-center">
-                  <span className="font-medium">{item.question}</span>
+                  <span className="font-medium">{t(item.question)}</span>
                   <ChevronRight size={20} className="text-[#7A8A91] group-open:rotate-90 transition-transform" />
                 </summary>
-                <div className="px-6 pb-4 text-[#A8B6BC] leading-relaxed">{item.answer}</div>
+                <div className="px-6 pb-4 text-[#A8B6BC] leading-relaxed">{t(item.answer)}</div>
               </details>
             ))}
           </div>
@@ -146,10 +149,9 @@ export function ComparePageTemplate({ page }: ComparePageTemplateProps) {
       <section className="py-12 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
-            想針對你的情境諮詢？
-          </h2>
+            {t("想針對你的情境諮詢？")}</h2>
           <Link href="/#contact" className="falcon-btn-primary inline-flex items-center">
-            預約諮詢 <ArrowRight size={18} className="ml-2" />
+            {t("預約諮詢")}<ArrowRight size={18} className="ml-2" />
           </Link>
         </div>
       </section>

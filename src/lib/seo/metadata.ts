@@ -1,3 +1,6 @@
+import { getI18n } from '@/lib/i18n/server'
+import { languageInfo } from '@/lib/i18n/config'
+import { absoluteLocaleUrl, languageAlternates } from '@/lib/i18n/seo'
 import type { Metadata } from 'next'
 import { siteConfig } from './site-config'
 
@@ -13,21 +16,22 @@ export interface MetadataInput {
 const defaultOgImage = `${siteConfig.url}/opengraph-image`
 
 export function createMetadata(input: MetadataInput): Metadata {
-  const url = `${siteConfig.url}${input.path}`
-  const fullTitle = input.title.includes(siteConfig.name)
-    ? input.title
-    : `${input.title} | ${siteConfig.name}`
+  const { t, locale } = getI18n()
+  const url = absoluteLocaleUrl(input.path, locale)
+  const title = t(input.title)
+  const description = t(input.description)
+  const brand = locale === 'zh-tw' ? siteConfig.name : 'Falcon Information'
+  const image = locale === 'zh-tw' ? input.ogImage ?? defaultOgImage : `${siteConfig.url}/brand-og`
+  const fullTitle = title.includes(brand)
+    ? title
+    : `${title} | ${brand}`
 
   return {
-    title: input.title,
-    description: input.description,
+    title: { absolute: fullTitle },
+    description,
     alternates: {
       canonical: url,
-      languages: {
-        'zh-TW': url,
-        'zh-Hant': url,
-        'x-default': url,
-      },
+      languages: languageAlternates(input.path),
     },
     robots: input.noIndex
       ? { index: false, follow: true }
@@ -44,18 +48,18 @@ export function createMetadata(input: MetadataInput): Metadata {
         },
     openGraph: {
       type: 'website',
-      locale: 'zh_TW',
+      locale: languageInfo[locale].og,
       url,
-      siteName: siteConfig.name,
+      siteName: brand,
       title: fullTitle,
-      description: input.description,
-      images: [{ url: input.ogImage ?? defaultOgImage, width: 1200, height: 630 }],
+      description,
+      images: [{ url: image, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title: fullTitle,
-      description: input.description,
-      images: [input.ogImage ?? defaultOgImage],
+      description,
+      images: [image],
     },
   }
 }

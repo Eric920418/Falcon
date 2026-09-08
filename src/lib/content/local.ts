@@ -1,3 +1,5 @@
+import { translateData } from '@/lib/i18n/server'
+import type { Locale } from '@/lib/i18n/config'
 import type { LocalContent, CaseStudy } from './types'
 
 const lastModified = '2026-08-12'
@@ -652,12 +654,12 @@ export const localPages: Record<string, LocalContent> = {
 
 export const localSlugs = Object.keys(localPages)
 
-export function getLocalPage(slug: string): LocalContent | null {
-  return localPages[slug] ?? null
+export function getLocalPage(slug: string, locale: Locale = 'zh-tw'): LocalContent | null {
+  return translateData(localPages[slug] ?? null, locale)
 }
 
-export function getAllLocalPages(): LocalContent[] {
-  return Object.values(localPages)
+export function getAllLocalPages(locale: Locale = 'zh-tw'): LocalContent[] {
+  return translateData(Object.values(localPages), locale)
 }
 
 /**

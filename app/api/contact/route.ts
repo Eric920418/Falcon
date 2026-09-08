@@ -1,3 +1,5 @@
+import { isLocale, languageInfo, type Locale } from '@/lib/i18n/config'
+import { contactMessages } from '@/lib/i18n/contact-messages'
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 import { siteConfig } from '@/lib/seo/site-config'
@@ -13,21 +15,30 @@ function escapeHtml(value: unknown): string {
 }
 
 export async function POST(request: NextRequest) {
+  let locale: Locale = 'zh-tw'
   try {
     const body = await request.json()
+    if (!body || typeof body !== 'object' || Array.isArray(body)) {
+      return NextResponse.json({ error: contactMessages(locale).required, code: 'REQUIRED_FIELDS_MISSING' }, { status: 400 })
+    }
+    if (body.locale !== undefined && !isLocale(body.locale)) {
+      return NextResponse.json({ error: contactMessages(locale).invalidLocale, code: 'INVALID_LOCALE' }, { status: 400 })
+    }
+    locale = body.locale ?? 'zh-tw'
+    const messages = contactMessages(locale)
     const { name, email, company, message, serviceInterest } = body
 
     // 驗證必填欄位
-    if (!name || !email || !message) {
+    if (![name, email, message].every(value => typeof value === 'string' && value.trim()) || (company !== undefined && typeof company !== 'string')) {
       return NextResponse.json(
-        { error: '請填寫姓名、Email 與訊息內容。', code: 'REQUIRED_FIELDS_MISSING' },
+        { error: messages.required, code: 'REQUIRED_FIELDS_MISSING' },
         { status: 400 }
       )
     }
 
-    if (serviceInterest && !isServiceInterest(serviceInterest)) {
+    if (serviceInterest !== undefined && serviceInterest !== '' && !isServiceInterest(serviceInterest)) {
       return NextResponse.json(
-        { error: '服務類別格式不正確，請重新選擇後再送出。', code: 'INVALID_SERVICE_INTEREST' },
+        { error: messages.service, code: 'INVALID_SERVICE_INTEREST' },
         { status: 400 }
       )
     }
@@ -37,7 +48,7 @@ export async function POST(request: NextRequest) {
       console.error('缺少 SMTP 設定：請設定 SMTP_USER 與 SMTP_PASSWORD')
       return NextResponse.json(
         {
-          error: '郵件服務未正確設定（缺少 SMTP_USER / SMTP_PASSWORD），請改用電話、Email 或 LINE 聯繫。',
+          error: messages.configuration,
           code: 'SMTP_NOT_CONFIGURED',
         },
         { status: 500 }
@@ -75,6 +86,7 @@ export async function POST(request: NextRequest) {
           </h2>
 
           <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <p><strong>訪客語言：</strong> ${escapeHtml(languageInfo[locale].name)} (${locale})</p>
             <p><strong>姓名：</strong> ${safeName}</p>
             <p><strong>Email：</strong> <a href="mailto:${safeEmail}">${safeEmail}</a></p>
             <p><strong>公司：</strong> ${safeCompany}</p>
@@ -99,17 +111,28 @@ export async function POST(request: NextRequest) {
     await transporter.sendMail(mailOptions)
 
     return NextResponse.json(
-      { message: '訊息已成功送出！', code: 'CONTACT_SENT' },
+      { message: messages.sent, code: 'CONTACT_SENT' },
       { status: 200 }
     )
   } catch (error) {
     console.error('郵件發送失敗:', error)
     return NextResponse.json(
       {
-        error: `郵件發送失敗：${error instanceof Error ? error.message : '未知錯誤'}`,
+        error: contactMessages(locale).failed,
+        detail: publicErrorDetail(error),
         code: 'SMTP_SEND_FAILED',
       },
       { status: 500 }
     )
   }
+}
+
+// Keep useful diagnostics without exposing SMTP credentials or configuration values.
+function publicErrorDetail(error: unknown): string {
+  let detail = error instanceof Error ? error.message : String(error)
+  for (const key of ['SMTP_USER', 'SMTP_PASSWORD', 'SMTP_HOST', 'CONTACT_RECIPIENT']) {
+    const value = process.env[key]
+    if (value) detail = detail.split(value).join('[redacted]')
+  }
+  return detail.replace(/(password|authorization|token|secret)\s*[:=]\s*(?:Bearer\s+)?\S+/gi, '$1=[redacted]')
 }

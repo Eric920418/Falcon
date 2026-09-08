@@ -1,6 +1,7 @@
 'use client'
 
-import Link from 'next/link'
+import Link from '@/lib/i18n/link'
+import { unlocalizedPath } from '@/lib/i18n/config'
 import { trackEvent } from '@/lib/analytics'
 import { serviceInterestEvent } from '@/lib/contact-service'
 
@@ -31,7 +32,7 @@ export function ServiceCtaLink({
           action,
           placement,
         })
-        if (href === '/?service=ai_voice#contact' && !event.defaultPrevented &&
+        if (unlocalizedPath(href) === '/?service=ai_voice#contact' && !event.defaultPrevented &&
           !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && event.button === 0) {
           window.dispatchEvent(new CustomEvent(serviceInterestEvent, { detail: 'ai_voice' }))
         }

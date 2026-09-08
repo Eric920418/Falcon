@@ -7,7 +7,7 @@ export function createProfilePageSchema() {
     '@context': 'https://schema.org',
     '@type': 'ProfilePage',
     '@id': `${url}#profile`,
-    name: `${primaryAuthor.name}｜${primaryAuthor.jobTitle}`,
+    name: primaryAuthor.name,
     url,
     inLanguage: 'zh-TW',
     mainEntity: {

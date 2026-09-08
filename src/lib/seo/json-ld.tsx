@@ -1,3 +1,5 @@
+import { getI18n } from '@/lib/i18n/server'
+import { localizeSchema } from '@/lib/i18n/seo'
 import { organizationSchema } from './schemas/organization'
 import { websiteSchema } from './schemas/website'
 
@@ -18,11 +20,12 @@ function safeJsonForScript(value: unknown): string {
 }
 
 export function JsonLd({ data }: JsonLdProps) {
-  const items = [
+  const { locale, messages } = getI18n()
+  const items = localizeSchema([
     organizationSchema,
     websiteSchema,
     ...(Array.isArray(data) ? data : [data]),
-  ]
+  ], locale, messages)
   const ids = new Set<string>()
   const graph = {
     '@context': 'https://schema.org',

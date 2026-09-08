@@ -1,10 +1,12 @@
 'use client'
+import { useI18n } from '@/lib/i18n/client'
+
 
 import { motion } from 'motion/react'
 import { useState } from 'react'
 import { ExternalLink, ChevronDown, ChevronUp, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
+import Link from '@/lib/i18n/link'
 
 interface Project {
   id: number
@@ -934,6 +936,8 @@ const evidencePaths: Record<number, string> = {
 }
 
 export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
+  const { t, locale } = useI18n()
+
   const [selectedCategory, setSelectedCategory] = useState('全部')
   const [expandedProject, setExpandedProject] = useState<number | null>(null)
 
@@ -960,17 +964,16 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
           {/* 標籤 */}
           <div className="flex items-center gap-3 mb-6">
             <div className="brand-line" />
-            <span className="text-[#6D8F96] text-sm tracking-widest uppercase">Portfolio</span>
+            <span className="text-[#6D8F96] text-sm tracking-widest uppercase">{t("Portfolio")}</span>
           </div>
 
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <div>
               <h2 className="text-4xl md:text-5xl text-[#E0E5E8] mb-4">
-                完整<span className="text-falcon-gradient">作品紀錄</span>
+                <span className="text-falcon-gradient">{t("完整作品紀錄")}</span>
               </h2>
               <p className="text-lg text-[#A8B6BC] max-w-xl">
-                33 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。
-              </p>
+                {t("33 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。")}</p>
             </div>
 
             {/* Category Filter */}
@@ -985,7 +988,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                   }`}
                   onClick={() => setSelectedCategory(category)}
                 >
-                  {category}
+                  {t(category)}
                 </button>
               ))}
             </div>
@@ -994,7 +997,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
         )}
 
         {!showHeader && (
-          <div className="flex flex-wrap gap-2 mb-12" aria-label="案例分類">
+          <div className="flex flex-wrap gap-2 mb-12" aria-label={t("案例分類")}>
             {categories.map((category) => (
               <button
                 key={category}
@@ -1006,7 +1009,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                 onClick={() => setSelectedCategory(category)}
                 aria-pressed={selectedCategory === category}
               >
-                {category}
+                {t(category)}
               </button>
             ))}
           </div>
@@ -1029,7 +1032,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                   {project.image ? (
                     <Image
                       src={project.image}
-                      alt={project.title}
+                      alt={t(project.title)}
                       fill
                       loading="lazy"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -1038,7 +1041,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
                       <span className="text-5xl font-bold text-[#344349]" style={{ fontFamily: 'var(--font-display)' }}>
-                        {project.title.charAt(0)}
+                        {t(project.title.charAt(0))}
                       </span>
                     </div>
                   )}
@@ -1047,12 +1050,11 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
 
                   {/* Category Badge */}
                   <div className="absolute top-3 right-3 falcon-badge">
-                    {project.category}
+                    {t(project.category)}
                   </div>
                   {evidencePaths[project.id] && (
                     <div className="absolute top-3 left-3 bg-amber-500 text-stone-950 px-2 py-1 text-xs font-medium rounded">
-                      可驗證證據
-                    </div>
+                      {t("可驗證證據")}</div>
                   )}
                 </div>
 
@@ -1060,7 +1062,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                 <div className="p-6 flex-1 flex flex-col">
                   <div className="flex items-start justify-between mb-3">
                     <h3 className="text-lg text-[#E0E5E8] group-hover:text-[#A8B6BC] transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
-                      {project.title}
+                      {t(project.title)}
                     </h3>
                     {project.url && (
                       <a
@@ -1075,7 +1077,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                   </div>
 
                   <p className="text-[#6D8F96] text-sm mb-4 line-clamp-3 leading-relaxed">
-                    {project.description}
+                    {t(project.description)}
                   </p>
 
                   {evidencePaths[project.id] && (
@@ -1083,7 +1085,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                       href={evidencePaths[project.id]}
                       className="inline-flex items-center gap-2 text-sm text-amber-500 hover:underline mb-3"
                     >
-                      查看證據與限制 <ArrowRight size={14} />
+                      {t("查看證據與限制")}<ArrowRight size={14} />
                     </Link>
                   )}
 
@@ -1096,22 +1098,22 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                       exit={{ opacity: 0, height: 0 }}
                     >
                       <div className="mb-3">
-                        <p className="text-xs text-[#5F808B] mb-2">核心功能</p>
+                        <p className="text-xs text-[#5F808B] mb-2">{t("核心功能")}</p>
                         <div className="flex flex-wrap gap-1">
                           {project.features.map((feature) => (
                             <span key={feature} className="text-xs text-[#6D8F96]">
-                              {feature}
+                              {t(feature)}
                             </span>
                           ))}
                         </div>
                       </div>
                       <div>
-                        <p className="text-xs text-[#5F808B] mb-2">技術亮點</p>
+                        <p className="text-xs text-[#5F808B] mb-2">{t("技術亮點")}</p>
                         <ul className="space-y-1">
                           {project.highlights.map((highlight) => (
                             <li key={highlight} className="text-xs text-[#6D8F96] flex items-start gap-2">
                               <span className="w-1 h-1 rounded-full bg-[#5F808B] mt-1.5 flex-shrink-0" />
-                              {highlight}
+                              {t(highlight)}
                             </li>
                           ))}
                         </ul>
@@ -1125,9 +1127,9 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                     onClick={() => setExpandedProject(expandedProject === project.id ? null : project.id)}
                   >
                     {expandedProject === project.id ? (
-                      <>收起 <ChevronUp size={16} /></>
+                      <>{t("收起")}<ChevronUp size={16} /></>
                     ) : (
-                      <>查看詳情 <ChevronDown size={16} /></>
+                      <>{t("查看詳情")}<ChevronDown size={16} /></>
                     )}
                   </button>
                 </div>

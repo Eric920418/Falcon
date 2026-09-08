@@ -1,5 +1,7 @@
+
+import { getI18n } from '@/lib/i18n/server'
 import Image from 'next/image'
-import Link from 'next/link'
+import Link from '@/lib/i18n/link'
 import {
   ArrowDown,
   ArrowRight,
@@ -58,58 +60,57 @@ const deliverySteps = [
 ]
 
 export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
+  const { t, locale } = getI18n()
+
   return (
     <div className="bg-[#0d1315] text-[#E0E5E8]">
       <section className="relative overflow-hidden border-b border-[#344349]/70 px-6 py-16 md:py-24">
         <div className="absolute inset-0 industrial-grid opacity-25" aria-hidden="true" />
         <div className="absolute -right-24 top-0 h-96 w-96 rounded-full bg-amber-500/8 blur-3xl" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl">
-          <nav className="mb-10 flex flex-wrap items-center gap-2 text-sm text-[#7A8A91]" aria-label="麵包屑">
-            <Link href="/" className="hover:text-amber-500">首頁</Link>
+          <nav className="mb-10 flex flex-wrap items-center gap-2 text-sm text-[#7A8A91]" aria-label={t("麵包屑")}>
+            <Link href="/" className="hover:text-amber-500">{t("首頁")}</Link>
             <ChevronRight size={14} aria-hidden="true" />
-            <Link href="/services" className="hover:text-amber-500">服務項目</Link>
+            <Link href="/services" className="hover:text-amber-500">{t("服務項目")}</Link>
             <ChevronRight size={14} aria-hidden="true" />
-            <Link href="/services/ai-tools" className="hover:text-amber-500">AI 工具開發</Link>
+            <Link href="/services/ai-tools" className="hover:text-amber-500">{t("AI 工具開發")}</Link>
             <ChevronRight size={14} aria-hidden="true" />
-            <span className="text-[#A8B6BC]">AI 語音客服</span>
+            <span className="text-[#A8B6BC]">{t("AI 語音客服")}</span>
           </nav>
 
           <div className="grid gap-12 lg:grid-cols-[1.12fr_0.88fr] lg:items-center">
             <div>
               <div className="mb-6 flex flex-wrap items-center gap-3">
                 <span className="border border-amber-500/40 bg-amber-500/10 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-amber-400">
-                  Enterprise voice workflow
-                </span>
-                <span className="text-xs text-[#7A8A91]">客製建置 · POC 驗收 · 非套裝 SaaS</span>
+                  {t("Enterprise voice workflow")}</span>
+                <span className="text-xs text-[#7A8A91]">{t("客製建置 · POC 驗收 · 非套裝 SaaS")}</span>
               </div>
-              <h1 className="max-w-4xl text-4xl leading-[1.12] md:text-6xl lg:text-7xl">{service.h1}</h1>
-              <p className="mt-7 max-w-3xl text-lg leading-relaxed text-[#A8B6BC] md:text-xl">{service.intro}</p>
+              <h1 className="max-w-4xl text-4xl leading-[1.12] md:text-6xl lg:text-7xl">{t(service.h1)}</h1>
+              <p className="mt-7 max-w-3xl text-lg leading-relaxed text-[#A8B6BC] md:text-xl">{t(service.intro)}</p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <ServiceCtaLink
                   href="/?service=ai_voice#contact"
                   placement="ai_voice_hero_demo"
                   className="falcon-btn-primary inline-flex items-center justify-center gap-2"
                 >
-                  提出流程 Demo 需求 <ArrowRight size={18} aria-hidden="true" />
+                  {t("提出流程 Demo 需求")}<ArrowRight size={18} aria-hidden="true" />
                 </ServiceCtaLink>
                 <Link
                   href="/case-studies/gogocha-ai-dispatch"
                   className="falcon-btn-outline inline-flex items-center justify-center gap-2"
                 >
-                  查看 GoGoCha 證據 <ArrowDown size={18} aria-hidden="true" />
+                  {t("查看 GoGoCha 證據")}<ArrowDown size={18} aria-hidden="true" />
                 </Link>
               </div>
               <p className="mt-5 text-sm leading-relaxed text-[#7A8A91]">
-                不承諾零誤判或全面取代人工；先用真實任務與失敗情境確認是否值得導入。
-              </p>
+                {t("不承諾零誤判或全面取代人工；先用真實任務與失敗情境確認是否值得導入。")}</p>
             </div>
 
             <div className="relative border border-[#46616a] bg-[#131d20] p-4 shadow-2xl shadow-black/30 md:p-6">
               <div className="mb-5 flex items-center justify-between border-b border-[#344349] pb-4 font-mono text-xs uppercase tracking-[0.14em] text-[#7A8A91]">
-                <span>Call flow illustration</span>
+                <span>{t("Call flow illustration")}</span>
                 <span className="inline-flex items-center gap-2 text-emerald-400">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400" /> 流程示意
-                </span>
+                  <span className="h-2 w-2 rounded-full bg-emerald-400" /> {t("流程示意")}</span>
               </div>
               <div className="space-y-3">
                 {[
@@ -120,12 +121,12 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
                   ['例外出口', '不確定或敏感事項轉人工'],
                 ].map(([label, text], index) => (
                   <div key={label} className="grid grid-cols-[4.75rem_1fr] gap-3 border border-[#344349]/80 bg-[#0d1315]/80 p-3">
-                    <span className="font-mono text-xs text-amber-500">0{index + 1} {label}</span>
-                    <span className="text-sm leading-relaxed text-[#C5CED2]">{text}</span>
+                    <span className="font-mono text-xs text-amber-500">{t("0")}{index + 1} {t(label)}</span>
+                    <span className="text-sm leading-relaxed text-[#C5CED2]">{t(text)}</span>
                   </div>
                 ))}
               </div>
-              <p className="mt-4 text-xs leading-relaxed text-[#7A8A91]">示意內容，不是 GoGoCha 真實通話錄音或實際客服承諾。</p>
+              <p className="mt-4 text-xs leading-relaxed text-[#7A8A91]">{t("示意內容，不是 GoGoCha 真實通話錄音或實際客服承諾。")}</p>
             </div>
           </div>
         </div>
@@ -135,19 +136,18 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-7 border-b border-[#1E2A2E]/20 pb-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
-              <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-800">Why calls break</p>
-              <h2 className="text-3xl leading-tight md:text-5xl">企業真正要解的，不只是接電話</h2>
+              <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-800">{t("Why calls break")}</p>
+              <h2 className="text-3xl leading-tight md:text-5xl">{t("企業真正要解的，不只是接電話")}</h2>
             </div>
             <p className="max-w-2xl text-lg leading-relaxed text-[#344349] lg:justify-self-end">
-              電話自動化的價值發生在通話結束之後：資料有沒有確認、任務有沒有建立、狀態有沒有同步，以及錯誤能不能被人工接住。
-            </p>
+              {t("電話自動化的價值發生在通話結束之後：資料有沒有確認、任務有沒有建立、狀態有沒有同步，以及錯誤能不能被人工接住。")}</p>
           </div>
           <div className="grid gap-px bg-[#1E2A2E]/20 md:grid-cols-2 lg:grid-cols-4">
             {painPoints.map(([title, text], index) => (
               <article key={title} className="bg-[#E0E5E8] px-5 py-8">
-                <span className="font-mono text-xs text-amber-800">0{index + 1}</span>
-                <h3 className="mt-7 text-xl">{title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#344349]">{text}</p>
+                <span className="font-mono text-xs text-amber-800">{t("0")}{index + 1}</span>
+                <h3 className="mt-7 text-xl">{t(title)}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-[#344349]">{t(text)}</p>
               </article>
             ))}
           </div>
@@ -157,21 +157,20 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
       <section className="px-6 py-24">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-4xl">
-            <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-500">One workflow, six controls</p>
-            <h2 className="text-3xl md:text-5xl">AI 電話如何從一句話走到系統動作？</h2>
+            <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-500">{t("One workflow, six controls")}</p>
+            <h2 className="text-3xl md:text-5xl">{t("AI 電話如何從一句話走到系統動作？")}</h2>
             <p className="mt-5 text-lg leading-relaxed text-[#A8B6BC]">
-              每一步都要留下可驗收的輸入、規則與失敗出口。語音模型只是其中一層，真正決定能否營運的是後端工作流。
-            </p>
+              {t("每一步都要留下可驗收的輸入、規則與失敗出口。語音模型只是其中一層，真正決定能否營運的是後端工作流。")}</p>
           </div>
           <ol className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {aiVoiceWorkflow.map(([number, title, text]) => (
               <li key={number} className="border border-[#344349] bg-[#131d20] p-6">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-sm text-amber-500">{number}</span>
+                  <span className="font-mono text-sm text-amber-500">{t(number)}</span>
                   <Network size={18} className="text-[#5F808B]" aria-hidden="true" />
                 </div>
-                <h3 className="mt-8 text-xl">{title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#A8B6BC]">{text}</p>
+                <h3 className="mt-8 text-xl">{t(title)}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-[#A8B6BC]">{t(text)}</p>
               </li>
             ))}
           </ol>
@@ -182,12 +181,11 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-7 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
             <div>
-              <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-500">Evidence boundary</p>
-              <h2 className="text-3xl md:text-5xl">已實作，和可客製，不混著說</h2>
+              <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-500">{t("Evidence boundary")}</p>
+              <h2 className="text-3xl md:text-5xl">{t("已實作，和可客製，不混著說")}</h2>
             </div>
             <p className="max-w-2xl leading-relaxed text-[#A8B6BC] lg:justify-self-end">
-              綠色代表已有公開案例可查；灰色代表可納入企業專案，但要看電話環境與系統介面，並經 POC、整合測試與正式驗收。
-            </p>
+              {t("綠色代表已有公開案例可查；灰色代表可納入企業專案，但要看電話環境與系統介面，並經 POC、整合測試與正式驗收。")}</p>
           </div>
 
           <div className="mt-12 overflow-hidden border border-[#344349]">
@@ -198,15 +196,15 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
                     ? 'inline-flex items-center gap-2 border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-300'
                     : 'inline-flex items-center gap-2 border border-[#5F808B] bg-[#0d1315] px-3 py-1 text-xs text-[#A8B6BC]'}>
                     {capability.status === 'demonstrated' ? <Check size={13} aria-hidden="true" /> : <Building2 size={13} aria-hidden="true" />}
-                    {capability.status === 'demonstrated' ? '已實作證據' : '可客製交付'}
+                    {t(capability.status === 'demonstrated' ? '已實作證據' : '可客製交付')}
                   </span>
                 </div>
-                <h3 className="text-lg">{capability.title}</h3>
+                <h3 className="text-lg">{t(capability.title)}</h3>
                 <div>
-                  <p className="text-sm leading-relaxed text-[#A8B6BC]">{capability.description}</p>
+                  <p className="text-sm leading-relaxed text-[#A8B6BC]">{t(capability.description)}</p>
                   {capability.evidenceHref && (
                     <Link href={capability.evidenceHref} className="mt-2 inline-flex items-center gap-1 text-sm text-amber-500 hover:underline">
-                      查看公開證據 <ArrowRight size={14} aria-hidden="true" />
+                      {t("查看公開證據")}<ArrowRight size={14} aria-hidden="true" />
                     </Link>
                   )}
                 </div>
@@ -220,33 +218,32 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
             <div>
-              <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-500">Public implementation</p>
-              <h2 className="text-3xl md:text-5xl">公開案例與可驗證證據</h2>
+              <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-500">{t("Public implementation")}</p>
+              <h2 className="text-3xl md:text-5xl">{t("公開案例與可驗證證據")}</h2>
               <p className="mt-6 text-lg leading-relaxed text-[#A8B6BC]">
-                GoGoCha 在這裡不是被推廣的客運品牌，而是隼訊技術能力的公開證據：電話、網站與 LINE 的需求可進入同一套即時派單後端，再同步至司機／乘客 App 與營運介面。
-              </p>
+                {t("GoGoCha 在這裡不是被推廣的客運品牌，而是隼訊技術能力的公開證據：電話、網站與 LINE 的需求可進入同一套即時派單後端，再同步至司機／乘客 App 與營運介面。")}</p>
               <div className="mt-8 space-y-4 border-l border-amber-500/50 pl-5 text-sm leading-relaxed text-[#C5CED2]">
-                <p><strong className="text-amber-400">隼訊負責範圍：</strong>品牌官網、AI 電話入口、即時派單後端、LINE Bot、App 與營運系統整合。</p>
-                <p><strong className="text-amber-400">公開技術：</strong>Express、PostgreSQL、Redis、BullMQ、Socket.IO 與 OpenAI。</p>
-                <p><strong className="text-amber-400">證據限制：</strong>未公開營收、訂單、人力節省、接通率或通話 SLA；「3 秒」只保留為產品設計目標。</p>
+                <p><strong className="text-amber-400">{t("隼訊負責範圍：")}</strong>{t("品牌官網、AI 電話入口、即時派單後端、LINE Bot、App 與營運系統整合。")}</p>
+                <p><strong className="text-amber-400">{t("公開技術：")}</strong>{t("Express、PostgreSQL、Redis、BullMQ、Socket.IO 與 OpenAI。")}</p>
+                <p><strong className="text-amber-400">{t("證據限制：")}</strong>{t("未公開營收、訂單、人力節省、接通率或通話 SLA；「3 秒」只保留為產品設計目標。")}</p>
               </div>
               <Link href="/case-studies/gogocha-ai-dispatch" className="mt-8 inline-flex items-center gap-2 text-amber-500 hover:underline">
-                查看完整技術案例與限制 <ArrowRight size={17} aria-hidden="true" />
+                {t("查看完整技術案例與限制")}<ArrowRight size={17} aria-hidden="true" />
               </Link>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <figure className="border border-[#344349] bg-[#131d20] p-3 sm:translate-y-6">
                 <div className="relative aspect-[16/10] overflow-hidden bg-[#1E2A2E]">
-                  <Image src="/GoGoChaWebsite.png" alt="GoGoCha 公開網站與 AI 派單服務畫面" fill loading="lazy" sizes="(min-width: 1024px) 28vw, 90vw" className="object-cover" />
+                  <Image src="/GoGoChaWebsite.png" alt={t("GoGoCha 公開網站與 AI 派單服務畫面")} fill loading="lazy" sizes="(min-width: 1024px) 28vw, 90vw" className="object-cover" />
                 </div>
-                <figcaption className="p-3 text-xs leading-relaxed text-[#7A8A91]">公開品牌網站：多入口導向同一派單流程。</figcaption>
+                <figcaption className="p-3 text-xs leading-relaxed text-[#7A8A91]">{t("公開品牌網站：多入口導向同一派單流程。")}</figcaption>
               </figure>
               <figure className="border border-[#344349] bg-[#131d20] p-3">
                 <div className="relative aspect-[16/10] overflow-hidden bg-[#1E2A2E]">
-                  <Image src="/GoGoCha.png" alt="GoGoCha 司機與乘客 App 公開畫面" fill loading="lazy" sizes="(min-width: 1024px) 28vw, 90vw" className="object-cover" />
+                  <Image src="/GoGoCha.png" alt={t("GoGoCha 司機與乘客 App 公開畫面")} fill loading="lazy" sizes="(min-width: 1024px) 28vw, 90vw" className="object-cover" />
                 </div>
-                <figcaption className="p-3 text-xs leading-relaxed text-[#7A8A91]">公開 App 畫面：承接後端的通知與任務狀態。</figcaption>
+                <figcaption className="p-3 text-xs leading-relaxed text-[#7A8A91]">{t("公開 App 畫面：承接後端的通知與任務狀態。")}</figcaption>
               </figure>
             </div>
           </div>
@@ -257,38 +254,36 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-14 lg:grid-cols-2">
             <div>
-              <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-800">System boundaries</p>
-              <h2 className="text-3xl md:text-5xl">可以串哪些電話與企業系統？</h2>
+              <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-800">{t("System boundaries")}</p>
+              <h2 className="text-3xl md:text-5xl">{t("可以串哪些電話與企業系統？")}</h2>
               <p className="mt-5 leading-relaxed text-[#344349]">
-                是否能串接，不看 Logo 清單，而看既有系統是否提供正確權限、API、事件或標準電話介面。正式報價前會先確認責任邊界。
-              </p>
+                {t("是否能串接，不看 Logo 清單，而看既有系統是否提供正確權限、API、事件或標準電話介面。正式報價前會先確認責任邊界。")}</p>
               <div className="mt-8 grid gap-px bg-[#1E2A2E]/20 sm:grid-cols-2">
                 {integrations.map(({ icon: Icon, label, text }) => (
                   <div key={label} className="bg-[#E0E5E8] p-5">
                     <Icon size={20} className="text-amber-800" aria-hidden="true" />
-                    <h3 className="mt-6 text-lg">{label}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-[#344349]">{text}</p>
+                    <h3 className="mt-6 text-lg">{t(label)}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-[#344349]">{t(text)}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             <div>
-              <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-800">Use cases</p>
-              <h2 className="text-3xl md:text-5xl">哪些任務適合先導入？</h2>
+              <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-800">{t("Use cases")}</p>
+              <h2 className="text-3xl md:text-5xl">{t("哪些任務適合先導入？")}</h2>
               <div className="mt-8 divide-y divide-[#1E2A2E]/20 border-y border-[#1E2A2E]/20">
                 {industries.map(([title, text]) => (
                   <article key={title} className="grid gap-2 py-5 sm:grid-cols-[9rem_1fr]">
-                    <h3 className="text-lg">{title}</h3>
-                    <p className="text-sm leading-relaxed text-[#344349]">{text}</p>
+                    <h3 className="text-lg">{t(title)}</h3>
+                    <p className="text-sm leading-relaxed text-[#344349]">{t(text)}</p>
                   </article>
                 ))}
               </div>
               <div className="mt-7 flex gap-3 border border-red-900/20 bg-red-950/5 p-5">
                 <CircleAlert size={20} className="mt-0.5 shrink-0 text-red-800" aria-hidden="true" />
                 <p className="text-sm leading-relaxed text-[#344349]">
-                  不建議第一階段自動處理醫療判斷、法律結論、重大客訴、付款授權或身分爭議；這些工作應以人工審核為主。
-                </p>
+                  {t("不建議第一階段自動處理醫療判斷、法律結論、重大客訴、付款授權或身分爭議；這些工作應以人工審核為主。")}</p>
               </div>
             </div>
           </div>
@@ -298,11 +293,10 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
       <section className="px-6 py-24">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.92fr_1.08fr]">
           <div>
-            <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-500">Fail safely</p>
-            <h2 className="text-3xl md:text-5xl">AI 判斷不了時，系統怎麼收尾？</h2>
+            <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-500">{t("Fail safely")}</p>
+            <h2 className="text-3xl md:text-5xl">{t("AI 判斷不了時，系統怎麼收尾？")}</h2>
             <p className="mt-5 leading-relaxed text-[#A8B6BC]">
-              導入前先設計失敗路徑，通常比調整一句提示詞更重要。每個專案至少要驗收下列機制。
-            </p>
+              {t("導入前先設計失敗路徑，通常比調整一句提示詞更重要。每個專案至少要驗收下列機制。")}</p>
             <ul className="mt-8 space-y-4">
               {[
                 '重要欄位重述確認，不能把猜測直接寫入訂單。',
@@ -313,22 +307,22 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
               ].map((item) => (
                 <li key={item} className="flex gap-3 text-sm leading-relaxed text-[#C5CED2]">
                   <ShieldCheck size={18} className="mt-0.5 shrink-0 text-amber-500" aria-hidden="true" />
-                  <span>{item}</span>
+                  <span>{t(item)}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           <div className="border border-[#344349] bg-[#131d20] p-6 md:p-8">
-            <p className="font-mono text-xs uppercase tracking-[0.18em] text-amber-500">Implementation sequence</p>
-            <h2 className="mt-4 text-2xl md:text-3xl">企業 AI 電話導入流程</h2>
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-amber-500">{t("Implementation sequence")}</p>
+            <h2 className="mt-4 text-2xl md:text-3xl">{t("企業 AI 電話導入流程")}</h2>
             <ol className="mt-8 space-y-6">
               {deliverySteps.map(([title, text], index) => (
                 <li key={title} className="grid grid-cols-[2.75rem_1fr] gap-4">
-                  <span className="flex h-10 w-10 items-center justify-center border border-[#5F808B] font-mono text-xs text-amber-500">0{index + 1}</span>
+                  <span className="flex h-10 w-10 items-center justify-center border border-[#5F808B] font-mono text-xs text-amber-500">{t("0")}{index + 1}</span>
                   <div>
-                    <h3 className="text-lg">{title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-[#A8B6BC]">{text}</p>
+                    <h3 className="text-lg">{t(title)}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-[#A8B6BC]">{t(text)}</p>
                   </div>
                 </li>
               ))}
@@ -341,24 +335,23 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-[0.78fr_1.22fr]">
             <div>
-              <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-500">Custom quotation</p>
-              <h2 className="text-3xl md:text-5xl">AI 電話系統怎麼報價？</h2>
+              <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-500">{t("Custom quotation")}</p>
+              <h2 className="text-3xl md:text-5xl">{t("AI 電話系統怎麼報價？")}</h2>
               <p className="mt-5 leading-relaxed text-[#A8B6BC]">
-                不用一般聊天機器人的起價套用電話專案。AI 電話同時涉及電信、即時語音、企業 API、人工席位與維運責任，需先完成需求與環境盤點。
-              </p>
+                {t("不用一般聊天機器人的起價套用電話專案。AI 電話同時涉及電信、即時語音、企業 API、人工席位與維運責任，需先完成需求與環境盤點。")}</p>
               <ServiceCtaLink
                 href="/?service=ai_voice#contact"
                 placement="ai_voice_pricing"
                 className="mt-8 inline-flex items-center gap-2 text-amber-500 hover:underline"
               >
-                提供現況，取得評估清單 <ArrowRight size={17} aria-hidden="true" />
+                {t("提供現況，取得評估清單")}<ArrowRight size={17} aria-hidden="true" />
               </ServiceCtaLink>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
               {aiVoiceQuoteFactors.map((factor, index) => (
                 <div key={factor} className="flex items-start gap-3 border border-[#344349] bg-[#0d1315] p-4">
-                  <span className="font-mono text-xs text-amber-500">0{index + 1}</span>
-                  <span className="text-sm leading-relaxed text-[#C5CED2]">{factor}</span>
+                  <span className="font-mono text-xs text-amber-500">{t("0")}{index + 1}</span>
+                  <span className="text-sm leading-relaxed text-[#C5CED2]">{t(factor)}</span>
                 </div>
               ))}
             </div>
@@ -368,17 +361,17 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
 
       <section className="px-6 py-24">
         <div className="mx-auto max-w-7xl">
-          <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-500">Decision library</p>
+          <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-500">{t("Decision library")}</p>
           <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
-            <h2 className="max-w-2xl text-3xl md:text-5xl">先把技術、成本與選型看懂</h2>
-            <Link href="/blog" className="inline-flex items-center gap-2 text-amber-500 hover:underline">查看所有文章 <ArrowRight size={16} aria-hidden="true" /></Link>
+            <h2 className="max-w-2xl text-3xl md:text-5xl">{t("先把技術、成本與選型看懂")}</h2>
+            <Link href="/blog" className="inline-flex items-center gap-2 text-amber-500 hover:underline">{t("查看所有文章")}<ArrowRight size={16} aria-hidden="true" /></Link>
           </div>
           <div className="mt-10 grid gap-4 md:grid-cols-2">
             {aiVoiceArticles.map((article, index) => (
               <Link key={article.slug} href={`/blog/${article.slug}`} className="group border border-[#344349] bg-[#131d20] p-6 hover:border-amber-500">
-                <span className="font-mono text-xs text-[#7A8A91]">0{index + 1}</span>
-                <h3 className="mt-7 text-xl group-hover:text-amber-400">{article.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#A8B6BC]">{article.description}</p>
+                <span className="font-mono text-xs text-[#7A8A91]">{t("0")}{index + 1}</span>
+                <h3 className="mt-7 text-xl group-hover:text-amber-400">{t(article.title)}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-[#A8B6BC]">{t(article.description)}</p>
               </Link>
             ))}
           </div>
@@ -387,16 +380,16 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
 
       <section id="faq" className="bg-[#E0E5E8] px-6 py-24 text-[#1E2A2E]">
         <div className="mx-auto max-w-4xl">
-          <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-800">Buyer questions</p>
-          <h2 className="text-3xl md:text-5xl">企業導入 AI 語音客服常見問題</h2>
+          <p className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-amber-800">{t("Buyer questions")}</p>
+          <h2 className="text-3xl md:text-5xl">{t("企業導入 AI 語音客服常見問題")}</h2>
           <div className="mt-10 divide-y divide-[#1E2A2E]/20 border-y border-[#1E2A2E]/20">
             {service.faq.map((item) => (
               <details key={item.question} className="group py-5">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-lg">
-                  <span>{item.question}</span>
-                  <span className="font-mono text-amber-800 group-open:rotate-45">＋</span>
+                  <span>{t(item.question)}</span>
+                  <span className="font-mono text-amber-800 group-open:rotate-45">{t("＋")}</span>
                 </summary>
-                <p className="max-w-3xl pt-4 leading-relaxed text-[#344349]">{item.answer}</p>
+                <p className="max-w-3xl pt-4 leading-relaxed text-[#344349]">{t(item.answer)}</p>
               </details>
             ))}
           </div>
@@ -407,24 +400,22 @@ export function AiVoiceServicePage({ service }: AiVoiceServicePageProps) {
         <div className="absolute inset-0 industrial-grid opacity-25" aria-hidden="true" />
         <div className="relative mx-auto max-w-3xl">
           <PhoneCall size={34} className="mx-auto text-amber-500" aria-hidden="true" />
-          <h2 className="mt-6 text-3xl md:text-5xl">評估你的企業 AI 電話流程</h2>
+          <h2 className="mt-6 text-3xl md:text-5xl">{t("評估你的企業 AI 電話流程")}</h2>
           <p className="mx-auto mt-5 max-w-2xl leading-relaxed text-[#A8B6BC]">
-            告訴我們目前如何接聽、通話後要建立什麼紀錄，以及最需要避免哪種錯誤。我們會以 GoGoCha 公開畫面與工作流為討論起點，對照你的流程、系統介面與人工接手邊界，判斷是否值得進入 POC。
-          </p>
+            {t("告訴我們目前如何接聽、通話後要建立什麼紀錄，以及最需要避免哪種錯誤。我們會以 GoGoCha 公開畫面與工作流為討論起點，對照你的流程、系統介面與人工接手邊界，判斷是否值得進入 POC。")}</p>
           <ul className="mx-auto mt-6 max-w-2xl space-y-3 text-left text-sm leading-relaxed text-[#A8B6BC]">
-            <li>需求盤點：目前電話如何分流、誰接手，以及通話後的派單、工單或 CRM 動作。</li>
-            <li>例外處理：AI 無法確認、API 失敗或無人工席位時，哪些情況必須停止或降級。</li>
-            <li>下一步：確認可展示的範圍與 POC 待驗證項目；PBX、客服席位與客戶系統串接不視為已完成能力。</li>
+            <li>{t("需求盤點：目前電話如何分流、誰接手，以及通話後的派單、工單或 CRM 動作。")}</li>
+            <li>{t("例外處理：AI 無法確認、API 失敗或無人工席位時，哪些情況必須停止或降級。")}</li>
+            <li>{t("下一步：確認可展示的範圍與 POC 待驗證項目；PBX、客服席位與客戶系統串接不視為已完成能力。")}</li>
           </ul>
           <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-[#7A8A91]">
-            送出表單只是提出流程 Demo 需求，時間與展示範圍另行確認，不包含現場接入你的正式系統。POC 範圍、費用與驗收條件另外討論；請勿提供私人錄音、客戶個資或系統密碼。
-          </p>
+            {t("送出表單只是提出流程 Demo 需求，時間與展示範圍另行確認，不包含現場接入你的正式系統。POC 範圍、費用與驗收條件另外討論；請勿提供私人錄音、客戶個資或系統密碼。")}</p>
           <ServiceCtaLink
             href="/?service=ai_voice#contact"
             placement="ai_voice_final"
             className="falcon-btn-primary mt-8 inline-flex items-center gap-2"
           >
-            提出流程 Demo 需求 <ArrowRight size={18} aria-hidden="true" />
+            {t("提出流程 Demo 需求")}<ArrowRight size={18} aria-hidden="true" />
           </ServiceCtaLink>
         </div>
       </section>

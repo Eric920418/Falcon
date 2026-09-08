@@ -1,4 +1,6 @@
-import Link from 'next/link'
+
+import { getI18n } from '@/lib/i18n/server'
+import Link from '@/lib/i18n/link'
 import { ArrowRight, Bot, Code2, PhoneCall, Search, Sparkles } from 'lucide-react'
 
 const hubs = [
@@ -30,21 +32,22 @@ const hubs = [
 ]
 
 export function HomeHubs() {
+  const { t, locale } = getI18n()
+
   return (
     <section id="services" className="py-24 px-6 bg-stone-950">
       <div className="max-w-6xl mx-auto">
-        <p className="text-amber-500 text-sm tracking-widest uppercase mb-3">Two focused hubs</p>
-        <h2 className="text-3xl md:text-5xl text-[#E0E5E8] mb-5">兩條清楚的合作路徑</h2>
+        <p className="text-amber-500 text-sm tracking-widest uppercase mb-3">{t("Two focused hubs")}</p>
+        <h2 className="text-3xl md:text-5xl text-[#E0E5E8] mb-5">{t("兩條清楚的合作路徑")}</h2>
         <p className="text-[#A8B6BC] max-w-3xl leading-relaxed mb-12">
-          不把所有會做的事情都當成主服務。開發解決產品與流程問題；搜尋成長解決被找到與產生詢盤的問題。
-        </p>
+          {t("不把所有會做的事情都當成主服務。開發解決產品與流程問題；搜尋成長解決被找到與產生詢盤的問題。")}</p>
 
         <div className="grid lg:grid-cols-2 gap-6">
           {hubs.map((hub) => (
             <article key={hub.title} className="border border-[#344349] rounded-2xl p-7 md:p-9 bg-[#1E2A2E]/55">
-              <span className="text-amber-500 text-sm">{hub.eyebrow}</span>
-              <h3 className="text-3xl text-[#E0E5E8] mt-3 mb-4">{hub.title}</h3>
-              <p className="text-[#A8B6BC] leading-relaxed">{hub.description}</p>
+              <span className="text-amber-500 text-sm">{t(hub.eyebrow)}</span>
+              <h3 className="text-3xl text-[#E0E5E8] mt-3 mb-4">{t(hub.title)}</h3>
+              <p className="text-[#A8B6BC] leading-relaxed">{t(hub.description)}</p>
               <div className="grid sm:grid-cols-2 gap-3 mt-7">
                 {hub.children.map(({ label, href, icon: Icon }) => (
                   <Link
@@ -53,12 +56,12 @@ export function HomeHubs() {
                     className="flex items-center gap-3 rounded-lg border border-[#344349] p-4 text-[#C5CED2] hover:border-amber-500 hover:text-amber-500 transition-colors"
                   >
                     <Icon size={18} />
-                    <span>{label}</span>
+                    <span>{t(label)}</span>
                   </Link>
                 ))}
               </div>
               <Link href={hub.href} className="inline-flex items-center gap-2 text-amber-500 mt-8 hover:underline">
-                {hub.cta} <ArrowRight size={17} />
+                {t(hub.cta)} <ArrowRight size={17} />
               </Link>
             </article>
           ))}

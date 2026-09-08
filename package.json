@@ -7,9 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:content": "tsx scripts/lint-content.ts",
+    "lint:content": "tsx scripts/lint-content.ts && tsx scripts/check-i18n.ts",
     "check:seo": "tsx scripts/check-seo-status.ts",
-    "check:conversion": "node scripts/check-conversion.mjs"
+    "check:conversion": "node scripts/check-conversion.mjs",
+    "check:i18n": "tsx scripts/check-i18n.ts"
   },
   "dependencies": {
     "@fontsource/noto-sans-tc": "^5.2.9",

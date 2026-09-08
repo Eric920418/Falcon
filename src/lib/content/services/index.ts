@@ -1,3 +1,5 @@
+import { translateData } from '@/lib/i18n/server'
+import type { Locale } from '@/lib/i18n/config'
 import { seoService } from './seo'
 import { geoService } from './geo'
 import { webDevelopmentService } from './web-development'
@@ -30,20 +32,20 @@ export const serviceSlugs = [
   ...redirectedServiceSlugs,
 ]
 
-export function getService(slug: string): ServiceContent | null {
-  return services[slug] ?? null
+export function getService(slug: string, locale: Locale = 'zh-tw'): ServiceContent | null {
+  return translateData(services[slug] ?? null, locale)
 }
 
-export function getAllServices(): ServiceContent[] {
-  return Object.values(services)
+export function getAllServices(locale: Locale = 'zh-tw'): ServiceContent[] {
+  return translateData(Object.values(services), locale)
 }
 
 export function isIndexableService(slug: string): boolean {
   return (indexableServiceSlugs as readonly string[]).includes(slug)
 }
 
-export function getIndexableServices(): ServiceContent[] {
-  return indexableServiceSlugs.map((slug) => services[slug])
+export function getIndexableServices(locale: Locale = 'zh-tw'): ServiceContent[] {
+  return translateData(indexableServiceSlugs.map((slug) => services[slug]), locale)
 }
 
 export { seoService, geoService, webDevelopmentService, aiToolsService, aiVoiceService, digitalAdsService, socialMediaService, videoService, quantTradingService }

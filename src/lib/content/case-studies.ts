@@ -1,3 +1,5 @@
+import { translateData } from '@/lib/i18n/server'
+import type { Locale } from '@/lib/i18n/config'
 import type { CaseEvidence } from './types'
 
 export const caseStudies: Record<string, CaseEvidence> = {
@@ -215,10 +217,10 @@ export const caseStudies: Record<string, CaseEvidence> = {
 
 export const caseStudySlugs = Object.keys(caseStudies)
 
-export function getCaseStudy(slug: string): CaseEvidence | null {
-  return caseStudies[slug] ?? null
+export function getCaseStudy(slug: string, locale: Locale = 'zh-tw'): CaseEvidence | null {
+  return translateData(caseStudies[slug] ?? null, locale)
 }
 
-export function getAllCaseStudies(): CaseEvidence[] {
-  return Object.values(caseStudies)
+export function getAllCaseStudies(locale: Locale = 'zh-tw'): CaseEvidence[] {
+  return translateData(Object.values(caseStudies), locale)
 }

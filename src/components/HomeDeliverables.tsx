@@ -1,4 +1,6 @@
-import Link from 'next/link'
+
+import { getI18n } from '@/lib/i18n/server'
+import Link from '@/lib/i18n/link'
 import { ArrowRight, Bot, Code2, PhoneCall, Search, Sparkles } from 'lucide-react'
 
 const deliveryTracks = [
@@ -58,17 +60,18 @@ const deliveryTracks = [
 ]
 
 export function HomeDeliverables() {
+  const { t, locale } = getI18n()
+
   return (
     <section className="bg-[#E0E5E8] px-6 py-24 text-[#1E2A2E]">
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-8 border-b border-[#1E2A2E]/20 pb-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
           <div>
-            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-amber-700">Actual deliverables</p>
-            <h2 className="text-3xl leading-tight md:text-5xl">真正交付的，不是一句服務名稱</h2>
+            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-amber-700">{t("Actual deliverables")}</p>
+            <h2 className="text-3xl leading-tight md:text-5xl">{t("真正交付的，不是一句服務名稱")}</h2>
           </div>
           <p className="max-w-2xl text-lg leading-relaxed text-[#344349] lg:justify-self-end">
-            首頁要回答的核心不是「我們什麼都會」，而是你委託之後會得到什麼、如何驗收，以及哪些結果不能亂保證。
-          </p>
+            {t("首頁要回答的核心不是「我們什麼都會」，而是你委託之後會得到什麼、如何驗收，以及哪些結果不能亂保證。")}</p>
         </div>
 
         <div className="divide-y divide-[#1E2A2E]/20">
@@ -79,12 +82,12 @@ export function HomeDeliverables() {
             >
               <div>
                 <div className="mb-6 flex items-center gap-3 text-sm uppercase tracking-[0.18em] text-amber-700">
-                  <span className="font-mono">{track.number}</span>
+                  <span className="font-mono">{t(track.number)}</span>
                   <span className="h-px w-10 bg-amber-700/60" />
-                  <span>{track.label}</span>
+                  <span>{t(track.label)}</span>
                 </div>
-                <h3 className="max-w-md text-2xl leading-snug md:text-3xl">{track.title}</h3>
-                <p className="mt-5 max-w-md leading-relaxed text-[#344349]">{track.description}</p>
+                <h3 className="max-w-md text-2xl leading-snug md:text-3xl">{t(track.title)}</h3>
+                <p className="mt-5 max-w-md leading-relaxed text-[#344349]">{t(track.description)}</p>
 
                 <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
                   {track.links.map(({ label, href, icon: Icon }) => (
@@ -94,7 +97,7 @@ export function HomeDeliverables() {
                       className="inline-flex items-center gap-2 border-b border-[#1E2A2E]/25 pb-1 text-sm font-medium hover:border-amber-700 hover:text-amber-800"
                     >
                       <Icon size={16} aria-hidden="true" />
-                      {label}
+                      {t(label)}
                     </Link>
                   ))}
                 </div>
@@ -104,17 +107,17 @@ export function HomeDeliverables() {
                 <div className="divide-y divide-[#1E2A2E]/15 border-y border-[#1E2A2E]/15">
                   {track.deliverables.map((item, index) => (
                     <div key={item.title} className="grid gap-2 py-6 sm:grid-cols-[3rem_0.62fr_1.38fr] sm:gap-5">
-                      <span className="font-mono text-xs text-amber-700">0{index + 1}</span>
-                      <h4 className="text-lg">{item.title}</h4>
-                      <p className="text-sm leading-relaxed text-[#344349]">{item.body}</p>
+                      <span className="font-mono text-xs text-amber-700">{t("0")}{index + 1}</span>
+                      <h4 className="text-lg">{t(item.title)}</h4>
+                      <p className="text-sm leading-relaxed text-[#344349]">{t(item.body)}</p>
                     </div>
                   ))}
                 </div>
                 <p className="mt-5 flex items-start gap-2 text-sm leading-relaxed text-[#344349]">
                   <ArrowRight size={16} className="mt-0.5 shrink-0 text-amber-700" aria-hidden="true" />
                   <span>
-                    <strong className="font-medium text-[#1E2A2E]">驗收方式：</strong>
-                    {track.validation}
+                    <strong className="font-medium text-[#1E2A2E]">{t("驗收方式：")}</strong>
+                    {t(track.validation)}
                   </span>
                 </p>
               </div>

@@ -1,10 +1,13 @@
 'use client'
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { useI18n } from '@/lib/i18n/client'
+
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
+import Link from '@/lib/i18n/link'
 
 const buildLinks = [
   { label: '網站建置與軟體開發', href: '/services/web-development' },
@@ -32,6 +35,8 @@ const navItems: NavItem[] = [
 ]
 
 export function Navigation() {
+  const { t, locale } = useI18n()
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -81,7 +86,7 @@ export function Navigation() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-3">
         {/* Logo */}
         <motion.button
           onClick={() => scrollToSection('hero')}
@@ -91,21 +96,20 @@ export function Navigation() {
         >
           <Image
             src="/logo.png"
-            alt="隼訊數位行銷"
+            alt={t("隼訊數位行銷")}
             width={44}
             height={44}
             className="rounded"
           />
           <span
-            className="text-xl text-[#E0E5E8] group-hover:text-[#A8B6BC] transition-colors"
+            className="hidden sm:inline text-xl text-[#E0E5E8] group-hover:text-[#A8B6BC] transition-colors"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            隼訊數位行銷
-          </span>
+            {t("隼訊數位行銷")}</span>
         </motion.button>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center gap-1">
+        <div className="hidden xl:flex items-center gap-1">
           {navItems.map((item) => {
             if (item.kind === 'dropdown') {
               return (
@@ -114,13 +118,20 @@ export function Navigation() {
                   className="relative"
                   onMouseEnter={() => setOpenDropdown(item.label)}
                   onMouseLeave={() => setOpenDropdown(null)}
-                  onFocus={() => setOpenDropdown(item.label)}
+                  onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setOpenDropdown(null) }}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Escape') {
+                      setOpenDropdown(null)
+                      event.currentTarget.querySelector('button')?.focus()
+                    }
+                  }}
                 >
                   <button
                     className="flex items-center gap-1 px-4 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8] transition-colors"
                     aria-expanded={openDropdown === item.label}
+                    onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
                   >
-                    {item.label}
+                    {t(item.label)}
                     <ChevronDown
                       size={14}
                       className={`transition-transform ${openDropdown === item.label ? 'rotate-180' : ''}`}
@@ -142,7 +153,7 @@ export function Navigation() {
                               href={s.href}
                               className="block px-4 py-2 text-sm text-[#A8B6BC] hover:text-amber-500 hover:bg-[#2D3B40]/50 transition-colors"
                             >
-                              {s.label}
+                              {t(s.label)}
                             </Link>
                           ))}
                         </div>
@@ -160,7 +171,7 @@ export function Navigation() {
                   href={item.href}
                   className="relative px-4 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8] transition-colors group"
                 >
-                  {item.label}
+                  {t(item.label)}
                   <span className="absolute bottom-1 left-4 right-4 h-px bg-[#5F808B] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
                 </Link>
               );
@@ -172,29 +183,33 @@ export function Navigation() {
                 onClick={() => scrollToSection(item.id)}
                 className="relative px-4 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8] transition-colors group"
               >
-                {item.label}
+                {t(item.label)}
                 <span className="absolute bottom-1 left-4 right-4 h-px bg-[#5F808B] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
               </button>
             );
           })}
         </div>
 
+        <LanguageSwitcher />
+
         {/* CTA Button - Desktop */}
         <motion.button
-          className="hidden lg:flex falcon-btn-primary text-sm py-2 px-5"
+          className="hidden xl:flex falcon-btn-primary text-sm py-2 px-5"
           onClick={() => scrollToSection('contact')}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
         >
-          立即諮詢
-        </motion.button>
+          {t("立即諮詢")}</motion.button>
 
         {/* Mobile Menu Button */}
         <button
-          className="lg:hidden w-10 h-10 flex items-center justify-center text-[#C5CED2] hover:text-[#A8B6BC] transition-colors"
+          className="xl:hidden w-10 h-10 flex items-center justify-center text-[#C5CED2] hover:text-[#A8B6BC] transition-colors"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label={isMobileMenuOpen ? '關閉選單' : '開啟選單'}
+          id="home-menu-toggle"
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="home-mobile-menu"
+          aria-label={t(isMobileMenuOpen ? '關閉選單' : '開啟選單')}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -204,7 +219,9 @@ export function Navigation() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="lg:hidden fixed inset-0 top-[72px] bg-[#1E2A2E] overflow-y-auto"
+            id="home-mobile-menu"
+            onKeyDown={(event) => { if (event.key === 'Escape') { closeMobile(); document.getElementById('home-menu-toggle')?.focus() } }}
+            className="xl:hidden fixed inset-x-0 top-[72px] h-[calc(100dvh-72px)] bg-[#1E2A2E] overflow-y-auto"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -217,9 +234,10 @@ export function Navigation() {
                     <div key={item.label} className="border-b border-[#344349]/50">
                       <button
                         onClick={() => setMobileDropdown((value) => value === item.label ? null : item.label)}
+                        aria-expanded={mobileDropdown === item.label}
                         className="w-full flex items-center justify-between py-4 text-left text-lg text-[#C5CED2] hover:text-[#A8B6BC] transition-colors"
                       >
-                        <span style={{ fontFamily: 'var(--font-display)' }}>{item.label}</span>
+                        <span style={{ fontFamily: 'var(--font-display)' }}>{t(item.label)}</span>
                         <ChevronDown
                           size={18}
                           className={`transition-transform ${mobileDropdown === item.label ? 'rotate-180' : ''}`}
@@ -234,7 +252,7 @@ export function Navigation() {
                               onClick={closeMobile}
                               className="py-2.5 text-[#A8B6BC] hover:text-amber-500 transition-colors"
                             >
-                              {s.label}
+                              {t(s.label)}
                             </Link>
                           ))}
                         </div>
@@ -252,7 +270,7 @@ export function Navigation() {
                       className="py-4 text-lg text-[#C5CED2] hover:text-[#A8B6BC] transition-colors border-b border-[#344349]/50"
                       style={{ fontFamily: 'var(--font-display)' }}
                     >
-                      {item.label}
+                      {t(item.label)}
                     </Link>
                   );
                 }
@@ -264,7 +282,7 @@ export function Navigation() {
                     className="py-4 text-left text-lg text-[#C5CED2] hover:text-[#A8B6BC] transition-colors border-b border-[#344349]/50"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
-                    {item.label}
+                    {t(item.label)}
                   </button>
                 );
               })}
@@ -274,8 +292,7 @@ export function Navigation() {
                 className="falcon-btn-primary mt-6 w-full text-center"
                 onClick={() => scrollToSection('contact')}
               >
-                立即諮詢
-              </button>
+                {t("立即諮詢")}</button>
             </div>
           </motion.div>
         )}

@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import { locales, localizedPath } from './src/lib/i18n/config'
 
 // Vercel Live toolbar (Comments / Feedback) 只在 preview / development 注入；
 // production 不放行，保持最嚴 CSP。
@@ -91,23 +92,31 @@ const nextConfig: NextConfig = {
     ]
   },
   async redirects() {
-    return [
-      {
-        source: '/services/aeo',
-        destination: '/services/geo',
-        statusCode: 301,
-      },
-      {
-        source: '/blog/seo-vs-geo-vs-aeo',
-        destination: '/compare/seo-vs-geo-vs-aeo',
-        statusCode: 301,
-      },
-      {
-        source: '/blog/how-we-pick-clients',
-        destination: '/about',
-        statusCode: 301,
-      },
+    const previous = [
+      ['/services/aeo', '/services/geo'],
+      ['/blog/seo-vs-geo-vs-aeo', '/compare/seo-vs-geo-vs-aeo'],
+      ['/blog/how-we-pick-clients', '/about'],
     ]
+    return [
+      ...previous.flatMap(([source, destination]) => [
+        { source, destination, statusCode: 301 },
+        ...locales.map(locale => ({
+          source: `/${locale}${source}`,
+          destination: localizedPath(destination, locale),
+          statusCode: 301,
+        })),
+      ]),
+      { source: '/zh-tw', destination: '/', statusCode: 301 },
+      { source: '/zh-tw/:path*', destination: '/:path*', statusCode: 301 },
+    ]
+  },
+  async rewrites() {
+    return { beforeFiles: [
+      { source: '/', destination: '/zh-tw' },
+      { source: '/:section(services|about|case-studies|pricing|blog|compare|local)/:path*', destination: '/zh-tw/:section/:path*' },
+      { source: '/llms.txt', destination: '/zh-tw/llms.txt' },
+      { source: '/llms-full.txt', destination: '/zh-tw/llms-full.txt' },
+    ], afterFiles: [], fallback: [] }
   },
 }
 

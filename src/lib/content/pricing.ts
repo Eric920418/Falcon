@@ -1,3 +1,5 @@
+import { translateData } from '@/lib/i18n/server'
+import type { Locale } from '@/lib/i18n/config'
 import type {
   PricingPageContent,
   ComparePageContent,
@@ -325,8 +327,8 @@ export const pricingPages: Record<string, PricingPageContent> = Object.fromEntri
 
 export const pricingSlugs = Object.keys(pricingPages)
 
-export function getPricingPage(slug: string): PricingPageContent | null {
-  return pricingPages[slug] ?? null
+export function getPricingPage(slug: string, locale: Locale = 'zh-tw'): PricingPageContent | null {
+  return translateData(pricingPages[slug] ?? null, locale)
 }
 
 export const comparePages: Record<string, ComparePageContent> = {
@@ -581,6 +583,6 @@ export const comparePages: Record<string, ComparePageContent> = {
 
 export const compareSlugs = Object.keys(comparePages)
 
-export function getComparePage(slug: string): ComparePageContent | null {
-  return comparePages[slug] ?? null
+export function getComparePage(slug: string, locale: Locale = 'zh-tw'): ComparePageContent | null {
+  return translateData(comparePages[slug] ?? null, locale)
 }

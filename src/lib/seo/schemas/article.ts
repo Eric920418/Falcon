@@ -48,7 +48,7 @@ export function createArticleSchema(input: ArticleSchemaInput) {
   }
 
   if (input.keywords) {
-    schema.keywords = input.keywords.join(', ')
+    schema.keywords = input.keywords
   }
 
   return schema

@@ -1,4 +1,8 @@
 'use client'
+import { contactMessages } from '@/lib/i18n/contact-messages'
+import { languageUi } from '@/lib/i18n/language-ui'
+import { useI18n } from '@/lib/i18n/client'
+
 
 import { useEffect, useRef, useState } from 'react'
 import { Mail, Phone, Send, MessageCircle } from 'lucide-react'
@@ -9,12 +13,15 @@ import { isServiceInterest, serviceInterestEvent, serviceInterestOptions } from 
 
 const safeErrorCodes = new Set([
   'REQUIRED_FIELDS_MISSING', 'INVALID_SERVICE_INTEREST', 'SMTP_NOT_CONFIGURED',
-  'SMTP_SEND_FAILED', 'INVALID_RESPONSE', 'HTTP_ERROR', 'CONTACT_FORM_FAILED',
+  'SMTP_SEND_FAILED', 'INVALID_LOCALE', 'INVALID_RESPONSE', 'HTTP_ERROR', 'CONTACT_FORM_FAILED',
 ])
 
 export function Contact() {
+  const { t, locale } = useI18n()
+  const messages = contactMessages(locale)
+
   const submitLock = useRef(false);
-  const phoneNumber = '0958801559';
+  const phoneNumber = locale === 'zh-tw' ? '0958801559' : '+886 958 801 559';
   const phoneHref = 'tel:+886958801559';
   const [formData, setFormData] = useState({
     name: '',
@@ -55,7 +62,7 @@ export function Contact() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, locale }),
       });
 
       const rawBody = await response.text();
@@ -68,9 +75,10 @@ export function Contact() {
       const data = parsed && typeof parsed === 'object' && !Array.isArray(parsed)
         ? parsed as Record<string, unknown> : null;
       if (!response.ok || !data || data.code !== 'CONTACT_SENT') {
-        const detail = typeof data?.error === 'string' ? data.error : rawBody;
+        const detail = typeof data?.error === 'string'
+          ? [data.error, typeof data.detail === 'string' ? data.detail : ''].filter(Boolean).join('\n') : rawBody;
         const submitError = new Error(
-          `${response.ok ? '未收到有效的送出確認，請重試或改用電話、Email、LINE 聯繫' : '發送失敗'}（HTTP ${response.status}）${detail ? `：${detail}` : '：伺服器回應為空白'}`
+          `${response.ok ? messages.confirmation : messages.failed} (HTTP ${response.status})${detail ? `：${detail}` : `：${messages.empty}`}`
         ) as Error & { code?: string };
         submitError.code = response.ok || !data ? 'INVALID_RESPONSE'
           : typeof data.code === 'string' && data.code !== 'CONTACT_SENT' ? data.code : 'HTTP_ERROR';
@@ -90,7 +98,7 @@ export function Contact() {
           ? error.code
           : 'CONTACT_FORM_FAILED';
       setSubmitStatus('error');
-      setErrorMessage(error instanceof Error ? error.message : '發送失敗，請稍後再試');
+      setErrorMessage(error instanceof Error ? error.message : messages.retry);
       setErrorCode(code);
       trackEvent('form_error', {
         form_name: 'contact',
@@ -146,22 +154,22 @@ export function Contact() {
         {/* 標籤 */}
         <div className="flex items-center gap-3 mb-6">
           <div className="brand-line" />
-          <span className="text-amber-500 text-sm tracking-widest uppercase">Contact</span>
+          <span className="text-amber-500 text-sm tracking-widest uppercase">{t("Contact")}</span>
         </div>
 
         <div className="mb-16">
           <h2 className="text-4xl md:text-5xl text-stone-100 mb-4">
-            聯絡<span className="text-falcon-gradient">我們</span>
+            <span className="text-falcon-gradient">{t("聯絡我們")}</span>
           </h2>
           <p className="text-lg text-stone-400 max-w-xl">
-            準備好開始您的數位轉型之旅了嗎？讓我們一起討論如何幫助您的品牌成長
-          </p>
+            {t("準備好開始您的數位轉型之旅了嗎？讓我們一起討論如何幫助您的品牌成長")}</p>
         </div>
 
+        <p className="mb-8 text-sm leading-relaxed text-stone-400">{languageUi(locale).inquiry}</p>
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div>
-            <h3 className="text-xl mb-8 text-stone-100" style={{ fontFamily: 'var(--font-display)' }}>取得聯繫</h3>
+            <h3 className="text-xl mb-8 text-stone-100" style={{ fontFamily: 'var(--font-display)' }}>{t("取得聯繫")}</h3>
 
             <div className="space-y-6 mb-10">
               {contactInfo.map((info, index) => {
@@ -175,7 +183,7 @@ export function Contact() {
                       <Icon className="text-stone-400 group-hover:text-stone-950 transition-colors" size={20} />
                     </div>
                     <div>
-                      <p className="text-stone-500 text-sm mb-1">{info.title}</p>
+                      <p className="text-stone-500 text-sm mb-1">{t(info.title)}</p>
                       {info.link ? (
                         <TrackedContactLink
                           href={info.link}
@@ -186,10 +194,10 @@ export function Contact() {
                           rel={info.channel === 'line' ? 'noopener noreferrer' : undefined}
                           className="text-stone-200 hover:text-amber-500 transition-colors"
                         >
-                          {info.content}
+                          {t(info.content)}
                         </TrackedContactLink>
                       ) : (
-                        <p className="text-stone-200">{info.content}</p>
+                        <p className="text-stone-200">{t(info.content)}</p>
                       )}
                     </div>
                   </div>
@@ -199,22 +207,23 @@ export function Contact() {
 
             <div className="falcon-card rounded-lg p-8">
               <h4 className="text-lg mb-4 text-falcon-gradient" style={{ fontFamily: 'var(--font-display)' }}>
-                營業時間
-              </h4>
+                {t("營業時間")}</h4>
               <div className="space-y-2 text-stone-400">
-                <p>採預約制，以電話、Email、LINE 或表單安排線上／到場討論。</p>
+                <p>{t("採預約制，以電話、Email、LINE 或表單安排線上／到場討論。")}</p>
               </div>
             </div>
           </div>
 
           {/* Contact Form */}
           <div>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onInvalid={(event) => {
+              const field = event.target as HTMLInputElement | HTMLTextAreaElement
+              field.setCustomValidity(field.validity.typeMismatch ? messages.email : messages.required)
+            }} onInput={(event) => (event.target as HTMLInputElement | HTMLTextAreaElement).setCustomValidity('')} data-contact-dirty={Object.values(formData).some(value => value !== '')} onSubmit={handleSubmit} className="space-y-6">
               <fieldset disabled={isSubmitting} className="min-w-0 space-y-6">
               <div>
                 <label htmlFor="name" className="block text-stone-400 text-sm mb-2">
-                  姓名 *
-                </label>
+                  {t("姓名 *")}</label>
                 <input
                   type="text"
                   id="name"
@@ -224,14 +233,13 @@ export function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors"
-                  placeholder="請輸入您的姓名"
+                  placeholder={t("請輸入您的姓名")}
                 />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-stone-400 text-sm mb-2">
-                  Email *
-                </label>
+                  {t("Email *")}</label>
                 <input
                   type="email"
                   id="email"
@@ -241,14 +249,13 @@ export function Contact() {
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors"
-                  placeholder="your@email.com"
+                  placeholder={t("your@email.com")}
                 />
               </div>
 
               <div>
                 <label htmlFor="company" className="block text-stone-400 text-sm mb-2">
-                  公司名稱
-                </label>
+                  {t("公司名稱")}</label>
                 <input
                   type="text"
                   id="company"
@@ -257,14 +264,13 @@ export function Contact() {
                   value={formData.company}
                   onChange={handleChange}
                   className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors"
-                  placeholder="您的公司名稱（選填）"
+                  placeholder={t("您的公司名稱（選填）")}
                 />
               </div>
 
               <div>
                 <label htmlFor="serviceInterest" className="block text-stone-400 text-sm mb-2">
-                  想討論的服務
-                </label>
+                  {t("想討論的服務")}</label>
                 <select
                   id="serviceInterest"
                   name="serviceInterest"
@@ -274,7 +280,7 @@ export function Contact() {
                 >
                   {serviceInterestOptions.map((option) => (
                     <option key={option.value || 'unspecified'} value={option.value} className="bg-stone-900">
-                      {option.label}
+                      {t(option.label)}
                     </option>
                   ))}
                 </select>
@@ -282,8 +288,7 @@ export function Contact() {
 
               <div>
                 <label htmlFor="message" className="block text-stone-400 text-sm mb-2">
-                  訊息內容 *
-                </label>
+                  {t("訊息內容 *")}</label>
                 <textarea
                   id="message"
                   name="message"
@@ -293,24 +298,24 @@ export function Contact() {
                   required
                   rows={5}
                   className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors resize-none"
-                  placeholder="請告訴我們您的需求..."
+                  placeholder={t("請告訴我們您的需求...")}
                 />
                 {formData.serviceInterest === 'ai_voice' && (
                   <div id="ai-voice-form-help" className="mt-3 space-y-2 text-sm leading-relaxed text-stone-400">
-                    <p>可以先說明：目前如何接聽？通話後需要做什麼？最需要避免什麼錯誤？</p>
-                    <p>送出的是流程 Demo 需求，時間與展示範圍將另行確認；請勿提供私人錄音、客戶個資或系統密碼。</p>
+                    <p>{t("可以先說明：目前如何接聽？通話後需要做什麼？最需要避免什麼錯誤？")}</p>
+                    <p>{t("送出的是流程 Demo 需求，時間與展示範圍將另行確認；請勿提供私人錄音、客戶個資或系統密碼。")}</p>
                   </div>
                 )}
               </div>
 
               {submitStatus === 'error' && (
                 <div role="alert" className="p-4 bg-red-900/30 border border-red-800/50 rounded-lg text-red-300 [overflow-wrap:anywhere]">
-                  <p className="font-medium">送出失敗 [{errorCode}]</p>
+                  <p className="font-medium">{t("送出失敗 [")}{t(errorCode)}{t("]")}</p>
                   <p className="mt-1 whitespace-pre-wrap">{errorMessage}</p>
                 </div>
               )}
               <div role="status" aria-live="polite" aria-atomic="true" className="text-sm text-emerald-300">
-                {submitStatus === 'success' && '需求已送出，後續聯絡確認。這不代表預約時間已確定。'}
+                {t(submitStatus === 'success' && '需求已送出，後續聯絡確認。這不代表預約時間已確定。')}
               </div>
 
               <button
@@ -326,18 +331,15 @@ export function Contact() {
                 {isSubmitting ? (
                   <>
                     <div className="w-5 h-5 border-2 border-current rounded-full border-t-transparent animate-spin" />
-                    發送中...
-                  </>
+                    {t("發送中...")}</>
                 ) : submitStatus === 'success' ? (
                   <>
-                    <span>✓</span>
-                    需求已送出
-                  </>
+                    <span>{t("✓")}</span>
+                    {t("需求已送出")}</>
                 ) : (
                   <>
                     <Send size={18} />
-                    送出訊息
-                  </>
+                    {t("送出訊息")}</>
                 )}
               </button>
               </fieldset>

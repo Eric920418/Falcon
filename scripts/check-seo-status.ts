@@ -1,3 +1,5 @@
+import { locales, localizedPath, unlocalizedPath, localeFromPath, languageInfo } from '../src/lib/i18n/config'
+import { languageAlternates } from '../src/lib/i18n/seo'
 /**
  * 全站 SEO 驗收：以 production HTML 驗證 sitemap、索引狀態、metadata、
  * canonical、H1、JSON-LD @graph、URL 結構、內鏈與永久轉址。
@@ -120,7 +122,8 @@ function collectExpectedRoutes(): RouteSpec[] {
     })
   }
 
-  return routes
+  return routes.flatMap(route => ['/resume', '/card'].includes(route.path)
+    ? [route] : locales.map(locale => ({ ...route, path: localizedPath(route.path, locale) })))
 }
 
 async function fetchText(
@@ -277,6 +280,27 @@ async function auditPage(route: RouteSpec): Promise<PageAudit> {
   const title = getTitle(html)
   const description = getMeta(html, 'name', 'description')
   const canonical = getCanonical(html)
+  const locale = localeFromPath(route.path)
+  const htmlTag = html.match(/<html\b[^>]*>/i)?.[0] ?? ''
+  const expectedLanguage = languageInfo[locale].lang
+  if (getAttribute(htmlTag, 'lang') !== expectedLanguage) problems.push(`html lang 應為 ${expectedLanguage}`)
+  const marketingPage = !['/card', '/resume'].includes(route.path)
+  if (marketingPage) {
+    if (canonical !== expectedCanonical(route.path)) problems.push('公開頁 canonical 必須指向自身版本')
+    const links = [...html.matchAll(/<link\b[^>]*>/gi)].map(match => match[0])
+    for (const [language, href] of Object.entries(languageAlternates(unlocalizedPath(route.path)))) {
+      const tag = links.find(link => getAttribute(link, 'hreflang') === language)
+      if (!tag || getAttribute(tag, 'href') !== href) problems.push(`hreflang ${language} 缺少或目的錯誤`)
+    }
+  }
+  if (marketingPage && locale !== 'zh-tw') {
+    if (getMeta(html, 'property', 'og:image') !== `${siteConfig.url}/brand-og` || getMeta(html, 'name', 'twitter:image') !== `${siteConfig.url}/brand-og`) problems.push('外語社群圖片必須使用純品牌圖')
+    if (getMeta(html, 'property', 'og:locale') !== languageInfo[locale].og) problems.push('Open Graph locale 錯誤')
+    for (const path of getInternalLinks(html)) {
+      if (/^\/(?:card|resume|api)(?:\/|$)/.test(path) || /\.[^/]+$/.test(path)) continue
+      if (localeFromPath(path) !== locale) problems.push(`站內連結離開目前語言：${path}`)
+    }
+  }
   const robots = getMeta(html, 'name', 'robots')
   const h1Count = Array.from(html.matchAll(/<h1(?:\s|>)/gi)).length
   const hasNoindex = robots?.toLowerCase().includes('noindex') ?? false
@@ -318,6 +342,9 @@ async function auditPage(route: RouteSpec): Promise<PageAudit> {
           if (organizations.length !== 1) {
             problems.push(`Organization 節點 ${organizations.length}，預期 1`)
           }
+          for (const node of jsonLd['@graph']) {
+            if ('inLanguage' in node && node.inLanguage !== expectedLanguage) problems.push('JSON-LD inLanguage 錯誤')
+          }
           if (websites.length !== 1) {
             problems.push(`WebSite 節點 ${websites.length}，預期 1`)
           }
@@ -347,7 +374,8 @@ function findDuplicates(
 ): string[] {
   const values = new Map<string, string[]>()
   for (const audit of audits) {
-    const value = audit[field]
+    const rawValue = audit[field]
+    const value = rawValue && (field === 'canonical' ? rawValue : `${localeFromPath(audit.route.path)}:${rawValue}`)
     if (!value) continue
     values.set(value, [...(values.get(value) ?? []), audit.route.path])
   }
@@ -390,6 +418,15 @@ async function main() {
   for (const path of sitemapPaths) {
     if (!expectedSitemapPaths.has(path)) issues.push(`sitemap 多出 ${path}`)
   }
+  for (const block of sitemap?.text.match(/<url>[\s\S]*?<\/url>/g) ?? []) {
+    const path = normalizePath(block.match(/<loc>([^<]+)<\/loc>/)?.[1] ?? '')
+    if (!path) continue
+    const links = block.match(/<xhtml:link\b[^>]*>/g) ?? []
+    for (const [language, href] of Object.entries(languageAlternates(unlocalizedPath(path)))) {
+      if (!links.some(link => getAttribute(link, 'hreflang') === language && getAttribute(link, 'href') === href)) issues.push(`sitemap ${path}: 缺少 ${language} 對等網址`)
+    }
+  }
+
 
   if (robots?.status !== 200) {
     issues.push(`robots.txt HTTP ${robots?.status ?? 0}`)
@@ -459,8 +496,21 @@ async function main() {
     { source: '/services/aeo', destination: '/services/geo' },
     { source: '/blog/seo-vs-geo-vs-aeo', destination: '/compare/seo-vs-geo-vs-aeo' },
     { source: '/blog/how-we-pick-clients', destination: '/about' },
-  ]
+  ].flatMap(item => [...locales.map(locale => ({ source: localizedPath(item.source, locale), destination: localizedPath(item.destination, locale) })), { source: `/zh-tw${item.source}`, destination: item.destination }])
+  redirects.push({ source: '/zh-tw', destination: '/' }, { source: '/zh-tw/services/seo', destination: '/services/seo' })
 
+  for (const path of ['/it', '/ar/services/seo', '/en/services/not-a-service', '/ja/not-a-page', '/en/resume', '/pt/card']) {
+    const missing = await fetchText(`${baseUrl}${path}`, 'manual')
+    if (missing?.status !== 404) issues.push(`${path}: 預期 404，取得 ${missing?.status}`)
+  }
+  for (const locale of locales) {
+    const missing = await fetchText(`${baseUrl}${localizedPath('/services/not-a-service', locale)}`, 'manual')
+    if (missing?.status !== 404) issues.push(`${locale}: 不存在服務必須回傳 404`)
+    for (const path of ['/llms.txt', '/llms-full.txt']) {
+      const text = await fetchText(`${baseUrl}${localizedPath(path, locale)}`)
+      if (text?.status !== 200 || !text.text.includes(`Language: ${languageInfo[locale].lang}`) || text.headers.get('content-language') !== languageInfo[locale].lang) issues.push(`${locale}${path}: 摘要語言或回應錯誤`)
+    }
+  }
   for (const redirect of redirects) {
     const response = await fetchText(`${baseUrl}${redirect.source}`, 'manual')
     const location = response?.headers.get('location') ?? ''
