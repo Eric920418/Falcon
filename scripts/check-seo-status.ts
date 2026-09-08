@@ -68,6 +68,8 @@ function collectExpectedRoutes(): RouteSpec[] {
     { path: '/case-studies', indexable: true, source: 'static' },
     { path: '/pricing', indexable: true, source: 'static' },
     { path: '/blog', indexable: true, source: 'static' },
+    { path: '/privacy', indexable: true, source: 'static' },
+    { path: '/terms', indexable: true, source: 'static' },
     { path: '/card', indexable: false, source: 'static' },
     { path: '/resume', indexable: false, source: 'static' },
   ]
@@ -122,7 +124,7 @@ function collectExpectedRoutes(): RouteSpec[] {
     })
   }
 
-  return routes.flatMap(route => ['/resume', '/card'].includes(route.path)
+  return routes.flatMap(route => ['/resume', '/card', '/privacy', '/terms'].includes(route.path)
     ? [route] : locales.map(locale => ({ ...route, path: localizedPath(route.path, locale) })))
 }
 
@@ -297,7 +299,7 @@ async function auditPage(route: RouteSpec): Promise<PageAudit> {
     if (getMeta(html, 'property', 'og:image') !== `${siteConfig.url}/brand-og` || getMeta(html, 'name', 'twitter:image') !== `${siteConfig.url}/brand-og`) problems.push('外語社群圖片必須使用純品牌圖')
     if (getMeta(html, 'property', 'og:locale') !== languageInfo[locale].og) problems.push('Open Graph locale 錯誤')
     for (const path of getInternalLinks(html)) {
-      if (/^\/(?:card|resume|api)(?:\/|$)/.test(path) || /\.[^/]+$/.test(path)) continue
+      if (/^\/(?:card|resume|privacy|terms|api)(?:\/|$)/.test(path) || /\.[^/]+$/.test(path)) continue
       if (localeFromPath(path) !== locale) problems.push(`站內連結離開目前語言：${path}`)
     }
   }

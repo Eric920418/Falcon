@@ -6,6 +6,7 @@ export function absoluteLocaleUrl(path: string, locale: Locale): string {
   return localized === '/' ? siteConfig.url : siteConfig.url + localized
 }
 export function languageAlternates(path: string): Record<string, string> {
+  if (['/privacy', '/terms'].includes(path)) return { 'zh-TW': siteConfig.url + path, 'x-default': siteConfig.url + path }
   return Object.fromEntries([
     ...locales.map(locale => [languageInfo[locale].lang, absoluteLocaleUrl(path, locale)]),
     ['x-default', absoluteLocaleUrl(path, 'zh-tw')],

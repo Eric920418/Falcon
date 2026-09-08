@@ -318,6 +318,10 @@ export function Contact() {
                 {t(submitStatus === 'success' && '需求已送出，後續聯絡確認。這不代表預約時間已確定。')}
               </div>
 
+              <p className="text-sm leading-relaxed text-stone-400">
+                {languageUi(locale).privacyNotice}{' '}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline underline-offset-4">{languageUi(locale).privacy}</a>
+              </p>
               <button
                 type="submit"
                 className={`w-full py-4 rounded-lg flex items-center justify-center gap-2 transition-all ${submitStatus === 'success'

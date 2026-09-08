@@ -28,7 +28,7 @@ export function unlocalizedPath(path: string): string {
 export function localizedPath(path: string, locale: Locale): string {
   if (!path.startsWith('/') || path.startsWith('//')) return path
   const plain = unlocalizedPath(path)
-  if (/^\/(?:api|_next|card|resume)(?:\/|[?#]|$)/.test(plain)) return plain
+  if (/^\/(?:api|_next|card|resume|privacy|terms)(?:\/|[?#]|$)/.test(plain)) return plain
   const pathname = plain.split(/[?#]/)[0]
   if (/\.[^/]+$/.test(pathname) && !/^\/llms(?:-full)?\.txt$/.test(pathname)) return plain
   if (/^\/(?:opengraph-image|ai-voice-og|brand-og)(?:\/|[?#]|$)/.test(plain)) return plain

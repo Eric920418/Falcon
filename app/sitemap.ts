@@ -18,6 +18,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/case-studies`, lastModified: '2026-09-07' },
     { url: `${baseUrl}/pricing`, lastModified: '2026-08-11' },
     { url: `${baseUrl}/blog`, lastModified: '2026-08-30' },
+    { url: `${baseUrl}/privacy`, lastModified: '2026-09-08' },
+    { url: `${baseUrl}/terms`, lastModified: '2026-09-08' },
   ]
 
   const serviceRoutes: MetadataRoute.Sitemap = getIndexableServices()
@@ -71,6 +73,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]
   return routes.flatMap(route => {
     const path = route.url.slice(baseUrl.length) || '/'
+    if (['/privacy', '/terms'].includes(path)) return [{ ...route, alternates: { languages: languageAlternates(path) } }]
     return locales.map(locale => ({
       ...route,
       url: localizedPath(path, locale) === '/' ? baseUrl : baseUrl + localizedPath(path, locale),

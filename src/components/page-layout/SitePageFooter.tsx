@@ -1,10 +1,12 @@
 
 import { getI18n } from '@/lib/i18n/server'
+import { languageUi } from '@/lib/i18n/language-ui'
 import Link from '@/lib/i18n/link'
 import { TrackedContactLink } from '@/components/TrackedContactLink'
 
 export function SitePageFooter() {
   const { t, locale } = getI18n()
+  const ui = languageUi(locale)
 
   return (
     <footer className="relative border-t border-[#344349]/50 py-12 px-6 bg-[#1E2A2E]">
@@ -65,6 +67,10 @@ export function SitePageFooter() {
           <div className="text-center md:text-left">
             <p className="text-[#A8B6BC] text-sm">{t("&copy; 2026 隼訊數位行銷")}</p>
             <p className="text-[#7A8A91] text-xs mt-1">{t("網站與 AI 開發、SEO／GEO 搜尋成長｜服務台灣企業")}</p>
+            <div className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm md:justify-start">
+              <Link href="/privacy" className="text-[#A8B6BC] hover:text-amber-500 underline underline-offset-4">{ui.privacy}</Link>
+              <Link href="/terms" className="text-[#A8B6BC] hover:text-amber-500 underline underline-offset-4">{ui.terms}</Link>
+            </div>
           </div>
           <div className="flex items-center gap-6">
             <a href="https://www.instagram.com/falcon.information" target="_blank" rel="noopener noreferrer" className="text-[#A8B6BC] hover:text-amber-500 transition-colors text-sm">{t("Instagram")}</a>

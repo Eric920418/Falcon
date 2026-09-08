@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server'
 import { POST } from '../app/api/contact/route'
 import { languageUi } from '../src/lib/i18n/language-ui'
 import { contactMessages } from '../src/lib/i18n/contact-messages'
-import { localizeSchema, absoluteLocaleUrl } from '../src/lib/i18n/seo'
+import { localizeSchema, absoluteLocaleUrl, languageAlternates } from '../src/lib/i18n/seo'
 import { siteConfig, orgId } from '../src/lib/seo/site-config'
 import { formatMoney } from '../src/lib/i18n/format'
 import ts from 'typescript'
@@ -61,7 +61,7 @@ for (const locale of locales) {
   const path = localizedPath('/blog/example?service=ai_voice#contact', locale)
   assert.equal(unlocalizedPath(path), '/blog/example?service=ai_voice#contact')
   assert.equal(localizedPath(path, locale), path)
-  for (const untouched of ['/api/contact','/card','/resume','/logo.png','/opengraph-image','/ai-voice-og','https://example.com/x','//example.com/x','mailto:test@example.com','#section']) assert.equal(localizedPath(untouched, locale), untouched)
+  for (const untouched of ['/api/contact','/card','/resume','/privacy','/terms','/logo.png','/opengraph-image','/ai-voice-og','https://example.com/x','//example.com/x','mailto:test@example.com','#section']) assert.equal(localizedPath(untouched, locale), untouched)
   assert.equal(localizedPath('/?service=ai_voice#contact', locale), locale === 'zh-tw' ? '/?service=ai_voice#contact' : `/${locale}?service=ai_voice#contact`)
   assert(languageInfo[locale].name)
   assert(Object.values(languageUi(locale)).every(value => typeof value === 'string' && value.trim()))
@@ -71,6 +71,9 @@ for (const locale of locales) {
   assert.equal(schema.url, absoluteLocaleUrl('/', locale))
   assert.equal(schema.about['@id'], orgId)
   assert.equal(schema.inLanguage, languageInfo[locale].lang)
+}
+for (const path of ['/privacy', '/terms']) {
+  assert.deepEqual(languageAlternates(path), { 'zh-TW': siteConfig.url + path, 'x-default': siteConfig.url + path })
 }
 const sourceKeys = new Set(groups.flatMap(file => Object.keys(JSON.parse(readFileSync(`${root}/zh-tw/${file}`, 'utf8')))))
 function checkRenderedKeys(directory: string) {

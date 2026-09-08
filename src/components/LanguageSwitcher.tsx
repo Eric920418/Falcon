@@ -17,7 +17,7 @@ export function LanguageSwitcher() {
   const { locale } = useI18n()
   const ui = languageUi(locale)
   const path = usePathname()
-  if (/^\/(?:card|resume)(?:\/|$)/.test(path)) return null
+  if (/^\/(?:card|resume|privacy|terms)(?:\/|$)/.test(path)) return null
   return <label className="ml-auto xl:ml-0 inline-flex shrink-0 items-center gap-2 text-sm text-stone-200">
     <span className="sr-only">{ui.label}</span>
     <select aria-label={ui.label} value={locale} onChange={event => changeLanguage(event.target.value as Locale, ui.unsent)} className="max-w-36 rounded border border-stone-600 bg-stone-900 px-2 py-2 text-sm focus-visible:outline-amber-500">

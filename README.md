@@ -4,6 +4,15 @@
 
 **網站**: https://www.falconinformation.com
 
+## 隱私權政策與服務條款（2026-09-08）
+
+- 公開路徑為 `/privacy` 與 `/terms`，沿用 `(tools)` 的獨立繁中布局。部署後可將 `https://www.falconinformation.com/privacy` 與 `https://www.falconinformation.com/terms` 填入服務提供者登錄欄位。
+- 條文提供單一繁體中文版；各語系頁尾連至相同網址，外語入口標示內容為繁體中文。詢價表單送出前提供隱私告知與新分頁政策連結，避免離開頁面而遺失輸入。
+- 此次未加入額外同意勾選或變更表單送出流程；分析 Cookie 的載入行為維持現況，政策頁本身不等同 Cookie 同意管理功能。
+- 隱私政策依現有表單寄信、Google 分析、主機紀錄及本機語言偏好撰寫；服務條款以官網使用與諮詢為範圍，正式合作以個別契約及法令為準。參考 [個人資料保護法](https://law.pdpc.gov.tw/LawContent.aspx?id=FL010627) 與 [Google 合作網站資料說明](https://policies.google.com/technologies/partner-sites?hl=zh-TW)。
+- 更新條文請修改 `app/(tools)/privacy/page.tsx`、`app/(tools)/terms/page.tsx` 的內容及日期，同步更新 sitemap 日期與本 README；不另建條款 Markdown 或管理後台。路徑與 hreflang 回歸納入 `pnpm check:i18n`，兩頁及 sitemap 納入 `pnpm check:seo`。新增頁面不等於正式站已部署。
+- 驗收通過：內容檢查、30,915 筆翻譯檢查、TypeScript 與 `pnpm build`、本機正式版全站 SEO 檢查，以及政策頁／中英文首頁的 1440px、390px 瀏覽器檢查（頁尾、表單連結、無橫向溢出或瀏覽器錯誤；外部請求及寄信已封鎖）。沙箱限制 tsx IPC 時，以 `pnpm exec node --import tsx scripts/lint-content.ts` 及 `pnpm exec node --import tsx scripts/check-i18n.ts` 執行同一檢查。建置仍輸出 metadataBase 預設 localhost 警告，但全站 canonical 與社群 metadata 驗收通過。
+
 ## 業務範圍
 
 - 企業網站、電商、CMS 與客製系統開發
