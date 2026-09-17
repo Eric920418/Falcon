@@ -23,6 +23,37 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: 38,
+    title: "桃園歸正福音教會官方網站",
+    description:
+      "為桃園歸正福音教會打造的內容型網站，以主日與聚會資訊引導初次來訪者，整合最新消息、講道影音、信仰教義與文章典藏，並提供具角色權限的內容管理後台。",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS 4",
+      "Prisma 7",
+      "PostgreSQL",
+      "Auth.js v5",
+    ],
+    features: [
+      "主日與固定聚會資訊",
+      "首次來訪與交通導覽",
+      "最新消息與活動",
+      "講道影音與信息整理",
+      "信仰教義與文章典藏",
+      "後台文章、消息與首頁內容管理",
+    ],
+    highlights: [
+      "公開首頁與內容頁整合教會資訊",
+      "Prisma／PostgreSQL 支援內容管理",
+      "Auth.js 登入與後台角色權限",
+    ],
+    image: "/taoyuan-reformed-church-cover.png",
+    url: "https://recty.org/",
+    category: "形象網站",
+  },
+  {
     id: 37,
     title: "翻譯蒟蒻 CLASP 原生協作 App",
     description:
@@ -54,9 +85,9 @@ const projects: Project[] = [
   },
   {
     id: 36,
-    title: "YUHE 品牌服飾電商（測試版）",
+    title: "YUHE 品牌服飾電商",
     description:
-      "為 YUHE 打造的品牌服飾電商測試版，以編輯式留白與商品情境照建立日常衣著的品牌調性，整合分類選購、商品資訊、會員登入、購物車與政策頁面。公開站目前以 noindex 隔離測試流量，並明示商品圖片為暫代素材。",
+      "為 YUHE 打造的品牌服飾電商，以編輯式留白與商品情境照建立日常衣著的品牌調性，整合分類選購、商品資訊、會員登入、購物車與政策頁面。官網目前仍設定 noindex，頁尾也標示商品圖片為暫代素材。",
     tech: [
       "Next.js",
       "React",
@@ -973,7 +1004,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                 <span className="text-falcon-gradient">{t("完整作品紀錄")}</span>
               </h2>
               <p className="text-lg text-[#A8B6BC] max-w-xl">
-                {t("33 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。")}</p>
+                {t("34 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。")}</p>
             </div>
 
             {/* Category Filter */}

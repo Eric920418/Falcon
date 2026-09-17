@@ -19,7 +19,7 @@ export function HomeCases() {
             <h2 className="text-3xl md:text-5xl text-[#E0E5E8]">{t("案例先講證據，再講限制")}</h2>
           </div>
           <Link href="/case-studies" className="inline-flex items-center gap-2 text-amber-500 hover:underline">
-            {t("查看完整 33 項作品")}<ArrowRight size={17} />
+            {t("查看完整 34 項作品")}<ArrowRight size={17} />
           </Link>
         </div>
 
