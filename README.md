@@ -532,12 +532,12 @@ NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 
 ## 聯絡表單郵件設定
 
-聯絡表單提交後會自動發送通知郵件到公司信箱 `contact@falconinformation.com`（取自 `src/lib/seo/site-config.ts` 的 `email`，單一來源）。
+聯絡表單提交後會自動發送通知郵件到聯絡信箱 `26416387.re@gmail.com`（取自 `src/lib/seo/site-config.ts` 的 `email`，單一來源）。
 
 採「**寄、收分離**」架構：
 
-- **寄**：透過 **Gmail SMTP**（`falconinformation0113@gmail.com`）送出通知信。Zoho 免費版不支援 SMTP/IMAP/POP，故寄信仍走 Gmail。
-- **收**：通知信投遞到公司信箱 `contact@falconinformation.com`（Zoho 託管），對外顯示與收件人皆為公司網域。
+- **寄**：透過現有 **Gmail SMTP**（`falconinformation0113@gmail.com`）送出通知信。
+- **收**：通知信預設投遞到 `26416387.re@gmail.com`，與官網公開聯絡信箱一致。
 
 環境變數採廠商中立命名（`SMTP_*`），未來若改付費方案直接用公司信箱寄信，只需改 `.env` 的值、不必動 code。
 
@@ -549,7 +549,7 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=465
 SMTP_USER=falconinformation0113@gmail.com
 SMTP_PASSWORD=你的Gmail應用程式密碼
-# 選填：覆寫表單通知收件人（預設為 siteConfig.email = contact@falconinformation.com）
+# 選填：覆寫表單通知收件人（預設為 siteConfig.email = 26416387.re@gmail.com）
 # 測試「寄信」是否通時，可暫時指向你確定收得到的信箱：
 # CONTACT_RECIPIENT=falconinformation0113@gmail.com
 ```
@@ -563,15 +563,7 @@ SMTP_PASSWORD=你的Gmail應用程式密碼
 1. 前往 [Google 帳戶設定](https://myaccount.google.com/) →「安全性」，確認已開啟「兩步驟驗證」。
 2. 在「應用程式密碼」產生一組（名稱如 "Falcon 網站"），複製 16 位密碼貼到 `SMTP_PASSWORD`。
 
-### 前置：讓 `contact@falconinformation.com` 能收信
-
-1. 在 [Zoho Mail](https://www.zoho.com/mail/) 新增網域 `falconinformation.com` 並完成「網域驗證」（加一筆 TXT 到 DNS）。
-2. 設定 DNS：將 **MX** 記錄指向 Zoho（`mx.zoho.com` / `mx2.zoho.com`），並加上 Zoho 提供的 **SPF（TXT）** 與 **DKIM（TXT）**。
-3. 建立信箱使用者 `contact@falconinformation.com`，即可在 Zoho 網頁版收信。
-
-> 注意：DNS 與 Zoho 後台設定屬基礎建設層，無法由程式碼完成。若 `contact@` 尚未建立 / MX 未設好，通知信會收不到——此時請先用 `CONTACT_RECIPIENT` 指向可收信箱，把「寄信」與「收信」兩個問題切開排查。
->
-> 升級路徑：日後付 Zoho Mail Lite（約 $1/人/月）即可解鎖 SMTP，把 `SMTP_*` 改成 `contact@falconinformation.com` 的 Zoho 設定，達成全程公司網域寄收。
+公開聯絡信箱與表單預設收件人已統一為 `26416387.re@gmail.com`；寄件 SMTP 帳號維持原設定。若環境另設 `CONTACT_RECIPIENT`，表單通知仍依該覆寫值寄送。
 
 ## 個人履歷 PDF 產生器
 
@@ -898,3 +890,19 @@ Asset: premium 3D cutout illustration for a light corporate website section, lan
 - 47 張素材的生成原檔 ID 已記錄於上表，原始 PNG 位於 `/Users/eric/.codex/generated_images/01a10ef5-ff50-7e62-be46-16d666471397/`，不覆蓋或刪除原檔。僅本次 QA 快照、預覽、來源備份與試稿資料夾加入 Git 忽略，避免暫存截圖隨程式提交；本機預覽仍可使用。
 
 - 最終重跑通過：正式建置、內容／九語檢查、SEO、轉換及擴充視覺檢查；main 中的生成插畫與真實案例截圖均正常載入，含空白檔名的原案例截圖已恢復。48 頁原文與內鏈保留、三尺寸與九語無溢出，圖片 HTTP 503 仍完整呈現錯誤並保留輸入。
+
+### 首頁 Hero 構圖重做（2026-10-06）
+
+- 針對首屏層級不足重新排版：主標放大、搜尋副標降低層級，正文收窄；去背裝置以較大比例呈現，搭配單一淺鼠尾草展示區，移除原網格／漸層背景與通用封面版型。
+- 首屏採獨立構圖，主要 CTA 改為深色圓角按鈕與箭頭，案例 CTA 改為文字連結；三項原有合作原則收整為底部資訊列。
+- 沿用現有 Logo、字體、主圖與所有文字／連結；只更新 `HomeHero.tsx`、官網 Hero 範圍的 CSS 與本 README，不新增套件、素材、API 或資料庫操作。
+- 驗收通過：1440／768／390px、九語首頁與 48 頁原文／內鏈比對，47 張既有素材全部保留；圖片 HTTP 503 仍完整顯示錯誤並保留輸入。Hero 實際文字與按鈕最低對比 5.93:1，鍵盤焦點、聯絡錨點與案例 CTA 通過。
+
+- 首屏細修：中文主標控制為完整語意的兩行，拉開主標與搜尋副標的字級差距；拉丁語系依字長調整主標尺寸，首屏關閉自動連字斷行，避免英文 systems 被拆開。手機減少導覽下方留白，保留文字→圖片→合作原則的閱讀順序。
+- `pnpm lint:content`、TypeScript、`pnpm build`、本機 `check:seo`、`check:conversion` 與 `check:visuals` 通過；本機正式版本暖機後三次首頁 LCP 中位數 64 ms、CLS 0，僅供本機觀察。Hero 截圖及九語檢查紀錄保留於 `tmp/visual-refresh-20261006/hero-v2-*`；本機預覽 `http://127.0.0.1:3001`，未正式部署。
+
+### 聯絡信箱更新（2026-10-06）
+
+- 官網公開聯絡信箱改為 `26416387.re@gmail.com`。聯絡區、九語頁尾、法律頁、名片／vCard、Organization 結構化資料、llms.txt 與表單預設收件人共用 `siteConfig.email`，頁尾移除寫死的舊地址與不再使用的信箱翻譯項目。
+- SMTP 寄件設定與 `CONTACT_RECIPIENT` 覆寫規則沿用；九語移除不再使用的信箱翻譯鍵。本次不寄測試郵件、不操作資料庫、不正式部署，保留既有 Hero 修改。
+- 驗收通過：`pnpm lint:content`（31,005 筆翻譯）、TypeScript、`pnpm build`；正式本機版本九語聯絡區／頁尾的顯示與 mailto、Organization／llms.txt、法律頁與名片均為新地址。隔離 SMTP 驗證預設收件人與環境覆寫規則、vCard 新信箱，全程沒有寄出郵件。已重啟 `http://127.0.0.1:3001`，重新整理即可看到更新。

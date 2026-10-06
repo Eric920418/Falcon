@@ -3,6 +3,7 @@ import { getI18n } from '@/lib/i18n/server'
 import { languageUi } from '@/lib/i18n/language-ui'
 import Link from '@/lib/i18n/link'
 import { TrackedContactLink } from '@/components/TrackedContactLink'
+import { siteConfig } from '@/lib/seo/site-config'
 
 export function SitePageFooter() {
   const { t, locale } = getI18n()
@@ -57,7 +58,7 @@ export function SitePageFooter() {
               {t("聯絡")}</h3>
             <ul className="space-y-2 text-sm">
               <li><TrackedContactLink channel="phone" placement="footer" href="tel:+886958801559" className="text-[var(--site-muted)] hover:text-[var(--site-accent)]">{locale === 'zh-tw' ? '0958-801-559' : '+886 958 801 559'}</TrackedContactLink></li>
-              <li><TrackedContactLink channel="email" placement="footer" href="mailto:contact@falconinformation.com" className="text-[var(--site-muted)] hover:text-[var(--site-accent)]">{t("contact@falconinformation.com")}</TrackedContactLink></li>
+              <li><TrackedContactLink channel="email" placement="footer" href={`mailto:${siteConfig.email}`} className="text-[var(--site-muted)] hover:text-[var(--site-accent)]">{siteConfig.email}</TrackedContactLink></li>
               <li><TrackedContactLink channel="line" placement="footer" href="https://lin.ee/7IjIYw2" target="_blank" rel="noopener noreferrer" className="text-[var(--site-muted)] hover:text-[var(--site-accent)]">{t("LINE 官方帳號")}</TrackedContactLink></li>
             </ul>
           </div>

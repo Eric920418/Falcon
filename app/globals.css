@@ -578,3 +578,45 @@ html:not(:lang(zh-TW)) :is(h1, h2, h3, p, li, a, button) {
 .visual-hero { max-width: 72rem; margin-inline: auto; display: grid; gap: 2.5rem; align-items: center; }
 .visual-hero > :first-child { min-width: 0; }
 @media (min-width: 1024px) { .visual-hero { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 3rem; } }
+
+/* The home hero is a composed product stage, independent of page-cover grids. */
+.home-hero { position: relative; overflow: hidden; background: #fafbf7; }
+.home-hero-inner { width: min(100%, 1328px); margin-inline: auto; padding: 112px 24px 0; }
+.home-hero-composition { position: relative; display: grid; align-items: center; }
+.home-hero-copy { position: relative; z-index: 2; min-width: 0; }
+.home-hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; color: #3d6255; font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; }
+.home-hero-eyebrow > span { width: 7px; height: 7px; flex-shrink: 0; background: #3d6255; border-radius: 50%; }
+.falcon-site .home-hero-heading { margin: 0; font-family: var(--font-display); hyphens: none; }
+.home-hero-title { display: block; max-width: 7.6em; color: #213e35; font-size: clamp(38px, 5.4vw, 72px); font-weight: 700; line-height: 1.15; letter-spacing: -0.055em; }
+.home-hero-growth { display: block; margin-top: 20px; color: #426952; font-size: clamp(24px, 2.8vw, 38px); font-weight: 500; line-height: 1.35; letter-spacing: -0.035em; }
+.home-hero-description { max-width: 30rem; margin-top: 26px; color: #52665a; font-size: 16px; line-height: 1.85; }
+.home-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 28px; margin-top: 30px; }
+.home-hero-primary { display: inline-flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 60px; padding: 10px 10px 10px 24px; border-radius: 999px; background: #214d45; color: #fff; font-size: 15px; font-weight: 500; transition: background-color 180ms ease; }
+.home-hero-primary:hover { background: #173b34; }
+.home-hero-action-icon { display: grid; place-items: center; width: 38px; height: 38px; flex-shrink: 0; background: #fafbf7; color: #214d45; border-radius: 50%; }
+.home-hero-secondary { display: inline-flex; align-items: center; gap: 10px; padding-block: 10px; border-bottom: 1px solid #7d9784; color: #213e35; font-size: 15px; }
+.home-hero-secondary:hover { color: #426952; border-color: currentColor; }
+.home-hero-stage { position: relative; min-width: 0; height: 280px; margin-top: 18px; }
+.home-hero-field { position: absolute; width: 340px; height: 340px; right: -90px; top: -14px; border-radius: 50%; background: #e7eedf; }
+.home-hero-art { position: absolute; width: calc(100% + 48px); max-width: none; right: -24px; top: 22px; z-index: 1; }
+.home-hero-art:has([data-image-error]) { width: 100%; right: 0; }
+.home-hero-proof { position: relative; z-index: 2; display: grid; gap: 18px; padding: 26px 0 32px; border-top: 1px solid #ccd7c7; color: #4c6457; font-size: 13px; line-height: 1.7; }
+.home-hero-proof > div { display: flex; align-items: flex-start; gap: 10px; }
+.home-hero-proof svg { flex-shrink: 0; margin-top: 3px; color: #426952; }
+@media (min-width: 640px) {
+  .home-hero-inner { padding-top: 144px; }
+  .home-hero-stage { height: 440px; }
+  .home-hero-art { width: min(100%, 760px); right: 0; }
+  .home-hero-field { width: 520px; height: 520px; right: -110px; }
+  .home-hero-proof { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; }
+}
+@media (min-width: 1024px) {
+  .home-hero-inner { padding: 154px 48px 0; }
+  .home-hero-composition { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); min-height: 556px; }
+  .home-hero-stage { height: 500px; margin-top: 0; }
+  .home-hero-art { width: min(68vw, 840px); right: -150px; top: 36px; }
+  .home-hero-field { width: 720px; height: 720px; right: -220px; top: -138px; }
+  .home-hero-proof { margin-top: 34px; padding: 28px 0; }
+}
+
+html:is(:lang(en), :lang(es), :lang(fr), :lang(de), :lang(pt)) .home-hero-title { max-width: 8.8em; font-size: clamp(38px, 4.5vw, 62px); letter-spacing: -0.045em; }

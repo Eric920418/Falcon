@@ -19,7 +19,7 @@ export const cardProfile = {
 
   // 聯絡（個人 + 公司都放）
   personalEmail: resumeData.contact.email, // 26416387.re@gmail.com
-  companyEmail: siteConfig.email, // contact@falconinformation.com
+  companyEmail: siteConfig.email,
   phone: resumeData.contact.phone, // +886 958-801-559
   github: resumeData.contact.github, // https://github.com/Eric920418
   website: siteConfig.url, // https://www.falconinformation.com

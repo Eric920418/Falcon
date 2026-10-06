@@ -12,7 +12,7 @@ export const siteConfig = {
     '台灣網站開發', '台灣 SEO 顧問',
   ],
   telephone: '+886958801559',
-  email: 'contact@falconinformation.com',
+  email: '26416387.re@gmail.com',
   foundingDate: '2024',
   socialLinks: [
     'https://github.com/Eric920418',
