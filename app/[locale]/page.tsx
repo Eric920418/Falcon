@@ -28,7 +28,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const url = siteConfig.url
 
   return (
-    <div className="bg-stone-950 text-stone-100 overflow-x-hidden">
+    <div className="falcon-site bg-[var(--site-bg)] text-[var(--site-text)] overflow-x-hidden">
       <JsonLd
         data={createWebPageSchema({
           name: '台灣企業網站、AI 系統開發與 SEO／GEO 搜尋成長服務',

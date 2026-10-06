@@ -547,3 +547,34 @@ html:lang(zh-Hans) {
 html:not(:lang(zh-TW)) :is(h1, h2, h3, p, li, a, button) {
   overflow-wrap: anywhere;
 }
+
+/* Marketing pages only: tools retain their original visual system. */
+.falcon-site {
+  --site-bg: #f8faf8;
+  --site-card: #ffffff;
+  --site-soft: #edf4f0;
+  --site-tint: #dcebe5;
+  --site-text: #233d3d;
+  --site-muted: #526965;
+  --site-border: #ccdcd3;
+  --site-accent: #2c7169;
+  color: var(--site-text);
+  background: var(--site-bg);
+}
+.falcon-site h1 { hyphens: auto; }
+.falcon-site .falcon-card { background: var(--site-card); border-color: var(--site-border); }
+.falcon-site .falcon-card:hover { border-color: var(--site-accent); box-shadow: 0 12px 36px #294e4412; }
+.falcon-site .falcon-btn-primary { background: var(--site-accent); color: #fff; border-radius: 8px; }
+.falcon-site .falcon-btn-primary:hover { background: #225d56; box-shadow: 0 6px 20px #294e441c; }
+.falcon-site .falcon-btn-outline { color: var(--site-accent); border-color: var(--site-accent); border-width: 1px; border-radius: 8px; }
+.falcon-site .falcon-btn-outline:hover { background: var(--site-accent); color: #fff; }
+.falcon-site .text-falcon-gradient { background: linear-gradient(135deg, #235951, #3c7b75); background-clip: text; -webkit-background-clip: text; }
+.falcon-site .falcon-badge { color: #214f48; background: #eef7f2; border-color: #b8d2c5; }
+.falcon-site .industrial-grid { opacity: 0.12; }
+.falcon-site .diagonal-lines { opacity: 0.08; }
+.falcon-site :is(a, button, input, textarea, select, summary):focus-visible { outline: 2px solid var(--site-accent); outline-offset: 4px; }
+.visual-frame { position: relative; aspect-ratio: 16 / 9; }
+.visual-frame img { object-fit: contain; }
+.visual-hero { max-width: 72rem; margin-inline: auto; display: grid; gap: 2.5rem; align-items: center; }
+.visual-hero > :first-child { min-width: 0; }
+@media (min-width: 1024px) { .visual-hero { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 3rem; } }

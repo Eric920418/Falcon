@@ -1,7 +1,7 @@
 
 import { getI18n, initLocale } from '@/lib/i18n/server'
 import type { Metadata } from 'next'
-import Image from 'next/image'
+import { ImageWithFallback as Image } from '@/components/figma/ImageWithFallback'
 import Link from '@/lib/i18n/link'
 import { ArrowRight, ExternalLink } from 'lucide-react'
 import { notFound } from 'next/navigation'
@@ -67,19 +67,19 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   return (
     <PageShell>
       <JsonLd data={schemas} />
-      <article className="bg-stone-950">
+      <article className="bg-[var(--site-bg)] ">
         <header className="max-w-5xl mx-auto px-6 py-16">
-          <p className="text-xs uppercase tracking-[0.18em] text-amber-500 mb-4">{t("公開案例與可驗證證據")}</p>
-          <p className="text-amber-500 text-sm mb-3">{t(caseStudy.location)}{t("｜")}{t(caseStudy.period)}</p>
-          <h1 className="text-4xl md:text-6xl text-[#E0E5E8] mb-6">{t(caseStudy.title)}</h1>
-          <p className="text-xl text-[#A8B6BC] max-w-3xl leading-relaxed">{t(caseStudy.summary)}</p>
+          <p className="text-xs uppercase tracking-[0.18em] text-[var(--site-accent)] mb-4">{t("公開案例與可驗證證據")}</p>
+          <p className="text-[var(--site-accent)] text-sm mb-3">{t(caseStudy.location)}{t("｜")}{t(caseStudy.period)}</p>
+          <h1 className="text-4xl md:text-6xl text-[var(--site-text)] mb-6">{t(caseStudy.title)}</h1>
+          <p className="text-xl text-[var(--site-muted)] max-w-3xl leading-relaxed">{t(caseStudy.summary)}</p>
         </header>
 
         <div className="max-w-5xl mx-auto px-6 pb-20">
           {caseStudy.gallery ? (
             <div className="grid gap-4 md:grid-cols-2">
               {caseStudy.gallery.map((item, index) => (
-                <figure key={item.src} className={`rounded-xl overflow-hidden border border-[#344349] bg-[#1E2A2E] ${index === 0 ? 'md:translate-y-6' : ''}`}>
+                <figure key={item.src} className={`rounded-xl overflow-hidden border border-[var(--site-border)] bg-[var(--site-soft)] ${index === 0 ? 'md:translate-y-6' : ''}`}>
                   <div className="relative aspect-[16/10]">
                     <Image
                       src={item.src}
@@ -91,12 +91,12 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                       className="object-cover"
                     />
                   </div>
-                  <figcaption className="p-4 text-xs leading-relaxed text-[#A8B6BC]">{t(item.caption)}</figcaption>
+                  <figcaption className="p-4 text-xs leading-relaxed text-[var(--site-muted)]">{t(item.caption)}</figcaption>
                 </figure>
               ))}
             </div>
           ) : (
-            <div className="relative aspect-[16/9] rounded-xl overflow-hidden border border-[#344349] bg-[#1E2A2E]">
+            <div className="relative aspect-[16/9] rounded-xl overflow-hidden border border-[var(--site-border)] bg-[var(--site-soft)]">
               <Image
                 src={caseStudy.image}
                 alt={t("{0}案例介面", { 0: caseStudy.clientName })}
@@ -111,15 +111,15 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
           <div className="grid lg:grid-cols-[2fr_1fr] gap-12 mt-14">
             <div className="space-y-12">
               <section>
-                <h2 className="text-3xl text-[#E0E5E8] mb-4">{t("問題背景")}</h2>
-                <p className="text-[#A8B6BC] leading-relaxed">{t(caseStudy.challenge)}</p>
+                <h2 className="text-3xl text-[var(--site-text)] mb-4">{t("問題背景")}</h2>
+                <p className="text-[var(--site-muted)] leading-relaxed">{t(caseStudy.challenge)}</p>
               </section>
               <section>
-                <h2 className="text-3xl text-[#E0E5E8] mb-4">{t("實作方式")}</h2>
-                <ul className="space-y-3 text-[#A8B6BC]">
+                <h2 className="text-3xl text-[var(--site-text)] mb-4">{t("實作方式")}</h2>
+                <ul className="space-y-3 text-[var(--site-muted)]">
                   {caseStudy.approach.map((item) => (
                     <li key={item} className="flex gap-3">
-                      <span className="text-amber-500">{t("—")}</span>
+                      <span className="text-[var(--site-accent)]">{t("—")}</span>
                       <span>{t(item)}</span>
                     </li>
                   ))}
@@ -127,21 +127,21 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               </section>
               {caseStudy.responsibilities && (
                 <section>
-                  <h2 className="text-3xl text-[#E0E5E8] mb-4">{t("隼訊實際負責範圍")}</h2>
-                  <ul className="grid gap-3 text-[#A8B6BC] sm:grid-cols-2">
+                  <h2 className="text-3xl text-[var(--site-text)] mb-4">{t("隼訊實際負責範圍")}</h2>
+                  <ul className="grid gap-3 text-[var(--site-muted)] sm:grid-cols-2">
                     {caseStudy.responsibilities.map((item) => (
-                      <li key={item} className="border border-[#344349] bg-stone-900/40 p-4 text-sm leading-relaxed">{t(item)}</li>
+                      <li key={item} className="border border-[var(--site-border)] bg-[var(--site-card)]  p-4 text-sm leading-relaxed">{t(item)}</li>
                     ))}
                   </ul>
                 </section>
               )}
               {caseStudy.workflow && (
                 <section>
-                  <h2 className="text-3xl text-[#E0E5E8] mb-4">{t(caseStudy.workflowTitle ?? '實作資料流')}</h2>
+                  <h2 className="text-3xl text-[var(--site-text)] mb-4">{t(caseStudy.workflowTitle ?? '實作資料流')}</h2>
                   <ol className="space-y-3">
                     {caseStudy.workflow.map((item, index) => (
-                      <li key={item} className="grid grid-cols-[2.5rem_1fr] gap-3 border-b border-[#344349] pb-3 text-sm leading-relaxed text-[#A8B6BC]">
-                        <span className="font-mono text-amber-500">{t("0")}{index + 1}</span>
+                      <li key={item} className="grid grid-cols-[2.5rem_1fr] gap-3 border-b border-[var(--site-border)] pb-3 text-sm leading-relaxed text-[var(--site-muted)]">
+                        <span className="font-mono text-[var(--site-accent)]">{t("0")}{index + 1}</span>
                         <span>{t(item)}</span>
                       </li>
                     ))}
@@ -150,11 +150,11 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               )}
               {caseStudy.fallbacks && (
                 <section>
-                  <h2 className="text-3xl text-[#E0E5E8] mb-4">{t("限制、失敗降級與替代方式")}</h2>
-                  <ul className="space-y-3 text-[#A8B6BC]">
+                  <h2 className="text-3xl text-[var(--site-text)] mb-4">{t("限制、失敗降級與替代方式")}</h2>
+                  <ul className="space-y-3 text-[var(--site-muted)]">
                     {caseStudy.fallbacks.map((item) => (
                       <li key={item} className="flex gap-3 text-sm leading-relaxed">
-                        <span className="text-amber-500">{t("—")}</span>
+                        <span className="text-[var(--site-accent)]">{t("—")}</span>
                         <span>{t(item)}</span>
                       </li>
                     ))}
@@ -163,11 +163,11 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               )}
               {caseStudy.verification && (
                 <section>
-                  <h2 className="text-3xl text-[#E0E5E8] mb-4">{t("證據如何核對")}</h2>
-                  <ul className="space-y-3 text-[#A8B6BC]">
+                  <h2 className="text-3xl text-[var(--site-text)] mb-4">{t("證據如何核對")}</h2>
+                  <ul className="space-y-3 text-[var(--site-muted)]">
                     {caseStudy.verification.map((item) => (
                       <li key={item} className="flex gap-3 text-sm leading-relaxed">
-                        <span className="text-emerald-400">{t("✓")}</span>
+                        <span className="text-emerald-700">{t("✓")}</span>
                         <span>{t(item)}</span>
                       </li>
                     ))}
@@ -175,19 +175,19 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 </section>
               )}
               <section>
-                <h2 className="text-3xl text-[#E0E5E8] mb-5">{t("可公開的量測與能力")}</h2>
+                <h2 className="text-3xl text-[var(--site-text)] mb-5">{t("可公開的量測與能力")}</h2>
                 <div className="grid md:grid-cols-3 gap-4">
                   {caseStudy.metrics.map((metric) => (
-                    <div key={metric.label} className="border border-[#344349] rounded-xl p-5 bg-stone-900/40">
-                      <p className="text-sm text-[#7A8A91]">{t(metric.label)}</p>
-                      <p className="text-2xl text-amber-500 my-2">{t(metric.value)}</p>
-                      <p className="text-xs text-[#A8B6BC] leading-relaxed">{t(metric.context)}</p>
+                    <div key={metric.label} className="border border-[var(--site-border)] rounded-xl p-5 bg-[var(--site-card)] ">
+                      <p className="text-sm text-[var(--site-muted)]">{t(metric.label)}</p>
+                      <p className="text-2xl text-[var(--site-accent)] my-2">{t(metric.value)}</p>
+                      <p className="text-xs text-[var(--site-muted)] leading-relaxed">{t(metric.context)}</p>
                       {metric.sourceUrl && (
                         <a
                           href={metric.sourceUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="mt-3 inline-flex items-center gap-1 text-xs text-amber-500 hover:underline"
+                          className="mt-3 inline-flex items-center gap-1 text-xs text-[var(--site-accent)] hover:underline"
                         >
                           {t("核對公開來源")}<ExternalLink size={12} />
                         </a>
@@ -196,21 +196,21 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   ))}
                 </div>
               </section>
-              <section className="border border-amber-700/40 bg-amber-950/10 rounded-xl p-6">
-                <h2 className="text-xl text-[#E0E5E8] mb-3">{t("揭露與限制")}</h2>
-                <p className="text-[#A8B6BC] leading-relaxed">{t(caseStudy.disclosure)}</p>
+              <section className="border border-[var(--site-accent)]/40 bg-amber-950/10 rounded-xl p-6">
+                <h2 className="text-xl text-[var(--site-text)] mb-3">{t("揭露與限制")}</h2>
+                <p className="text-[var(--site-muted)] leading-relaxed">{t(caseStudy.disclosure)}</p>
               </section>
             </div>
 
             <aside className="space-y-8">
               <div>
-                <p className="mb-5 inline-flex border border-emerald-800/50 bg-emerald-950/20 px-3 py-1 text-xs text-emerald-300">
+                <p className="mb-5 inline-flex border border-emerald-800/50 bg-emerald-950/20 px-3 py-1 text-xs text-emerald-700">
                   {t("證據狀態：")}{t(caseStudy.evidenceStatus === 'public-project' ? '公開專案' : caseStudy.evidenceStatus === 'client-approved' ? '客戶同意公開' : '匿名技術案例')}
                 </p>
-                <h2 className="text-lg text-[#E0E5E8] mb-3">{t("技術範圍")}</h2>
+                <h2 className="text-lg text-[var(--site-text)] mb-3">{t("技術範圍")}</h2>
                 <div className="flex flex-wrap gap-2">
                   {caseStudy.technologies.map((tech) => (
-                    <span key={tech} className="px-3 py-1 rounded-full bg-[#1E2A2E] text-xs text-[#A8B6BC]">
+                    <span key={tech} className="px-3 py-1 rounded-full bg-[var(--site-soft)] text-xs text-[var(--site-muted)]">
                       {t(tech)}
                     </span>
                   ))}
@@ -227,7 +227,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 </a>
               )}
               {caseStudy.slug === 'gogocha-ai-dispatch' && (
-                <ServiceCtaLink href="/services/ai-voice-agent" action="view_service" placement="case_gogocha_service" className="inline-flex items-center gap-2 text-amber-500 hover:underline">
+                <ServiceCtaLink href="/services/ai-voice-agent" action="view_service" placement="case_gogocha_service" className="inline-flex items-center gap-2 text-[var(--site-accent)] hover:underline">
                   {t("了解企業 AI 電話方案")}<ArrowRight size={16} />
                 </ServiceCtaLink>
               )}

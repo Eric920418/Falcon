@@ -123,19 +123,19 @@ pnpm start
 
 ## 設計美學
 
-### 東方俐落 × 暖色工業風格
+### 淺色官網與主題去背插畫
 
-本網站採用獨特的「東方俐落」美學方向，區別於常見的 AI 生成風格：
+主要官網以易讀的淺色圖文版面呈現；履歷、名片與法律頁保留各自視覺系統：
 
 **配色系統**
-- **主色**：琥珀色 (#D97706) - 暖色調取代冷藍紫
-- **輔色**：銅色 (#B45309)、青銅色 (#92400E)
-- **背景**：深石色系 (stone-950, stone-900)
-- **文字**：奶油色 (#FAFAF9) + 石灰色層次
+- **主色**：深青綠 (#2C7169)，搭配淡藍青與薄荷色細節
+- **背景**：白色 (#FFFFFF)、霧灰 (#F8FAF8)、柔和綠灰 (#EDF4F0)
+- **文字**：深色 (#233D3D) 與次要文字 (#526965)
+- 色彩變數僅套用於 `.falcon-site` 範圍。
 
 **字體選擇**
-- **標題**：Noto Serif TC（思源宋體）- 東方書法韻味
-- **內文**：Noto Sans TC（思源黑體）- 現代簡潔
+- **標題與內文**：沿用 Noto Sans TC（思源黑體）
+- **外語**：沿用各語言系統字體與原有字形規則
 
 **設計元素**
 - 品牌裝飾線 - 書法筆觸感的漸層線條
@@ -148,7 +148,7 @@ pnpm start
 - `.falcon-card` - 克制的懸浮陰影與邊框變色
 - `.falcon-btn-primary` - 俐落的按鈕設計
 - `.brand-line` - 品牌裝飾線
-- `.text-falcon-gradient` - 暖色調漸層文字
+- `.text-falcon-gradient` - 深青綠漸層文字
 
 ## 功能特色
 
@@ -157,7 +157,7 @@ pnpm start
 - 流暢的頁面過渡動畫
 - **Hero 背景** - 工業網格 + 暖色光暈 + 大型漢字裝飾
 - **信任徽章** - 首屏展示「永久售後服務」與「快速交件保證」
-- **作品案例展示** - 完整案例頁收錄 34 項作品，首頁精選三項可驗證案例
+- **作品案例展示** - 完整案例頁收錄 33 項作品，首頁精選三項可驗證案例
 - **決策型首頁內容** - 兩個獲客 Hub、企業 AI 電話旗艦區、實際交付、四步合作流程、適配條件、公開起價、實名負責人與精選實作文章
 
 ## 作品案例
@@ -190,19 +190,11 @@ Portfolio 組件展示公司的專案作品，包含：
 
 每個專案卡片包含：專案描述、核心功能、技術亮點
 
-## Hero 背景實現
+## 首頁圖文版面
 
-主視覺背景結合圖片與 CSS 效果：
+首頁主視覺採桌面左右圖文、手機文字先行，使用 `home-hero-cutout.webp` 透明物件直接融合 section 底色。原全幅背景圖片保留在 public，首頁不再引用。交付、合作路徑、AI 電話與文章區引用相關素材，真實案例繼續使用原始截圖。
 
-- **背景圖片** - 3D 立體風格主視覺（40% 透明度）
-- **工業感網格** - 使用 `.industrial-grid` CSS class
-- **斜線紋理** - 使用 `.diagonal-lines` CSS class
-- **暖色光暈** - 琥珀色/橘色柔和光暈
-- **大型漢字裝飾** - 右側「隼」字作為品牌標識
-
-相關檔案：
-- `app/globals.css` - 品牌視覺系統和 CSS 組件
-- `src/components/Hero.tsx` - HTML 結構和 Motion 動畫
+相關檔案：`app/globals.css`、`src/components/HomeHero.tsx`、`src/components/PageVisual.tsx`、`src/lib/content/visual-assets.ts`。
 
 ## SEO／GEO 配置
 
@@ -585,6 +577,24 @@ SMTP_PASSWORD=你的Gmail應用程式密碼
 
 路由 `/resume` 是一個**隱藏的個人履歷 PDF 產生器**（不在主導覽、不進 sitemap、`robots: noindex/nofollow`）。開啟頁面後選擇語言（繁中 / 英文），按下載即可取得對應語言的 A4 單頁 PDF。
 
+另備有本機 `output/pdf/蔡翊廉_個人履歷.pdf`，由 `pnpm exec tsx scripts/generate-personal-resume.tsx` 產生。三頁 A4：首頁整合個人資料、簡介、工作經驗、技術與語言能力、學歷；第二、三頁依本人選擇只保留四項精選作品，依序為 GoGoCha AI 通話、TellCraft、翻譯蒟蒻 CLASP、診所預約。每頁兩項，每項包含口語用途介紹、四段自然敘述、技術清單及圖片。依本人最新回饋移除「問題、流程、選擇、例外、驗證」制式標題，將需求、技術理由、失敗處理及測試方法融合為完整句子，以實際操作解釋專業名詞，包括派車通知、同時預約及備份還原。作品頁維持原字級與清楚段落間距，避免自動分頁將同頁兩案拆開。縮圖以 Sharp 暫時壓縮，完成後刪除暫存。
+
+舊履歷來源為本人提供的 `~/Downloads/蔡翊廉.pdf`。保留的資料融合到首頁對應位置：英文姓名、性別與兵役放在姓名區，通訊地址、駕照與交通工具放在聯絡資料區，個人特質放入簡介，英文聽說讀寫程度加入能力區，基隆商工電機科直接加入原學歷列表。依本人 PDF 批註，通訊地址改為本人提供的完整地址（僅存於私人產生腳本與 PDF），基隆商工不顯示就學期間。依本人最新指示刪除獨立補充頁、早期穿搭與串燒作品、Python 早期學習／APCS／進修段落、額外實務與團隊協作段落、全部求職條件。首頁既有簡介、工作經驗、精通與常用技術、最新大學與研究所學歷，以及四項作品與開發月份保留原資料。新版獨立開發經歷本身表達工作狀態與 2022 年至今年資，不另外重複欄位；舊版過期的任職與學歷狀態不覆蓋新版。舊 PDF 保持原檔。
+
+本人另提供 `~/Downloads/IMG_0770.JPG` 作為大頭照，原檔複製至私人輸出目錄 `output/pdf/resume-photo.jpg`。首頁右上角依原比例顯示完整照片。首頁用原有字級調整段落間距，將保留欄位融合為一頁，整份維持三頁；照片不修改、不上傳網站。
+
+四項作品標題下補上「開發起始」：GoGoCha 約 2025/10、TellCraft 約 2026/01、CLASP 約 2026/05、診所預約約 2026/01。同列「製作時間(估計)」依本人更正，將先前粗估區間各加三個月：GoGoCha 原 4-6 個月改為約 7-9 個月、TellCraft 原 3-4 個月改為約 6-7 個月、CLASP 原 2-3 個月改為約 5-6 個月、診所原 1-2 個月改為約 4-5 個月；不是四案統一寫三個月，也非已核實工時。CLASP 的時長與既有起始月份至目前的日曆跨度有落差，已向本人指出，未自行變更起始月份。日期標籤使用半形冒號，避免目前 PDF 字型缺少全形冒號造成漏字。起始月份依本機 Git 初始提交估計；GoGoCha 主專案首筆提交為 2025/10/25，TellCraft 為 2026/01/26，CLASP 為 2026/05/26，診所初始提交為 2026/01/11、業務程式加入為 2026/01/12。GoGoCha 的 Realtime bridge 於 2026/06/24 補進版控，但該次提交說明為記錄既有線上程式，不能當成 AI 模組起始日。履歷僅列整體專案的近似起始月份，並非精確開工、全部功能完成或上線日期；僅寫入本機履歷產生器與 PDF。
+
+履歷沿用可正常顯示的中文句號、頓號及半形符號，不使用目前字型無法正常顯示的全形逗號。輸出後檢查保留欄位、指定刪除段落、精選作品資料與圖片，再渲染確認文字不重疊或溢出。
+
+四項敘述已對照本機原始碼，來源分別為 `~/Desktop/HualienTaxiServer`、`~/Desktop/tellcraft`、`~/Desktop/Translation_gummy` 和 `~/Desktop/project/clinic-booking`，搭配相關原生 App 專案。GoGoCha 說明 Asterisk／AudioSocket 音訊橋接、OpenAI Realtime 插話處理、驗址／建單／查單工具、真人轉接、錄音備援及多因素派單。TellCraft 說明 LangGraph StateGraph 的 Agent 子流程、PostgreSQL checkpoint、BullMQ 長任務、BDD 驗證、Neon 資料庫及現行 Vercel Preview。CLASP 說明原生雙平台、手動跨域轉譯、pgvector／加權 RRF、GPT-5.4 Nano／ICAP 支援與六項協作工具。診所系統說明 LINE LIFF 流程、SQL 列鎖／Serializable、診療時長快照、同日預約唯一索引、Realtime 同步、Playwright 案例及加密備份還原驗證；不將測試案例存在等同於本輪已執行全部測試。
+
+專案內容另核對 GoGoCha 的 `test-decimator.mjs`、地址／服務區域回歸腳本與 `test-claim-race.ts`；TellCraft 的 `graph/main-graph.ts`、`graph/checkpointer.ts`、`preview-auto-fix.ts` 與預覽驗證測試；CLASP 的 `ai/retrieval.ts`、轉譯政策、轉譯 API 與 `qa-rag-retrieval.mjs`；診所的預約交易、Playwright 案例、備份加密及隔離還原驗證腳本。口語改寫沿用已核對的實作與測試範圍，不增加未核實的成效數字或測試通過結果。段落間距為 6pt，中文與英文內部名稱以空格分隔，避免括號接在中文後造成不自然斷字。這次僅編輯私人履歷內容與敘述方式。
+
+首頁頭銜為「數位產品創業者」，獨立開發經歷為 2022 年至今。受僱經歷依本人確認列為嘉生活有限公司 2024/01 至 2026/06、積大企業有限公司 2023/02 至 2023/12。簡介保留本人舊履歷的語氣並補充 Vue／API、框架重整、資料維護及全端開發實務。技術先列「精通」「常用」，再列 AI、行動整合、其他後端、資料自動化與部署。學歷為國立臺北教育大學課程與教學傳播科技研究所在學、元智大學資訊傳播學系畢業；未提供年份不代填。生日為本人確認的 2003/04/18，年齡依台北日期計算，不顯示計算日期。聯絡列不顯示地點。
+
+此次作品精簡只更新本機 PDF，不變更公開網站內容。產生腳本及 PDF 已加入 `.gitignore`；網站履歷及作品集不讀取本機 PDF，生日也不寫入共用履歷資料。先前移除的履歷限定展示案維持非公開，網站現有 33 項作品。「精選作品」使用可正常顯示的標點與短段落；全文件統一在中文句讀處加入空白換行點，包含字型分段末端的標點，避免長句溢出、被圖片遮擋或出現多餘連字號，英文名稱不在行尾斷字。新內容若有超過欄寬的單句，需先拆句。
+
 ### 使用方式
 
 1. `pnpm dev` 後開 http://localhost:3000/resume
@@ -762,3 +772,129 @@ pnpm check:conversion http://127.0.0.1:3007
 - `git diff --check`：通過。瀏覽器截圖保留於 `/var/folders/_2/0cgnyjy96gq7clyqpvzrx0vm0000gn/T/falcon-conversion-svnJPn`；這是本次本機暫存產物，重跑會使用新目錄。
 
 本次沒有新增套件、修改資料庫、正式部署或調整 GA4 帳號設定。正式環境的搜尋收錄與實際詢價成效仍需上線後觀察。
+
+## 全站淺色視覺與專屬圖片（2026-10-06）
+
+- 已實作：保留原有文字、價格、內鏈與案例證據，官網主要頁面改為白／霧灰底、深色文字與淡藍青／薄荷色 3D 插畫。
+- 47 張專屬素材：首頁 4、服務 6、關於 1、價格 5、文章 22、城市 6、比較 3；九語共用無文字插畫。案例沿用真實截圖。
+- 素材使用內建 imagegen，存入 `public/visuals/`，以既有 sharp 壓縮；生成提示詞、清單與驗收紀錄均記錄於本 README。
+- 修改前來源已保存於本機 `tmp/visual-refresh-20261006/before/`，供內容保留驗收；既有工作區修改保留，履歷、名片、法律頁不改版，不操作資料庫、不部署。
+
+### 圖片生成提示詞與清單
+
+依 2026-10-06 補充要求改為真正透明背景的去背圖，直接融入 section；只保留與文字主題相關的物件，不使用風景、盆栽或無關裝飾。每張完整提示詞由共用風格加上以下主題組成。
+
+```text
+Asset: premium 3D cutout illustration for a light corporate website section, landscape 16:9 with a truly transparent alpha background. Only the explicitly listed topic-related objects, arranged as a single clear, compact composition with depth, entirely inside the central 85% for safe placement. Pearl-white matte ceramic, frosted aqua glass and sea-glass mint, restrained brushed metal, soft studio lighting and subtle contact shadows only beneath the objects. No room, no backdrop, no floor, no tabletop, no decorative plinth, no plants, no scenery, no landscape photographs, no random props, no floating decorative blobs, no people, no mascot, no logo, no watermark. No text, no letters, no numerals; screens contain only blank geometric interface shapes and meaningful simple pictograms. Remove all environmental background from the reference and rebuild only these topic-relevant objects. This will be placed directly beside real HTML text, not inside a framed image card.
+```
+
+| 路徑 | 素材 | 主題／替代文字依據 | 主題提示詞  生成原檔 |
+|---|---|---|---|---|
+| / | `home-hero-cutout.webp` | 台灣企業網站與 AI 系統開發 | An open laptop displaying modular website layout blocks, a matching mobile screen, and a small automation flow of three connected task tiles; a magnifying lens inspects one website document. Focus on website building, AI workflow and searchable content. Three-quarter angled composition.  `exec-87cab92f-85fc-407e-92ab-c2ff8113d035.png` |
+| /#build | `home-build-cutout.webp` | 網站與 AI 開發 | A laptop and mobile screen with matching blank layout blocks connect to a compact database stack and a manual approval switch. Show maintainable website and business-system development. Low oblique composition.  `exec-0ac1b21b-d9ce-49d0-b928-0a8fdcd9d8bf.png` |
+| /#grow | `home-grow-cutout.webp` | SEO／GEO 搜尋成長 | A magnifying lens examines connected website document cards; one document links to a short answer panel and a final inquiry envelope. Show content discovery leading to a business inquiry, no growth statistics.  `exec-00027a9e-08fd-44df-8c3c-b75d7308b158.png` |
+| /#ai-voice | `home-ai-voice-cutout.webp` | 企業 AI 語音客服 | A business telephone handset with a speech waveform connects to an appointment-calendar tile, task inbox and a manual handoff headset. Show a purposeful telephone service flow.  `exec-d7f5ce79-a336-4c94-a1df-36a7a893c6be.png` |
+| /services | `services-index-cutout.webp` | 企業網站、AI 開發與搜尋成長服務 | Five connected service objects, no shelves: responsive browser and mobile pair, automation cog, business telephone handset, indexing lens, source-linked answer card. Balanced arc, each service clearly identifiable.  `exec-da31ea82-dd04-4721-8312-c29c38f6bd85.png` |
+| /about | `about-cutout.webp` | 關於隼訊與負責人蔡翊廉 | Four connected software-delivery stages: blank requirements diagram, laptop prototype, verification checklist with check pictograms and a handover folder containing a key and code-bracket pictogram. Show discovery, implementation, acceptance and ownership transfer. No physical consumer product, calipers or bottle.  `exec-7c3717d3-aecd-41dc-87f2-98f119385080.png` |
+| /pricing | `pricing-index-cutout.webp` | 透明定價 | A blank estimate sheet, balanced scale and three differently sized project-scope modules containing website, automation and search pictograms. Show scope determining budgets. No currency symbols, numbers or calculator.  `exec-a9e2b6e6-e573-4cb5-bb0f-b6a431f1af81.png` |
+| /blog | `blog-index-cutout.webp` | 部落格 | An open reference book connects to three topic cards: responsive website, search lens, and telephone waveform. Show practical knowledge for business website and AI decisions. No generic reading-desk props.  `exec-74e459c0-67fe-4f59-b29a-15b71ead7215.png` |
+| /services/web-development | `services-web-development-cutout.webp` | 網站建置與軟體開發 | Desktop display, tablet and mobile screen at staggered angles with matching blank website layout components; three fitted reusable component tiles. Show responsive website development.  `exec-6df274a1-57ab-41be-9d76-589d26ec8918.png` |
+| /services/ai-tools | `services-ai-tools-cutout.webp` | AI 工具開發 | Incoming document cards enter a compact automation module and emerge into an organized task tray; a side route leads to a manual approval switch. Show document processing and safe workflow automation.  `exec-f5b1d0e3-3801-49c4-a8e8-fdd0c4618c4d.png` |
+| /services/ai-voice-agent | `services-ai-voice-agent-cutout.webp` | 企業 AI 語音客服與電話自動化系統 | A telephone handset and speech waveform connect to appointment, customer-record and work-order cards; a clear fallback branch reaches a human-support headset.  `exec-c5a9a8f0-adeb-44ef-83b8-d19c91e0c4a4.png` |
+| /services/seo | `services-seo-cutout.webp` | SEO 搜尋引擎優化 | A magnifying lens inspects a small group of connected website documents; an indexing path and maintenance tool beneath the document foundation show crawlability and technical SEO. No robot or vehicle.  `exec-19835f24-eec0-4093-ac29-8f09a33ce09e.png` |
+| /services/geo | `services-geo-cutout.webp` | GEO AI 搜尋優化 | A concise answer panel connects to three original source documents through clear citation threads; a lens inspects one source-to-answer connection.  `exec-edb6a5a9-ee00-482d-9636-9a6be1851c95.png` |
+| /pricing/web-development | `pricing-web-development-cutout.webp` | 網站與系統開發費用 | A modular website prototype, CMS drawer, hosting block and maintenance wrench arranged around a blank project estimate folder. Show the concrete components that change a development quote.  `exec-06b2d870-4848-4fb4-b1f2-d57a715d0463.png` |
+| /pricing/ai-development | `pricing-ai-development-cutout.webp` | AI 工具開發費用 | A modular automation processor, connector pieces, knowledge-document stack and manual approval lever beside a blank estimate sheet. Distinguish integration and acceptance effort.  `exec-a73d237c-7070-45fc-954a-74e711e3b19e.png` |
+| /pricing/seo | `pricing-seo-cutout.webp` | SEO 搜尋成長費用 | A recurring work tray holds an indexing lens, repair wrench, content document and blank report panel; four unmarked calendar tiles communicate ongoing monthly work.  `exec-c78bfb06-f621-4446-b871-29204b355a5d.png` |
+| /pricing/geo | `pricing-geo-cutout.webp` | SEO／GEO 搜尋成長費用 | A balanced scale weighs linked source-document work against answer-observation panels, with a blank budget sheet. Show evidence and measurement effort, no invented performance.  `exec-96dd3e33-544a-4af8-bab1-95dc9e2f7fb2.png` |
+| /blog/ai-voice-customer-service-guide | `blog-ai-voice-customer-service-guide-cutout.webp` | AI 語音客服是什麼？企業導入架構與適用情境 | Five connected physical modules: telephone handset, speech waveform, dialogue cards, decision junction and enterprise task tray. One explicit branch ends at a human-support headset.  `exec-9b3c00ac-c9c5-44b2-9da6-d05f8c7c9899.png` |
+| /blog/ai-voice-customer-service-cost | `blog-ai-voice-customer-service-cost-cutout.webp` | AI 語音客服費用怎麼算？ | A telephone handset next to a balanced scale weighing infrastructure modules and usage tokens, with a blank budget folder. No calculator, prices or numbers.  `exec-752ed5da-374d-4add-b1a4-5789239710eb.png` |
+| /blog/ai-voice-vs-ivr-human-agent | `blog-ai-voice-vs-ivr-human-agent-cutout.webp` | AI 語音客服、傳統 IVR 與真人客服比較 | Three equal connected options: AI waveform with task connector, an IVR telephone with entirely blank tactile keys and branching menu rails, and a human-agent headset. No digits on any telephone keys.  `exec-7eadb5c5-1fb9-4271-bfc4-3f7554161713.png` |
+| /blog/ai-phone-pbx-crm-integration | `blog-ai-phone-pbx-crm-integration-cutout.webp` | AI 電話如何串接 PBX、CRM、工單與派單系統？ | A small business telephone switchboard with blank keys connects by tidy cables to customer-record drawers, a work-order inbox and a dispatch-route card with abstract pins. A spare fallback connector is visible.  `exec-b65e7240-2657-4f37-8d31-03033f7a9392.png` |
+| /blog/ai-voice-agent-poc-acceptance-checklist | `blog-ai-voice-agent-poc-acceptance-checklist-cutout.webp` | AI 語音客服 POC 怎麼驗收？測試情境、指標與上線門檻 | A telephone handset connects to a voice waveform and a verification board with raised checkpoints; mint checks mark passed scenarios, and one open exception path remains. A lens inspects the waveform-to-test junction.  `exec-ee8136f5-b0af-4164-932b-18e5811c3aea.png` |
+| /blog/ai-voice-latency-barge-in-turn-taking | `blog-ai-voice-latency-barge-in-turn-taking-cutout.webp` | AI 語音客服延遲與打斷怎麼測？VAD、Barge-in 與輪替設計 | Two speech waveforms approach a turn-taking gate, with a small interruption branch and an unmarked mechanical timer, beside a telephone handset. Show latency and interruption testing.  `exec-6898d866-6f6c-4a77-96ec-8cda29a6da35.png` |
+| /blog/ai-call-recording-privacy-security | `blog-ai-call-recording-privacy-security-cutout.webp` | AI 電話錄音與個資怎麼處理？告知、保存、權限與稽核清單 | Audio-waveform record cards are protected inside a locked archive drawer; three role-access keys and a blank audit ledger accompany it. One expired recording card moves toward a deletion chute.  `exec-7fefea98-fa14-4202-bfca-4e5b6f2f1575.png` |
+| /blog/ai-voice-human-handoff-escalation | `blog-ai-voice-human-handoff-escalation-cutout.webp` | AI 語音客服怎麼轉真人？觸發條件、上下文交接與失敗降級 | A telephone waveform path reaches an exception gate, then curves toward a support headset while carrying context-document cards. A separate fallback branch leads to a task inbox.  `exec-02dd7fda-d460-4746-b1a7-9e9dc8de4b41.png` |
+| /blog/geo-complete-guide-2026 | `blog-geo-complete-guide-2026-cutout.webp` | GEO 生成式引擎優化指南 | An open reference book supports a short answer panel linked to three source documents, with a magnifying lens inspecting citations. No scenic photos in any document.  `exec-9750d39d-fead-418e-8c74-2ef28e6cc387.png` |
+| /blog/schema-org-tutorial | `blog-schema-org-tutorial-cutout.webp` | Schema.org 結構化資料教學｜JSON-LD、驗證與常見錯誤 | Nested translucent data-document frames fit neatly into a web-page card; aligned key-value slots and a validation lens with check pictogram communicate structured data. No actual code text.  `exec-f8df218b-6ee7-4700-bb94-7dc35e13d6cd.png` |
+| /blog/perplexity-aeo-overview | `blog-perplexity-aeo-overview-cutout.webp` | Perplexity 引用邏輯與 AEO 實作 | A frosted answer panel is linked to four distinct source cards by citation threads; a large lens clearly selects one cited source. Asymmetric arrangement, no brand marks.  `exec-5f1780f1-4168-4c95-bb88-fca22649c379.png` |
+| /blog/google-ai-overview-basics | `blog-google-ai-overview-basics-cutout.webp` | Google AI Overview 與 SEO 的關係 | A browser-shaped frame shows a short answer card above three ordinary search-result cards; visible links connect both to the same original source documents.  `exec-3104c6bd-df3a-43aa-80b6-3e4a8cd030ee.png` |
+| /blog/website-pricing-2026 | `blog-website-pricing-2026-cutout.webp` | 2026 台灣網站建置費用｜行情區間、隱藏成本與報價比較 | A website prototype beside a blank estimate folder; separate hosting, content and maintenance modules reveal project-cost components. No currency symbols or decorative tools unrelated to maintenance.  `exec-534437e5-6be8-427a-8c08-fff7979dd4e3.png` |
+| /blog/common-seo-mistakes | `blog-common-seo-mistakes-cutout.webp` | 常見技術 SEO 問題盤點 | A website document has a broken indexing connector, two duplicated page cards and an unmarked slow-loading timer; a repair wrench and lens identify these concrete technical faults.  `exec-1c113fdb-79d9-4cbc-9827-99e782102a97.png` |
+| /blog/ai-customer-service-cost | `blog-ai-customer-service-cost-cutout.webp` | AI 客服自建 vs SaaS 成本比較 | Two balanced customer-service systems: custom modular processing blocks and a compact cloud-subscription module, both connected to the same support headset and blank budget ledger.  `exec-a1977732-f5f5-4ea8-bf3a-8aa693a5d6b0.png` |
+| /blog/how-we-define-good-seo-content | `blog-how-we-define-good-seo-content-cutout.webp` | SEO 內容品質怎麼判斷？E-E-A-T、證據與驗收標準 | A reference document with source tabs is checked by a lens and validation stamp; a blank author-identity card and cited evidence stack show accountability and evidence.  `exec-67ba2947-ca1b-4908-bd14-2c0e3e0e4a63.png` |
+| /blog/llms-txt-implementation-guide | `blog-llms-txt-implementation-guide-cutout.webp` | llms.txt 是什麼？格式、實作與效果評估 | One lightweight plain-text index card sits beside a full website-document library and a crawler-access gate. Its thin connecting path clearly shows a supplementary index, not a magic ranking tool.  `exec-4c66b0a6-e774-4ab5-bab7-287826a289a7.png` |
+| /blog/chatgpt-search-citation-observations | `blog-chatgpt-search-citation-observations-cutout.webp` | ChatGPT 搜尋的引用來源：觀察方法與限制 | A short AI answer card connects to two cited website documents; an observation lens and dated but completely unmarked sample tiles show citation tracking rather than guaranteed inclusion.  `exec-3807c5b4-b517-4f8f-b3a6-4d513e0649a2.png` |
+| /blog/geo-measurement-guide | `blog-geo-measurement-guide-cutout.webp` | GEO 成效怎麼衡量？Google AI、Bing AI 與 GA4 量測實作 | A measurement clipboard compares repeated answer-observation cards, source-citation markers and an inquiry envelope; a small unmarked sampling timer communicates repeatable observation. No rising charts or invented statistics.  `exec-e7406b48-f0d8-4090-ac58-eedd230428a1.png` |
+| /blog/ai-crawler-robots-guide | `blog-ai-crawler-robots-guide-cutout.webp` | AI 爬蟲清單與 robots.txt 決策 | A website document library with two access gates, one open and one closed; small crawler-path rails and a shield show permission boundaries. No actual robot or vehicle.  `exec-245b1367-7d06-4d42-a307-01acc44f1e92.png` |
+| /blog/seo-vendor-evaluation-guide | `blog-seo-vendor-evaluation-guide-cutout.webp` | SEO 公司怎麼選？合約、報表與驗收檢查清單 | Three blank vendor-proposal folders are evaluated using an evidence lens, ownership key and acceptance checklist. Equal scale, no brand logos or rankings.  `exec-f9d33f21-da4b-4bec-b27b-510ba4c8f8a7.png` |
+| /local/taoyuan-seo | `local-taoyuan-seo-cutout.webp` | 桃園 SEO 公司 | A small abstract industrial-business storefront cluster sits beside an indexing lens and linked business webpage cards. Service dominates the composition; city reference is only a compact airport-canopy silhouette, not a scenic city image.  `exec-e50408ff-b335-45ec-9ab3-9879c77a8b12.png` |
+| /local/taoyuan-web-design | `local-taoyuan-web-design-cutout.webp` | 桃園網頁設計 | A responsive desktop and mobile website pair connect to a small local manufacturer storefront and product-catalog cards. A subtle compact airport-canopy silhouette suggests Taoyuan business context.  `exec-19b2fcfc-4fb8-4da3-aef5-4075c751d01f.png` |
+| /local/taipei-digital-marketing | `local-taipei-digital-marketing-cutout.webp` | 台北數位行銷 | A website card, search-content documents and inquiry envelope connect as a marketing flow beside a small abstract urban shop cluster with one slender tower silhouette. Marketing service is the main subject.  `exec-c8b2eaeb-17cd-4efd-93ab-4875180d6495.png` |
+| /local/taipei-seo | `local-taipei-seo-cutout.webp` | 台北 SEO 公司 | An indexing lens inspects connected local-business website documents beside a compact abstract urban tower cluster. Focus on content and crawlability, no geographic map or office marker.  `exec-3e66cefb-2805-4282-86e2-dced1c8bda7e.png` |
+| /local/xinbei-seo | `local-xinbei-seo-cutout.webp` | 新北 SEO 公司 | A search lens and linked business webpage cards connect two small storefronts across a compact bridge-shaped connector. Local business search is primary; no scenic city backdrop.  `exec-92234ec8-e706-40f0-8a5f-c58443e24fd7.png` |
+| /local/hsinchu-web-design | `local-hsinchu-web-design-cutout.webp` | 新竹網頁設計 | Desktop and mobile website prototypes with catalog and inquiry modules connect to a small abstract technology-workshop building. Focus on responsive website design for technology businesses.  `exec-c8306849-9311-4c17-b2f6-b8cb0ec253c7.png` |
+| /compare/seo-vs-geo-vs-aeo | `compare-seo-vs-geo-vs-aeo-cutout.webp` | SEO、GEO、AEO 的共同基礎與差別 | Three connected discovery objects share one document foundation: search lens, cited answer panel, and question-response card represented by speech pictograms. Show shared content and differing output.  `exec-f48c120c-1817-4e51-a032-057ab8e3d9e9.png` |
+| /compare/ai-voice-vs-chatbot | `compare-ai-voice-vs-chatbot-cutout.webp` | AI 語音客服與文字客服機器人的差別 | Two equal interfaces: telephone handset with voice waveform and a mobile screen with blank chat bubbles. Both connect to the same task tray and support-handoff headset.  `exec-e578c0b4-23ef-4496-af55-6648d5c2ae2d.png` |
+| /compare/wordpress-vs-custom-website | `compare-wordpress-vs-custom-website-cutout.webp` | WordPress 套版與客製化網站的差別 | Two equal website-building prototypes: fitted reusable template tiles and individually shaped custom interface modules, with a shared CMS drawer and maintenance wrench. No brand logos or superiority claims.  `exec-30cbd4cd-071b-4236-abe3-599e574abc79.png` |
+
+
+
+- 透明素材使用獨立 `*-cutout.webp` 檔名，避免舊試稿的圖片最佳化快取；網站主體由圖片本身的 alpha 與 section 底色直接融合。
+
+
+
+- 首頁以去背主體取代舊全幅裝飾背景（原始檔保留），避免雙重圖像與額外下載；手機交付區先讀文字再顯示對應圖。內容檢查與 TypeScript 已通過。
+
+
+
+- 手機合作路徑卡片調整為文字／連結在前、去背圖在後；沒有新增收合或隱藏正文。
+
+
+
+- 語意修稿：services-seo、services-geo、pricing-web-development、blog-ai-voice-vs-ivr-human-agent、blog-geo-complete-guide-2026、blog-schema-org-tutorial、blog-website-pricing-2026、blog-common-seo-mistakes；去除非電話主題的耳機、卡片風景與生成的人像。
+
+| 素材 | 修稿指令 |
+|---|---|
+| services-seo | Remove all scenic pictures and leaf pictures from the document cards; replace them with abstract gray content lines and small chain-link pictograms. Remove the large display table and decorative arch; retain only connected website documents, indexing paths, a magnifying lens and a small maintenance wrench in a compact cutout. |
+| services-geo | Replace every mountain, leaf and building picture on source documents with abstract gray content lines and small chain-link pictograms. Keep the original source-to-answer connections and inspection lens. No other objects. |
+| pricing-web-development | Remove the calculator completely. Replace all scenic photos in page modules with abstract gray content blocks. Retain website modules, CMS drawer, hosting blocks, maintenance wrench and blank estimate clipboard. No phone or headset. |
+| blog-ai-voice-vs-ivr-human-agent | Remove the entire woman bust and circular portrait frame from the right station. Replace it with one standalone professional support headset at the same scale. Keep the AI waveform and IVR telephone stations, all phone keys completely blank. |
+| blog-geo-complete-guide-2026 | Remove the headset completely. Retain the reference book, source cards, answer panel and citation-inspection lens. Remove rising bar charts from sources; use neutral content-line blocks and chain-link pictograms. |
+| blog-schema-org-tutorial | Remove the headset completely. Remove the rising bar-chart tile. Retain structured nested document frames, key-value slots, browser frame, branching data pictogram and validation lens. No phone-related objects. |
+| blog-website-pricing-2026 | Remove the headset completely. Keep the website laptop, scope folder, hosting blocks, content cards and maintenance tools. Replace laptop scenic placeholders with plain modular interface rectangles. |
+| blog-common-seo-mistakes | Remove the headset completely. Keep the duplicate page cards, broken chain, slow-loading timer, website frame, lens and repair wrench. No unrelated objects. |
+
+- 最終語意修正：blog-ai-customer-service-cost：Refine this exact transparent cutout to illustrate the true costs of AI customer service: a custom modular system and a managed cloud service with a headset and a plain blank cost ledger. Remove the entire telephone object in the lower right. No phone keypad, no numbers, no letters, no text anywhere. Do not add new unrelated objects. Preserve the composition, matte pearl white / aqua / mint materials and true transparent background.
+  - blog-llms-txt-implementation-guide：Refine this exact transparent cutout for a technical article about an llms.txt website content index and crawler access. Remove the entire robot mascot, including its body and face. Replace the mascot area with a simple non-personified mint directional arrow on the access route. Keep the plain index document, website document library, and access gateway. No people, no face, no robot, no headset, no text, no letters, no numbers. Preserve the meaningful object arrangement, soft studio materials, and true transparent background.
+
+- 最終素材整理：`public/visuals/` 僅保留 47 張透明 WebP，矩形試稿移入本機暫存資料夾；生成原檔不刪除。全部素材完成後重新啟動本機服務，避免啟動前的 public 檔案清單與圖片快取造成假性 400。
+
+- 視覺驗收擴充：47 個唯一檔案、alpha 透明範圍、檔案大小、頁面對應、48 頁原文／連結比對、三種寬度、九語替代文字，以及主體／次要文字／按鈕至少 4.5:1 對比；圖片錯誤含頁面路徑與完整診斷。
+
+- 圖片預覽：`tmp/visual-refresh-20261006/preview.html` 為本機 47 張預覽，四張素材總覽為 `preview-1.png` 至 `preview-4.png`；原始生成 PNG 與素材 ID 對應保存在同目錄 `cutouts.json`。來源 PNG 保留於 Codex 生成目錄，WebP 全部為 1600 × 900 且含 alpha。
+
+- 對比驗收讀取正式 CSS 的色彩變數，兼容建置壓縮後的三位十六進位色碼。
+
+### 最終驗收（2026-10-06）
+
+- 素材：47 張不同構圖，1600 × 900 WebP，保留真實 alpha，每張 76–244 KB，合計 6.39 MB；只提供最終 `*-cutout.webp`，首頁主圖優先載入，其餘延遲載入並提供尺寸與 sizes。
+- 版面：圖片沒有額外框線、底色或卡片陰影，直接融入 section；桌面左右圖文，手機文字先行，價格表、比較表、正文、案例與揭露保留。案例放大原始真實截圖，不使用生成圖表示成果。
+- 內容：`pnpm check:visuals http://127.0.0.1:3001` 通過 48 頁修改前後的原文與連結數量比對、素材對應與唯一性、透明範圍、尺寸及大小。修改前快照與驗收產物在 `tmp/visual-refresh-20261006/`。
+- 響應式與語言：1440／768／390px 的十種代表頁，九語首頁／SEO 服務／錄音隱私文章無橫向溢出，圖片完整載入、提供當頁語言替代文字；實際檢視桌面、平板、手機、各語言及素材總覽。主要文字與按鈕對比至少 4.5:1。
+- 錯誤：模擬圖片 HTTP 503，前端顯示來源、請求、事件、HTTP 狀態及完整回應；原文和已輸入表單資料保留。表單驗收涵蓋 15 種失敗、成功與防重複送出，測試攔截請求，不寄出真實郵件。
+- `pnpm lint:content`、`pnpm exec tsc --noEmit --incremental false`、`pnpm build` 通過；九語字典共 31,014 筆，另有 17 個 API 邊界與 18 個九語成功／失敗隔離測試，建置產生 500 個靜態頁面／端點。
+- `pnpm check:seo http://127.0.0.1:3001` 通過：434 個索引頁、38 個 noindex 頁，以及 canonical、雙向 hreflang、社群圖規則、JSON-LD、sitemap、內鏈與轉址。Article 沿用既有 image 欄位接入各篇封面，外語品牌社群圖規則不變。
+- `pnpm check:conversion http://127.0.0.1:3001` 通過：8 篇文章 CTA、九語表單、語言切換與建議、停用儲存、主要頁型的手機／桌面及鍵盤導覽。截圖保留於系統暫存目錄 `falcon-conversion-GV6e4A`。
+- 載入觀察：相同本機 Chrome、1440px、關閉快取、暖機後三次載入，開發版本首頁 LCP 中位數由 120 ms 至 148 ms，CLS 均為 0；正式本機版本中位數 60 ms、CLS 0。開發／正式數字不可直接當作效能改善比例，也不是公網 Core Web Vitals；原始紀錄為 `performance.json` 與 `performance-dev.json`。
+- `git diff --check` 通過。正式建置仍有原有 metadataBase 警告，現有 SEO 驗收通過；本次沒有新增套件、對外 API、資料庫操作或正式部署。既有工作區修改與原始圖片保留。
+
+本機網站預覽：`http://127.0.0.1:3001`；47 張素材預覽為 `tmp/visual-refresh-20261006/preview.html`（需本機服務運作）。
+
+- 手機人工檢視後，主比較表沿用既有內表的 680px 最小寬度，在區塊內原生橫向捲動，避免欄位被擠成逐字直排；多語主標題使用瀏覽器依語言自動斷字，改善德文長單字的換行。沒有隱藏表格或正文。
+
+- 真實案例圖片驗收發現原有含空白的截圖檔名會令 Next 圖片最佳化回傳 400；`ImageWithFallback` 以原生 URL 統一正規化本機圖片網址，保留既有百分比編碼與查詢參數。原始檔與案例文字不改，視覺檢查擴充為 main 內全部圖片載入成功、沒有圖片錯誤。
+
+- 47 張素材的生成原檔 ID 已記錄於上表，原始 PNG 位於 `/Users/eric/.codex/generated_images/01a10ef5-ff50-7e62-be46-16d666471397/`，不覆蓋或刪除原檔。僅本次 QA 快照、預覽、來源備份與試稿資料夾加入 Git 忽略，避免暫存截圖隨程式提交；本機預覽仍可使用。
+
+- 最終重跑通過：正式建置、內容／九語檢查、SEO、轉換及擴充視覺檢查；main 中的生成插畫與真實案例截圖均正常載入，含空白檔名的原案例截圖已恢復。48 頁原文與內鏈保留、三尺寸與九語無溢出，圖片 HTTP 503 仍完整呈現錯誤並保留輸入。

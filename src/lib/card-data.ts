@@ -10,7 +10,7 @@ export const cardProfile = {
   // 個人
   nameZh: resumeData.name.zh, // 蔡翊廉
   nameEn: resumeData.name.en, // Eric Tsai
-  title: resumeData.title.zh, // 全端工程師 · 數位產品創業者
+  title: resumeData.title.zh, // 全端工程師
   summary: resumeData.summary.zh,
 
   // 公司

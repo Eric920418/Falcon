@@ -79,7 +79,7 @@ export function Navigation() {
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${
         isScrolled
-          ? 'bg-[#1E2A2E] border-b border-[#344349]/50'
+          ? 'bg-[var(--site-soft)] border-b border-[var(--site-border)]/50'
           : 'bg-transparent'
       }`}
       initial={{ y: -100 }}
@@ -102,7 +102,7 @@ export function Navigation() {
             className="rounded"
           />
           <span
-            className="hidden sm:inline text-xl text-[#E0E5E8] group-hover:text-[#A8B6BC] transition-colors"
+            className="hidden sm:inline text-xl text-[var(--site-text)] group-hover:text-[var(--site-muted)] transition-colors"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             {t("隼訊數位行銷")}</span>
@@ -127,7 +127,7 @@ export function Navigation() {
                   }}
                 >
                   <button
-                    className="flex items-center gap-1 px-4 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8] transition-colors"
+                    className="flex items-center gap-1 px-4 py-2 text-sm text-[var(--site-muted)] hover:text-[var(--site-text)] transition-colors"
                     aria-expanded={openDropdown === item.label}
                     onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
                   >
@@ -146,12 +146,12 @@ export function Navigation() {
                         exit={{ opacity: 0, y: 8 }}
                         transition={{ duration: 0.15 }}
                       >
-                        <div className="rounded-lg border border-[#344349]/60 bg-[#1E2A2E] py-2 shadow-xl">
+                        <div className="rounded-lg border border-[var(--site-border)]/60 bg-[var(--site-soft)] py-2 shadow-xl">
                           {item.items.map((s) => (
                             <Link
                               key={s.href}
                               href={s.href}
-                              className="block px-4 py-2 text-sm text-[#A8B6BC] hover:text-amber-500 hover:bg-[#2D3B40]/50 transition-colors"
+                              className="block px-4 py-2 text-sm text-[var(--site-muted)] hover:text-[var(--site-accent)] hover:bg-[var(--site-soft)] transition-colors"
                             >
                               {t(s.label)}
                             </Link>
@@ -169,7 +169,7 @@ export function Navigation() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="relative px-4 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8] transition-colors group"
+                  className="relative px-4 py-2 text-sm text-[var(--site-muted)] hover:text-[var(--site-text)] transition-colors group"
                 >
                   {t(item.label)}
                   <span className="absolute bottom-1 left-4 right-4 h-px bg-[#5F808B] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
@@ -181,7 +181,7 @@ export function Navigation() {
               <button
                 key={item.label}
                 onClick={() => scrollToSection(item.id)}
-                className="relative px-4 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8] transition-colors group"
+                className="relative px-4 py-2 text-sm text-[var(--site-muted)] hover:text-[var(--site-text)] transition-colors group"
               >
                 {t(item.label)}
                 <span className="absolute bottom-1 left-4 right-4 h-px bg-[#5F808B] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
@@ -204,7 +204,7 @@ export function Navigation() {
 
         {/* Mobile Menu Button */}
         <button
-          className="xl:hidden w-10 h-10 flex items-center justify-center text-[#C5CED2] hover:text-[#A8B6BC] transition-colors"
+          className="xl:hidden w-10 h-10 flex items-center justify-center text-[var(--site-text)] hover:text-[var(--site-muted)] transition-colors"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           id="home-menu-toggle"
           aria-expanded={isMobileMenuOpen}
@@ -221,7 +221,7 @@ export function Navigation() {
           <motion.div
             id="home-mobile-menu"
             onKeyDown={(event) => { if (event.key === 'Escape') { closeMobile(); document.getElementById('home-menu-toggle')?.focus() } }}
-            className="xl:hidden fixed inset-x-0 top-[72px] h-[calc(100dvh-72px)] bg-[#1E2A2E] overflow-y-auto"
+            className="xl:hidden fixed inset-x-0 top-[72px] h-[calc(100dvh-72px)] bg-[var(--site-soft)] overflow-y-auto"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -231,11 +231,11 @@ export function Navigation() {
               {navItems.map((item) => {
                 if (item.kind === 'dropdown') {
                   return (
-                    <div key={item.label} className="border-b border-[#344349]/50">
+                    <div key={item.label} className="border-b border-[var(--site-border)]/50">
                       <button
                         onClick={() => setMobileDropdown((value) => value === item.label ? null : item.label)}
                         aria-expanded={mobileDropdown === item.label}
-                        className="w-full flex items-center justify-between py-4 text-left text-lg text-[#C5CED2] hover:text-[#A8B6BC] transition-colors"
+                        className="w-full flex items-center justify-between py-4 text-left text-lg text-[var(--site-text)] hover:text-[var(--site-muted)] transition-colors"
                       >
                         <span style={{ fontFamily: 'var(--font-display)' }}>{t(item.label)}</span>
                         <ChevronDown
@@ -250,7 +250,7 @@ export function Navigation() {
                               key={s.href}
                               href={s.href}
                               onClick={closeMobile}
-                              className="py-2.5 text-[#A8B6BC] hover:text-amber-500 transition-colors"
+                              className="py-2.5 text-[var(--site-muted)] hover:text-[var(--site-accent)] transition-colors"
                             >
                               {t(s.label)}
                             </Link>
@@ -267,7 +267,7 @@ export function Navigation() {
                       key={item.label}
                       href={item.href}
                       onClick={closeMobile}
-                      className="py-4 text-lg text-[#C5CED2] hover:text-[#A8B6BC] transition-colors border-b border-[#344349]/50"
+                      className="py-4 text-lg text-[var(--site-text)] hover:text-[var(--site-muted)] transition-colors border-b border-[var(--site-border)]/50"
                       style={{ fontFamily: 'var(--font-display)' }}
                     >
                       {t(item.label)}
@@ -279,7 +279,7 @@ export function Navigation() {
                   <button
                     key={item.label}
                     onClick={() => scrollToSection(item.id)}
-                    className="py-4 text-left text-lg text-[#C5CED2] hover:text-[#A8B6BC] transition-colors border-b border-[#344349]/50"
+                    className="py-4 text-left text-lg text-[var(--site-text)] hover:text-[var(--site-muted)] transition-colors border-b border-[var(--site-border)]/50"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
                     {t(item.label)}

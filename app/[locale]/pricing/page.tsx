@@ -1,3 +1,4 @@
+import { PageVisual } from '@/components/PageVisual'
 import { formatMoney } from '@/lib/i18n/format'
 
 import { getI18n, initLocale } from '@/lib/i18n/server'
@@ -45,32 +46,35 @@ export default async function PricingIndexPage({ params }: { params: Promise<{ l
   return (
     <PageShell>
       <JsonLd data={schemas} />
-      <div className="bg-stone-950">
-        <section className="py-16 px-6 bg-gradient-to-b from-[#1E2A2E] to-stone-950">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+      <div className="bg-[var(--site-bg)] ">
+        <section className="py-16 px-6 bg-gradient-to-b from-[var(--site-soft)] to-[var(--site-bg)] ">
+          <div className="visual-hero">
+          <div>
+            <h1 className="text-4xl md:text-5xl text-[var(--site-text)] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
               {t("透明定價")}</h1>
-            <p className="text-lg text-[#A8B6BC] max-w-2xl">
+            <p className="text-lg text-[var(--site-muted)] max-w-2xl">
               {t("公開起價、基礎範圍與報價因素。正式報價仍會依需求逐項列出，不用模糊數字先吸引詢問。")}</p>
-          </div>
+            </div>
+          <PageVisual path={"/pricing"} priority />
+        </div>
         </section>
 
         <section className="py-12 px-6">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl text-[#E0E5E8] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-2xl text-[var(--site-text)] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
               {t("詳細報價頁")}</h2>
             <div className="grid md:grid-cols-3 gap-4 mb-12">
               {Object.values(pricingPages).map((p) => (
                 <Link
                   key={p.slug}
                   href={`/pricing/${p.slug}`}
-                  className="block p-6 border border-[#344349] rounded-lg hover:border-amber-500 transition-colors group bg-stone-900/30"
+                  className="block p-6 border border-[var(--site-border)] rounded-lg hover:border-[var(--site-accent)] transition-colors group bg-[var(--site-card)] "
                 >
-                  <h3 className="text-lg text-[#E0E5E8] mb-2 group-hover:text-amber-500" style={{ fontFamily: 'var(--font-display)' }}>
+                  <h3 className="text-lg text-[var(--site-text)] mb-2 group-hover:text-[var(--site-accent)]" style={{ fontFamily: 'var(--font-display)' }}>
                     {t(p.h1)}
                   </h3>
-                  <p className="text-sm text-[#A8B6BC] line-clamp-2">{t(p.description)}</p>
-                  <span className="inline-flex items-center gap-1 mt-3 text-sm text-amber-500">
+                  <p className="text-sm text-[var(--site-muted)] line-clamp-2">{t(p.description)}</p>
+                  <span className="inline-flex items-center gap-1 mt-3 text-sm text-[var(--site-accent)]">
                     {t("查看詳細定價")}<ArrowRight size={14} />
                   </span>
                 </Link>
@@ -78,60 +82,60 @@ export default async function PricingIndexPage({ params }: { params: Promise<{ l
             </div>
             <Link
               href="/services/ai-voice-agent"
-              className="mb-12 grid gap-5 border border-amber-600/40 bg-amber-950/10 p-6 hover:border-amber-500 md:grid-cols-[0.75fr_1.25fr] md:items-center"
+              className="mb-12 grid gap-5 border border-[var(--site-accent)]/40 bg-amber-950/10 p-6 hover:border-[var(--site-accent)] md:grid-cols-[0.75fr_1.25fr] md:items-center"
             >
               <div>
-                <p className="text-xs uppercase tracking-[0.16em] text-amber-500">{t("Custom quotation")}</p>
-                <h2 className="mt-3 text-2xl text-[#E0E5E8]">{t("企業 AI 語音客服")}</h2>
+                <p className="text-xs uppercase tracking-[0.16em] text-[var(--site-accent)]">{t("Custom quotation")}</p>
+                <h2 className="mt-3 text-2xl text-[var(--site-text)]">{t("企業 AI 語音客服")}</h2>
               </div>
               <div>
-                <p className="text-sm leading-relaxed text-[#A8B6BC]">
+                <p className="text-sm leading-relaxed text-[var(--site-muted)]">
                   {t("採客製報價，不沿用一般聊天機器人的起價。依通話方向、尖峰併發、PBX／SIP、企業 API、錄音、人工席位、部署與 SLA 估算。")}</p>
-                <span className="mt-3 inline-flex items-center gap-1 text-sm text-amber-500">{t("查看報價因素")}<ArrowRight size={14} /></span>
+                <span className="mt-3 inline-flex items-center gap-1 text-sm text-[var(--site-accent)]">{t("查看報價因素")}<ArrowRight size={14} /></span>
               </div>
             </Link>
 
             <section className="mb-12 grid gap-6 md:grid-cols-2">
-              <div className="border border-[#344349] bg-stone-900/30 p-6">
-                <p className="text-xs uppercase tracking-[0.16em] text-amber-500">{t("How we quote")}</p>
-                <h2 className="mt-3 text-2xl text-[#E0E5E8]">{t("正式報價的形成方式")}</h2>
-                <ol className="mt-5 space-y-3 text-sm leading-relaxed text-[#A8B6BC]">
-                  <li><span className="mr-2 font-mono text-amber-500">{t("01")}</span>{t("確認目標、使用者、現況與必要整合。")}</li>
-                  <li><span className="mr-2 font-mono text-amber-500">{t("02")}</span>{t("拆出第一階段範圍、風險與驗收方式。")}</li>
-                  <li><span className="mr-2 font-mono text-amber-500">{t("03")}</span>{t("分列建置、持續費用與第三方實際用量。")}</li>
-                  <li><span className="mr-2 font-mono text-amber-500">{t("04")}</span>{t("在合作前寫清楚不包含項目、移交與維護責任。")}</li>
+              <div className="border border-[var(--site-border)] bg-[var(--site-card)]  p-6">
+                <p className="text-xs uppercase tracking-[0.16em] text-[var(--site-accent)]">{t("How we quote")}</p>
+                <h2 className="mt-3 text-2xl text-[var(--site-text)]">{t("正式報價的形成方式")}</h2>
+                <ol className="mt-5 space-y-3 text-sm leading-relaxed text-[var(--site-muted)]">
+                  <li><span className="mr-2 font-mono text-[var(--site-accent)]">{t("01")}</span>{t("確認目標、使用者、現況與必要整合。")}</li>
+                  <li><span className="mr-2 font-mono text-[var(--site-accent)]">{t("02")}</span>{t("拆出第一階段範圍、風險與驗收方式。")}</li>
+                  <li><span className="mr-2 font-mono text-[var(--site-accent)]">{t("03")}</span>{t("分列建置、持續費用與第三方實際用量。")}</li>
+                  <li><span className="mr-2 font-mono text-[var(--site-accent)]">{t("04")}</span>{t("在合作前寫清楚不包含項目、移交與維護責任。")}</li>
                 </ol>
               </div>
-              <div className="border border-[#344349] bg-stone-900/30 p-6">
-                <p className="text-xs uppercase tracking-[0.16em] text-amber-500">{t("Comparison rule")}</p>
-                <h2 className="mt-3 text-2xl text-[#E0E5E8]">{t("比較報價要使用相同範圍")}</h2>
-                <p className="mt-5 text-sm leading-relaxed text-[#A8B6BC]">
+              <div className="border border-[var(--site-border)] bg-[var(--site-card)]  p-6">
+                <p className="text-xs uppercase tracking-[0.16em] text-[var(--site-accent)]">{t("Comparison rule")}</p>
+                <h2 className="mt-3 text-2xl text-[var(--site-text)]">{t("比較報價要使用相同範圍")}</h2>
+                <p className="mt-5 text-sm leading-relaxed text-[var(--site-muted)]">
                   {t("一份只列頁面或關鍵字數量的報價，不能直接和包含研究、設計、整合、測試、內容、部署及維護的報價比較。請逐項核對帳號與原始碼歸屬、第三方費用、修改輪次、資料提供責任、驗收與終止後移交。")}</p>
-                <p className="mt-4 text-sm leading-relaxed text-[#A8B6BC]">
+                <p className="mt-4 text-sm leading-relaxed text-[var(--site-muted)]">
                   {t("若預算不足，應縮小第一階段或改做盤點／POC；把完整需求塞進最低起價，通常只會把必要工作延後成追加費用。")}</p>
               </div>
             </section>
 
-            <h2 className="text-2xl text-[#E0E5E8] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-2xl text-[var(--site-text)] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
               {t("兩大獲客 Hub 起價速覽")}</h2>
-            <div className="border border-[#344349] rounded-lg overflow-x-auto bg-stone-900/30">
+            <div className="border border-[var(--site-border)] rounded-lg overflow-x-auto bg-[var(--site-card)] ">
               <table className="min-w-[680px] w-full text-sm">
-                <thead className="bg-[#1E2A2E]">
+                <thead className="bg-[var(--site-soft)]">
                   <tr>
-                    <th className="px-6 py-3 text-left text-[#E0E5E8]">{t("服務")}</th>
-                    <th className="px-6 py-3 text-left text-[#E0E5E8]">{t("起價")}</th>
-                    <th className="px-6 py-3 text-left text-[#E0E5E8]">{t("單位")}</th>
-                    <th className="px-6 py-3 text-left text-[#E0E5E8]"></th>
+                    <th className="px-6 py-3 text-left text-[var(--site-text)]">{t("服務")}</th>
+                    <th className="px-6 py-3 text-left text-[var(--site-text)]">{t("起價")}</th>
+                    <th className="px-6 py-3 text-left text-[var(--site-text)]">{t("單位")}</th>
+                    <th className="px-6 py-3 text-left text-[var(--site-text)]"></th>
                   </tr>
                 </thead>
                 <tbody>
                   {primaryPriceDefinitions.map((price) => (
-                    <tr key={price.serviceSlug} className="border-t border-[#344349]/50">
-                      <td className="px-6 py-4 text-[#A8B6BC]">{t(price.name)}</td>
-                      <td className="px-6 py-4 text-amber-500">{formatMoney(price.from, locale)}</td>
-                      <td className="px-6 py-4 text-[#7A8A91]">{t("/")}{t(price.unit)}</td>
+                    <tr key={price.serviceSlug} className="border-t border-[var(--site-border)]/50">
+                      <td className="px-6 py-4 text-[var(--site-muted)]">{t(price.name)}</td>
+                      <td className="px-6 py-4 text-[var(--site-accent)]">{formatMoney(price.from, locale)}</td>
+                      <td className="px-6 py-4 text-[var(--site-muted)]">{t("/")}{t(price.unit)}</td>
                       <td className="px-6 py-4 text-right">
-                        <Link href={`/services/${price.serviceSlug}`} className="text-sm text-amber-500 hover:underline inline-flex items-center gap-1">
+                        <Link href={`/services/${price.serviceSlug}`} className="text-sm text-[var(--site-accent)] hover:underline inline-flex items-center gap-1">
                           {t("詳情")}<ChevronRight size={14} />
                         </Link>
                       </td>
@@ -140,10 +144,10 @@ export default async function PricingIndexPage({ params }: { params: Promise<{ l
                 </tbody>
               </table>
             </div>
-            <p className="mt-5 text-sm text-[#A8B6BC]">
+            <p className="mt-5 text-sm text-[var(--site-muted)]">
               {t("不確定名詞差別？")}<Link
                 href="/compare/seo-vs-geo-vs-aeo"
-                className="ml-2 text-amber-500 hover:underline"
+                className="ml-2 text-[var(--site-accent)] hover:underline"
               >
                 {t("查看 SEO、GEO、AEO 的共同基礎與量測差異")}</Link>
             </p>

@@ -14,7 +14,6 @@ mkdirSync(outDir, { recursive: true })
 const images = [
   'TellCraft.png',
   '滷味.png',
-  '展望國際人力.png',
   'AI智能客服系統網頁首頁.png',
   'CosmosWork.png',
   'TISCLLB.png',

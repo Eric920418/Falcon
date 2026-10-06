@@ -1,3 +1,4 @@
+import { PageVisual } from '@/components/PageVisual'
 
 import { getI18n } from '@/lib/i18n/server'
 import Link from '@/lib/i18n/link'
@@ -29,29 +30,30 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
   const { t, locale } = getI18n()
 
   return (
-    <div className="bg-stone-950">
-      <section id="post-hero" className="relative py-16 px-6 bg-gradient-to-b from-[#1E2A2E] to-stone-950">
-        <div className="max-w-3xl mx-auto">
-          <nav className="text-sm text-[#7A8A91] mb-6 flex flex-wrap items-center gap-2">
-            <Link href="/" className="hover:text-amber-500">{t("首頁")}</Link>
+    <div className="bg-[var(--site-bg)] ">
+      <section id="post-hero" className="relative py-16 px-6 bg-gradient-to-b from-[var(--site-soft)] to-[var(--site-bg)] ">
+        <div className="visual-hero">
+          <div>
+          <nav className="text-sm text-[var(--site-muted)] mb-6 flex flex-wrap items-center gap-2">
+            <Link href="/" className="hover:text-[var(--site-accent)]">{t("首頁")}</Link>
             <ChevronRight size={14} />
-            <Link href="/blog" className="hover:text-amber-500">{t("部落格")}</Link>
+            <Link href="/blog" className="hover:text-[var(--site-accent)]">{t("部落格")}</Link>
             <ChevronRight size={14} />
-            <span className="text-[#A8B6BC] truncate">{t(post.title)}</span>
+            <span className="text-[var(--site-muted)] truncate">{t(post.title)}</span>
           </nav>
 
           <h1
-            className="text-3xl md:text-4xl text-[#E0E5E8] mb-4 leading-tight"
+            className="text-3xl md:text-4xl text-[var(--site-text)] mb-4 leading-tight"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             {t(post.h1)}
           </h1>
-          <p className="text-lg text-[#A8B6BC] leading-relaxed">{t(post.intro)}</p>
+          <p className="text-lg text-[var(--site-muted)] leading-relaxed">{t(post.intro)}</p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-[#7A8A91]">
+          <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-[var(--site-muted)]">
             <span className="inline-flex items-center gap-1">
               <User size={14} />
-              <Link href={primaryAuthor.url} className="hover:text-amber-500">
+              <Link href={primaryAuthor.url} className="hover:text-[var(--site-accent)]">
                 {t(primaryAuthor.name)}{t("｜")}{t(primaryAuthor.jobTitle)}
               </Link>
             </span>
@@ -64,14 +66,16 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
               </span>
             )}
           </div>
+          </div>
+          <PageVisual path={`/blog/${post.slug}`} priority />
         </div>
       </section>
 
       {post.toc && post.toc.length > 0 && (
         <section className="py-8 px-6">
-          <div className="max-w-3xl mx-auto p-6 border border-[#344349] rounded-lg bg-stone-900/30">
-            <h2 className="text-sm text-[#7A8A91] mb-3 uppercase tracking-wider">{t("本文章節")}</h2>
-            <ul className="space-y-2 text-[#A8B6BC]">
+          <div className="max-w-3xl mx-auto p-6 border border-[var(--site-border)] rounded-lg bg-[var(--site-card)] ">
+            <h2 className="text-sm text-[var(--site-muted)] mb-3 uppercase tracking-wider">{t("本文章節")}</h2>
+            <ul className="space-y-2 text-[var(--site-muted)]">
               {post.toc.map((item, i) => (
                 <li key={i}>{t("·")}{t(item)}</li>
               ))}
@@ -85,34 +89,34 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
           {post.sections.map((section, idx) => (
             <article key={idx}>
               <h2
-                className="text-2xl md:text-3xl text-[#E0E5E8] mb-4"
+                className="text-2xl md:text-3xl text-[var(--site-text)] mb-4"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 {t(section.heading)}
               </h2>
-              {section.body && <p className="text-[#A8B6BC] leading-relaxed mb-4">{t(section.body)}</p>}
+              {section.body && <p className="text-[var(--site-muted)] leading-relaxed mb-4">{t(section.body)}</p>}
               {section.items && (
                 <ul className="space-y-2">
                   {section.items.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-[#A8B6BC]">
-                      <Check size={20} className="text-amber-500 flex-shrink-0 mt-1" />
+                    <li key={i} className="flex items-start gap-3 text-[var(--site-muted)]">
+                      <Check size={20} className="text-[var(--site-accent)] flex-shrink-0 mt-1" />
                       <span>{t(item)}</span>
                     </li>
                   ))}
                 </ul>
               )}
               {section.table && (
-                <div className="mt-6 overflow-x-auto rounded-lg border border-[#344349]">
+                <div className="mt-6 overflow-x-auto rounded-lg border border-[var(--site-border)]">
                   <table className="min-w-[680px] w-full border-collapse text-left text-sm">
                     {section.table.caption && (
-                      <caption className="bg-stone-900/70 px-4 py-3 text-left text-sm text-[#A8B6BC]">
+                      <caption className="bg-[var(--site-card)]  px-4 py-3 text-left text-sm text-[var(--site-muted)]">
                         {t(section.table.caption)}
                       </caption>
                     )}
-                    <thead className="bg-[#1E2A2E]">
+                    <thead className="bg-[var(--site-soft)]">
                       <tr>
                         {section.table.headers.map((header) => (
-                          <th key={header} scope="col" className="px-4 py-3 font-medium text-[#E0E5E8]">
+                          <th key={header} scope="col" className="px-4 py-3 font-medium text-[var(--site-text)]">
                             {t(header)}
                           </th>
                         ))}
@@ -120,9 +124,9 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
                     </thead>
                     <tbody>
                       {section.table.rows.map((row, rowIndex) => (
-                        <tr key={`${section.heading}-${rowIndex}`} className="border-t border-[#344349] align-top">
+                        <tr key={`${section.heading}-${rowIndex}`} className="border-t border-[var(--site-border)] align-top">
                           {row.map((cell, cellIndex) => (
-                            <td key={`${rowIndex}-${cellIndex}`} className="px-4 py-3 leading-relaxed text-[#A8B6BC]">
+                            <td key={`${rowIndex}-${cellIndex}`} className="px-4 py-3 leading-relaxed text-[var(--site-muted)]">
                               {t(cell)}
                             </td>
                           ))}
@@ -139,17 +143,17 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
 
       {post.references && post.references.length > 0 && (
         <section id="references" className="px-6 py-12">
-          <div className="max-w-3xl mx-auto border-t border-[#344349] pt-8">
-            <h2 className="text-2xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+          <div className="max-w-3xl mx-auto border-t border-[var(--site-border)] pt-8">
+            <h2 className="text-2xl text-[var(--site-text)] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
               {t("參考資料")}</h2>
             <ul className="space-y-3">
               {post.references.map((reference) => (
-                <li key={reference.url} className="text-sm leading-relaxed text-[#A8B6BC]">
+                <li key={reference.url} className="text-sm leading-relaxed text-[var(--site-muted)]">
                   <a
                     href={reference.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-amber-500 hover:underline"
+                    className="text-[var(--site-accent)] hover:underline"
                   >
                     {t(reference.name)}
                   </a>
@@ -163,24 +167,24 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
       )}
 
       {post.howTo && (
-        <section className="py-12 px-6 bg-[#1E2A2E]/50">
+        <section className="py-12 px-6 bg-[var(--site-soft)]">
           <div className="max-w-3xl mx-auto">
             <h2
-              className="text-2xl md:text-3xl text-[#E0E5E8] mb-2"
+              className="text-2xl md:text-3xl text-[var(--site-text)] mb-2"
               style={{ fontFamily: 'var(--font-display)' }}
             >
               {t(post.howTo.name)}
             </h2>
-            <p className="text-[#A8B6BC] mb-6">{t(post.howTo.description)}</p>
+            <p className="text-[var(--site-muted)] mb-6">{t(post.howTo.description)}</p>
             <ol className="space-y-4">
               {post.howTo.steps.map((step, i) => (
                 <li key={i} className="flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 text-amber-500 flex items-center justify-center font-bold">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[var(--site-accent)]/20 text-[var(--site-accent)] flex items-center justify-center font-bold">
                     {i + 1}
                   </div>
                   <div>
-                    <h3 className="text-[#E0E5E8] mb-1">{t(step.name)}</h3>
-                    <p className="text-[#A8B6BC]">{t(step.text)}</p>
+                    <h3 className="text-[var(--site-text)] mb-1">{t(step.name)}</h3>
+                    <p className="text-[var(--site-muted)]">{t(step.text)}</p>
                   </div>
                 </li>
               ))}
@@ -192,16 +196,16 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
       {post.faq && post.faq.length > 0 && (
         <section id="post-faq" className="py-12 px-6">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-2xl md:text-3xl text-[var(--site-text)] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
               {t("常見問題")}</h2>
             <div className="space-y-4">
               {post.faq.map((item, i) => (
-                <details key={i} className="group border border-[#344349] rounded-lg overflow-hidden bg-stone-900/30">
-                  <summary className="px-6 py-4 cursor-pointer text-[#E0E5E8] hover:bg-[#344349]/30 flex justify-between items-center">
+                <details key={i} className="group border border-[var(--site-border)] rounded-lg overflow-hidden bg-[var(--site-card)] ">
+                  <summary className="px-6 py-4 cursor-pointer text-[var(--site-text)] hover:bg-[var(--site-tint)] flex justify-between items-center">
                     <span className="font-medium">{t(item.question)}</span>
-                    <ChevronRight size={20} className="text-[#7A8A91] group-open:rotate-90 transition-transform" />
+                    <ChevronRight size={20} className="text-[var(--site-muted)] group-open:rotate-90 transition-transform" />
                   </summary>
-                  <div className="px-6 pb-4 text-[#A8B6BC] leading-relaxed">{t(item.answer)}</div>
+                  <div className="px-6 pb-4 text-[var(--site-muted)] leading-relaxed">{t(item.answer)}</div>
                 </details>
               ))}
             </div>
@@ -212,13 +216,13 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
       {post.relatedLinks && post.relatedLinks.length > 0 && (
         <section className="px-6 py-10">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-xl text-[#E0E5E8] mb-4">{t("延伸閱讀")}</h2>
+            <h2 className="text-xl text-[var(--site-text)] mb-4">{t("延伸閱讀")}</h2>
             <div className="grid gap-3 sm:grid-cols-2">
               {post.relatedLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="flex items-center justify-between gap-4 border border-[#344349] bg-stone-900/30 p-4 text-sm text-[#A8B6BC] transition-colors hover:border-amber-500 hover:text-[#E0E5E8]"
+                  className="flex items-center justify-between gap-4 border border-[var(--site-border)] bg-[var(--site-card)]  p-4 text-sm text-[var(--site-muted)] transition-colors hover:border-[var(--site-accent)] hover:text-[var(--site-text)]"
                 >
                   <span>{t(link.label)}</span>
                   <ArrowRight size={16} className="shrink-0" aria-hidden="true" />
@@ -230,9 +234,9 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
       )}
 
       {post.relatedServices && post.relatedServices.length > 0 && (
-        <section className="py-12 px-6 bg-[#1E2A2E]/50">
+        <section className="py-12 px-6 bg-[var(--site-soft)]">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-xl text-[#E0E5E8] mb-4">{t("相關服務")}</h2>
+            <h2 className="text-xl text-[var(--site-text)] mb-4">{t("相關服務")}</h2>
             <div className="grid sm:grid-cols-2 gap-3">
               {post.relatedServices.map((slug) => slug === 'ai-voice-agent' ? (
                 <ServiceCtaLink
@@ -240,7 +244,7 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
                   href="/services/ai-voice-agent"
                   action="view_service"
                   placement={`blog_${post.slug}_related_service`}
-                  className="block p-4 border border-[#344349] rounded-lg hover:border-amber-500 transition-colors text-[#A8B6BC] hover:text-[#E0E5E8]"
+                  className="block p-4 border border-[var(--site-border)] rounded-lg hover:border-[var(--site-accent)] transition-colors text-[var(--site-muted)] hover:text-[var(--site-text)]"
                 >
                   <span className="text-sm">{t(serviceNames[slug])}</span>
                   <ArrowRight size={16} className="inline ml-2" />
@@ -249,7 +253,7 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
                 <Link
                   key={slug}
                   href={`/services/${slug}`}
-                  className="block p-4 border border-[#344349] rounded-lg hover:border-amber-500 transition-colors text-[#A8B6BC] hover:text-[#E0E5E8]"
+                  className="block p-4 border border-[var(--site-border)] rounded-lg hover:border-[var(--site-accent)] transition-colors text-[var(--site-muted)] hover:text-[var(--site-text)]"
                 >
                   <span className="text-sm">{t(serviceNames[slug] ?? slug)}</span>
                   <ArrowRight size={16} className="inline ml-2" />
@@ -263,12 +267,12 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
       {post.relatedCaseStudies && post.relatedCaseStudies.length > 0 && (
         <section className="px-6 py-10">
           <div className="max-w-3xl mx-auto border border-emerald-800/50 bg-emerald-950/10 p-6">
-            <p className="text-xs uppercase tracking-[0.16em] text-emerald-400">{t("公開案例與可驗證證據")}</p>
+            <p className="text-xs uppercase tracking-[0.16em] text-emerald-700">{t("公開案例與可驗證證據")}</p>
             {post.relatedCaseStudies.map((slug) => (
               <Link
                 key={slug}
                 href={`/case-studies/${slug}`}
-                className="mt-4 flex items-center justify-between gap-4 text-[#E0E5E8] hover:text-amber-500"
+                className="mt-4 flex items-center justify-between gap-4 text-[var(--site-text)] hover:text-[var(--site-accent)]"
               >
                 <span>{t(caseStudyNames[slug] ?? slug)}</span>
                 <ArrowRight size={17} />
@@ -282,9 +286,9 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
         <div className="max-w-3xl mx-auto text-center">
           {post.relatedServices?.includes('ai-voice-agent') ? (
             <>
-              <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+              <h2 className="text-2xl md:text-3xl text-[var(--site-text)] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
                 {t("評估你的企業 AI 電話流程")}</h2>
-              <p className="mb-6 leading-relaxed text-[#A8B6BC]">
+              <p className="mb-6 leading-relaxed text-[var(--site-muted)]">
                 {t("從目前接聽方式、通話後的系統動作與例外處理開始討論。提出需求後，再確認 Demo 時間、展示範圍及是否需要 POC。")}</p>
               <div className="flex flex-col justify-center gap-3 sm:flex-row">
                 <ServiceCtaLink href="/services/ai-voice-agent" action="view_service" placement={`blog_${post.slug}_service`} className="falcon-btn-outline inline-flex items-center justify-center">
@@ -297,7 +301,7 @@ export function BlogPostTemplate({ post }: BlogPostTemplateProps) {
             </>
           ) : (
             <>
-              <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+              <h2 className="text-2xl md:text-3xl text-[var(--site-text)] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
                 {t("有相關需求？")}</h2>
               <Link href="/#contact" className="falcon-btn-primary inline-flex items-center">
                 {t("聯絡我們")}<ArrowRight size={18} className="ml-2" />

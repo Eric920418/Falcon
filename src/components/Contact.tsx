@@ -145,31 +145,31 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" className="relative py-32 px-6 bg-stone-950">
+    <section id="contact" className="relative py-32 px-6 bg-[var(--site-bg)] ">
       {/* 背景 */}
       <div className="absolute inset-0 industrial-grid opacity-20" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-stone-800 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--site-card)]  to-transparent" />
 
       <div className="max-w-6xl mx-auto relative">
         {/* 標籤 */}
         <div className="flex items-center gap-3 mb-6">
           <div className="brand-line" />
-          <span className="text-amber-500 text-sm tracking-widest uppercase">{t("Contact")}</span>
+          <span className="text-[var(--site-accent)] text-sm tracking-widest uppercase">{t("Contact")}</span>
         </div>
 
         <div className="mb-16">
-          <h2 className="text-4xl md:text-5xl text-stone-100 mb-4">
+          <h2 className="text-4xl md:text-5xl text-[var(--site-text)] mb-4">
             <span className="text-falcon-gradient">{t("聯絡我們")}</span>
           </h2>
-          <p className="text-lg text-stone-400 max-w-xl">
+          <p className="text-lg text-[var(--site-muted)] max-w-xl">
             {t("準備好開始您的數位轉型之旅了嗎？讓我們一起討論如何幫助您的品牌成長")}</p>
         </div>
 
-        <p className="mb-8 text-sm leading-relaxed text-stone-400">{languageUi(locale).inquiry}</p>
+        <p className="mb-8 text-sm leading-relaxed text-[var(--site-muted)]">{languageUi(locale).inquiry}</p>
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div>
-            <h3 className="text-xl mb-8 text-stone-100" style={{ fontFamily: 'var(--font-display)' }}>{t("取得聯繫")}</h3>
+            <h3 className="text-xl mb-8 text-[var(--site-text)]" style={{ fontFamily: 'var(--font-display)' }}>{t("取得聯繫")}</h3>
 
             <div className="space-y-6 mb-10">
               {contactInfo.map((info, index) => {
@@ -179,11 +179,11 @@ export function Contact() {
                     key={index}
                     className="flex items-start gap-4 group"
                   >
-                    <div className="w-12 h-12 bg-stone-800 border border-stone-700 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-amber-600 group-hover:border-amber-500 transition-all duration-300">
-                      <Icon className="text-stone-400 group-hover:text-stone-950 transition-colors" size={20} />
+                    <div className="w-12 h-12 bg-[var(--site-card)]  border border-[var(--site-border)] rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-[var(--site-accent)] group-hover:border-[var(--site-accent)] transition-all duration-300">
+                      <Icon className="text-[var(--site-muted)] group-hover:text-white transition-colors" size={20} />
                     </div>
                     <div>
-                      <p className="text-stone-500 text-sm mb-1">{t(info.title)}</p>
+                      <p className="text-[var(--site-muted)] text-sm mb-1">{t(info.title)}</p>
                       {info.link ? (
                         <TrackedContactLink
                           href={info.link}
@@ -192,12 +192,12 @@ export function Contact() {
                           service={isServiceInterest(formData.serviceInterest) ? formData.serviceInterest : undefined}
                           target={info.channel === 'line' ? '_blank' : undefined}
                           rel={info.channel === 'line' ? 'noopener noreferrer' : undefined}
-                          className="text-stone-200 hover:text-amber-500 transition-colors"
+                          className="text-[var(--site-text)] hover:text-[var(--site-accent)] transition-colors"
                         >
                           {t(info.content)}
                         </TrackedContactLink>
                       ) : (
-                        <p className="text-stone-200">{t(info.content)}</p>
+                        <p className="text-[var(--site-text)]">{t(info.content)}</p>
                       )}
                     </div>
                   </div>
@@ -208,7 +208,7 @@ export function Contact() {
             <div className="falcon-card rounded-lg p-8">
               <h4 className="text-lg mb-4 text-falcon-gradient" style={{ fontFamily: 'var(--font-display)' }}>
                 {t("營業時間")}</h4>
-              <div className="space-y-2 text-stone-400">
+              <div className="space-y-2 text-[var(--site-muted)]">
                 <p>{t("採預約制，以電話、Email、LINE 或表單安排線上／到場討論。")}</p>
               </div>
             </div>
@@ -222,7 +222,7 @@ export function Contact() {
             }} onInput={(event) => (event.target as HTMLInputElement | HTMLTextAreaElement).setCustomValidity('')} data-contact-dirty={Object.values(formData).some(value => value !== '')} onSubmit={handleSubmit} className="space-y-6">
               <fieldset disabled={isSubmitting} className="min-w-0 space-y-6">
               <div>
-                <label htmlFor="name" className="block text-stone-400 text-sm mb-2">
+                <label htmlFor="name" className="block text-[var(--site-muted)] text-sm mb-2">
                   {t("姓名 *")}</label>
                 <input
                   type="text"
@@ -232,13 +232,13 @@ export function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--site-card)]  border border-[var(--site-border)] rounded-lg text-[var(--site-text)] placeholder-[var(--site-muted)] focus:outline-none focus:border-[var(--site-accent)] transition-colors"
                   placeholder={t("請輸入您的姓名")}
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-stone-400 text-sm mb-2">
+                <label htmlFor="email" className="block text-[var(--site-muted)] text-sm mb-2">
                   {t("Email *")}</label>
                 <input
                   type="email"
@@ -248,13 +248,13 @@ export function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--site-card)]  border border-[var(--site-border)] rounded-lg text-[var(--site-text)] placeholder-[var(--site-muted)] focus:outline-none focus:border-[var(--site-accent)] transition-colors"
                   placeholder={t("your@email.com")}
                 />
               </div>
 
               <div>
-                <label htmlFor="company" className="block text-stone-400 text-sm mb-2">
+                <label htmlFor="company" className="block text-[var(--site-muted)] text-sm mb-2">
                   {t("公司名稱")}</label>
                 <input
                   type="text"
@@ -263,23 +263,23 @@ export function Contact() {
                   autoComplete="organization"
                   value={formData.company}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--site-card)]  border border-[var(--site-border)] rounded-lg text-[var(--site-text)] placeholder-[var(--site-muted)] focus:outline-none focus:border-[var(--site-accent)] transition-colors"
                   placeholder={t("您的公司名稱（選填）")}
                 />
               </div>
 
               <div>
-                <label htmlFor="serviceInterest" className="block text-stone-400 text-sm mb-2">
+                <label htmlFor="serviceInterest" className="block text-[var(--site-muted)] text-sm mb-2">
                   {t("想討論的服務")}</label>
                 <select
                   id="serviceInterest"
                   name="serviceInterest"
                   value={formData.serviceInterest}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 focus:outline-none focus:border-amber-600 transition-colors"
+                  className="w-full px-4 py-3 bg-[var(--site-card)]  border border-[var(--site-border)] rounded-lg text-[var(--site-text)] focus:outline-none focus:border-[var(--site-accent)] transition-colors"
                 >
                   {serviceInterestOptions.map((option) => (
-                    <option key={option.value || 'unspecified'} value={option.value} className="bg-stone-900">
+                    <option key={option.value || 'unspecified'} value={option.value} className="bg-[var(--site-card)] ">
                       {t(option.label)}
                     </option>
                   ))}
@@ -287,7 +287,7 @@ export function Contact() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-stone-400 text-sm mb-2">
+                <label htmlFor="message" className="block text-[var(--site-muted)] text-sm mb-2">
                   {t("訊息內容 *")}</label>
                 <textarea
                   id="message"
@@ -297,11 +297,11 @@ export function Contact() {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-4 py-3 bg-stone-900/50 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-600 transition-colors resize-none"
+                  className="w-full px-4 py-3 bg-[var(--site-card)]  border border-[var(--site-border)] rounded-lg text-[var(--site-text)] placeholder-[var(--site-muted)] focus:outline-none focus:border-[var(--site-accent)] transition-colors resize-none"
                   placeholder={t("請告訴我們您的需求...")}
                 />
                 {formData.serviceInterest === 'ai_voice' && (
-                  <div id="ai-voice-form-help" className="mt-3 space-y-2 text-sm leading-relaxed text-stone-400">
+                  <div id="ai-voice-form-help" className="mt-3 space-y-2 text-sm leading-relaxed text-[var(--site-muted)]">
                     <p>{t("可以先說明：目前如何接聽？通話後需要做什麼？最需要避免什麼錯誤？")}</p>
                     <p>{t("送出的是流程 Demo 需求，時間與展示範圍將另行確認；請勿提供私人錄音、客戶個資或系統密碼。")}</p>
                   </div>
@@ -309,18 +309,18 @@ export function Contact() {
               </div>
 
               {submitStatus === 'error' && (
-                <div role="alert" className="p-4 bg-red-900/30 border border-red-800/50 rounded-lg text-red-300 [overflow-wrap:anywhere]">
+                <div role="alert" className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 [overflow-wrap:anywhere]">
                   <p className="font-medium">{t("送出失敗 [")}{t(errorCode)}{t("]")}</p>
                   <p className="mt-1 whitespace-pre-wrap">{errorMessage}</p>
                 </div>
               )}
-              <div role="status" aria-live="polite" aria-atomic="true" className="text-sm text-emerald-300">
+              <div role="status" aria-live="polite" aria-atomic="true" className="text-sm text-emerald-700">
                 {t(submitStatus === 'success' && '需求已送出，後續聯絡確認。這不代表預約時間已確定。')}
               </div>
 
-              <p className="text-sm leading-relaxed text-stone-400">
+              <p className="text-sm leading-relaxed text-[var(--site-muted)]">
                 {languageUi(locale).privacyNotice}{' '}
-                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline underline-offset-4">{languageUi(locale).privacy}</a>
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-[var(--site-accent)] underline underline-offset-4">{languageUi(locale).privacy}</a>
               </p>
               <button
                 type="submit"

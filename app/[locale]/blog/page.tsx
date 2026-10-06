@@ -1,3 +1,4 @@
+import { PageVisual } from '@/components/PageVisual'
 
 import { getI18n, initLocale } from '@/lib/i18n/server'
 import type { Metadata } from 'next'
@@ -110,37 +111,40 @@ export default async function BlogIndexPage({ params }: { params: Promise<{ loca
   return (
     <PageShell>
       <JsonLd data={schemas} />
-      <div className="bg-stone-950">
-        <section className="py-16 px-6 bg-gradient-to-b from-[#1E2A2E] to-stone-950">
-          <div className="max-w-4xl mx-auto">
+      <div className="bg-[var(--site-bg)] ">
+        <section className="py-16 px-6 bg-gradient-to-b from-[var(--site-soft)] to-[var(--site-bg)] ">
+          <div className="visual-hero">
+          <div>
             <h1
-              className="text-4xl md:text-5xl text-[#E0E5E8] mb-4"
+              className="text-4xl md:text-5xl text-[var(--site-text)] mb-4"
               style={{ fontFamily: 'var(--font-display)' }}
             >
               {t("部落格")}</h1>
-            <p className="text-lg text-[#A8B6BC] max-w-2xl">
+            <p className="text-lg text-[var(--site-muted)] max-w-2xl">
               {t("網站、AI 系統與 SEO／GEO 搜尋成長實作。區分官方規範、觀察與限制，不販售捷徑。")}</p>
-          </div>
+            </div>
+          <PageVisual path={"/blog"} priority />
+        </div>
         </section>
 
-        <section className="px-6 py-12 border-b border-[#344349]">
+        <section className="px-6 py-12 border-b border-[var(--site-border)]">
           <div className="max-w-5xl mx-auto">
             <div className="max-w-3xl mb-8">
-              <p className="text-xs uppercase tracking-[0.16em] text-amber-500">{t("Start here")}</p>
-              <h2 className="mt-3 text-2xl md:text-3xl text-[#E0E5E8]" style={{ fontFamily: 'var(--font-display)' }}>
+              <p className="text-xs uppercase tracking-[0.16em] text-[var(--site-accent)]">{t("Start here")}</p>
+              <h2 className="mt-3 text-2xl md:text-3xl text-[var(--site-text)]" style={{ fontFamily: 'var(--font-display)' }}>
                 {t("依你現在的決策問題開始閱讀")}</h2>
-              <p className="mt-3 text-[#A8B6BC] leading-relaxed">
+              <p className="mt-3 text-[var(--site-muted)] leading-relaxed">
                 {t("這裡不是依發布時間堆文章。每條路徑先回答原理，再進入成本、比較、整合或案例；如果只需要確認服務與報價，可直接前往對應頁面。")}</p>
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
               {contentTracks.map((track) => (
-                <article key={track.label} className="border border-[#344349] bg-stone-900/35 p-6">
-                  <h3 className="text-xl text-[#E0E5E8]">{t(track.label)}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-[#A8B6BC]">{t(track.description)}</p>
+                <article key={track.label} className="border border-[var(--site-border)] bg-[var(--site-card)]  p-6">
+                  <h3 className="text-xl text-[var(--site-text)]">{t(track.label)}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[var(--site-muted)]">{t(track.description)}</p>
                   <ul className="mt-5 space-y-3">
                     {track.links.map(([label, href]) => (
                       <li key={href}>
-                        <Link href={href} className="inline-flex items-center gap-2 text-sm text-amber-500 hover:underline">
+                        <Link href={href} className="inline-flex items-center gap-2 text-sm text-[var(--site-accent)] hover:underline">
                           {t(label)} <ArrowRight size={13} />
                         </Link>
                       </li>
@@ -154,28 +158,29 @@ export default async function BlogIndexPage({ params }: { params: Promise<{ loca
 
         <section className="py-12 px-6">
           <div className="max-w-4xl mx-auto">
-            <h2 className="mb-6 text-2xl text-[#E0E5E8]" style={{ fontFamily: 'var(--font-display)' }}>{t("全部實作文章")}</h2>
+            <h2 className="mb-6 text-2xl text-[var(--site-text)]" style={{ fontFamily: 'var(--font-display)' }}>{t("全部實作文章")}</h2>
             <div className="grid gap-6 md:grid-cols-2">
             {posts.map((post) => (
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="block p-6 border border-[#344349] rounded-lg bg-stone-900/30 hover:border-amber-500 transition-colors group"
+                className="block p-6 border border-[var(--site-border)] rounded-lg bg-[var(--site-card)]  hover:border-[var(--site-accent)] transition-colors group"
               >
+                <PageVisual path={`/blog/${post.slug}`} className="mb-5" sizes="(min-width: 768px) 45vw, 100vw" />
                 <h2
-                  className="text-xl text-[#E0E5E8] mb-3 group-hover:text-amber-500 transition-colors"
+                  className="text-xl text-[var(--site-text)] mb-3 group-hover:text-[var(--site-accent)] transition-colors"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {t(post.title)}
                 </h2>
-                <p className="text-[#A8B6BC] text-sm leading-relaxed line-clamp-3 mb-4">
+                <p className="text-[var(--site-muted)] text-sm leading-relaxed line-clamp-3 mb-4">
                   {t(post.description)}
                 </p>
-                <div className="flex items-center justify-between text-xs text-[#7A8A91]">
+                <div className="flex items-center justify-between text-xs text-[var(--site-muted)]">
                   <span className="inline-flex items-center gap-1">
                     <Calendar size={12} /> {t(post.datePublished)}
                   </span>
-                  <span className="inline-flex items-center gap-1 text-amber-500">
+                  <span className="inline-flex items-center gap-1 text-[var(--site-accent)]">
                     {t("閱讀全文")}<ArrowRight size={12} />
                   </span>
                 </div>

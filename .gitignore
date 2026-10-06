@@ -34,3 +34,8 @@ next-env.d.ts
 .DS_Store
 *.pem
 .gstack/
+
+# 本機個人履歷，含不公開的專案內容
+scripts/generate-personal-resume.tsx
+output/pdf/
+/tmp/visual-refresh-20261006/

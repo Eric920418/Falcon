@@ -1,3 +1,4 @@
+import { PageVisual } from '@/components/PageVisual'
 import { formatMoney } from '@/lib/i18n/format'
 
 import { getI18n } from '@/lib/i18n/server'
@@ -13,23 +14,26 @@ export function PricingPageTemplate({ page }: PricingPageTemplateProps) {
   const { t, locale } = getI18n()
 
   return (
-    <div className="bg-stone-950">
-      <section id="pricing-hero" className="relative py-16 px-6 bg-gradient-to-b from-[#1E2A2E] to-stone-950">
-        <div className="max-w-4xl mx-auto">
-          <nav className="text-sm text-[#7A8A91] mb-6 flex flex-wrap items-center gap-2">
-            <Link href="/" className="hover:text-amber-500">{t("首頁")}</Link>
+    <div className="bg-[var(--site-bg)] ">
+      <section id="pricing-hero" className="relative py-16 px-6 bg-gradient-to-b from-[var(--site-soft)] to-[var(--site-bg)] ">
+        <div className="visual-hero">
+          <div>
+          <nav className="text-sm text-[var(--site-muted)] mb-6 flex flex-wrap items-center gap-2">
+            <Link href="/" className="hover:text-[var(--site-accent)]">{t("首頁")}</Link>
             <ChevronRight size={14} />
-            <Link href="/pricing" className="hover:text-amber-500">{t("透明定價")}</Link>
+            <Link href="/pricing" className="hover:text-[var(--site-accent)]">{t("透明定價")}</Link>
             <ChevronRight size={14} />
-            <span className="text-[#A8B6BC]">{t(page.h1)}</span>
+            <span className="text-[var(--site-muted)]">{t(page.h1)}</span>
           </nav>
           <h1
-            className="text-4xl md:text-5xl text-[#E0E5E8] mb-4"
+            className="text-4xl md:text-5xl text-[var(--site-text)] mb-4"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             {t(page.h1)}
           </h1>
-          <p className="text-lg text-[#A8B6BC] leading-relaxed">{t(page.intro)}</p>
+          <p className="text-lg text-[var(--site-muted)] leading-relaxed">{t(page.intro)}</p>
+          </div>
+          <PageVisual path={`/pricing/${page.slug}`} priority />
         </div>
       </section>
 
@@ -39,34 +43,34 @@ export function PricingPageTemplate({ page }: PricingPageTemplateProps) {
             <div
               key={i}
               className={`p-6 rounded-lg border ${
-                i === 1 ? 'border-amber-500 bg-amber-500/5' : 'border-[#344349] bg-stone-900/50'
+                i === 1 ? 'border-[var(--site-accent)] bg-[var(--site-accent)]/5' : 'border-[var(--site-border)] bg-[var(--site-card)] '
               }`}
             >
-              <h2 className="text-xl text-[#E0E5E8] mb-1" style={{ fontFamily: 'var(--font-display)' }}>
+              <h2 className="text-xl text-[var(--site-text)] mb-1" style={{ fontFamily: 'var(--font-display)' }}>
                 {t(tier.name)}
               </h2>
               <div className="mb-4">
-                <span className="text-3xl text-amber-500">{t(formatMoney(tier.price, locale))}</span>
-                <span className="text-sm text-[#7A8A91]"> {t("/")}{t(tier.unit)}</span>
+                <span className="text-3xl text-[var(--site-accent)]">{t(formatMoney(tier.price, locale))}</span>
+                <span className="text-sm text-[var(--site-muted)]"> {t("/")}{t(tier.unit)}</span>
               </div>
-              {tier.bestFor && <p className="text-sm text-[#7A8A91] italic mb-4">{t("適合：")}{t(tier.bestFor)}</p>}
+              {tier.bestFor && <p className="text-sm text-[var(--site-muted)] italic mb-4">{t("適合：")}{t(tier.bestFor)}</p>}
               <div className="mb-3">
-                <h3 className="text-xs text-[#A8B6BC] uppercase tracking-wider mb-2">{t("包含內容")}</h3>
+                <h3 className="text-xs text-[var(--site-muted)] uppercase tracking-wider mb-2">{t("包含內容")}</h3>
                 <ul className="space-y-2">
                   {tier.includes.map((item, j) => (
-                    <li key={j} className="flex items-start gap-2 text-sm text-[#A8B6BC]">
-                      <Check size={16} className="text-amber-500 flex-shrink-0 mt-0.5" />
+                    <li key={j} className="flex items-start gap-2 text-sm text-[var(--site-muted)]">
+                      <Check size={16} className="text-[var(--site-accent)] flex-shrink-0 mt-0.5" />
                       <span>{t(item)}</span>
                     </li>
                   ))}
                 </ul>
               </div>
               {tier.notIncludes && tier.notIncludes.length > 0 && (
-                <div className="mt-4 pt-4 border-t border-[#344349]/50">
-                  <h3 className="text-xs text-[#7A8A91] uppercase tracking-wider mb-2">{t("不包含")}</h3>
+                <div className="mt-4 pt-4 border-t border-[var(--site-border)]/50">
+                  <h3 className="text-xs text-[var(--site-muted)] uppercase tracking-wider mb-2">{t("不包含")}</h3>
                   <ul className="space-y-1">
                     {tier.notIncludes.map((item, j) => (
-                      <li key={j} className="flex items-start gap-2 text-xs text-[#7A8A91]">
+                      <li key={j} className="flex items-start gap-2 text-xs text-[var(--site-muted)]">
                         <X size={14} className="flex-shrink-0 mt-0.5" />
                         <span>{t(item)}</span>
                       </li>
@@ -79,19 +83,19 @@ export function PricingPageTemplate({ page }: PricingPageTemplateProps) {
         </div>
       </section>
 
-      <section id="pricing-details" className="px-6 py-12 bg-[#1E2A2E]/35">
+      <section id="pricing-details" className="px-6 py-12 bg-[var(--site-soft)]">
         <div className="max-w-4xl mx-auto space-y-10">
           {page.sections.map((section) => (
             <article key={section.heading}>
-              <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+              <h2 className="text-2xl md:text-3xl text-[var(--site-text)] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
                 {t(section.heading)}
               </h2>
-              {section.body && <p className="text-[#A8B6BC] leading-relaxed mb-4">{t(section.body)}</p>}
+              {section.body && <p className="text-[var(--site-muted)] leading-relaxed mb-4">{t(section.body)}</p>}
               {section.items && (
                 <ul className="grid gap-3 md:grid-cols-2">
                   {section.items.map((item) => (
-                    <li key={item} className="flex items-start gap-3 border border-[#344349] bg-stone-900/40 p-4 text-sm leading-relaxed text-[#A8B6BC]">
-                      <Check size={17} className="mt-0.5 shrink-0 text-amber-500" />
+                    <li key={item} className="flex items-start gap-3 border border-[var(--site-border)] bg-[var(--site-card)]  p-4 text-sm leading-relaxed text-[var(--site-muted)]">
+                      <Check size={17} className="mt-0.5 shrink-0 text-[var(--site-accent)]" />
                       <span>{t(item)}</span>
                     </li>
                   ))}
@@ -104,16 +108,16 @@ export function PricingPageTemplate({ page }: PricingPageTemplateProps) {
 
       <section id="faq" className="py-12 px-6">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
+          <h2 className="text-2xl md:text-3xl text-[var(--site-text)] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
             {t("常見問題")}</h2>
           <div className="space-y-4">
             {page.faq.map((item, i) => (
-              <details key={i} className="group border border-[#344349] rounded-lg overflow-hidden bg-stone-900/30">
-                <summary className="px-6 py-4 cursor-pointer text-[#E0E5E8] hover:bg-[#344349]/30 flex justify-between items-center">
+              <details key={i} className="group border border-[var(--site-border)] rounded-lg overflow-hidden bg-[var(--site-card)] ">
+                <summary className="px-6 py-4 cursor-pointer text-[var(--site-text)] hover:bg-[var(--site-tint)] flex justify-between items-center">
                   <span className="font-medium">{t(item.question)}</span>
-                  <ChevronRight size={20} className="text-[#7A8A91] group-open:rotate-90 transition-transform" />
+                  <ChevronRight size={20} className="text-[var(--site-muted)] group-open:rotate-90 transition-transform" />
                 </summary>
-                <div className="px-6 pb-4 text-[#A8B6BC] leading-relaxed">{t(item.answer)}</div>
+                <div className="px-6 pb-4 text-[var(--site-muted)] leading-relaxed">{t(item.answer)}</div>
               </details>
             ))}
           </div>
@@ -123,14 +127,14 @@ export function PricingPageTemplate({ page }: PricingPageTemplateProps) {
       {page.relatedLinks && page.relatedLinks.length > 0 && (
         <section id="related-links" className="px-6 pb-12">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+            <h2 className="text-xl text-[var(--site-text)] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
               {t("延伸閱讀")}</h2>
             <ul className="flex flex-wrap gap-3">
               {page.relatedLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="inline-flex items-center gap-2 rounded border border-[#344349] px-4 py-2 text-sm text-[#A8B6BC] transition-colors hover:border-amber-500/60 hover:text-amber-500"
+                    className="inline-flex items-center gap-2 rounded border border-[var(--site-border)] px-4 py-2 text-sm text-[var(--site-muted)] transition-colors hover:border-[var(--site-accent)]/60 hover:text-[var(--site-accent)]"
                   >
                     {t(link.label)}
                     <ArrowRight size={14} />
@@ -142,9 +146,9 @@ export function PricingPageTemplate({ page }: PricingPageTemplateProps) {
         </section>
       )}
 
-      <section className="py-12 px-6 bg-[#1E2A2E]/50">
+      <section className="py-12 px-6 bg-[var(--site-soft)]">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl text-[#E0E5E8] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
+          <h2 className="text-2xl md:text-3xl text-[var(--site-text)] mb-4" style={{ fontFamily: 'var(--font-display)' }}>
             {t("想要實際報價？")}</h2>
           <Link href="/#contact" className="falcon-btn-primary inline-flex items-center">
             {t("預約諮詢")}<ArrowRight size={18} className="ml-2" />

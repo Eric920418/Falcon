@@ -1,3 +1,4 @@
+import { PageVisual } from '@/components/PageVisual'
 
 import { getI18n, initLocale } from '@/lib/i18n/server'
 import Link from '@/lib/i18n/link'
@@ -44,18 +45,19 @@ function ServiceCard({ service }: { service: ServiceContent }) {
   return (
     <Link
       href={`/services/${service.slug}`}
-      className="group flex flex-col rounded-lg border border-[#344349] bg-[#1E2A2E]/60 p-6 transition-colors hover:border-amber-500/60"
+      className="group flex flex-col rounded-lg border border-[var(--site-border)] bg-[var(--site-soft)] p-6 transition-colors hover:border-[var(--site-accent)]/60"
     >
+      <PageVisual path={`/services/${service.slug}`} className="mb-5" sizes="(min-width: 1024px) 30vw, 100vw" />
       <h3
-        className="mb-3 text-xl text-[#E0E5E8] group-hover:text-amber-500"
+        className="mb-3 text-xl text-[var(--site-text)] group-hover:text-[var(--site-accent)]"
         style={{ fontFamily: 'var(--font-display)' }}
       >
         {t(service.h1)}
       </h3>
-      <p className="mb-6 flex-1 text-sm leading-relaxed text-[#A8B6BC]">{t(service.description)}</p>
+      <p className="mb-6 flex-1 text-sm leading-relaxed text-[var(--site-muted)]">{t(service.description)}</p>
       <div className="flex items-center justify-between">
-        <span className="font-mono text-sm text-amber-500">{formatPrice(service)}</span>
-        <ArrowRight size={18} className="text-[#5F808B] transition-transform group-hover:translate-x-1 group-hover:text-amber-500" />
+        <span className="font-mono text-sm text-[var(--site-accent)]">{formatPrice(service)}</span>
+        <ArrowRight size={18} className="text-[var(--site-accent)] transition-transform group-hover:translate-x-1 group-hover:text-[var(--site-accent)]" />
       </div>
     </Link>
   )
@@ -96,34 +98,37 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
   return (
     <PageShell>
       <JsonLd data={schemas} />
-      <div className="bg-stone-950">
-        <section className="relative bg-gradient-to-b from-[#1E2A2E] to-stone-950 px-6 py-20">
-          <div className="mx-auto max-w-5xl">
-            <nav className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[#7A8A91]" aria-label={t("麵包屑")}>
-              <Link href="/" className="hover:text-amber-500">{t("首頁")}</Link>
+      <div className="bg-[var(--site-bg)] ">
+        <section className="relative bg-gradient-to-b from-[var(--site-soft)] to-[var(--site-bg)]  px-6 py-20">
+          <div className="visual-hero">
+          <div>
+            <nav className="mb-6 flex flex-wrap items-center gap-2 text-sm text-[var(--site-muted)]" aria-label={t("麵包屑")}>
+              <Link href="/" className="hover:text-[var(--site-accent)]">{t("首頁")}</Link>
               <ChevronRight size={14} aria-hidden="true" />
-              <span className="text-[#A8B6BC]">{t("服務項目")}</span>
+              <span className="text-[var(--site-muted)]">{t("服務項目")}</span>
             </nav>
             <h1
-              className="mb-6 text-4xl leading-tight text-[#E0E5E8] md:text-5xl"
+              className="mb-6 text-4xl leading-tight text-[var(--site-text)] md:text-5xl"
               style={{ fontFamily: 'var(--font-display)' }}
             >
               {t(pageHeading)}
             </h1>
-            <p className="max-w-3xl text-lg leading-relaxed text-[#A8B6BC]">
+            <p className="max-w-3xl text-lg leading-relaxed text-[var(--site-muted)]">
               {t("我們的工作分成兩條主軸：一條是「把東西做出來」——網站、系統、AI 工具與語音客服的開發建置； 另一條是「讓對的人找到你」——傳統搜尋（SEO）與 AI 搜尋（GEO）的長期成長。 兩條軸可以單獨委託，也常常互相銜接：先把網站體質做好，再開始經營搜尋。")}</p>
-          </div>
+            </div>
+          <PageVisual path={"/services"} priority />
+        </div>
         </section>
 
         <section className="px-6 py-16">
           <div className="mx-auto max-w-5xl space-y-14">
             <div>
               <h2
-                className="mb-2 text-2xl text-[#E0E5E8] md:text-3xl"
+                className="mb-2 text-2xl text-[var(--site-text)] md:text-3xl"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 {t("網站與 AI 開發")}</h2>
-              <p className="mb-8 max-w-3xl text-[#A8B6BC]">
+              <p className="mb-8 max-w-3xl text-[var(--site-muted)]">
                 {t("從企業官網、電商到客製系統與 AI 工具，交付內容都包含原始碼與後台，帳號與資料歸屬客戶。")}</p>
               <div className="grid gap-6 md:grid-cols-3">
                 {devServices.map((service) => (
@@ -134,11 +139,11 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
 
             <div>
               <h2
-                className="mb-2 text-2xl text-[#E0E5E8] md:text-3xl"
+                className="mb-2 text-2xl text-[var(--site-text)] md:text-3xl"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 {t("SEO／GEO 搜尋成長")}</h2>
-              <p className="mb-8 max-w-3xl text-[#A8B6BC]">
+              <p className="mb-8 max-w-3xl text-[var(--site-muted)]">
                 {t("以技術修正、實名內容與案例證據累積搜尋能見度；GEO 方案另外量測 ChatGPT、Perplexity 等 AI 平台的引用狀況。我們不販售保證排名或保證引用。")}</p>
               <div className="grid gap-6 md:grid-cols-2">
                 {searchServices.map((service) => (
@@ -149,14 +154,14 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
           </div>
         </section>
 
-        <section className="border-t border-[#344349]/50 px-6 py-16">
+        <section className="border-t border-[var(--site-border)]/50 px-6 py-16">
           <div className="mx-auto max-w-5xl">
             <h2
-              className="mb-4 text-2xl text-[#E0E5E8] md:text-3xl"
+              className="mb-4 text-2xl text-[var(--site-text)] md:text-3xl"
               style={{ fontFamily: 'var(--font-display)' }}
             >
               {t("合作怎麼開始")}</h2>
-            <p className="mb-8 max-w-3xl leading-relaxed text-[#A8B6BC]">
+            <p className="mb-8 max-w-3xl leading-relaxed text-[var(--site-muted)]">
               {t("不論哪項服務，第一步都是需求訪談：你先說現況與目標，我們評估做不做得到、值不值得做。 評估後會給白紙黑字的報價與範圍——開發案寫清楚頁面、功能與驗收條件； 月費服務寫清楚每月交付項目與退場方式。如果評估後認為你現階段不需要這項服務，我們會直接說。")}</p>
             <div className="flex flex-wrap gap-4">
               <Link href="/pricing" className="falcon-btn-primary">
@@ -164,12 +169,12 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
               </Link>
               <Link
                 href="/case-studies"
-                className="rounded border border-[#5F808B] px-6 py-3 text-[#C5CED2] transition-colors hover:bg-[#344349]/30"
+                className="rounded border border-[var(--site-accent)] px-6 py-3 text-[var(--site-text)] transition-colors hover:bg-[var(--site-tint)]"
               >
                 {t("看公開案例")}</Link>
               <Link
                 href="/compare/seo-vs-geo-vs-aeo"
-                className="rounded border border-[#5F808B] px-6 py-3 text-[#C5CED2] transition-colors hover:bg-[#344349]/30"
+                className="rounded border border-[var(--site-accent)] px-6 py-3 text-[var(--site-text)] transition-colors hover:bg-[var(--site-tint)]"
               >
                 {t("SEO 與 GEO 差在哪？")}</Link>
             </div>

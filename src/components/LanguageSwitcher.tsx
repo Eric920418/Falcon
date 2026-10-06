@@ -18,9 +18,9 @@ export function LanguageSwitcher() {
   const ui = languageUi(locale)
   const path = usePathname()
   if (/^\/(?:card|resume|privacy|terms)(?:\/|$)/.test(path)) return null
-  return <label className="ml-auto xl:ml-0 inline-flex shrink-0 items-center gap-2 text-sm text-stone-200">
+  return <label className="ml-auto xl:ml-0 inline-flex shrink-0 items-center gap-2 text-sm text-[var(--site-text)]">
     <span className="sr-only">{ui.label}</span>
-    <select aria-label={ui.label} value={locale} onChange={event => changeLanguage(event.target.value as Locale, ui.unsent)} className="max-w-36 rounded border border-stone-600 bg-stone-900 px-2 py-2 text-sm focus-visible:outline-amber-500">
+    <select aria-label={ui.label} value={locale} onChange={event => changeLanguage(event.target.value as Locale, ui.unsent)} className="max-w-36 rounded border border-[var(--site-border)] bg-[var(--site-card)]  px-2 py-2 text-sm focus-visible:outline-[var(--site-accent)]">
       {locales.map(value => <option key={value} value={value} lang={languageInfo[value].lang}>{languageInfo[value].name}</option>)}
     </select>
   </label>
@@ -37,9 +37,9 @@ export function LanguageSuggestion() {
   }, [locale, path])
   if (!suggestion) return null
   const ui = languageUi(suggestion)
-  return <aside aria-label={ui.suggestion} lang={languageInfo[suggestion].lang} className="fixed bottom-4 left-4 right-4 z-50 mx-auto flex max-w-xl flex-wrap items-center justify-between gap-3 rounded-lg border border-amber-700 bg-stone-900 p-4 text-sm text-stone-100 shadow-xl">
+  return <aside aria-label={ui.suggestion} lang={languageInfo[suggestion].lang} className="falcon-site fixed bottom-4 left-4 right-4 z-50 mx-auto flex max-w-xl flex-wrap items-center justify-between gap-3 rounded-lg border border-[var(--site-accent)] bg-[var(--site-card)]  p-4 text-sm text-[var(--site-text)] shadow-xl">
     <span>{ui.suggestion}: {languageInfo[suggestion].name}</span>
-    <button type="button" className="rounded border border-amber-500 px-3 py-2 text-amber-400" onClick={() => changeLanguage(suggestion, languageUi(locale).unsent)}>{ui.change}</button>
+    <button type="button" className="rounded border border-[var(--site-accent)] px-3 py-2 text-[var(--site-accent)]" onClick={() => changeLanguage(suggestion, languageUi(locale).unsent)}>{ui.change}</button>
     <button type="button" className="rounded p-2" aria-label={ui.dismiss} onClick={() => { remember('dismissed'); setSuggestion(undefined) }}>×</button>
   </aside>
 }

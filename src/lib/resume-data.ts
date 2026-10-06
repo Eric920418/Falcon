@@ -17,7 +17,7 @@ export type SkillGroup = {
 export type ExperienceItem = {
   company: Bilingual
   role: Bilingual
-  period: string
+  period: Bilingual
   highlights: Bilingual[]
 }
 
@@ -70,8 +70,8 @@ export const resumeData: ResumeData = {
     en: 'Eric Tsai',
   },
   title: {
-    zh: '全端工程師 · 數位產品創業者',
-    en: 'Full-Stack Engineer · Digital Product Builder',
+    zh: '全端工程師',
+    en: 'Full-Stack Engineer',
   },
   contact: {
     email: '26416387.re@gmail.com',
@@ -96,6 +96,7 @@ export const resumeData: ResumeData = {
         'Next.js 16 (App Router)',
         'React 19',
         'Vue.js',
+        'Sass',
         'Tailwind CSS v4',
         'Framer Motion',
         'GSAP + ScrollTrigger',
@@ -114,6 +115,7 @@ export const resumeData: ResumeData = {
         'BullMQ + Redis',
         'Server-Sent Events',
         'Express',
+        'Django',
       ],
     },
     {
@@ -165,6 +167,7 @@ export const resumeData: ResumeData = {
         'Azure Kinect',
         'Unreal Engine',
         'SEO / GEO / AEO',
+        'Google Sheets / Apps Script',
       ],
     },
   ],
@@ -172,7 +175,7 @@ export const resumeData: ResumeData = {
     {
       company: { zh: '獨立接案 / 自由工作者', en: 'Independent / Freelance' },
       role: { zh: '全端工程師', en: 'Full-Stack Engineer' },
-      period: '2024 ~ Present',
+      period: { zh: '2022 至今', en: '2022 - Present' },
       highlights: [
         {
           zh: '獨立交付 20+ 個生產級專案，涵蓋電商、企業官網、AI 工具、POS、學術系統等領域，客戶包括老字號食品品牌、國際顧問公司、學術機構與新創',
@@ -190,11 +193,13 @@ export const resumeData: ResumeData = {
           zh: '打造 TellCraft AI 網站生成平台，整合 Claude API + BullMQ 任務佇列 + Sandpack 即時沙箱，實現從需求對話到部署上線的一站式流程',
           en: 'Built TellCraft AI website generation platform, integrating Claude API + BullMQ job queues + Sandpack live sandbox — a complete flow from requirement chat to live deployment',
         },
-        {
-          zh: '開發企業 HR 管理系統（四級 RBAC、32 項細粒度權限、React Flow 工作流編輯器、GraphQL DataLoader 解 N+1），支撐人力仲介的三層架構（前台/員工/決策）',
-          en: 'Developed enterprise HR platform (4-tier RBAC with 32 fine-grained permissions, React Flow workflow editor, GraphQL DataLoader to fix N+1) supporting three-tier architecture (frontend/employee/admin) for staffing agencies',
-        },
       ],
+    },
+    {
+      company: { zh: '', en: '' },
+      role: { zh: '資料工程師', en: 'Data Engineer' },
+      period: { zh: '2022 年以前 / 2 年', en: 'Before 2022 / 2 years' },
+      highlights: [],
     },
   ],
   projects: [
@@ -217,16 +222,6 @@ export const resumeData: ResumeData = {
       tech: ['Next.js 14', 'TypeScript', 'GraphQL Yoga', 'Prisma', 'PostgreSQL', 'Redis'],
       url: 'https://yizhenxiang.com.tw/zh-TW',
       image: '/resume-images/滷味.jpg',
-    },
-    {
-      name: '企業 HR 管理系統',
-      description: {
-        zh: '企業級人力資源管理與形象網站系統，三層架構（前台形象/員工平台/決策後台）。四級 RBAC 權限（32 項細粒度權限）、React Flow 可視化工作流編輯器、動態 CMS、行政簽核系統、活動日誌追蹤，GraphQL DataLoader 解決 N+1。',
-        en: 'Enterprise HR platform with three-tier architecture (brand site / employee platform / decision admin). 4-tier RBAC with 32 fine-grained permissions, React Flow visual workflow editor, dynamic CMS, approval system, activity logs. GraphQL DataLoader fixes N+1.',
-      },
-      tech: ['Next.js 16', 'React 19', 'GraphQL Yoga', 'Apollo Client', 'React Flow', 'NextAuth'],
-      url: 'https://manpower2.vercel.app',
-      image: '/resume-images/展望國際人力.jpg',
     },
     {
       name: '現場 AI 智能客服系統',
@@ -365,15 +360,14 @@ export const resumeData: ResumeData = {
   ],
   education: [
     {
-      school: {
-        zh: '國立臺北教育大學',
-        en: 'National Taipei University of Education',
-      },
-      degree: {
-        zh: '科技教育傳播學系',
-        en: 'Department of Technology, Education & Communication',
-      },
-      period: '— TODO 就學期間 —', // 請改成例如 2019-09 ~ 2023-06
+      school: { zh: '國立臺北教育大學', en: 'National Taipei University of Education' },
+      degree: { zh: '課程與教學傳播科技研究所 - 在學', en: 'Graduate School of Curriculum and Instructional Communications Technology - Enrolled' },
+      period: '',
+    },
+    {
+      school: { zh: '元智大學', en: 'Yuan Ze University' },
+      degree: { zh: '資訊傳播學系 - 畢業', en: 'Department of Information Communication - Graduated' },
+      period: '',
     },
   ],
   photoPath: undefined, // 等你給照片後設為 '/resume-photo.jpg'

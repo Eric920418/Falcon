@@ -46,7 +46,7 @@ export function SitePageHeader() {
 
   return (
     <motion.header
-      className="sticky top-0 left-0 right-0 z-40 bg-[#1E2A2E] border-b border-[#344349]/50"
+      className="sticky top-0 left-0 right-0 z-40 bg-[var(--site-soft)] border-b border-[var(--site-border)]/50"
       initial={{ y: -60 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.4 }}
@@ -55,7 +55,7 @@ export function SitePageHeader() {
         <Link href="/" className="flex items-center gap-3 group">
           <Image src="/logo.png" alt={t("隼訊數位行銷 — 回首頁")} width={44} height={44} className="rounded" />
           <span
-            className="hidden sm:inline text-xl text-[#E0E5E8] group-hover:text-[#A8B6BC] transition-colors"
+            className="hidden sm:inline text-xl text-[var(--site-text)] group-hover:text-[var(--site-muted)] transition-colors"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             {t("隼訊數位行銷")}</span>
@@ -79,7 +79,7 @@ export function SitePageHeader() {
                   }}
                 >
                   <button
-                    className="flex items-center gap-1 px-3 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8]"
+                    className="flex items-center gap-1 px-3 py-2 text-sm text-[var(--site-muted)] hover:text-[var(--site-text)]"
                     aria-expanded={openDropdown === item.label}
                     onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
                   >
@@ -87,9 +87,9 @@ export function SitePageHeader() {
                   </button>
                   {openDropdown === item.label && (
                     <div className="absolute left-0 top-full w-64 pt-2">
-                      <div className="rounded-lg border border-[#344349] bg-[#1E2A2E] py-2 shadow-xl">
+                      <div className="rounded-lg border border-[var(--site-border)] bg-[var(--site-soft)] py-2 shadow-xl">
                         {item.items.map((child) => (
-                          <Link key={child.href} href={child.href} className="block px-4 py-2 text-sm text-[#A8B6BC] hover:bg-[#2D3B40] hover:text-amber-500">
+                          <Link key={child.href} href={child.href} className="block px-4 py-2 text-sm text-[var(--site-muted)] hover:bg-[var(--site-soft)] hover:text-[var(--site-accent)]">
                             {t(child.label)}
                           </Link>
                         ))}
@@ -104,7 +104,7 @@ export function SitePageHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="relative px-3 py-2 text-sm text-[#A8B6BC] hover:text-[#E0E5E8] transition-colors group"
+                className="relative px-3 py-2 text-sm text-[var(--site-muted)] hover:text-[var(--site-text)] transition-colors group"
               >
                 {t(item.label)}
                 <span className="absolute bottom-1 left-3 right-3 h-px bg-[#5F808B] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
@@ -119,7 +119,7 @@ export function SitePageHeader() {
           {t("立即諮詢")}</Link>
 
         <button
-          className="xl:hidden w-10 h-10 flex items-center justify-center text-[#C5CED2]"
+          className="xl:hidden w-10 h-10 flex items-center justify-center text-[var(--site-text)]"
           onClick={() => setIsMobileOpen(!isMobileOpen)}
           id="page-menu-toggle"
           aria-expanded={isMobileOpen}
@@ -135,7 +135,7 @@ export function SitePageHeader() {
           <motion.div
             id="page-mobile-menu"
             onKeyDown={(event) => { if (event.key === 'Escape') { setIsMobileOpen(false); document.getElementById('page-menu-toggle')?.focus() } }}
-            className="xl:hidden fixed inset-x-0 top-[72px] h-[calc(100dvh-72px)] overflow-y-auto bg-[#1E2A2E] z-30"
+            className="xl:hidden fixed inset-x-0 top-[72px] h-[calc(100dvh-72px)] overflow-y-auto bg-[var(--site-soft)] z-30"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -146,13 +146,13 @@ export function SitePageHeader() {
                 if ('items' in item) {
                   const isOpen = mobileDropdown === item.label
                   return (
-                    <div key={item.label} className="border-b border-[#344349]/50">
+                    <div key={item.label} className="border-b border-[var(--site-border)]/50">
                       <button
                         onClick={() => setMobileDropdown(isOpen ? null : item.label)}
-                        className="flex w-full items-center gap-4 py-4 text-left text-lg text-[#C5CED2]"
+                        className="flex w-full items-center gap-4 py-4 text-left text-lg text-[var(--site-text)]"
                         aria-expanded={isOpen}
                       >
-                        <span className="w-6 text-[#5F808B] text-sm">{t("0")}{index + 1}</span>
+                        <span className="w-6 text-[var(--site-accent)] text-sm">{t("0")}{index + 1}</span>
                         <span className="flex-1" style={{ fontFamily: 'var(--font-display)' }}>{t(item.label)}</span>
                         <ChevronDown size={18} className={isOpen ? 'rotate-180' : ''} />
                       </button>
@@ -163,7 +163,7 @@ export function SitePageHeader() {
                               key={child.href}
                               href={child.href}
                               onClick={() => setIsMobileOpen(false)}
-                              className="py-2.5 text-[#A8B6BC] hover:text-amber-500"
+                              className="py-2.5 text-[var(--site-muted)] hover:text-[var(--site-accent)]"
                             >
                               {t(child.label)}
                             </Link>
@@ -179,9 +179,9 @@ export function SitePageHeader() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setIsMobileOpen(false)}
-                    className="flex items-center gap-4 py-4 text-left text-lg text-[#C5CED2] border-b border-[#344349]/50"
+                    className="flex items-center gap-4 py-4 text-left text-lg text-[var(--site-text)] border-b border-[var(--site-border)]/50"
                   >
-                    <span className="w-6 text-[#5F808B] text-sm">{t("0")}{index + 1}</span>
+                    <span className="w-6 text-[var(--site-accent)] text-sm">{t("0")}{index + 1}</span>
                     <span style={{ fontFamily: 'var(--font-display)' }}>{t(item.label)}</span>
                   </Link>
                 )

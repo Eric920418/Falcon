@@ -1,6 +1,6 @@
 
 import { getI18n } from '@/lib/i18n/server'
-import Image from 'next/image'
+import { ImageWithFallback as Image } from '@/components/figma/ImageWithFallback'
 import Link from '@/lib/i18n/link'
 import { ArrowRight } from 'lucide-react'
 import { getAllCaseStudies } from '@/lib/content/case-studies'
@@ -11,21 +11,21 @@ export function HomeCases() {
   const studies = getAllCaseStudies()
 
   return (
-    <section id="cases" className="py-24 px-6 bg-[#1E2A2E]">
+    <section id="cases" className="py-24 px-6 bg-[var(--site-soft)]">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-12">
           <div>
-            <p className="text-amber-500 text-sm tracking-widest uppercase mb-3">{t("Evidence")}</p>
-            <h2 className="text-3xl md:text-5xl text-[#E0E5E8]">{t("案例先講證據，再講限制")}</h2>
+            <p className="text-[var(--site-accent)] text-sm tracking-widest uppercase mb-3">{t("Evidence")}</p>
+            <h2 className="text-3xl md:text-5xl text-[var(--site-text)]">{t("案例先講證據，再講限制")}</h2>
           </div>
-          <Link href="/case-studies" className="inline-flex items-center gap-2 text-amber-500 hover:underline">
-            {t("查看完整 34 項作品")}<ArrowRight size={17} />
+          <Link href="/case-studies" className="inline-flex items-center gap-2 text-[var(--site-accent)] hover:underline">
+            {t("查看完整 33 項作品")}<ArrowRight size={17} />
           </Link>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
           {studies.map((study) => (
-            <article key={study.slug} className="rounded-xl overflow-hidden border border-[#344349] bg-stone-950/45">
+            <article key={study.slug} className="rounded-xl overflow-hidden border border-[var(--site-border)] bg-[var(--site-bg)] ">
               <div className="relative aspect-[16/10]">
                 <Image
                   src={study.image}
@@ -37,12 +37,12 @@ export function HomeCases() {
                 />
               </div>
               <div className="p-6">
-                <p className="text-xs text-amber-500">{t(study.location)}</p>
-                <h3 className="text-xl text-[#E0E5E8] my-3">{t(study.title)}</h3>
-                <p className="text-sm text-[#A8B6BC] leading-relaxed">{t(study.summary)}</p>
+                <p className="text-xs text-[var(--site-accent)]">{t(study.location)}</p>
+                <h3 className="text-xl text-[var(--site-text)] my-3">{t(study.title)}</h3>
+                <p className="text-sm text-[var(--site-muted)] leading-relaxed">{t(study.summary)}</p>
                 <Link
                   href={`/case-studies/${study.slug}`}
-                  className="inline-flex items-center gap-2 text-amber-500 mt-5 hover:underline"
+                  className="inline-flex items-center gap-2 text-[var(--site-accent)] mt-5 hover:underline"
                 >
                   {t("查看證據")}<ArrowRight size={15} />
                 </Link>

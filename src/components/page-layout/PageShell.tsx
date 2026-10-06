@@ -7,7 +7,7 @@ interface PageShellProps {
 
 export function PageShell({ children }: PageShellProps) {
   return (
-    <div className="bg-stone-950 text-stone-100 min-h-screen flex flex-col">
+    <div className="falcon-site bg-[var(--site-bg)] text-[var(--site-text)] min-h-screen flex flex-col">
       <SitePageHeader />
       <main className="flex-1">{children}</main>
       <SitePageFooter />

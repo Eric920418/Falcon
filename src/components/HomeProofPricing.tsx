@@ -9,14 +9,14 @@ export function HomeProofPricing() {
   const { t, locale } = getI18n()
 
   return (
-    <section className="px-6 py-24 bg-stone-950 border-y border-[#344349]/40">
+    <section className="px-6 py-24 bg-[var(--site-bg)]  border-y border-[var(--site-border)]/40">
       <div className="max-w-6xl mx-auto grid lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-16">
         <div>
-          <p className="text-amber-500 text-sm tracking-widest uppercase mb-4">{t("Proof & pricing")}</p>
-          <h2 className="text-3xl md:text-5xl text-[#E0E5E8] leading-tight mb-6">
+          <p className="text-[var(--site-accent)] text-sm tracking-widest uppercase mb-4">{t("Proof & pricing")}</p>
+          <h2 className="text-3xl md:text-5xl text-[var(--site-text)] leading-tight mb-6">
             {t("案例有廣度，價格不藏")}</h2>
-          <p className="text-[#A8B6BC] leading-relaxed mb-8">
-            {t("完整作品集收錄 34 項網站、系統與 App，其中三項提供獨立證據與限制頁；四個核心服務公開目前起價與報價因素，先確認預算是否對得上。")}</p>
+          <p className="text-[var(--site-muted)] leading-relaxed mb-8">
+            {t("完整作品集收錄 33 項網站、系統與 App，其中三項提供獨立證據與限制頁；四個核心服務公開目前起價與報價因素，先確認預算是否對得上。")}</p>
 
           <div className="grid grid-cols-3 gap-3 mb-8">
             {[
@@ -24,14 +24,14 @@ export function HomeProofPricing() {
               ['3', '證據詳頁'],
               ['4', '公開起價'],
             ].map(([value, label]) => (
-              <div key={label} className="border border-[#344349] rounded-lg p-4 bg-[#1E2A2E]/50">
-                <p className="text-2xl md:text-3xl text-amber-500">{t(value)}</p>
-                <p className="text-xs text-[#A8B6BC] mt-1">{t(label)}</p>
+              <div key={label} className="border border-[var(--site-border)] rounded-lg p-4 bg-[var(--site-soft)]">
+                <p className="text-2xl md:text-3xl text-[var(--site-accent)]">{t(value)}</p>
+                <p className="text-xs text-[var(--site-muted)] mt-1">{t(label)}</p>
               </div>
             ))}
           </div>
 
-          <Link href="/case-studies" className="inline-flex items-center gap-2 text-amber-500 hover:underline">
+          <Link href="/case-studies" className="inline-flex items-center gap-2 text-[var(--site-accent)] hover:underline">
             {t("查看完整案例")}<ArrowRight size={16} />
           </Link>
         </div>
@@ -39,10 +39,10 @@ export function HomeProofPricing() {
         <div>
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
-              <p className="text-sm text-[#7A8A91] mb-2">{t("公開起價")}</p>
-              <h3 className="text-2xl text-[#E0E5E8]">{t("先確認預算是否對得上")}</h3>
+              <p className="text-sm text-[var(--site-muted)] mb-2">{t("公開起價")}</p>
+              <h3 className="text-2xl text-[var(--site-text)]">{t("先確認預算是否對得上")}</h3>
             </div>
-            <Link href="/pricing" className="hidden sm:inline-flex items-center gap-2 text-sm text-amber-500 hover:underline">
+            <Link href="/pricing" className="hidden sm:inline-flex items-center gap-2 text-sm text-[var(--site-accent)] hover:underline">
               {t("完整價格")}<ArrowRight size={14} />
             </Link>
           </div>
@@ -52,17 +52,17 @@ export function HomeProofPricing() {
               <Link
                 key={price.serviceSlug}
                 href={`/pricing/${price.pricingSlug}`}
-                className="border border-[#344349] rounded-xl p-5 bg-[#1E2A2E]/55 hover:border-amber-500 transition-colors"
+                className="border border-[var(--site-border)] rounded-xl p-5 bg-[var(--site-soft)] hover:border-[var(--site-accent)] transition-colors"
               >
-                <p className="text-sm text-[#A8B6BC]">{t(price.name)}</p>
-                <p className="text-2xl text-[#E0E5E8] mt-3">
+                <p className="text-sm text-[var(--site-muted)]">{t(price.name)}</p>
+                <p className="text-2xl text-[var(--site-text)] mt-3">
                   {t("{0}／{1}起", { 0: formatMoney(price.from, locale), 1: t(price.unit) })}
                 </p>
               </Link>
             ))}
           </div>
 
-          <Link href="/pricing" className="sm:hidden inline-flex items-center gap-2 text-sm text-amber-500 hover:underline mt-6">
+          <Link href="/pricing" className="sm:hidden inline-flex items-center gap-2 text-sm text-[var(--site-accent)] hover:underline mt-6">
             {t("查看完整價格")}<ArrowRight size={14} />
           </Link>
         </div>

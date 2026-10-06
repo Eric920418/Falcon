@@ -327,7 +327,6 @@
   "4 種預設模板與拖放編輯": "Modèles par défaut 4 et éditeur de glisser-déposer",
   "Redis Pub/Sub 即時通訊": "Communication instantanée Redis Pub/Sub",
   "專為餐廳設計的全功能 POS 系統，涵蓋點餐、出單、庫存、桌位、報表、會員等模組，支援店內多裝置協同運作。": "Ce système de point de vente complet, conçu spécifiquement pour les restaurants, comprend des modules pour la prise de commandes, la création de factures, la gestion des stocks, la gestion des tables, la génération de rapports et la gestion des membres. Il prend en charge la collaboration entre plusieurs appareils dans le restaurant.",
-  "基於 Next.js 16 的企業級人力資源管理與形象網站系統，涵蓋前台形象網站、員工工作平台、管理決策後台三層架構。支援四級 RBAC 權限控制（32 項細粒度權限）、可視化工作流程編輯器、動態 CMS 內容管理與活動日誌追蹤系統。": "Basé sur Next.js 16, ce système de gestion des ressources humaines et de site web d'entreprise comprend trois couches : le site web d'image accessible aux utilisateurs, la plateforme de travail des employés et un back-end de prise de décision. Il prend en charge le contrôle d'accès RBAC de niveau 4 (32 droits granulaires), un éditeur de flux de travail visuel, une gestion de contenu dynamique via CMS et un système de suivi des activités.",
   "四級 RBAC 權限管理": "Gestion des autorisations RBAC de niveau 4",
   "可視化工作流程編輯器": "Éditeur de flux de travail",
   "動態 CMS 內容管理": "Gestion de contenu dynamique pour CMS",
@@ -351,13 +350,12 @@
   "Portfolio": "Portfolio",
   "完整": "Complète",
   "作品紀錄": "Enregistrement des œuvres",
-  "34 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。": "34 : Enregistrement complet des données originales de projet Git. Les fonctionnalités et les capacités techniques présentées ci-dessous représentent ce qui est effectivement fourni. Les données sans source de mesure ne doivent pas être interprétées comme des résultats en termes de trafic, de revenus ou de classement.",
+  "33 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。": "33 : Enregistrement complet des données originales de projet Git. Les fonctionnalités et les capacités techniques présentées ci-dessous représentent ce qui est effectivement fourni. Les données sans source de mesure ne doivent pas être interprétées comme des résultats en termes de trafic, de revenus ou de classement.",
   "案例分類": "Catégorisation des cas",
   "可驗證證據": "Preuves vérifiables",
   "查看證據與限制": "Examiner les preuves et les limitations",
   "核心功能": "Fonctionnalités principales",
   "技術亮點": "Points forts techniques",
   "收起": "Réduire",
-  "查看詳情": "Afficher les détails",
-  "企業 HR 管理系統": "Système RH pour entreprises"
+  "查看詳情": "Afficher les détails"
 }

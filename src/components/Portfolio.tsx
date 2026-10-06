@@ -5,7 +5,7 @@ import { useI18n } from '@/lib/i18n/client'
 import { motion } from 'motion/react'
 import { useState } from 'react'
 import { ExternalLink, ChevronDown, ChevronUp, ArrowRight } from 'lucide-react'
-import Image from 'next/image'
+import { ImageWithFallback as Image } from '@/components/figma/ImageWithFallback'
 import Link from '@/lib/i18n/link'
 
 interface Project {
@@ -896,36 +896,6 @@ const projects: Project[] = [
     category: "其他",
   },
   {
-    id: 22,
-    title: "企業 HR 管理系統",
-    description:
-      "基於 Next.js 16 的企業級人力資源管理與形象網站系統，涵蓋前台形象網站、員工工作平台、管理決策後台三層架構。支援四級 RBAC 權限控制（32 項細粒度權限）、可視化工作流程編輯器、動態 CMS 內容管理與活動日誌追蹤系統。",
-    tech: [
-      "Next.js 16",
-      "React 19",
-      "TypeScript",
-      "GraphQL Yoga",
-      "Apollo Client",
-      "Tailwind CSS v4",
-      "NextAuth",
-    ],
-    features: [
-      "四級 RBAC 權限管理",
-      "可視化工作流程編輯器",
-      "動態 CMS 內容管理",
-      "行政事務簽核系統",
-      "活動日誌追蹤",
-    ],
-    highlights: [
-      "React Flow 拖拉式流程設計",
-      "GraphQL DataLoader 解決 N+1",
-      "CKEditor 5 富文本整合",
-    ],
-    image: "/展望國際人力.png",
-    url: "https://manpower2.vercel.app",
-    category: "其他",
-  },
-  {
     id: 21,
     title: "茶客棧飲料店官網",
     description:
@@ -977,10 +947,10 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
     : projects.filter(p => p.category === selectedCategory || (selectedCategory === '其他' && !categories.slice(1, -1).includes(p.category)))
 
   return (
-    <section id="portfolio" className="relative py-32 px-6 bg-[#2D3B40]/50">
+    <section id="portfolio" className="relative py-32 px-6 bg-[var(--site-soft)]">
       {/* 背景 */}
       <div className="absolute inset-0 diagonal-lines" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#344349] to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--site-tint)] to-transparent" />
 
       <div className="max-w-7xl mx-auto relative">
         {/* Section Header */}
@@ -995,16 +965,16 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
           {/* 標籤 */}
           <div className="flex items-center gap-3 mb-6">
             <div className="brand-line" />
-            <span className="text-[#6D8F96] text-sm tracking-widest uppercase">{t("Portfolio")}</span>
+            <span className="text-[var(--site-accent)] text-sm tracking-widest uppercase">{t("Portfolio")}</span>
           </div>
 
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
             <div>
-              <h2 className="text-4xl md:text-5xl text-[#E0E5E8] mb-4">
+              <h2 className="text-4xl md:text-5xl text-[var(--site-text)] mb-4">
                 <span className="text-falcon-gradient">{t("完整作品紀錄")}</span>
               </h2>
-              <p className="text-lg text-[#A8B6BC] max-w-xl">
-                {t("34 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。")}</p>
+              <p className="text-lg text-[var(--site-muted)] max-w-xl">
+                {t("33 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。")}</p>
             </div>
 
             {/* Category Filter */}
@@ -1014,8 +984,8 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                   key={category}
                   className={`px-4 py-2 text-sm transition-all ${
                     selectedCategory === category
-                      ? 'bg-[#5F808B] text-[#1E2A2E]'
-                      : 'bg-[#2D3B40]/50 text-[#A8B6BC] hover:text-[#E0E5E8] hover:bg-[#2D3B40]'
+                      ? 'bg-[var(--site-accent)] text-white'
+                      : 'bg-[var(--site-soft)] text-[var(--site-muted)] hover:text-[var(--site-text)] hover:bg-[var(--site-soft)]'
                   }`}
                   onClick={() => setSelectedCategory(category)}
                 >
@@ -1034,8 +1004,8 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                 key={category}
                 className={`px-4 py-2 text-sm transition-all ${
                   selectedCategory === category
-                    ? 'bg-[#5F808B] text-[#1E2A2E]'
-                    : 'bg-[#2D3B40]/50 text-[#A8B6BC] hover:text-[#E0E5E8] hover:bg-[#2D3B40]'
+                    ? 'bg-[var(--site-accent)] text-white'
+                    : 'bg-[var(--site-soft)] text-[var(--site-muted)] hover:text-[var(--site-text)] hover:bg-[var(--site-soft)]'
                 }`}
                 onClick={() => setSelectedCategory(category)}
                 aria-pressed={selectedCategory === category}
@@ -1059,7 +1029,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
             >
               <div className="falcon-card rounded-lg overflow-hidden h-full flex flex-col">
                 {/* Project Image */}
-                <div className="relative h-48 bg-[#2D3B40] overflow-hidden">
+                <div className="relative aspect-[16/10] bg-[var(--site-soft)] overflow-hidden">
                   {project.image ? (
                     <Image
                       src={project.image}
@@ -1071,20 +1041,20 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-5xl font-bold text-[#344349]" style={{ fontFamily: 'var(--font-display)' }}>
+                      <span className="text-5xl font-bold text-[var(--site-muted)]" style={{ fontFamily: 'var(--font-display)' }}>
                         {t(project.title.charAt(0))}
                       </span>
                     </div>
                   )}
                   {/* Overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1E2A2E]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--site-soft)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                   {/* Category Badge */}
                   <div className="absolute top-3 right-3 falcon-badge">
                     {t(project.category)}
                   </div>
                   {evidencePaths[project.id] && (
-                    <div className="absolute top-3 left-3 bg-amber-500 text-stone-950 px-2 py-1 text-xs font-medium rounded">
+                    <div className="absolute top-3 left-3 bg-[var(--site-accent)] text-white px-2 py-1 text-xs font-medium rounded">
                       {t("可驗證證據")}</div>
                   )}
                 </div>
@@ -1092,7 +1062,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                 {/* Content */}
                 <div className="p-6 flex-1 flex flex-col">
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-lg text-[#E0E5E8] group-hover:text-[#A8B6BC] transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
+                    <h3 className="text-lg text-[var(--site-text)] group-hover:text-[var(--site-muted)] transition-colors" style={{ fontFamily: 'var(--font-display)' }}>
                       {t(project.title)}
                     </h3>
                     {project.url && (
@@ -1100,21 +1070,21 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#6D8F96] hover:text-[#A8B6BC] transition-colors ml-2 flex-shrink-0"
+                        className="text-[var(--site-accent)] hover:text-[var(--site-muted)] transition-colors ml-2 flex-shrink-0"
                       >
                         <ExternalLink size={18} />
                       </a>
                     )}
                   </div>
 
-                  <p className="text-[#6D8F96] text-sm mb-4 line-clamp-3 leading-relaxed">
+                  <p className="text-[var(--site-accent)] text-sm mb-4 line-clamp-3 leading-relaxed">
                     {t(project.description)}
                   </p>
 
                   {evidencePaths[project.id] && (
                     <Link
                       href={evidencePaths[project.id]}
-                      className="inline-flex items-center gap-2 text-sm text-amber-500 hover:underline mb-3"
+                      className="inline-flex items-center gap-2 text-sm text-[var(--site-accent)] hover:underline mb-3"
                     >
                       {t("查看證據與限制")}<ArrowRight size={14} />
                     </Link>
@@ -1123,26 +1093,26 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                   {/* Expandable Details */}
                   {expandedProject === project.id && (
                     <motion.div
-                      className="mt-auto pt-4 border-t border-[#344349]"
+                      className="mt-auto pt-4 border-t border-[var(--site-border)]"
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
                     >
                       <div className="mb-3">
-                        <p className="text-xs text-[#5F808B] mb-2">{t("核心功能")}</p>
+                        <p className="text-xs text-[var(--site-accent)] mb-2">{t("核心功能")}</p>
                         <div className="flex flex-wrap gap-1">
                           {project.features.map((feature) => (
-                            <span key={feature} className="text-xs text-[#6D8F96]">
+                            <span key={feature} className="text-xs text-[var(--site-accent)]">
                               {t(feature)}
                             </span>
                           ))}
                         </div>
                       </div>
                       <div>
-                        <p className="text-xs text-[#5F808B] mb-2">{t("技術亮點")}</p>
+                        <p className="text-xs text-[var(--site-accent)] mb-2">{t("技術亮點")}</p>
                         <ul className="space-y-1">
                           {project.highlights.map((highlight) => (
-                            <li key={highlight} className="text-xs text-[#6D8F96] flex items-start gap-2">
+                            <li key={highlight} className="text-xs text-[var(--site-accent)] flex items-start gap-2">
                               <span className="w-1 h-1 rounded-full bg-[#5F808B] mt-1.5 flex-shrink-0" />
                               {t(highlight)}
                             </li>
@@ -1154,7 +1124,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
 
                   {/* Expand Button */}
                   <button
-                    className="flex items-center justify-center gap-1 text-sm text-[#6D8F96] hover:text-[#A8B6BC] transition-colors mt-4 pt-4 border-t border-[#344349]"
+                    className="flex items-center justify-center gap-1 text-sm text-[var(--site-accent)] hover:text-[var(--site-muted)] transition-colors mt-4 pt-4 border-t border-[var(--site-border)]"
                     onClick={() => setExpandedProject(expandedProject === project.id ? null : project.id)}
                   >
                     {expandedProject === project.id ? (

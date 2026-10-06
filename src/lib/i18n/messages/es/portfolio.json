@@ -327,7 +327,6 @@
   "4 種預設模板與拖放編輯": "4 plantillas prediseñadas y edición mediante arrastrar y soltar",
   "Redis Pub/Sub 即時通訊": "Redis Pub/Sub: Comunicación en tiempo real",
   "完整營運後台（司機/乘客/訂單 CRUD、營運儀表板、即時監控、糾紛處理）": "Panel de administración completo (para conductores/pasajeros, gestión de pedidos, panel de control operativo, monitorización en tiempo real y resolución de conflictos).",
-  "基於 Next.js 16 的企業級人力資源管理與形象網站系統，涵蓋前台形象網站、員工工作平台、管理決策後台三層架構。支援四級 RBAC 權限控制（32 項細粒度權限）、可視化工作流程編輯器、動態 CMS 內容管理與活動日誌追蹤系統。": "Sistema de gestión de recursos humanos y sitio web corporativo basado en Next.js 16, que incluye una arquitectura de tres capas: sitio web corporativo, plataforma de trabajo para empleados y panel de administración. Soporta control de permisos RBAC de cuatro niveles (32, control granular de permisos), editor de flujo de trabajo visualizable, gestión dinámica de contenido CMS y sistema de seguimiento de eventos.",
   "四級 RBAC 權限管理": "Gestión de permisos basada en RBAC de nivel 4",
   "可視化工作流程編輯器": "Editor para la visualización de flujos de trabajo",
   "動態 CMS 內容管理": "Gestión dinámica de contenido CMS",
@@ -351,13 +350,12 @@
   "Portfolio": "Portafolio",
   "完整": "Completo",
   "作品紀錄": "Registro de la obra",
-  "34 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。": "34: Registro completo de los datos originales de Git. A continuación, se presentan las funcionalidades y el alcance técnico reales; el contenido sin datos de medición no debe interpretarse como resultados de tráfico, ingresos o posicionamiento.",
+  "33 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。": "33: Registro completo de los datos originales de Git. A continuación, se presentan las funcionalidades y el alcance técnico reales; el contenido sin datos de medición no debe interpretarse como resultados de tráfico, ingresos o posicionamiento.",
   "案例分類": "Clasificación de casos",
   "可驗證證據": "Evidencia verificable",
   "查看證據與限制": "Ver evidencia y limitaciones",
   "核心功能": "Funciones principales",
   "技術亮點": "Aspectos técnicos destacados",
   "收起": "Guardar",
-  "查看詳情": "Ver detalles",
-  "企業 HR 管理系統": "Sistema empresarial de RR. HH."
+  "查看詳情": "Ver detalles"
 }

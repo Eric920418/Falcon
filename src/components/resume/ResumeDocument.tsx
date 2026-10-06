@@ -259,8 +259,6 @@ export function ResumeDocument({
               </Link>
               <Text>·</Text>
               <Text>{data.contact.phone}</Text>
-              <Text>·</Text>
-              <Text>{data.contact.location[lang]}</Text>
               {data.contact.github && (
                 <>
                   <Text>·</Text>
@@ -311,9 +309,9 @@ export function ResumeDocument({
               <View style={styles.expHeader}>
                 <View>
                   <Text style={styles.expRole}>{exp.role[lang]}</Text>
-                  <Text style={styles.expCompany}>{exp.company[lang]}</Text>
+                  {exp.company[lang] && <Text style={styles.expCompany}>{exp.company[lang]}</Text>}
                 </View>
-                <Text style={styles.expPeriod}>{exp.period}</Text>
+                <Text style={styles.expPeriod}>{exp.period[lang]}</Text>
               </View>
               {exp.highlights.map((h, j) => (
                 <View key={j} style={styles.bullet}>

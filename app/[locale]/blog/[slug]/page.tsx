@@ -1,3 +1,4 @@
+import { visualAssets } from '@/lib/content/visual-assets'
 import { initLocale } from '@/lib/i18n/server'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
@@ -51,6 +52,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
       datePublished: post.datePublished,
       dateModified: post.dateModified,
       keywords: post.keywords,
+      image: `${siteConfig.url}${visualAssets[`/blog/${post.slug}`].src}`,
     }),
     createBreadcrumbSchema([
       { name: '首頁', path: '/' },
