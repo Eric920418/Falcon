@@ -33,6 +33,34 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 const devSlugs = ['web-development', 'ai-tools', 'ai-voice-agent']
 
+const serviceChoices: Record<string, { need: string; materials: string; delivery: string }> = {
+  'web-development': {
+    need: '需要企業官網、電商，或把人工流程做成可維護的系統。',
+    materials: '現有網址、頁面與功能清單、品牌素材及資料移轉需求。',
+    delivery: '網站與後台、必要整合、測試及原始碼交付。',
+  },
+  'ai-tools': {
+    need: '想讓 AI 回答知識問題、整理資料，或串接既有工作流程。',
+    materials: '常見問題、可使用的知識素材、系統接口與人工接手規則。',
+    delivery: '先驗證單一情境，再依結果評估企業系統整合。',
+  },
+  'ai-voice-agent': {
+    need: '需要電話接聽、資訊確認、派單或工單建立，並保留真人接手。',
+    materials: '電話流程、尖峰併發、PBX／SIP、企業 API 與轉接條件。',
+    delivery: '語音流程與整合驗證；範圍依電話環境及驗收情境確認。',
+  },
+  seo: {
+    need: '已有網站，需要處理收錄、搜尋內容與自然詢盤的成長。',
+    materials: '網站權限、GSC／GA4、服務重點與可公開的案例素材。',
+    delivery: '技術與索引盤點、內容優先序及持續量測。',
+  },
+  geo: {
+    need: '已有搜尋基礎，希望改善 AI 搜尋對品牌的理解與引用條件。',
+    materials: '品牌與作者資料、一手證據、目標問題及既有量測資料。',
+    delivery: '以 SEO 為基礎，補上可引用內容、實體一致性與 AI 搜尋觀察。',
+  },
+}
+
 function formatPrice(service: ServiceContent): string {
   if (!/^\d+$/.test(service.priceMin)) return service.priceMin
   const { t, locale } = getI18n()
@@ -150,6 +178,45 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
                   <ServiceCard key={service.slug} service={service} />
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-t border-[var(--site-border)]/50 px-6 py-16">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="mb-4 text-2xl text-[var(--site-text)] md:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>
+              {t('從需求選擇服務')}
+            </h2>
+            <p className="mb-6 max-w-3xl leading-relaxed text-[var(--site-muted)]">
+              {t('先確認目前卡住的流程，再決定服務。下表列出討論起點與交付方向；實際範圍、費用與驗收仍以個別報價為準。')}
+            </p>
+            <div className="overflow-x-auto rounded-lg border border-[var(--site-border)]" role="region" aria-label={t('核心服務選擇對照')} tabIndex={0}>
+              <table className="w-full min-w-[800px] text-left text-sm leading-relaxed">
+                <caption className="sr-only">{t('核心服務選擇對照')}</caption>
+                <thead className="bg-[var(--site-soft)] text-[var(--site-text)]">
+                  <tr>
+                    {['服務', '目前需求', '建議準備的素材', '交付方向'].map((heading) => (
+                      <th key={heading} scope="col" className="px-5 py-4">{t(heading)}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {services.map((service) => {
+                    const choice = serviceChoices[service.slug]
+                    if (!choice) return null
+                    return (
+                      <tr key={service.slug} className="border-t border-[var(--site-border)] align-top text-[var(--site-muted)]">
+                        <th scope="row" className="w-1/5 px-5 py-5 font-medium">
+                          <Link href={`/services/${service.slug}`} className="text-[var(--site-accent)] hover:underline">{t(service.h1)}</Link>
+                        </th>
+                        <td className="px-5 py-5">{t(choice.need)}</td>
+                        <td className="px-5 py-5">{t(choice.materials)}</td>
+                        <td className="px-5 py-5">{t(choice.delivery)}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         </section>

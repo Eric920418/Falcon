@@ -91,6 +91,25 @@ export function PricingPageTemplate({ page }: PricingPageTemplateProps) {
                 {t(section.heading)}
               </h2>
               {section.body && <p className="text-[var(--site-muted)] leading-relaxed mb-4">{t(section.body)}</p>}
+              {section.table && (
+                <div className="mb-4 overflow-x-auto rounded-lg border border-[var(--site-border)]" role="region" aria-label={t(section.heading)} tabIndex={0}>
+                  <table className="w-full min-w-[640px] text-left text-sm leading-relaxed">
+                    {section.table.caption && <caption className="bg-[var(--site-card)] px-5 py-4 text-left font-medium text-[var(--site-text)]">{t(section.table.caption)}</caption>}
+                    <thead className="bg-[var(--site-card)] text-[var(--site-text)]">
+                      <tr>{section.table.headers.map((heading) => <th key={heading} scope="col" className="px-5 py-4">{t(heading)}</th>)}</tr>
+                    </thead>
+                    <tbody>
+                      {section.table.rows.map((row, index) => (
+                        <tr key={index} className="border-t border-[var(--site-border)] align-top text-[var(--site-muted)]">
+                          {row.map((cell, column) => column === 0
+                            ? <th key={column} scope="row" className="px-5 py-4 font-medium text-[var(--site-text)]">{t(cell)}</th>
+                            : <td key={column} className="px-5 py-4">{t(cell)}</td>)}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
               {section.items && (
                 <ul className="grid gap-3 md:grid-cols-2">
                   {section.items.map((item) => (

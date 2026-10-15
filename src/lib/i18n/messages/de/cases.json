@@ -35,7 +35,7 @@
   "19 種活動／5 層會員": "19-Art von Aktivitäten / 5-Ebene Mitglieder",
   "系統功能規模，不代表活動或會員帶來的營收結果。": "Funktionsumfang des Systems, der nicht die durch Aktivitäten oder Mitglieder erzielten Umsätze widerspiegelt.",
   "本頁只引用已在隼訊作品集公開的技術資料；未取得並公開客戶 GA4、GSC 或營收資料，因此不宣稱商業成長幅度。": "Diese Seite bezieht sich nur auf die in der Falcon-Sammlung veröffentlichten technischen Daten; es liegen keine öffentlich zugänglichen GA4-, GSC- oder Umsatzdaten des Kunden vor, daher werden keine kommerziellen Wachstumsraten behauptet.",
-  "企業 AI 語音客服如何串接即時派單｜GoGoCha 技術案例": "Wie Unternehmen KI-basierte Sprachassistenten in Echtzeit einsetzen können | GoGoCha Technologie-Fallstudie",
+  "企業 AI 語音客服如何串接即時派單｜GoGoCha 技術案例": "KI-Telefonservice und Taxidisposition in Echtzeit | GoGoCha-Fallstudie",
   "GoGoCha 花蓮計程車": "GoGoCha Taxi, Hualien",
   "花蓮縣": "Landkreis Hualien",
   "公開上線產品，2026-08-11 更新": "Veröffentlichung von Produkten, 2026-08-11 Updates",
@@ -53,7 +53,7 @@
   "系統整理地點、聯絡與任務欄位，送入共用派單流程。": "Das System organisiert die Standorte, Kontaktinformationen und Auftragsfelder und leitet sie in einen gemeinsamen Auftragsprozess ein.",
   "後端以 PostgreSQL 保存狀態、BullMQ 處理佇列，並透過 Redis／Socket.IO 即時同步。": "Das Backend speichert den Status mit PostgreSQL, verarbeitet Warteschlangen mit BullMQ und synchronisiert die Daten in Echtzeit über Redis/Socket.IO.",
   "司機端、乘客端與營運介面取得同一筆任務狀態。": "Fahrer, Fahrgäste und die Betriebsoberfläche haben Zugriff auf den Status eines einzelnen Auftrags.",
-  "AI 接聽至派單的資料流": "Der Datenfluss von der KI-basierten Anrufannahme zur Auftragsvergabe.",
+  "AI 接聽至派單的資料流": "Datenfluss vom KI-Telefonservice zur Taxidisposition",
   "資訊不足或 AI 無法可靠確認時保留人工介入，不把猜測直接當成派單資料。": "Bei unzureichenden Informationen oder wenn die KI die Informationen nicht zuverlässig bestätigen kann, wird eine manuelle Intervention beibehalten, um Vermutungen nicht direkt als Auftragsdaten zu verwenden.",
   "網站費率 API 失敗時顯示本地規則估算與限制，不偽裝成正式報價成功。": "Wenn die Tarif-API auf der Website fehlschlägt, werden lokale Regel-Schätzungen und -Beschränkungen angezeigt, anstatt einen erfolgreichen offiziellen Preis zu simulieren.",
   "佇列與即時通訊分層處理，避免單次連線問題直接等同任務消失。": "Die Verarbeitung von Warteschlangen und Echtzeitkommunikation erfolgt in Schichten, um zu verhindern, dass ein einzelner Verbindungsfehler dazu führt, dass der Auftrag verloren geht.",
@@ -108,5 +108,9 @@
   "以後端交易處理衝突，不依賴前端先到先得。": "Konflikte werden durch Backend-Verarbeitung gelöst, nicht durch eine einfache Reihenfolge der Anfragen.",
   "同步方式": "Synchronisierungsweise",
   "預約狀態與後台異動採即時更新。": "Der Status der Buchungen und Änderungen im Hintergrund werden in Echtzeit aktualisiert.",
-  "客戶名稱與內部營運數據未公開；本頁只呈現既有作品集中已揭露的技術範圍與測試數量。": "Kundennamen und interne Betriebsdaten sind nicht öffentlich zugänglich. Diese Seite zeigt lediglich den im bestehenden Produktkatalog bereits genannten technischen Umfang und die Anzahl der Tests."
+  "客戶名稱與內部營運數據未公開；本頁只呈現既有作品集中已揭露的技術範圍與測試數量。": "Kundennamen und interne Betriebsdaten sind nicht öffentlich zugänglich. Diese Seite zeigt lediglich den im bestehenden Produktkatalog bereits genannten technischen Umfang und die Anzahl der Tests.",
+  "長輩、旅客與企業客戶可能從電話、網站或 LINE 叫車。如果各入口分開保存任務，營運端就需要在不同介面核對資訊。這個案子的重點是讓入口接到共用派單後端，使司機、乘客與營運端能核對同一筆任務狀態，同時保留資訊不足時的人工介入。": "Ältere Menschen, Reisende und Geschäftskunden können Taxis per Telefon, Website oder LINE bestellen. Speichert jeder Zugang Aufträge getrennt, muss der Betrieb Informationen zwischen Oberflächen abgleichen. Dieses Projekt verbindet die Zugänge mit einem gemeinsamen Dispositions-Backend, sodass Fahrer, Fahrgäste und Betrieb denselben Auftragsstatus prüfen können. Bei unvollständigen Angaben bleibt menschliches Eingreifen möglich.",
+  "AI 電話入口負責收集叫車資訊，共用後端負責保存與派單；將對話與任務狀態分開，讓電話、網站與 LINE 能銜接同一套營運流程。": "Der KI-Telefonzugang erfasst Fahrtangaben; das gemeinsame Backend speichert Aufträge und übernimmt die Disposition. Die Trennung von Gespräch und Auftragsstatus verbindet Telefon, Website und LINE mit demselben Betriebsablauf.",
+  "AI 無法可靠確認地點、聯絡或任務資訊時，應由人工進一步確認，不能把模型猜測當成可執行的派單資料；本頁不宣稱所有來電都能無人處理。": "Kann die KI Ort, Kontakt- oder Auftragsangaben nicht zuverlässig bestätigen, müssen Menschen sie weiter prüfen. Modellvermutungen dürfen nicht zu ausführbaren Dispositionsdaten werden. Diese Seite behauptet nicht, dass sämtliche Anrufe ohne menschliche Hilfe bearbeitet werden können.",
+  "網站費率 API 失敗時以本地規則提供替代估算，畫面須揭露估算依據與限制。替代結果不代表即時費率 API 成功，也不代表已完成叫車或取得正式報價。": "Fällt die Tarif-API der Website aus, liefern lokale Regeln eine Ersatzschätzung. Die Oberfläche muss deren Grundlage und Grenzen offenlegen. Das Ergebnis bedeutet weder eine erfolgreiche Echtzeit-Tarifabfrage noch eine abgeschlossene Taxibestellung oder ein verbindliches Angebot."
 }

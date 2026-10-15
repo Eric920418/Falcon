@@ -849,7 +849,7 @@ export const blogPosts: Record<string, BlogContent> = {
       '依 Google 2026 年官方指引整理 GEO：從搜尋索引、原創內容、實名案例、AI 爬蟲到量測，並拆解 llms.txt 與特殊 AI Schema 迷思。',
     keywords: ['GEO 怎麼做', 'GEO 完整指南', 'GEO 教學', 'AI 搜尋優化', '生成式引擎優化 教學'],
     datePublished,
-    dateModified: '2026-08-31',
+    dateModified: '2026-10-15',
     qualityTier: 'production',
     intent: 'informational',
     intro:
@@ -1833,7 +1833,7 @@ export const blogPosts: Record<string, BlogContent> = {
       '以 Google Generative AI、Bing AI Performance、GA4、固定查詢集與詢盤建立 GEO 量測架構，並說明每種資料的限制。',
     keywords: ['GEO 成效衡量', 'AI 搜尋 流量 追蹤', 'AI 引薦 GA4', 'GEO 量測', 'AI 流量 分析'],
     datePublished: '2026-08-12',
-    dateModified: '2026-08-31',
+    dateModified: '2026-10-15',
     qualityTier: 'production',
     intent: 'informational',
     intro:

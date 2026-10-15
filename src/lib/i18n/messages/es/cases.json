@@ -35,7 +35,7 @@
   "19 種活動／5 層會員": "19 tipo de actividad / 5 nivel de miembro",
   "系統功能規模，不代表活動或會員帶來的營收結果。": "Tamaño de las funciones del sistema, que no representan los resultados de ingresos generados por las actividades o los miembros.",
   "本頁只引用已在隼訊作品集公開的技術資料；未取得並公開客戶 GA4、GSC 或營收資料，因此不宣稱商業成長幅度。": "Esta página solo cita la información técnica publicada en el portafolio de Falcon; no se dispone de datos públicos de GA4, GSC o ingresos del cliente, por lo que no se hacen afirmaciones sobre el alcance del crecimiento comercial.",
-  "企業 AI 語音客服如何串接即時派單｜GoGoCha 技術案例": "Cómo integrar el servicio de atención al cliente con IA para empresas | Caso de estudio técnico de GoGoCha",
+  "企業 AI 語音客服如何串接即時派單｜GoGoCha 技術案例": "Cómo conectar la atención telefónica con IA al despacho de taxis en tiempo real | Caso técnico de GoGoCha",
   "GoGoCha 花蓮計程車": "GoGoCha, taxi de Hualien",
   "花蓮縣": "Condado de Hualien",
   "公開上線產品，2026-08-11 更新": "Lanzamiento de productos en línea, actualizaciones de 2026-08-11",
@@ -53,7 +53,7 @@
   "系統整理地點、聯絡與任務欄位，送入共用派單流程。": "El sistema organiza la información de ubicación, contacto y tarea, y la envía al flujo de asignación centralizado.",
   "後端以 PostgreSQL 保存狀態、BullMQ 處理佇列，並透過 Redis／Socket.IO 即時同步。": "El backend utiliza PostgreSQL para almacenar el estado, BullMQ para gestionar colas, y Redis/Socket.IO para la sincronización en tiempo real.",
   "司機端、乘客端與營運介面取得同一筆任務狀態。": "Tanto el conductor, el pasajero como la interfaz de gestión tienen acceso al mismo estado de la tarea.",
-  "AI 接聽至派單的資料流": "El flujo de datos de la tarea desde la atención telefónica con IA hasta la asignación.",
+  "AI 接聽至派單的資料流": "Flujo de datos desde la atención telefónica con IA hasta el despacho de taxis",
   "資訊不足或 AI 無法可靠確認時保留人工介入，不把猜測直接當成派單資料。": "Mantener la intervención manual en caso de que la información sea insuficiente o la IA no pueda confirmar de forma fiable, evitando que las suposiciones se utilicen directamente como datos de asignación.",
   "網站費率 API 失敗時顯示本地規則估算與限制，不偽裝成正式報價成功。": "En caso de fallo de la API de tarifas en la página web, mostrar las reglas locales y las limitaciones, sin simular una confirmación de precio formal.",
   "佇列與即時通訊分層處理，避免單次連線問題直接等同任務消失。": "Utilizar colas y comunicación en tiempo real para evitar que la pérdida de conexión se traduzca directamente en la desaparición de la tarea.",
@@ -108,5 +108,9 @@
   "以後端交易處理衝突，不依賴前端先到先得。": "Manejo de conflictos en el backend, sin depender del orden de llegada en el frontend.",
   "同步方式": "Modo de sincronización.",
   "預約狀態與後台異動採即時更新。": "Estado de las reservas y cambios en el backend se actualizan en tiempo real.",
-  "客戶名稱與內部營運數據未公開；本頁只呈現既有作品集中已揭露的技術範圍與測試數量。": "Los nombres de los clientes y los datos internos de operación no se revelan; esta página solo muestra el alcance técnico y el número de pruebas que ya se han divulgado en la colección de obras existentes."
+  "客戶名稱與內部營運數據未公開；本頁只呈現既有作品集中已揭露的技術範圍與測試數量。": "Los nombres de los clientes y los datos internos de operación no se revelan; esta página solo muestra el alcance técnico y el número de pruebas que ya se han divulgado en la colección de obras existentes.",
+  "長輩、旅客與企業客戶可能從電話、網站或 LINE 叫車。如果各入口分開保存任務，營運端就需要在不同介面核對資訊。這個案子的重點是讓入口接到共用派單後端，使司機、乘客與營運端能核對同一筆任務狀態，同時保留資訊不足時的人工介入。": "Personas mayores, viajeros y empresas pueden pedir un taxi por teléfono, web o LINE. Si cada canal guarda las solicitudes por separado, los operadores deben conciliar información entre interfaces. El proyecto conecta los canales a un backend común de despacho para que conductores, pasajeros y operadores consulten el mismo estado de la solicitud, conservando la intervención humana cuando faltan datos.",
+  "AI 電話入口負責收集叫車資訊，共用後端負責保存與派單；將對話與任務狀態分開，讓電話、網站與 LINE 能銜接同一套營運流程。": "El canal telefónico con IA recoge los datos del viaje; el backend común guarda las solicitudes y gestiona el despacho. Separar la conversación del estado de la solicitud conecta teléfono, web y LINE con un mismo flujo operativo.",
+  "AI 無法可靠確認地點、聯絡或任務資訊時，應由人工進一步確認，不能把模型猜測當成可執行的派單資料；本頁不宣稱所有來電都能無人處理。": "Si la IA no puede confirmar con fiabilidad la ubicación, el contacto o los detalles de la solicitud, una persona debe verificarlos. Las suposiciones del modelo no deben convertirse en datos de despacho ejecutables. Esta página no afirma que todas las llamadas puedan atenderse sin ayuda humana.",
+  "網站費率 API 失敗時以本地規則提供替代估算，畫面須揭露估算依據與限制。替代結果不代表即時費率 API 成功，也不代表已完成叫車或取得正式報價。": "Si falla la API de tarifas de la web, se ofrece una estimación alternativa mediante reglas locales y se deben indicar su fundamento y límites. El resultado no implica que la API en tiempo real haya funcionado, que se haya reservado un taxi ni que exista un presupuesto formal."
 }

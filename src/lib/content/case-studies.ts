@@ -80,9 +80,9 @@ export const caseStudies: Record<string, CaseEvidence> = {
     summary:
       '整合品牌官網、AI 電話接聽、即時派單、LINE Bot 與司機／乘客 App，將分散的叫車入口接到同一套後端。',
     challenge:
-      '叫車使用者包含長輩、旅客與企業客戶，入口可能來自電話、網站或 LINE；系統必須讓資訊進入同一條派單流程並保留人工介入能力。',
+      '長輩、旅客與企業客戶可能從電話、網站或 LINE 叫車。如果各入口分開保存任務，營運端就需要在不同介面核對資訊。這個案子的重點是讓入口接到共用派單後端，使司機、乘客與營運端能核對同一筆任務狀態，同時保留資訊不足時的人工介入。',
     approach: [
-      '將 AI 電話接聽取得的任務資訊送入共用後端，不讓電話入口成為獨立資料孤島。',
+      'AI 電話入口負責收集叫車資訊，共用後端負責保存與派單；將對話與任務狀態分開，讓電話、網站與 LINE 能銜接同一套營運流程。',
       '使用 Express、PostgreSQL、Redis、BullMQ 與 Socket.IO 建立即時派單後端。',
       '網站車資試算先呼叫真實費率 API，失敗時以本地規則提供清楚的替代結果。',
       '以大字級、語音優先與高對比方式處理長輩使用情境。',
@@ -101,8 +101,8 @@ export const caseStudies: Record<string, CaseEvidence> = {
     ],
     workflowTitle: 'AI 接聽至派單的資料流',
     fallbacks: [
-      '資訊不足或 AI 無法可靠確認時保留人工介入，不把猜測直接當成派單資料。',
-      '網站費率 API 失敗時顯示本地規則估算與限制，不偽裝成正式報價成功。',
+      'AI 無法可靠確認地點、聯絡或任務資訊時，應由人工進一步確認，不能把模型猜測當成可執行的派單資料；本頁不宣稱所有來電都能無人處理。',
+      '網站費率 API 失敗時以本地規則提供替代估算，畫面須揭露估算依據與限制。替代結果不代表即時費率 API 成功，也不代表已完成叫車或取得正式報價。',
       '佇列與即時通訊分層處理，避免單次連線問題直接等同任務消失。',
     ],
     verification: [
@@ -143,7 +143,7 @@ export const caseStudies: Record<string, CaseEvidence> = {
     technologies: ['Next.js', 'Express', 'PostgreSQL', 'Socket.IO', 'Redis', 'BullMQ', 'OpenAI'],
     image: '/GoGoChaWebsite.png',
     projectUrl: 'https://hualientaxi.taxi/',
-    updatedAt: '2026-08-11',
+    updatedAt: '2026-10-15',
     disclosure:
       '本頁說明已公開的產品能力與隼訊技術範圍；未公開車隊營收、訂單量、人力節省、接通率、真實通話錄音或通話 SLA。「3 秒」是產品設計目標，不代表每筆叫車都能在三秒內由司機接單。',
     evidenceStatus: 'public-project',

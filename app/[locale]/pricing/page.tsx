@@ -16,6 +16,15 @@ import {
   JsonLd,
 } from '@/lib/seo'
 
+const quotationChecklist = [
+  ['現有網站與現況', '提供網址、使用平台與目前遇到的問題；新專案則說明使用者與主要目標。'],
+  ['功能與第一階段', '列出必須完成的頁面、流程與驗收情境，將可延後的需求分開。'],
+  ['必要整合', '說明金流、會員、CRM、電話或其他 API；先提供接口資訊，不必傳送帳號密碼。'],
+  ['素材與資料責任', '確認誰提供品牌素材、內容、案例、知識庫或移轉資料，以及可使用的權限。'],
+  ['預算與持續費用', '提供可接受的預算範圍，並分開討論建置費、維護及第三方用量。'],
+  ['時程與配合窗口', '說明預期上線時間、內部審核者及可提供素材的時間；排程需在範圍確認後評估。'],
+] as const
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   await initLocale((await params).locale)
   return createMetadata({
@@ -114,6 +123,23 @@ export default async function PricingIndexPage({ params }: { params: Promise<{ l
                 <p className="mt-4 text-sm leading-relaxed text-[var(--site-muted)]">
                   {t("若預算不足，應縮小第一階段或改做盤點／POC；把完整需求塞進最低起價，通常只會把必要工作延後成追加費用。")}</p>
               </div>
+            </section>
+
+            <section className="mb-12" aria-labelledby="quotation-checklist">
+              <h2 id="quotation-checklist" className="mb-4 text-2xl text-[var(--site-text)]" style={{ fontFamily: 'var(--font-display)' }}>
+                {t('詢價前可以準備什麼？')}
+              </h2>
+              <p className="mb-6 max-w-3xl leading-relaxed text-[var(--site-muted)]">
+                {t('不需要先寫完整規格書。先整理以下資訊，缺少的項目可以在訪談中釐清，避免把不同範圍的報價當成同一件事比較。')}
+              </p>
+              <dl className="grid gap-4 md:grid-cols-2">
+                {quotationChecklist.map(([heading, body]) => (
+                  <div key={heading} className="border border-[var(--site-border)] bg-[var(--site-card)] p-5">
+                    <dt className="mb-2 font-medium text-[var(--site-text)]">{t(heading)}</dt>
+                    <dd className="text-sm leading-relaxed text-[var(--site-muted)]">{t(body)}</dd>
+                  </div>
+                ))}
+              </dl>
             </section>
 
             <h2 className="text-2xl text-[var(--site-text)] mb-6" style={{ fontFamily: 'var(--font-display)' }}>
