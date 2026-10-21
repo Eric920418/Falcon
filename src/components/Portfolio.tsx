@@ -23,6 +23,38 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: 39,
+    title: "CLIMATIX 溫室氣體盤查系統",
+    description:
+      "為台灣中小企業打造的溫室氣體盤查平台，整合組織邊界與場域管理、單據 OCR、人工複核、Scope 1／2 排放計算與 PDF 報告。透過排放係數及 GWP 版本快照、檔案歷程與稽核紀錄，讓計算結果可回溯至原始資料。",
+    tech: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Prisma",
+      "PostgreSQL",
+      "Azure Document Intelligence",
+      "pdfmake",
+      "Three.js",
+    ],
+    features: [
+      "組織邊界、場域與設備管理",
+      "單據 OCR 辨識與人工複核",
+      "Scope 1／2 排放計算",
+      "PDF 盤查報告與數據追溯",
+      "案件審查、補件與進度管理",
+      "客戶、審查員與管理者權限",
+    ],
+    highlights: [
+      "排放係數與 GWP 版本快照",
+      "Decimal.js 高精度計算與分氣體排放彙總",
+      "繁中、簡中與英文介面",
+    ],
+    image: "/climatix-cover.webp",
+    url: "https://climatix.io/",
+    category: "其他",
+  },
+  {
     id: 38,
     title: "桃園歸正福音教會官方網站",
     description:
@@ -974,7 +1006,7 @@ export function Portfolio({ showHeader = true }: { showHeader?: boolean }) {
                 <span className="text-falcon-gradient">{t("完整作品紀錄")}</span>
               </h2>
               <p className="text-lg text-[var(--site-muted)] max-w-xl">
-                {t("33 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。")}</p>
+                {t("34 項 Git 原始作品資料完整收錄。以下呈現實際交付功能與技術範圍；未附量測來源的內容不解讀為流量、營收或排名成果。")}</p>
             </div>
 
             {/* Category Filter */}

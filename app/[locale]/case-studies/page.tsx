@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return createMetadata({
     title: '網站、AI 與系統開發案例｜證據與限制完整揭露',
     description:
-      '查看隼訊 33 項完整作品紀錄，以及網站效能、AI 派單與 LINE 預約的證據化案例；清楚區分作品功能、技術量測與商業成果。',
+      '查看隼訊 34 項完整作品紀錄，以及網站效能、AI 派單與 LINE 預約的證據化案例；清楚區分作品功能、技術量測與商業成果。',
     path: '/case-studies',
   })
 }
@@ -55,7 +55,7 @@ export default async function CaseStudiesPage({ params }: { params: Promise<{ lo
             <p className="text-[var(--site-accent)] text-sm tracking-widest uppercase mb-4">{t("Evidence-based work")}</p>
             <h1 className="text-4xl md:text-6xl text-[var(--site-text)] mb-6">{t("公開案例與可驗證證據")}</h1>
             <p className="text-lg text-[var(--site-muted)] max-w-3xl leading-relaxed">
-              {t("Git 原始作品集的 33 項案例全部集中在同一區。有獨立量測或技術證據的案例會直接標示「查看證據」；其餘呈現實際交付功能，不把功能描述包裝成營收成果。")}</p>
+              {t("Git 原始作品集的 34 項案例全部集中在同一區。有獨立量測或技術證據的案例會直接標示「查看證據」；其餘呈現實際交付功能，不把功能描述包裝成營收成果。")}</p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {getAllCaseStudies().slice(0, 2).map((study, index) => (
