@@ -18,7 +18,7 @@ export function createCaseStudySchema(caseStudy: CaseEvidence) {
       '@type': 'Thing',
       name: caseStudy.clientName,
     },
-    spatialCoverage: caseStudy.location,
-    text: caseStudy.disclosure,
+    ...(caseStudy.location ? { spatialCoverage: caseStudy.location } : {}),
+    ...(caseStudy.disclosure ? { text: caseStudy.disclosure } : {}),
   }
 }

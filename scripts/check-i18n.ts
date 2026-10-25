@@ -9,7 +9,7 @@ import { formatMoney } from '../src/lib/i18n/format'
 import ts from 'typescript'
 import { getAllServices } from '../src/lib/content/services'
 import { getAllBlogPosts } from '../src/lib/content/blog'
-import { getAllCaseStudies } from '../src/lib/content/case-studies'
+import { getAllProjectCaseStudies } from '../src/lib/content/project-case-studies'
 import { getAllLocalPages } from '../src/lib/content/local'
 import { pricingPages, comparePages } from '../src/lib/content/pricing'
 import assert from 'node:assert/strict'
@@ -109,7 +109,7 @@ function checkContent(value: unknown) {
   } else if (Array.isArray(value)) value.forEach(checkContent)
   else if (value && typeof value === 'object') Object.values(value).forEach(checkContent)
 }
-checkContent([getAllServices(), getAllBlogPosts(), getAllCaseStudies(), getAllLocalPages(), pricingPages, comparePages])
+checkContent([getAllServices(), getAllBlogPosts(), getAllProjectCaseStudies(), getAllLocalPages(), pricingPages, comparePages])
 assert(formatMoney('30,000', 'de').includes('30.000'))
 assert(formatMoney(30000, 'en').includes('TWD'))
 assert.equal(formatMoney('另行報價', 'en'), '另行報價')

@@ -3,6 +3,7 @@ import { getI18n } from '@/lib/i18n/server'
 import { ImageWithFallback as Image } from '@/components/figma/ImageWithFallback'
 import Link from '@/lib/i18n/link'
 import { ArrowRight } from 'lucide-react'
+import { projectCount } from '@/lib/content/projects'
 import { getAllCaseStudies } from '@/lib/content/case-studies'
 
 export function HomeCases() {
@@ -19,7 +20,7 @@ export function HomeCases() {
             <h2 className="text-3xl md:text-5xl text-[var(--site-text)]">{t("案例先講證據，再講限制")}</h2>
           </div>
           <Link href="/case-studies" className="inline-flex items-center gap-2 text-[var(--site-accent)] hover:underline">
-            {t("查看完整 34 項作品")}<ArrowRight size={17} />
+            {t("查看完整 {0} 項作品", { 0: projectCount })}<ArrowRight size={17} />
           </Link>
         </div>
 

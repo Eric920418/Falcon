@@ -5,7 +5,7 @@ import { makeTranslator, type Translator } from './translate'
 import { siteConfig } from '@/lib/seo/site-config'
 import { getIndexableServices } from '@/lib/content/services'
 import { getAllBlogPosts } from '@/lib/content/blog'
-import { getAllCaseStudies } from '@/lib/content/case-studies'
+import { getAllProjectCaseStudies } from '@/lib/content/project-case-studies'
 import { getAllLocalPages, isIndexableLocalPage } from '@/lib/content/local'
 import { pricingPages, comparePages } from '@/lib/content/pricing'
 import { primaryPriceDefinitions } from '@/lib/content/price-catalog'
@@ -18,7 +18,7 @@ export async function llmsResponse(value: string, full: boolean) {
   const url = (path: string) => siteConfig.url + localizedPath(path, locale)
   const groups = [
     { title: '主要服務', prefix: '/services', pages: getIndexableServices().filter(page => page.qualityTier === 'production') },
-    { title: '公開案例', prefix: '/case-studies', pages: getAllCaseStudies() },
+    { title: '公開案例', prefix: '/case-studies', pages: getAllProjectCaseStudies() },
     { title: '價格頁', prefix: '/pricing', pages: Object.values(pricingPages).filter(page => page.qualityTier === 'production') },
     { title: '比較頁', prefix: '/compare', pages: Object.values(comparePages).filter(page => page.qualityTier === 'production') },
     { title: '內容文章', prefix: '/blog', pages: getAllBlogPosts().filter(page => page.qualityTier === 'production') },
@@ -43,7 +43,7 @@ export async function llmsResponse(value: string, full: boolean) {
 }
 // Render content fields only: machine identifiers and indexing flags are not prose.
 function renderFields(page: Record<string, unknown>, t: Translator): string {
-  const fields = ['intro', 'sections', 'faq', 'tiers', 'comparisonHeaders', 'comparisonTable', 'challenge', 'approach', 'metrics', 'disclosure', 'responsibilities', 'workflow', 'fallbacks', 'verification', 'references']
+  const fields = ['intro', 'sections', 'faq', 'tiers', 'comparisonHeaders', 'comparisonTable', 'challenge', 'features', 'technologies', 'approach', 'metrics', 'disclosure', 'responsibilities', 'workflow', 'fallbacks', 'verification', 'references']
   function text(value: unknown, key = ''): string {
     if (typeof value === 'string') return key === 'unit' ? t(value) : value
     if (typeof value === 'number') return String(value)

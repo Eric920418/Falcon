@@ -79,8 +79,8 @@ export interface CaseEvidence {
   slug: string
   title: string
   clientName: string
-  location: string
-  period: string
+  location?: string
+  period?: string
   summary: string
   challenge: string
   approach: string[]
@@ -89,8 +89,11 @@ export interface CaseEvidence {
   image: string
   projectUrl?: string
   updatedAt: string
-  disclosure: string
-  evidenceStatus: 'public-project' | 'client-approved' | 'anonymized'
+  disclosure?: string
+  features?: string[]
+  serviceSlug?: string
+  relatedSlugs?: string[]
+  evidenceStatus?: 'public-project' | 'client-approved' | 'anonymized'
   responsibilities?: string[]
   workflow?: string[]
   workflowTitle?: string

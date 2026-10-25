@@ -4,6 +4,68 @@
 
 **網站**: https://www.falconinformation.com
 
+## 全作品獨立案例頁（2026-10-25）
+
+- 依核定的 34 個固定 slug 建立九語作品詳頁，沿用既有三個證據案例與首頁精選；作品數改由共用資料計算。內容核對公開網站、本機來源及既有交付紀錄，未確認的日期、成效與負責範圍不補寫。實作與驗收紀錄持續補於本節，不另建文件。
+- 新頁各自補上使用情境與三步操作流程，功能及技術沿用已查核作品資料；TellCraft 暫停、元智舊網址 404 及清潔品牌更名另行揭露。公開連結檢查不登入、不送出表單、不修改來源專案資料。
+- `projects.ts` 為作品、slug、服務與相關案例的共用來源；`project-stories.ts` 保存各新案正文；`project-case-studies.ts` 組合既有三案與新案。首頁精選仍讀取原三案，詳頁／sitemap／llms／SEO 驗收改讀取全部案例。新增案例無成效資料時不渲染量測區塊。
+- 新案例的 SEO 標題、情境、流程與公開狀態已同步九語 `cases.json`，列表／導覽／動態作品數用語沿用共用字典；簡體中文沿用現有本機 OpenCC 轉換，未新增套件或翻譯服務。
+- 新日文用語及韓文標點已抽查校正；品牌名稱與技術專有詞保留原寫法。
+- metadata 工廠加入共用插值 `values`，動態作品數由原始翻譯 key 一次翻譯及插入，避免日文等語系的已翻譯句子被重複當 key 查找。
+- 可重跑 `pnpm check:projects http://localhost:3100`：檢查唯一 slug、原三案內容不變、圖片／服務／相關案例引用，逐一讀取九語詳頁初始 HTML、metadata、OG／Twitter、結構化資料、sitemap／llms 收錄與未知網址 404；僅接受本機 URL，不送出任何表單。
+- 案例驗收器以 async 入口相容既有 tsx 執行模式，HTML 屬性比對忽略大小寫。
+- 驗收中的圖片網址以 URL 編碼後比對，支援原有中文檔名；列表卡片不再預設透明，停用 JavaScript 時仍可見，分類與外連保留至少 44px 操作區。
+- 作品驗收另用既有 Sharp 解碼所有作品圖片，確認不只是檔名存在。
+- 全站 SEO 驗收同步新政策：案例的九語 OG／Twitter 使用專案封面，其餘外語頁維持純品牌圖。原本一次並行讀取全部網址在擴充後會造成暫時連線失敗，已改成每批 12 頁，保留全部原有索引與轉址檢查。
+- GoGoCha 原有帶事件追蹤的 AI 電話服務連結及 CTA 保留，避免再渲染重複的同服務入口。
+- 最終驗收通過：`pnpm lint:content`（33,120 筆翻譯、既有聯絡表單 mock 驗證）、`pnpm exec tsc --noEmit`、`pnpm build`、`pnpm check:projects http://localhost:3100`（34 案／306 個九語詳頁／未知網址 404）、`pnpm check:seo http://localhost:3100`（713 個 sitemap 網址／38 個 noindex 頁）。三個既有證據案例的資料與日期逐欄核對一致。
+- Chrome 完成繁中／英文／日文／德文 × 1440px／390px × 列表、CLIMATIX、CLASP、TellCraft、GoGoCha 共 40 組版面檢查；全部 34 張作品圖載入，分類與三個詳頁入口一致，實際點擊可進入新頁，首頁仍為三個精選案例，停用 JavaScript 仍可閱讀正文。無整頁橫向溢出、缺圖或瀏覽器執行錯誤，另人工抽看四張截圖。截圖暫存於 `/private/var/folders/_2/0cgnyjy96gq7clyqpvzrx0vm0000gn/T/falcon-project-pages-599TsP`；瀏覽器檢查已停用快取，避免將正常 304 當作失敗。
+- 本次沿用既有元件、字典、圖片與套件，不新增資料庫或外部翻譯服務。尚未 commit／push／部署或送出 GSC；建置仍有既有 metadataBase 預設 localhost 警告，實際 canonical／社群圖片網址驗收通過。Google 收錄與排名須上線後觀察，不將本機驗收寫成搜尋成果。
+- 來源校正：草莓派以 `project/Strawberry-Pie/src/components` 的作品／時間地圖／會員集章元件取代籠統擴充描述；元智以 `cmyzu/package.json`、聊天與 3D 元件核對 Prisma／next-intl，移除未核實 GraphQL／fine-tune 說法；書籍案依現有 Prisma D1 adapter 改列 Cloudflare D1。三個既有證據案例資料不改寫。
+
+
+### 固定網址與內容來源
+
+所有 slug 均位於 `/case-studies/`，九語共用相同 slug；來源專案只讀取程式與紀錄，不操作其環境設定、帳號或資料庫。公開網址於 2026-10-25 唯讀核對；沒有公開網址或程式來源的舊案以既有紀錄為界，不將推論寫成成果。
+
+| ID | Slug | 內容依據 | 公開狀態 |
+| --- | --- | --- | --- |
+| 39 | `climatix-ghg-inventory` | `/Users/eric/Desktop/CLIMATIX`：OCR／排放計算／PDF／資料追溯 | 公開頁 200 |
+| 38 | `taoyuan-reformed-church` | `/Users/eric/Desktop/taoyuan-reformed-church`：公開路由與內容後台 | 公開頁 200 |
+| 37 | `clasp-collaboration-app` | `/Users/eric/Desktop/Translation_gummy`、`/Users/eric/Translation_gummy`、Android 專案：共用 API 與原生客戶端 | 公開頁 200 |
+| 36 | `yuhe-fashion-commerce` | `/Users/eric/Desktop/apparel`：商品／會員／購物車；公開頁尾與 noindex 已核對 | 200／noindex／暫代圖片 |
+| 35 | `vehicle-history-management` | `/Users/eric/Desktop/project/VehicleHistory`：車籍／維修／辨識／報表 | 登入頁 200／noindex |
+| 34 | `automation-expo-ai-explorer` | `/Users/eric/Desktop/exhibition/web`：登錄／任務／兌換規則 | 公開頁 200 |
+| 33 | `alive-ai-game` | `/Users/eric/Desktop/aliverole`、`/Users/eric/AndroidStudioProjects/Alive`：原生介面與共用後端紀錄 | 公開頁 200 |
+| 32 | `hongwei-industrial-property` | `/Users/eric/Desktop/project/land`：物件／文章／表單／CMS | 公開頁 200 |
+| 31 | `gogocha-ai-dispatch` | 既有證據案例、`/Users/eric/Desktop/HualienTaxiServer` 與 `project/gogocha-website` | 公開頁 200 |
+| 30 | `escrowa-game-escrow` | 公開網站、既有交付紀錄與 `/Users/eric/Desktop/escrowa_deploy` 部署素材 | 公開頁 200 |
+| 23 | `tellcraft-ai-website-builder` | `/Users/eric/Desktop/tellcraft`：需求／生成／佇列；README 記載服務暫停 | 公開網址 503／暫停 |
+| 27 | `gogocha-taxi-app` | `/Users/eric/AndroidStudioProjects/HualienTaxiDriver`：雙模式／語音／即時通訊 | 公開頁 200 |
+| 29 | `telegram-group-management-bot` | `/Users/eric/Desktop/project/TG`：webhook／守門／排程／後台 | 未提供公開網址 |
+| 28 | `invisible-care-cms` | `/Users/eric/Desktop/project/clean`：區塊 CMS／前後對比／圖片 | 公開站 200／品牌已改 ProShake |
+| 26 | `roll-on-corporate-website` | `/Users/eric/Desktop/roll`：雙語／地圖／服務／聯絡 | 公開頁 200 |
+| 25 | `tiscllb-society-website` | `/Users/eric/Desktop/project/learn`：學會／會員／藝廊 | 公開頁 200 |
+| 1 | `yizhenxiang-commerce-performance` | 既有證據案例與 `/Users/eric/Desktop/project/yizx` | 公開頁 200 |
+| 20 | `clinic-line-booking` | 既有匿名證據案例與 `/Users/eric/Desktop/project/clinic-booking` | 未提供公開網址 |
+| 2 | `sneaker-ecommerce` | `/Users/eric/Desktop/project/shoe`：尺碼／會員／GraphQL／訂單 | 公開頁 200 |
+| 4 | `r-collectives-interior-design` | `/Users/eric/Desktop/project/ROC`：區塊 CMS／作品／論壇 | 未提供公開網址 |
+| 5 | `chao-healing-book-website` | `/Users/eric/Desktop/project/book-showcase`：播放器／量表／雷達圖／D1 adapter | 公開頁 200 |
+| 6 | `barbecue-online-ordering` | 既有交付紀錄與原公開作品圖；未取得可明確對應的原始碼 | 未提供公開網址 |
+| 7 | `three-kingdoms-game-website` | `/Users/eric/Desktop/project/Kingdoms`：會員／論壇／公告／審核 | 公開頁 200 |
+| 8 | `conference-submission-system` | `/Users/eric/Desktop/Contribute`：投稿／角色／審查／決議 | 公開頁 200 |
+| 9 | `icte-2025-conference` | `/Users/eric/Desktop/project/seminar`：GraphQL／編輯器與公開研討會頁 | 公開頁 200 |
+| 10 | `yzu-management-website` | `/Users/eric/Desktop/cmyzu`：CMS／聊天／3D 元件 | 原網址 404 |
+| 24 | `neuron-2026-exhibition` | `/Users/eric/Desktop/project/神經元-neuron-2026`：粒子／作品／預約／回饋 | 公開頁 200 |
+| 11 | `exhibition-event-website` | `/Users/eric/Desktop/project/Strawberry-Pie`：作品分組／時間地圖／集章元件 | 公開頁 200 |
+| 14 | `restaurant-pos-system` | 既有 POS 交付紀錄與圖片；未取得可明確對應的餐飲原始碼 | 未提供公開網址 |
+| 15 | `onsite-ai-customer-service` | 既有現場 AI 客服交付紀錄與圖片；未取得本輪可核對的完整場域專案 | 未提供公開網址 |
+| 17 | `ai-programming-learning-research` | 既有教授指導研究專案紀錄與圖片；未核對研究成效或完整研究資料 | 未提供公開網址 |
+| 18 | `cosmoswork-freelance-platform` | `/Users/eric/Desktop/project/cosmosWork`：案件／履歷／媒合／查詢 | 公開頁 200 |
+| 19 | `exhibition-management-system` | `/Users/eric/Desktop/exhibition-system`：模板／看板／預約／資料模型 | 公開頁 200 |
+| 21 | `tea-brand-website` | `/Users/eric/Desktop/project/drink`：茶品／門市／活動／CMS | 公開頁 200 |
+
+
 ## SEO 內容補強與翻譯校正（2026-10-15）
 
 - Ubersuggest 字數報表列出 19 個網址，合併語系後為 8 種頁面。正式站正文已存在於 HTML；報表 words 與中日文非空白字元並非同一計數，不使用全站統一字數門檻，也不以 noindex 隱藏警告。

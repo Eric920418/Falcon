@@ -7,10 +7,9 @@ import { ArrowRight, ExternalLink } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import { PageShell } from '@/components/page-layout/PageShell'
 import { ServiceCtaLink } from '@/components/ServiceCtaLink'
-import {
-  caseStudySlugs,
-  getCaseStudy,
-} from '@/lib/content/case-studies'
+import { projectSlugs, getProject } from '@/lib/content/projects'
+import { getProjectCaseStudy } from '@/lib/content/project-case-studies'
+import { getService } from '@/lib/content/services'
 import {
   createBreadcrumbSchema,
   createCaseStudySchema,
@@ -25,30 +24,34 @@ interface CaseStudyPageProps {
 }
 
 export function generateStaticParams() {
-  return caseStudySlugs.map((slug) => ({ slug }))
+  return projectSlugs.map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
   const { slug, locale: routeLocale } = await params
   await initLocale(routeLocale)
-  const caseStudy = getCaseStudy(slug)
+  const caseStudy = getProjectCaseStudy(slug)
   if (!caseStudy) return {}
 
-  return createMetadata({
+  const metadata = createMetadata({
     title: caseStudy.title,
     description: caseStudy.summary,
     path: `/case-studies/${slug}`,
     ogImage: `${siteConfig.url}${caseStudy.image}`,
   })
+  const image = { url: `${siteConfig.url}${caseStudy.image}` }
+  return { ...metadata, openGraph: { ...metadata.openGraph, images: [image] }, twitter: { ...metadata.twitter, images: [image.url] } }
 }
 
 export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   const { slug, locale: routeLocale } = await params
   await initLocale(routeLocale)
   const { t, locale } = getI18n()
-  const caseStudy = getCaseStudy(slug)
+  const caseStudy = getProjectCaseStudy(slug)
   if (!caseStudy) notFound()
 
+  const relatedProjects = (caseStudy.relatedSlugs ?? []).map(getProject).filter(project => project !== undefined)
+  const service = caseStudy.serviceSlug ? getService(caseStudy.serviceSlug) : null
   const url = `${siteConfig.url}/case-studies/${slug}`
   const schemas = [
     createWebPageSchema({
@@ -67,10 +70,15 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   return (
     <PageShell>
       <JsonLd data={schemas} />
+      <nav aria-label={t("麵包屑")} className="max-w-5xl mx-auto px-6 pt-8 flex flex-wrap gap-2 text-sm text-[var(--site-muted)]">
+        <Link href="/">{t("首頁")}</Link><span aria-hidden="true">/</span>
+        <Link href="/case-studies">{t("返回作品集")}</Link><span aria-hidden="true">/</span>
+        <span aria-current="page">{t(caseStudy.clientName)}</span>
+      </nav>
       <article className="bg-[var(--site-bg)] ">
         <header className="max-w-5xl mx-auto px-6 py-16">
-          <p className="text-xs uppercase tracking-[0.18em] text-[var(--site-accent)] mb-4">{t("公開案例與可驗證證據")}</p>
-          <p className="text-[var(--site-accent)] text-sm mb-3">{t(caseStudy.location)}{t("｜")}{t(caseStudy.period)}</p>
+          <p className="text-xs uppercase tracking-[0.18em] text-[var(--site-accent)] mb-4">{t(caseStudy.evidenceStatus ? "公開案例與可驗證證據" : "專案介紹")}</p>
+          {(caseStudy.location || caseStudy.period) && <p className="text-[var(--site-accent)] text-sm mb-3">{[caseStudy.location, caseStudy.period].filter(Boolean).map(value => t(value)).join(" · ")}</p>}
           <h1 className="text-4xl md:text-6xl text-[var(--site-text)] mb-6">{t(caseStudy.title)}</h1>
           <p className="text-xl text-[var(--site-muted)] max-w-3xl leading-relaxed">{t(caseStudy.summary)}</p>
         </header>
@@ -114,6 +122,14 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 <h2 className="text-3xl text-[var(--site-text)] mb-4">{t("問題背景")}</h2>
                 <p className="text-[var(--site-muted)] leading-relaxed">{t(caseStudy.challenge)}</p>
               </section>
+              {caseStudy.features && (
+                <section>
+                  <h2 className="text-3xl text-[var(--site-text)] mb-4">{t("核心功能")}</h2>
+                  <ul className="grid gap-3 sm:grid-cols-2">
+                    {caseStudy.features.map(feature => <li key={feature} className="border border-[var(--site-border)] rounded-lg p-4 text-[var(--site-muted)]">{t(feature)}</li>)}
+                  </ul>
+                </section>
+              )}
               <section>
                 <h2 className="text-3xl text-[var(--site-text)] mb-4">{t("實作方式")}</h2>
                 <ul className="space-y-3 text-[var(--site-muted)]">
@@ -174,7 +190,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   </ul>
                 </section>
               )}
-              <section>
+              {caseStudy.metrics.length > 0 && <section>
                 <h2 className="text-3xl text-[var(--site-text)] mb-5">{t("可公開的量測與能力")}</h2>
                 <div className="grid md:grid-cols-3 gap-4">
                   {caseStudy.metrics.map((metric) => (
@@ -195,18 +211,18 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                     </div>
                   ))}
                 </div>
-              </section>
-              <section className="border border-[var(--site-accent)]/40 bg-amber-950/10 rounded-xl p-6">
+              </section>}
+              {caseStudy.disclosure && <section className="border border-[var(--site-accent)]/40 bg-amber-950/10 rounded-xl p-6">
                 <h2 className="text-xl text-[var(--site-text)] mb-3">{t("揭露與限制")}</h2>
                 <p className="text-[var(--site-muted)] leading-relaxed">{t(caseStudy.disclosure)}</p>
-              </section>
+              </section>}
             </div>
 
             <aside className="space-y-8">
               <div>
-                <p className="mb-5 inline-flex border border-emerald-800/50 bg-emerald-950/20 px-3 py-1 text-xs text-emerald-700">
+                {caseStudy.evidenceStatus && <p className="mb-5 inline-flex border border-emerald-800/50 bg-emerald-950/20 px-3 py-1 text-xs text-emerald-700">
                   {t("證據狀態：")}{t(caseStudy.evidenceStatus === 'public-project' ? '公開專案' : caseStudy.evidenceStatus === 'client-approved' ? '客戶同意公開' : '匿名技術案例')}
-                </p>
+                </p>}
                 <h2 className="text-lg text-[var(--site-text)] mb-3">{t("技術範圍")}</h2>
                 <div className="flex flex-wrap gap-2">
                   {caseStudy.technologies.map((tech) => (
@@ -223,8 +239,20 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   rel="noopener noreferrer"
                   className="falcon-btn-outline inline-flex items-center gap-2"
                 >
-                  {t("查看上線畫面證據")}<ExternalLink size={16} />
+                  {t(caseStudy.evidenceStatus ? "查看上線畫面證據" : "查看外部網站")}<ExternalLink size={16} />
                 </a>
+              )}
+              {service && caseStudy.slug !== 'gogocha-ai-dispatch' && (
+                <div className="space-y-3">
+                  <h2 className="text-lg text-[var(--site-text)]">{t("相關開發服務")}</h2>
+                  <Link href={`/services/${service.slug}`} className="inline-flex items-center gap-2 text-[var(--site-accent)] hover:underline">{t(service.title)}<ArrowRight size={15} /></Link>
+                </div>
+              )}
+              {relatedProjects.length > 0 && (
+                <div className="space-y-3">
+                  <h2 className="text-lg text-[var(--site-text)]">{t("相關案例")}</h2>
+                  <ul className="space-y-3">{relatedProjects.map(project => <li key={project.slug}><Link href={`/case-studies/${project.slug}`} className="text-[var(--site-accent)] hover:underline">{t(project.title)}</Link></li>)}</ul>
+                </div>
               )}
               {caseStudy.slug === 'gogocha-ai-dispatch' && (
                 <ServiceCtaLink href="/services/ai-voice-agent" action="view_service" placement="case_gogocha_service" className="inline-flex items-center gap-2 text-[var(--site-accent)] hover:underline">

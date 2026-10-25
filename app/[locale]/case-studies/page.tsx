@@ -1,4 +1,5 @@
 import { ImageWithFallback as Image } from '@/components/figma/ImageWithFallback'
+import { projects, projectCount } from '@/lib/content/projects'
 import { getAllCaseStudies } from '@/lib/content/case-studies'
 import { I18nProvider } from '@/lib/i18n/client'
 import portfolioSource from '@/lib/i18n/messages/zh-tw/portfolio.json'
@@ -10,6 +11,7 @@ import { PageShell } from '@/components/page-layout/PageShell'
 import { Portfolio } from '@/components/Portfolio'
 import {
   createBreadcrumbSchema,
+  createItemListSchema,
   createMetadata,
   createWebPageSchema,
   JsonLd,
@@ -21,7 +23,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return createMetadata({
     title: '網站、AI 與系統開發案例｜證據與限制完整揭露',
     description:
-      '查看隼訊 34 項完整作品紀錄，以及網站效能、AI 派單與 LINE 預約的證據化案例；清楚區分作品功能、技術量測與商業成果。',
+      '查看隼訊 {0} 項作品的獨立介紹，探索網站、App、AI 與客製系統的功能、實作方式及技術案例。',
+    values: { 0: projectCount },
     path: '/case-studies',
   })
 }
@@ -42,6 +45,10 @@ export default async function CaseStudiesPage({ params }: { params: Promise<{ lo
             description: '網站、AI 與系統開發的公開技術案例與證據揭露。',
             url,
           }),
+          createItemListSchema({
+            id: `${url}#projects`, name: '完整作品紀錄', description: '作品獨立介紹與開發案例', itemType: 'CreativeWork',
+            items: projects.map(project => ({ name: project.title, description: project.description, url: `${url}/${project.slug}` })),
+          }),
           createBreadcrumbSchema([
             { name: '首頁', path: '/' },
             { name: '案例', path: '/case-studies' },
@@ -55,7 +62,7 @@ export default async function CaseStudiesPage({ params }: { params: Promise<{ lo
             <p className="text-[var(--site-accent)] text-sm tracking-widest uppercase mb-4">{t("Evidence-based work")}</p>
             <h1 className="text-4xl md:text-6xl text-[var(--site-text)] mb-6">{t("公開案例與可驗證證據")}</h1>
             <p className="text-lg text-[var(--site-muted)] max-w-3xl leading-relaxed">
-              {t("Git 原始作品集的 34 項案例全部集中在同一區。有獨立量測或技術證據的案例會直接標示「查看證據」；其餘呈現實際交付功能，不把功能描述包裝成營收成果。")}</p>
+              {t("{0} 項作品皆有獨立介紹。依類型探索功能、實作方式與相關服務。", { 0: projectCount })}</p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {getAllCaseStudies().slice(0, 2).map((study, index) => (
@@ -67,7 +74,7 @@ export default async function CaseStudiesPage({ params }: { params: Promise<{ lo
           </div>
         </header>
 
-        <I18nProvider locale={locale} messages={clientMessages}><Portfolio showHeader={false} /></I18nProvider>
+        <I18nProvider locale={locale} messages={clientMessages}><Portfolio showHeader={false} projects={projects.map(({ id, slug, title, description, image, imageContain, url, category, hasEvidence }) => ({ id, slug, title, description, image, ...(imageContain ? { imageContain } : {}), ...(url ? { url } : {}), category, ...(hasEvidence ? { hasEvidence } : {}) }))} /></I18nProvider>
       </div>
     </PageShell>
   )

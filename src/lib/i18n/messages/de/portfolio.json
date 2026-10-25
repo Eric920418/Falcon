@@ -1,4 +1,5 @@
 {
+  "草莓派畢業展覽網站，整合活動介紹、作品分組瀏覽、時間地點與會員集章介面，以 React 前端串接活動資料。": "Die Website der Strawberry-Pie-Abschlussausstellung verbindet Einführung, Werkgruppen, Termine, Ort und Stempelsammlung über ein React-Frontend mit Ausstellungsdaten.",
   "CLIMATIX 溫室氣體盤查系統": "CLIMATIX — Treibhausgasinventar",
   "為台灣中小企業打造的溫室氣體盤查平台，整合組織邊界與場域管理、單據 OCR、人工複核、Scope 1／2 排放計算與 PDF 報告。透過排放係數及 GWP 版本快照、檔案歷程與稽核紀錄，讓計算結果可回溯至原始資料。": "Eine Plattform zur Treibhausgasbilanzierung für taiwanische KMU mit Organisationsgrenzen und Standorten, Beleg-OCR, manueller Prüfung, Scope-1/2-Berechnung und PDF-Berichten. Versionsstände der Emissionsfaktoren und GWP-Werte, Dateiverläufe und Prüfprotokolle machen Berechnungen bis zu den Quelldaten nachvollziehbar.",
   "組織邊界、場域與設備管理": "Organisationsgrenzen, Standorte und Anlagen verwalten",

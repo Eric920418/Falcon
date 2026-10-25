@@ -1,3 +1,4 @@
+import { projectCount } from '@/lib/content/projects'
 import { formatMoney } from '@/lib/i18n/format'
 
 import { getI18n } from '@/lib/i18n/server'
@@ -16,11 +17,11 @@ export function HomeProofPricing() {
           <h2 className="text-3xl md:text-5xl text-[var(--site-text)] leading-tight mb-6">
             {t("案例有廣度，價格不藏")}</h2>
           <p className="text-[var(--site-muted)] leading-relaxed mb-8">
-            {t("完整作品集收錄 34 項網站、系統與 App，其中三項提供獨立證據與限制頁；四個核心服務公開目前起價與報價因素，先確認預算是否對得上。")}</p>
+            {t("完整作品集收錄 {0} 項網站、系統與 App，其中三項提供獨立證據與限制頁；四個核心服務公開目前起價與報價因素，先確認預算是否對得上。", { 0: projectCount })}</p>
 
           <div className="grid grid-cols-3 gap-3 mb-8">
             {[
-              ['34', '完整作品'],
+              [String(projectCount), '完整作品'],
               ['3', '證據詳頁'],
               ['4', '公開起價'],
             ].map(([value, label]) => (

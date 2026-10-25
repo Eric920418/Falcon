@@ -6,16 +6,16 @@ import { getIndexableServices } from '@/lib/content/services'
 import { getAllLocalPages, isIndexableLocalPage } from '@/lib/content/local'
 import { getAllBlogPosts } from '@/lib/content/blog'
 import { pricingPages, comparePages } from '@/lib/content/pricing'
-import { getAllCaseStudies } from '@/lib/content/case-studies'
+import { getAllProjectCaseStudies } from '@/lib/content/project-case-studies'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: baseUrl, lastModified: '2026-10-15' },
+    { url: baseUrl, lastModified: '2026-10-25' },
     { url: `${baseUrl}/services`, lastModified: '2026-10-15' },
     { url: `${baseUrl}/about`, lastModified: '2026-08-11' },
-    { url: `${baseUrl}/case-studies`, lastModified: '2026-10-15' },
+    { url: `${baseUrl}/case-studies`, lastModified: '2026-10-25' },
     { url: `${baseUrl}/pricing`, lastModified: '2026-10-15' },
     { url: `${baseUrl}/blog`, lastModified: '2026-10-15' },
     { url: `${baseUrl}/privacy`, lastModified: '2026-09-08' },
@@ -57,7 +57,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: p.lastModified,
     }))
 
-  const caseStudyRoutes: MetadataRoute.Sitemap = getAllCaseStudies().map((caseStudy) => ({
+  const caseStudyRoutes: MetadataRoute.Sitemap = getAllProjectCaseStudies().map((caseStudy) => ({
     url: `${baseUrl}/case-studies/${caseStudy.slug}`,
     lastModified: caseStudy.updatedAt,
   }))

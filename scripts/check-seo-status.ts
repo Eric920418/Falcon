@@ -19,7 +19,7 @@ import {
 } from '../src/lib/content/local'
 import { getAllBlogPosts } from '../src/lib/content/blog'
 import { pricingPages, comparePages } from '../src/lib/content/pricing'
-import { getAllCaseStudies } from '../src/lib/content/case-studies'
+import { getAllProjectCaseStudies, getProjectCaseStudy } from '../src/lib/content/project-case-studies'
 
 const baseUrl = (process.argv[2] ?? siteConfig.url).replace(/\/$/, '')
 const MAX_PATH_LENGTH = 100
@@ -116,7 +116,7 @@ function collectExpectedRoutes(): RouteSpec[] {
     })
   }
 
-  for (const study of getAllCaseStudies()) {
+  for (const study of getAllProjectCaseStudies()) {
     routes.push({
       path: `/case-studies/${study.slug}`,
       indexable: true,
@@ -296,7 +296,10 @@ async function auditPage(route: RouteSpec): Promise<PageAudit> {
     }
   }
   if (marketingPage && locale !== 'zh-tw') {
-    if (getMeta(html, 'property', 'og:image') !== `${siteConfig.url}/brand-og` || getMeta(html, 'name', 'twitter:image') !== `${siteConfig.url}/brand-og`) problems.push('外語社群圖片必須使用純品牌圖')
+    const path = unlocalizedPath(route.path)
+    const study = path.startsWith('/case-studies/') ? getProjectCaseStudy(path.slice('/case-studies/'.length)) : null
+    const expectedImage = study ? new URL(study.image, siteConfig.url).href : `${siteConfig.url}/brand-og`
+    if (getMeta(html, 'property', 'og:image') !== expectedImage || getMeta(html, 'name', 'twitter:image') !== expectedImage) problems.push(study ? '案例社群圖片必須使用專案封面' : '外語社群圖片必須使用純品牌圖')
     if (getMeta(html, 'property', 'og:locale') !== languageInfo[locale].og) problems.push('Open Graph locale 錯誤')
     for (const path of getInternalLinks(html)) {
       if (/^\/(?:card|resume|privacy|terms|api)(?:\/|$)/.test(path) || /\.[^/]+$/.test(path)) continue
@@ -395,11 +398,14 @@ async function main() {
   console.log(`${colors.cyan}Falcon SEO／GEO 全站驗收${colors.reset} — ${baseUrl}`)
   console.log(`索引頁 ${indexableRoutes.length}；noindex 頁 ${noindexRoutes.length}\n`)
 
-  const [sitemap, robots, ...audits] = await Promise.all([
+  const [sitemap, robots] = await Promise.all([
     fetchText(`${baseUrl}/sitemap.xml`),
     fetchText(`${baseUrl}/robots.txt`),
-    ...routes.map(auditPage),
   ])
+  const audits: PageAudit[] = []
+  for (let offset = 0; offset < routes.length; offset += 12) {
+    audits.push(...await Promise.all(routes.slice(offset, offset + 12).map(auditPage)))
+  }
 
   console.log(`${colors.cyan}[1/6] Sitemap 與 robots.txt${colors.reset}`)
   const sitemapUrls = sitemap?.status === 200
