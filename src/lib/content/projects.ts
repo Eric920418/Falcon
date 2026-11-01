@@ -19,6 +19,42 @@ export type PortfolioCard = Pick<Project, 'id' | 'slug' | 'title' | 'description
 
 export const projects: Project[] = [
   {
+    "id": 40,
+    "slug": "nova-startup-operating-platform",
+    "title": "NOVA AI 創業營運平台",
+    "description": "為 ROLL ON. 打造的會員型創業營運平台，整合 ICP 客群定位、AI 行動計畫、客戶訪談、CRM 跟進、創辦人交流與投資人分享入口。以方案權限、AI 用量及 PayPal 訂閱串接公開產品頁與登入後工作區。",
+    "tech": [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Prisma 7",
+      "Neon PostgreSQL",
+      "Anthropic Claude",
+      "PayPal",
+      "next-intl"
+    ],
+    "features": [
+      "ICP 客群定位與 AI 行動計畫",
+      "客戶訪談、CRM 與里程碑跟進",
+      "創辦人會員交流與聊天",
+      "商業計畫與投資人分享權限",
+      "PayPal 訂閱與 AI 用量管理"
+    ],
+    "highlights": [
+      "AI 生成結果驗證與重送冪等處理",
+      "會員資料歸屬、方案與分享權限檢查",
+      "行動計畫版本衝突保護與雙語介面"
+    ],
+    "image": "/nova-product-cover.webp",
+    "url": "https://rollon.com.tw/product",
+    "category": "AI 應用",
+    "serviceSlug": "ai-tools",
+    "relatedSlugs": [
+      "roll-on-corporate-website",
+      "clasp-collaboration-app"
+    ]
+  },
+  {
     "id": 39,
     "title": "CLIMATIX 溫室氣體盤查系統",
     "description": "為台灣中小企業打造的溫室氣體盤查平台，整合組織邊界與場域管理、單據 OCR、人工複核、Scope 1／2 排放計算與 PDF 報告。透過排放係數及 GWP 版本快照、檔案歷程與稽核紀錄，讓計算結果可回溯至原始資料。",
@@ -559,7 +595,7 @@ export const projects: Project[] = [
     "slug": "roll-on-corporate-website",
     "serviceSlug": "web-development",
     "relatedSlugs": [
-      "hongwei-industrial-property",
+      "nova-startup-operating-platform",
       "yzu-management-website"
     ]
   },
@@ -921,7 +957,7 @@ export const projects: Project[] = [
       "3D 模型串接"
     ],
     "image": "/元智管院.png",
-    "url": "https://www.cm.yzu.edu.tw/zh",
+    "url": "https://newcm.cm.yzu.edu.tw/zh",
     "category": "企業官網",
     "slug": "yzu-management-website",
     "serviceSlug": "web-development",

@@ -4,6 +4,21 @@
 
 **網站**: https://www.falconinformation.com
 
+## 元智作品網址更新（2026-11-01）
+
+- ID 10 的共用外連改為 https://newcm.cm.yzu.edu.tw/zh，公開 GET 確認回應 200；作品列表及九語詳頁沿用共用資料，原案例 slug 不變。
+- 移除詳頁與九語字典中「原網址 404」及「舊網址無法展示」的過期說明，保留功能依本機原始碼核對的範圍；本輪未登入或驗證後台／AI 功能，不將首頁 200 視為所有功能驗收。詳頁更新日期同步為 2026-11-01，sitemap 自動沿用。
+- 驗收通過：`pnpm lint:content`（33,246 筆翻譯與既有 mock 表單驗證）、`pnpm exec tsc --noEmit`、`pnpm build` 及 `git diff --check`；直接檢查九語列表與元智詳頁共 18 個正式建置 HTML，新外連皆正確、舊網址已移除、案例正文無過期 404 說明且 H1 唯一。沿用既有 metadataBase 警告，本輪未重跑全站 SEO／瀏覽器版面檢查。保留前輪 NOVA 作品改動，未 commit／push／部署。
+
+## NOVA AI 創業營運平台（2026-11-01）
+
+- 新增作品 ID 40、固定網址 `/case-studies/nova-startup-operating-platform`，外連 https://rollon.com.tw/product；保留原 ROLL ON. 官網案例，兩案互連。新案介紹登入後的 ICP、行動計畫、訪談／CRM、會員交流、投資人分享及訂閱，不重複品牌官網內容。
+- 來源只讀核對 `/Users/eric/Desktop/roll` 的產品路由、雙語文案、Dashboard 路由、行動計畫 API／service、PayPal 訂閱 API 及 package.json；公開產品頁回應 200。公開頁的成效數字、訂單目標及試用期限不作本案成果，尚停用的外部公司搜尋不列為可用功能。
+- 封面為正式產品頁 1440×900 截圖，轉為 WebP；未登入、註冊、提交表單、呼叫 AI 或付款，未修改來源專案與資料庫。九語內容沿用既有字典，作品總數自動增為 35 項／315 個案例網址，sitemap 與 llms 自動讀取共用資料。
+- 驗收通過：`pnpm lint:content`（33,255 筆翻譯，既有聯絡表單全 mock）、`pnpm exec tsc --noEmit`、`pnpm build`（788 個靜態頁面）、`pnpm check:projects http://localhost:3100`（35 案／315 個九語詳頁）與 `pnpm check:seo http://localhost:3100`（722 個 sitemap 網址／38 個 noindex 頁）。原三案內容不變，未知 slug 404、初始 HTML、canonical／hreflang、分享圖片及結構化資料皆通過。
+- Chrome 抽驗新頁繁中／英文／日文／德文 × 1440／390px 共八組：無水平溢出、封面正常、服務及相關案例連結正確、無瀏覽器執行錯誤；另確認列表三個內鏈、桌機／手機實際點擊導頁及停用 JavaScript 仍可閱讀正文。截圖位於 `/tmp/falcon-nova-{zh-tw,en,ja,de}-{1440,390}.png`，原圖為 `/tmp/falcon-nova-product.png`，正式使用 `public/nova-product-cover.webp`（約 35KB）。
+- 未 commit／push／部署；未測試來源產品的登入、AI 與付款，僅核對原始碼及公開頁。建置保留既有 metadataBase fallback 警告，實際 canonical／社群圖網址檢查通過；正式收錄及排名須發布後觀察。
+
 ## 全作品獨立案例頁（2026-10-25）
 
 - 依核定的 34 個固定 slug 建立九語作品詳頁，沿用既有三個證據案例與首頁精選；作品數改由共用資料計算。內容核對公開網站、本機來源及既有交付紀錄，未確認的日期、成效與負責範圍不補寫。實作與驗收紀錄持續補於本節，不另建文件。
@@ -30,6 +45,7 @@
 
 | ID | Slug | 內容依據 | 公開狀態 |
 | --- | --- | --- | --- |
+| 40 | `nova-startup-operating-platform` | `/Users/eric/Desktop/roll`：ICP／行動計畫／訪談 CRM／會員交流／訂閱；2026-11-01 核對 | 產品頁 200 |
 | 39 | `climatix-ghg-inventory` | `/Users/eric/Desktop/CLIMATIX`：OCR／排放計算／PDF／資料追溯 | 公開頁 200 |
 | 38 | `taoyuan-reformed-church` | `/Users/eric/Desktop/taoyuan-reformed-church`：公開路由與內容後台 | 公開頁 200 |
 | 37 | `clasp-collaboration-app` | `/Users/eric/Desktop/Translation_gummy`、`/Users/eric/Translation_gummy`、Android 專案：共用 API 與原生客戶端 | 公開頁 200 |
@@ -55,7 +71,7 @@
 | 7 | `three-kingdoms-game-website` | `/Users/eric/Desktop/project/Kingdoms`：會員／論壇／公告／審核 | 公開頁 200 |
 | 8 | `conference-submission-system` | `/Users/eric/Desktop/Contribute`：投稿／角色／審查／決議 | 公開頁 200 |
 | 9 | `icte-2025-conference` | `/Users/eric/Desktop/project/seminar`：GraphQL／編輯器與公開研討會頁 | 公開頁 200 |
-| 10 | `yzu-management-website` | `/Users/eric/Desktop/cmyzu`：CMS／聊天／3D 元件 | 原網址 404 |
+| 10 | `yzu-management-website` | `/Users/eric/Desktop/cmyzu`：CMS／聊天／3D 元件 | 新網址 200（2026-11-01） |
 | 24 | `neuron-2026-exhibition` | `/Users/eric/Desktop/project/神經元-neuron-2026`：粒子／作品／預約／回饋 | 公開頁 200 |
 | 11 | `exhibition-event-website` | `/Users/eric/Desktop/project/Strawberry-Pie`：作品分組／時間地圖／集章元件 | 公開頁 200 |
 | 14 | `restaurant-pos-system` | 既有 POS 交付紀錄與圖片；未取得可明確對應的餐飲原始碼 | 未提供公開網址 |
@@ -229,7 +245,7 @@ pnpm start
 - 流暢的頁面過渡動畫
 - **Hero 背景** - 工業網格 + 暖色光暈 + 大型漢字裝飾
 - **信任徽章** - 首屏展示「永久售後服務」與「快速交件保證」
-- **作品案例展示** - 完整案例頁收錄 34 項作品，首頁精選三項可驗證案例
+- **作品案例展示** - 完整案例頁收錄 35 項作品，首頁精選三項可驗證案例
 - **決策型首頁內容** - 兩個獲客 Hub、企業 AI 電話旗艦區、實際交付、四步合作流程、適配條件、公開起價、實名負責人與精選實作文章
 
 ## 作品案例

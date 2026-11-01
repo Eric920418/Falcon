@@ -7,6 +7,16 @@ export interface ProjectStory {
 }
 
 export const projectStories: Record<string, ProjectStory> = {
+  "nova-startup-operating-platform": {
+    "seoTitle": "NOVA AI 創業營運平台｜AI 應用開發案例",
+    "context": "創辦人需要將市場假設、客戶訪談與下一步行動放在同一個工作區，而不是分散在文件與對話中。此案聚焦登入後的創業營運工具、會員權限及訂閱整合；既有 ROLL ON. 官網案例則介紹品牌與顧問服務展示。",
+    "workflow": [
+      "建立會員資料與 ICP，整理目標客群及市場假設。",
+      "記錄客戶訪談並產生行動計畫，追蹤任務與里程碑。",
+      "依方案使用會員交流及投資人分享，管理訂閱與 AI 用量。"
+    ],
+    "updatedAt": "2026-11-01"
+  },
   "climatix-ghg-inventory": {
     "seoTitle": "CLIMATIX 溫室氣體盤查系統｜系統開發案例",
     "context": "碳盤查需要把不同場域、設備與月份的單據接到同一套計算依據。此案將人工複核、排放係數與 GWP 版本一起保存，讓報告數字能沿原始資料回查。",
@@ -231,14 +241,13 @@ export const projectStories: Record<string, ProjectStory> = {
   },
   "yzu-management-website": {
     "seoTitle": "元智大學管理學系校網｜網站開發案例",
-    "context": "大學網站需要讓不同單位持續更新資料，也要協助訪客查找資訊。本機來源可核對內容後台、聊天介面與三維展示元件；本頁不推定這些功能仍在舊網址運作。",
+    "context": "大學網站需要讓不同單位持續更新資料，也要協助訪客查找資訊。本機來源可核對內容後台、聊天介面與三維展示元件。",
     "workflow": [
       "訪客瀏覽學校與單位資訊。",
       "透過聊天及展示介面查找內容。",
       "授權人員由後台維護網站資料。"
     ],
-    "updatedAt": "2026-10-25",
-    "note": "截至 2026-10-25，原公開網址回應 404；本頁依既有交付與本機來源紀錄介紹，不將該網址視為目前可用的展示。"
+    "updatedAt": "2026-11-01"
   },
   "neuron-2026-exhibition": {
     "seoTitle": "神經元 2026 畢業展官網｜網站開發案例",
