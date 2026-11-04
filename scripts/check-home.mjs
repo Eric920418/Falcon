@@ -33,7 +33,12 @@ await page.evaluateOnNewDocument(() => {
   new PerformanceObserver(list => { for (const e of list.getEntries()) if (!e.hadRecentInput) window.__homeMetrics.cls += e.value }).observe({ type: 'layout-shift', buffered: true })
 })
 const go = path => page.goto(new URL(path, base).href, { waitUntil: 'networkidle0' })
-const ready = () => page.waitForSelector('.falcon-home[data-motion="ready"]')
+const ready = async () => {
+  await page.waitForSelector('.falcon-home[data-motion="ready"]')
+  await page.waitForSelector('.fh-loading', { hidden: true })
+  assert.notEqual(await page.evaluate(()=>getComputedStyle(document.documentElement).overflow),'hidden','Loading releases scrolling')
+  assert.equal(await page.$$eval('.falcon-home > [inert]',nodes=>nodes.length),0,'Loading releases keyboard interaction')
+}
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 async function capture(name) {
   const file = join(output, `${name}.png`)
@@ -91,6 +96,28 @@ async function checkRibbon() {
     assert.equal(state.visibility, 'visible', 'The live canvas must not hide the flowing ribbon')
   }
 }
+async function checkEditorial() {
+  assert.equal(await page.$$eval('.fh-delivery-row',nodes=>nodes.length),6)
+  for(const progress of [.25,.75,.25]) {
+    await page.evaluate(p=>{
+      const rect=document.querySelector('.fh-delivery-details').getBoundingClientRect()
+      scrollTo({top:scrollY+rect.top-innerHeight*.7+(rect.height+innerHeight*.15)*p,behavior:'instant'})
+    },progress)
+    await wait(750)
+    const state=await page.evaluate(()=>{
+      const track=document.querySelector('.fh-delivery-track'), rect=track.getBoundingClientRect()
+      return {
+        progress:new DOMMatrixReadOnly(getComputedStyle(document.querySelector('.fh-track-progress span')).transform).m22,
+        route:parseFloat(getComputedStyle(track.querySelector('.fh-service-route')).strokeDashoffset),
+        expectedRoute:1-Math.min(1,Math.max(0,(innerHeight*.85-rect.top)/(rect.height+innerHeight*.45))),
+        text:[...document.querySelectorAll('.fh-delivery-row p')].every(p=>getComputedStyle(p).visibility==='visible'&&getComputedStyle(p).opacity==='1'),
+      }
+    })
+    assert(Math.abs(state.progress-progress)<.006,'Delivery reading line follows scroll and reverses deterministically')
+    assert(state.text,'All delivery body copy remains visible during animation')
+    assert(Math.abs(state.route-state.expectedRoute)<.006,'Normalized SVG route uses fractional scroll progress without pixel rounding')
+  }
+}
 try {
   for (const width of [1440, 768, 390]) {
     console.log(`Checking ${width}px complete journey`)
@@ -117,6 +144,7 @@ try {
     }
     metrics.push({ width, ...await page.evaluate(() => window.__homeMetrics) })
     await checkRibbon()
+    await checkEditorial()
     for (const id of ['manifesto', 'cases']) {
       await page.$eval(`#${id}`, e => e.scrollIntoView({ behavior: 'instant' }))
       await wait(900); await capture(`${width}-${id}`)
@@ -184,10 +212,14 @@ try {
   await capture('context-loss')
 
   glbFailure = true; await go('/')
-  await page.waitForSelector('.fh-render-error')
-  const message = await page.$eval('.fh-render-error', e => e.textContent)
+  await page.waitForSelector('.fh-loading-error')
+  const message = await page.$eval('.fh-loading-error', e => e.textContent)
   assert(message.includes('HTTP 503') && message.includes('MODEL_TEST_FAILURE') && message.includes('.glb'))
   assert.equal(await page.$$eval('[data-project]', nodes => nodes.length), 8)
+  assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).overflow),'hidden','Failure waits for retry or static choice')
+  await page.click('.fh-loading-error button:last-child')
+  await page.waitForSelector('.fh-loading',{hidden:true})
+  assert.notEqual(await page.evaluate(()=>getComputedStyle(document.documentElement).overflow),'hidden','Static choice releases scrolling')
   glbFailure = false; expectedFailure = false
 
   expectedFailure = true
@@ -198,20 +230,24 @@ try {
       return original.call(this, type, ...args)
     }
   })
-  await go('/'); await page.waitForSelector('.fh-render-error')
-  assert((await page.$eval('.fh-render-error', e => e.textContent)).includes('WebGL'))
+  await go('/'); await page.waitForSelector('.fh-loading-error')
+  assert((await page.$eval('.fh-loading-error', e => e.textContent)).includes('WebGL'))
   assert.equal(await page.$$eval('[data-project] a', nodes => nodes.length), 8)
   await page.removeScriptToEvaluateOnNewDocument(unsupported.identifier)
   expectedFailure = false
   await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }])
   const before = modelRequests; await go('/')
   assert.equal(modelRequests, before, 'Reduced motion does not load models')
+  assert.equal(await page.$$eval('.fh-loading',nodes=>nodes.length),0,'Reduced motion bypasses loading')
+  assert.equal(await page.$$eval('.fh-delivery-row',nodes=>nodes.length),6)
+  assert.equal(await page.$eval('.fh-service-graphic',e=>getComputedStyle(e).transform),'none','Reduced motion keeps service graphics static')
   assert(await page.$eval('.fh-journey', e => e.offsetHeight < innerHeight * 6))
   await capture('reduced-motion')
   await page.emulateMediaFeatures([])
   await page.setJavaScriptEnabled(false); await go('/')
   assert.equal(await page.$$eval('[data-project] a[href]', nodes => nodes.length), 8)
   assert.equal(await page.$$eval('main h1', nodes => nodes.length), 1)
+  assert.equal(await page.$$eval('.fh-delivery-row',nodes=>nodes.length),6,'No-JS keeps all deliverables')
   assert(await page.$eval('.fh-journey', e => e.offsetHeight < innerHeight * 6))
   await capture('no-javascript')
   await page.setJavaScriptEnabled(true)

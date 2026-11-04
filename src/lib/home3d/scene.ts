@@ -219,5 +219,16 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
     geometries.forEach(geometry => geometry.dispose()); materials.forEach(material => material.dispose())
     world.dispose();screenMaterial.dispose();projectiveMaterial.dispose();screenTarget.dispose(); environment.dispose(); renderer.dispose()
   }
-  return { resize, render, renderOpening, reduceQuality, dispose, renderer }
+  async function warmup(signal: AbortSignal, onProgress: (done: number, total: number) => void) {
+    const shots: Array<['hero' | 'manifesto' | 'journey', number]> = [['hero',0],['manifesto',0],...([0,.2,.32,.5,.7,.88,.96,1].map(p=>['journey',p] as ['journey',number]))]
+    resize(window.innerWidth, window.innerHeight)
+    for (let i=0; i<shots.length; i++) {
+      signal.throwIfAborted()
+      render(shots[i][0], shots[i][1], 0, { x: 0, y: 0 })
+      onProgress(i+1, shots.length)
+      await new Promise<void>(resolve => requestAnimationFrame(()=>resolve()))
+    }
+    signal.throwIfAborted()
+  }
+  return { resize, render, renderOpening, warmup, reduceQuality, dispose, renderer }
 }

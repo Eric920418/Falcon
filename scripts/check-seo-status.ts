@@ -299,11 +299,11 @@ async function auditPage(route: RouteSpec): Promise<PageAudit> {
       if (!tag || getAttribute(tag, 'href') !== href) problems.push(`hreflang ${language} 缺少或目的錯誤`)
     }
   }
-  if (marketingPage && locale !== 'zh-tw') {
+  if (marketingPage && (locale !== 'zh-tw' || unlocalizedPath(route.path) === '/case-studies')) {
     const path = unlocalizedPath(route.path)
     const study = path.startsWith('/case-studies/') ? getProjectCaseStudy(path.slice('/case-studies/'.length)) : null
-    const expectedImage = study ? new URL(study.image, siteConfig.url).href : `${siteConfig.url}/brand-og`
-    if (getMeta(html, 'property', 'og:image') !== expectedImage || getMeta(html, 'name', 'twitter:image') !== expectedImage) problems.push(study ? '案例社群圖片必須使用專案封面' : '外語社群圖片必須使用純品牌圖')
+    const expectedImage = path === '/case-studies' ? `${siteConfig.url}/case-studies-share-${locale === 'zh-tw' ? 'zh-tw' : 'en'}-v2.png` : study ? new URL(study.image, siteConfig.url).href : `${siteConfig.url}/brand-og`
+    if (getMeta(html, 'property', 'og:image') !== expectedImage || getMeta(html, 'name', 'twitter:image') !== expectedImage) problems.push(path === '/case-studies' ? '案例列表必須使用作品分享封面' : study ? '案例社群圖片必須使用專案封面' : '外語社群圖片必須使用純品牌圖')
     if (getMeta(html, 'property', 'og:locale') !== languageInfo[locale].og) problems.push('Open Graph locale 錯誤')
     for (const path of getInternalLinks(html)) {
       if (/^\/(?:card|resume|privacy|terms|api)(?:\/|$)/.test(path) || /\.[^/]+$/.test(path)) continue

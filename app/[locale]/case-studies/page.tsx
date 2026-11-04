@@ -20,13 +20,16 @@ import {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   await initLocale((await params).locale)
-  return createMetadata({
+  const { locale } = getI18n()
+  const metadata = createMetadata({
     title: '網站、AI 與系統開發案例｜證據與限制完整揭露',
     description:
       '查看隼訊 {0} 項作品的獨立介紹，探索網站、App、AI 與客製系統的功能、實作方式及技術案例。',
     values: { 0: projectCount },
     path: '/case-studies',
   })
+  const image = { url: `${siteConfig.url}/case-studies-share-${locale === 'zh-tw' ? 'zh-tw' : 'en'}-v2.png`, width: 1200, height: 630, alt: 'Falcon — Web, AI & Systems / Selected Work' }
+  return { ...metadata, openGraph: { ...metadata.openGraph, images: [image] }, twitter: { ...metadata.twitter, images: [image.url] } }
 }
 
 export default async function CaseStudiesPage({ params }: { params: Promise<{ locale: string }> }) {

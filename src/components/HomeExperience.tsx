@@ -1,6 +1,7 @@
 'use client'
 
-import { useRef, useState, type ReactNode } from 'react'
+import { useCallback, useRef, useState, type ReactNode } from 'react'
+import { HomeLoading } from './HomeLoading'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -15,6 +16,10 @@ export function HomeExperience({ children }: { children: ReactNode }) {
   const initialAnchorHandled = useRef(false)
   const journeyResume = useRef<number | null>(null)
   const [failure, setFailure] = useState('')
+  const [gate, setGate] = useState<'off' | 'loading' | 'ready' | 'error'>('loading')
+  const [loadStatus, setLoadStatus] = useState({ phase: '01 / ASSETS', detail: 'CONNECTING' })
+  const [attempt, setAttempt] = useState(0)
+  const exitLoading = useCallback(() => setGate('off'), [])
   const { t } = useI18n()
 
   useGSAP(() => {
@@ -23,7 +28,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
     const media = gsap.matchMedia()
     media.add({ mobile: '(max-width: 767px)', desktop: '(min-width: 768px)', reduced: '(prefers-reduced-motion: reduce)' }, context => {
       const mobile = Boolean(context.conditions?.mobile)
-      if (context.conditions?.reduced) { root.dataset.motion = 'rest'; return }
+      if (context.conditions?.reduced) { root.dataset.motion = 'rest'; setGate('off'); return }
       const host = document.createElement('div'), canvas = document.createElement('canvas')
       host.className = 'fh-canvas-host'; host.setAttribute('aria-hidden', 'true'); host.hidden = true
       host.appendChild(canvas)
@@ -42,6 +47,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       const bar = root.querySelector<HTMLElement>('.fh-journey-progress span')!
       const assetUrl = `/models/falcon-wing-${mobile ? 'mobile' : 'desktop'}.glb?v=square1`
       root.dataset.motion = 'loading'
+      setGate('loading'); setLoadStatus({ phase: '01 / ASSETS', detail: 'CONNECTING' })
       setFailure('')
 
       gsap.utils.toArray<HTMLElement>('[data-reveal]', root).forEach(element => {
@@ -56,6 +62,20 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       const ribbon = root.querySelector<SVGPathElement>(mobile ? '.fh-ribbon-mobile' : '.fh-ribbon-desktop')!
       gsap.fromTo(ribbon, { strokeDasharray: () => ribbonScreenLength(ribbon), strokeDashoffset: () => ribbonScreenLength(ribbon) }, { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: root.querySelector('.fh-ribbon'), start: 'top 90%', end: 'bottom 40%', scrub: 0.65, invalidateOnRefresh: true } })
       gsap.fromTo(root.querySelector('.fh-floating-feather'), { yPercent: -15, rotation: -28 }, { yPercent: 80, rotation: 48, ease: 'none', scrollTrigger: { trigger: root.querySelector('.fh-manifesto'), start: 'top bottom', end: 'bottom top', scrub: 0.6 } })
+      root.querySelectorAll<SVGPathElement>('.fh-service-route').forEach(path => {
+        gsap.fromTo(path, { strokeDashoffset: 1 }, { strokeDashoffset: 0, autoRound: false, ease: 'none', scrollTrigger: { trigger: path.closest('.fh-delivery-track') || root.querySelector('#services'), start: 'top 85%', end: 'bottom 40%', scrub: .5 } })
+      })
+      root.querySelectorAll<HTMLElement>('.fh-delivery-track').forEach(track => {
+        gsap.fromTo(track.querySelector('.fh-service-graphic'), { y: mobile ? 8 : 22, rotation: mobile ? 0 : -4 }, { y: mobile ? -8 : -22, rotation: mobile ? 0 : 3, ease: 'none', scrollTrigger: { trigger: track, start: 'top bottom', end: 'bottom top', scrub: .6 } })
+        gsap.fromTo(track.querySelectorAll('.fh-diagram-layer'), { y: 6 }, { y: -6, stagger: .08, ease: 'none', scrollTrigger: { trigger: track, start: 'top 85%', end: 'bottom 25%', scrub: .6 } })
+        const orbit=track.querySelector('.fh-diagram-orbit')
+        if(orbit)gsap.fromTo(orbit, { rotation: -12, svgOrigin: '210 133' }, { rotation: 12, ease: 'none', scrollTrigger: { trigger: track, start: 'top bottom', end: 'bottom top', scrub: .6 } })
+        gsap.fromTo(track.querySelector('.fh-track-progress span'), { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: track.querySelector('.fh-delivery-details'), start: 'top 70%', end: 'bottom 55%', scrub: .3 } })
+        track.querySelectorAll<HTMLElement>('.fh-delivery-row').forEach(row => {
+          gsap.fromTo(row, { '--read': 0 }, { '--read': 1, ease: 'none', scrollTrigger: { trigger: row, start: 'top 78%', end: 'top 46%', scrub: .3 } })
+          gsap.fromTo(row.querySelector('.fh-delivery-row-copy'), { y: 12 }, { y: 0, ease: 'none', scrollTrigger: { trigger: row, start: 'top 95%', end: 'top 78%', scrub: .2 } })
+        })
+      })
       root.querySelectorAll<HTMLElement>('.fh-project').forEach((project, index) => {
         gsap.fromTo(project, { y: mobile ? 25 : (index % 2 ? 90 : 20) }, { y: mobile ? -25 : (index % 2 ? -90 : -20), ease: 'none', scrollTrigger: { trigger: project, start: 'top bottom', end: 'bottom top', scrub: 0.65 } })
         gsap.fromTo(project.querySelector('.fh-project-image-inner'), { yPercent: -9, scale: 1.22 }, { yPercent: 9, scale: 1.22, ease: 'none', scrollTrigger: { trigger: project, start: 'top bottom', end: 'bottom top', scrub: 0.4 } })
@@ -75,7 +95,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
         host.remove()
         root.dataset.motion = 'rest'; delete root.dataset.scene; delete root.dataset.navDark; delete root.dataset.screenLight
         for (const chapter of chapters) { chapter.style.removeProperty('opacity'); chapter.style.removeProperty('visibility') }
-        if (message && !cancelled) setFailure(message)
+        if (message && !cancelled) { setFailure(message); setGate(value => value === 'off' ? value : 'error') }
         if (wasReady && !cancelled) requestAnimationFrame(() => {
           if (cancelled) return
           ScrollTrigger.refresh()
@@ -180,24 +200,45 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       })
       async function load() {
         let asset: Group | undefined
+        const timeout = setTimeout(() => abort.abort(new Error(`LOAD_TIMEOUT: 60s\n${assetUrl}`)), 60000)
         try {
           const [response, { GLTFLoader }, { createHomeStage }] = await Promise.all([
             fetch(assetUrl, { signal: abort.signal }),
             import('three/addons/loaders/GLTFLoader.js'), import('@/lib/home3d/scene'),
           ])
           if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}\n${await response.text()}`)
-          asset = (await new GLTFLoader().parseAsync(await response.arrayBuffer(), '/models/')).scene
+          if (!response.body) throw new Error('MODEL_RESPONSE_EMPTY')
+          const reader = response.body.getReader(), chunks: Uint8Array[] = []
+          let received = 0
+          while (true) {
+            const { done, value } = await reader.read()
+            if (done) break
+            chunks.push(value); received += value.byteLength
+            if (!cancelled) setLoadStatus({ phase: '01 / ASSETS', detail: `${(received / 1048576).toFixed(2)} MB` })
+          }
+          const bytes = new Uint8Array(received)
+          let offset = 0
+          for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength }
+          if (!cancelled) setLoadStatus({ phase: '02 / MODELS', detail: 'DECODING' })
+          asset = (await new GLTFLoader().parseAsync(bytes.buffer, '/models/')).scene
           if (cancelled) {
             asset.traverse(object => { const mesh = object as Mesh; if (mesh.isMesh) { mesh.geometry.dispose(); (Array.isArray(mesh.material) ? mesh.material : [mesh.material]).forEach((m: Material) => m.dispose()) } })
             return
           }
-          attach(createHomeStage(canvas, asset, mobile))
+          abort.signal.throwIfAborted()
+          stage = createHomeStage(canvas, asset, mobile)
+          await stage.warmup(abort.signal, (done, total) => {
+            if (!cancelled) setLoadStatus({ phase: '03 / SCENES', detail: `${done} / ${total}` })
+          })
+          attach(stage)
+          if (stage && !cancelled) { setLoadStatus({ phase: 'READY', detail: 'LET’S FLY' }); setGate('ready') }
         } catch (error) {
           if (!cancelled) {
-            asset?.traverse(object => { const mesh = object as Mesh; if (mesh.isMesh) { mesh.geometry.dispose(); (Array.isArray(mesh.material) ? mesh.material : [mesh.material]).forEach((m: Material) => m.dispose()) } })
+            if (!stage) asset?.traverse(object => { const mesh = object as Mesh; if (mesh.isMesh) { mesh.geometry.dispose(); (Array.isArray(mesh.material) ? mesh.material : [mesh.material]).forEach((m: Material) => m.dispose()) } })
             stopScene(`${assetUrl}\n${error instanceof Error ? error.stack || error.message : String(error)}`)
+            setGate('error'); setLoadStatus({ phase: 'LOAD FAILED', detail: 'RETRY / CONTINUE' })
           }
-        }
+        } finally { clearTimeout(timeout) }
       }
       void load()
       return () => {
@@ -210,10 +251,12 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       }
     }, root)
     return () => media.revert()
-  })
+  }, { dependencies: [attempt], revertOnUpdate: true })
 
   return <div ref={rootRef} className="falcon-site falcon-home">
-    {children}
-    {failure && <aside className="fh-render-error" role="alert"><strong>{t('3D 顯示已切換為靜態版本')}</strong><details open><summary>{t('完整錯誤資訊')}</summary><pre>{failure}</pre></details></aside>}
+    <noscript><style>{'html:has(.fh-loading),body:has(.fh-loading){overflow:auto!important}.fh-loading{display:none!important}'}</style></noscript>
+    <div className="fh-page-content">{children}</div>
+    {gate !== 'off' && <HomeLoading ready={gate === 'ready'} error={gate === 'error' ? failure : ''} phase={loadStatus.phase} detail={loadStatus.detail} onExit={exitLoading} onRetry={() => setAttempt(value => value + 1)} />}
+    {failure && gate === 'off' && <aside className="fh-render-error" role="alert"><strong>{t('3D 顯示已切換為靜態版本')}</strong><details open><summary>{t('完整錯誤資訊')}</summary><pre>{failure}</pre></details></aside>}
   </div>
 }
