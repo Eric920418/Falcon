@@ -9,6 +9,8 @@ export function pathFrame(t: number) {
   return { center, rotation: new Quaternion().setFromRotationMatrix(new Matrix4().makeBasis(right,up,tangent.clone().negate())) }
 }
 export const structureCount = (mobile: boolean) => mobile ? 20 : 30
+export const mirrorRoom = { halfWidth: 16, halfHeight: 13, depth: 260, centerZ: -85, inset: .04 }
+export const mirrorRoomOpacity = (p: number) => smooth(.12,.22,p) * (1-smooth(.39,.46,p))
 export function structureSegment(frame: number, side: number, part: number, p: number, mobile: boolean) {
   const t = .055 + frame / (structureCount(mobile) - 1) * 1.04, basis = pathFrame(t)
   const twist = smooth(.39,.64,p) * smooth(.22,.62,t)
@@ -25,16 +27,17 @@ export function structureSegment(frame: number, side: number, part: number, p: n
   return { start: point(part/3), end: point((part+.92)/3), twist }
 }
 export function tunnelGeometry(mobile: boolean) {
-  const rows = mobile ? 100 : 180, sides = mobile ? 48 : 80
+  const rows = mobile ? 100 : 180, half = 13.8
   const positions: number[]=[],uv: number[]=[],indices:number[]=[]
-  for(let i=0;i<=rows;i++) {
-    const t=.55+i/rows*1.4, basis=pathFrame(t)
-    for(let j=0;j<=sides;j++) {
-      const a=j/sides*Math.PI*2 + t*1.5
-      const c=Math.cos(a),s=Math.sin(a)
-      const point=new Vector3(Math.sign(c)*Math.pow(Math.abs(c),.55)*13.8,Math.sign(s)*Math.pow(Math.abs(s),.55)*11.8,0).applyQuaternion(basis.rotation).add(basis.center)
-      positions.push(...point.toArray());uv.push(j/sides,i/rows)
-      if(i<rows&&j<sides){const k=i*(sides+1)+j;indices.push(k,k+1,k+sides+1,k+1,k+sides+2,k+sides+1)}
+  const corners=[[-half,-half],[half,-half],[half,half],[-half,half],[-half,-half]]
+  // Each wall owns its UVs and normals; lettering never wraps across a corner.
+  for(let side=0;side<4;side++) for(let i=0;i<=rows;i++) {
+    const t=.55+i/rows*1.4, basis=pathFrame(t), along=t*flightPath.getLength()/42
+    for(let j=0;j<2;j++) {
+      const corner=corners[side+j]
+      positions.push(...new Vector3(corner[0],corner[1],0).applyQuaternion(basis.rotation).add(basis.center).toArray())
+      uv.push(...[[j,along],[-along,j],[1-j,-along],[along,1-j]][side])
+      if(i<rows&&j===0){const k=side*(rows+1)*2+i*2;indices.push(k,k+1,k+2,k+1,k+3,k+2)}
     }
   }
   const geometry=new BufferGeometry()

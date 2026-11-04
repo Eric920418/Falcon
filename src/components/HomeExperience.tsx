@@ -40,7 +40,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       const journeyStage = root.querySelector<HTMLElement>('[data-home-stage="journey"]')!
       const chapters = [...root.querySelectorAll<HTMLElement>('[data-chapter]')]
       const bar = root.querySelector<HTMLElement>('.fh-journey-progress span')!
-      const assetUrl = `/models/falcon-wing-${mobile ? 'mobile' : 'desktop'}.glb`
+      const assetUrl = `/models/falcon-wing-${mobile ? 'mobile' : 'desktop'}.glb?v=square1`
       root.dataset.motion = 'loading'
       setFailure('')
 

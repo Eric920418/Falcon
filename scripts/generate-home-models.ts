@@ -7,8 +7,10 @@ import puppeteer from 'puppeteer-core'
 import sharp from 'sharp'
 import ts from 'typescript'
 import { NodeIO } from '@gltf-transform/core'
+import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
 import { weld, simplify, prune } from '@gltf-transform/functions'
 import { MeshoptSimplifier } from 'meshoptimizer'
+import { tunnelGeometry } from '../src/lib/home3d/world-geometry'
 
 const require = createRequire(import.meta.url)
 const threeRoot = resolve(dirname(require.resolve('three')), '..')
@@ -16,9 +18,22 @@ const sourceRoot = resolve('src/lib/home3d')
 const output = resolve('public/models')
 async function main() {
   await mkdir(output, { recursive: true })
+  const preview=process.argv.includes('--preview')
+  if(process.argv.includes('--tunnel-only')) {
+    for(const detail of ['desktop','mobile']) {
+      const io=new NodeIO().registerExtensions(ALL_EXTENSIONS),path=`${output}/falcon-wing-${detail}.glb`,document=await io.read(path)
+      const primitive=document.getRoot().listNodes().find(node=>node.getName()==='BrandTunnel')?.getMesh()?.listPrimitives()[0]
+      assert(primitive,'BrandTunnel is missing')
+      const geometry=tunnelGeometry(detail==='mobile')
+      for(const [semantic,name] of [['POSITION','position'],['NORMAL','normal'],['TEXCOORD_0','uv']])primitive.getAttribute(semantic)!.setArray(new Float32Array(geometry.getAttribute(name).array))
+      primitive.getIndices()!.setArray(new Uint16Array(geometry.index!.array))
+      await io.write(path,document);geometry.dispose();console.log(`Updated ${detail} square tunnel`)
+    }
+    return
+  }
   await MeshoptSimplifier.ready
   const prepared = new Map<string, Uint8Array>()
-  for (const detail of ['desktop', 'mobile'] as const) {
+  for (const detail of preview ? [] : ['desktop', 'mobile'] as const) {
     const io = new NodeIO(), document = await io.read('assets/home3d/meshy-falcon-source.glb')
     assert.equal(document.getRoot().listMeshes().length, 6, 'Expected six Meshy parts')
     for (const mesh of document.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) primitive.setAttribute('COLOR_0', null)
@@ -41,8 +56,22 @@ async function main() {
       if (source) { res.setHeader('Content-Type', 'model/gltf-binary'); res.end(source); return }
       if (url.pathname === '/') {
         res.setHeader('Content-Type', 'text/html')
-        res.end('<!doctype html><style>body{margin:0}canvas{display:block;width:100vw;height:100vh}</style><script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script><canvas id="stage"></canvas>')
+        res.end('<!doctype html><style>body{margin:0}canvas{display:block;width:100vw;height:100vh}</style><script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script><canvas id="stage"></canvas>'+ (preview ? `<script type="module">
+          import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+          import {createHomeStage} from '/scene';
+          try {
+            const params=new URLSearchParams(location.search),mobile=params.get('mobile')==='1';
+            const model=await new GLTFLoader().loadAsync('/models/falcon-wing-'+(mobile?'mobile':'desktop')+'.glb');
+            const stage=createHomeStage(document.querySelector('canvas'),model.scene,mobile);
+            const progress={gallery:.73,corridor:.315,finale:1}[params.get('scene')]??.73;
+            const render=()=>{stage.resize(innerWidth,innerHeight);stage.render('journey',progress,0);};
+            render();addEventListener('resize',render);document.body.dataset.ready='true';
+          }catch(error){document.body.textContent=error.stack??String(error);}
+        </script>` : ''))
         return
+      }
+      if(preview && /^\/models\/falcon-wing-(desktop|mobile)\.glb$/.test(url.pathname)) {
+        res.setHeader('Content-Type','model/gltf-binary');res.end(await readFile(resolve('public',url.pathname.slice(1))));return
       }
       const isThree = url.pathname.startsWith('/three/')
       const root = isThree ? threeRoot : sourceRoot
@@ -56,6 +85,7 @@ async function main() {
   })
   await new Promise<void>(resolve => server.listen(0, '127.0.0.1', resolve))
   const port = (server.address() as { port: number }).port
+  if(preview){console.log(`Model preview: http://127.0.0.1:${port}/?scene=gallery`);return}
   const browser = await puppeteer.launch({ executablePath: process.env.CHROME_PATH || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true })
   try {
     const page = await browser.newPage()

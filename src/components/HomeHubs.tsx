@@ -35,32 +35,34 @@ export function HomeHubs() {
   const { t } = getI18n()
 
   return (
-    <section id="services" className="fh-content">
-      <div className="max-w-6xl mx-auto">
-        <p className="text-[var(--site-accent)] text-sm tracking-widest uppercase mb-3">{t("Two focused hubs")}</p>
-        <h2 className="text-3xl md:text-5xl text-[var(--site-text)] mb-5">{t("兩條清楚的合作路徑")}</h2>
-        <p className="text-[var(--site-muted)] max-w-3xl leading-relaxed mb-12">
+    <section id="services" className="fh-content fh-service-hubs">
+      <div className="fh-hubs-layout">
+        <div className="fh-hubs-intro">
+        <p className="fh-editorial-eyebrow">{t("Two focused hubs")}</p>
+        <h2>{t("兩條清楚的合作路徑")}</h2>
+        <p className="fh-editorial-description">
           {t("不把所有會做的事情都當成主服務。開發解決產品與流程問題；搜尋成長解決被找到與產生詢盤的問題。")}</p>
-
-        <div className="grid lg:grid-cols-2 gap-6">
-          {hubs.map((hub) => (
-            <article key={hub.title} className="flex flex-col border-t border-[var(--site-border)] py-8">
-              <span className="text-[var(--site-accent)] text-sm">{t(hub.eyebrow)}</span>
-              <h3 className="text-3xl text-[var(--site-text)] mt-3 mb-4">{t(hub.title)}</h3>
-              <p className="text-[var(--site-muted)] leading-relaxed">{t(hub.description)}</p>
-              <div className="grid sm:grid-cols-2 gap-3 mt-7">
+        <svg className="fh-hub-flow" viewBox="0 0 400 130" aria-hidden="true"><path d="M5 95C80 95 80 20 150 20S220 110 285 110 340 35 395 35" fill="none" stroke="#d9dfec" strokeWidth="12"/><path className="fh-service-route" pathLength="1" d="M5 95C80 95 80 20 150 20S220 110 285 110 340 35 395 35" fill="none" stroke="#3152e7" strokeWidth="12" strokeLinecap="round"/></svg>
+        </div>
+        <div className="fh-hub-columns">
+          {hubs.map((hub,index) => (
+            <article key={hub.title} className="fh-hub">
+              <div className="fh-hub-label"><span aria-hidden="true">0{index+1}</span><span>{t(hub.eyebrow)}</span></div>
+              <h3>{t(hub.title)}</h3>
+              <p className="fh-editorial-description">{t(hub.description)}</p>
+              <div className="fh-service-links">
                 {hub.children.map(({ label, href, icon: Icon }) => (
                   <Link
                     key={href}
                     href={href}
-                    className="flex items-center gap-3 border-b border-[var(--site-border)] py-4 text-[var(--site-text)] hover:border-[var(--site-accent)] hover:text-[var(--site-accent)] transition-colors"
+                    className="fh-service-link"
                   >
-                    <Icon size={18} />
+                    <Icon size={17} aria-hidden="true" />
                     <span>{t(label)}</span>
                   </Link>
                 ))}
               </div>
-              <Link href={hub.href} className="inline-flex items-center gap-2 text-[var(--site-accent)] mt-8 hover:underline">
+              <Link href={hub.href} className="fh-service-cta">
                 {t(hub.cta)} <ArrowRight size={17} />
               </Link>
             </article>

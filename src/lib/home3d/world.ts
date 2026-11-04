@@ -1,6 +1,6 @@
-import { AdditiveBlending, CanvasTexture, Color, DoubleSide, Group, InstancedMesh, Mesh, MeshBasicMaterial, MeshStandardMaterial, Object3D, PlaneGeometry, RepeatWrapping, ShaderMaterial, SRGBColorSpace, Vector3 } from 'three'
+import { AdditiveBlending, CanvasTexture, Color, DoubleSide, Group, InstancedMesh, Mesh, MeshBasicMaterial, MeshStandardMaterial, Object3D, PlaneGeometry, RepeatWrapping, ShaderMaterial, SRGBColorSpace, Vector2, Vector3 } from 'three'
 import { Reflector } from 'three/addons/objects/Reflector.js'
-import { pathFrame, structureCount, structureSegment } from './world-geometry'
+import { mirrorRoom, mirrorRoomOpacity, pathFrame, structureCount, structureSegment } from './world-geometry'
 import { smooth } from './choreography'
 
 export function createJourneyWorld(asset: Group, mobile: boolean) {
@@ -19,37 +19,64 @@ export function createJourneyWorld(asset: Group, mobile: boolean) {
     vertexShader:'varying vec2 vUv; void main(){vUv=uv; vec4 p=modelViewMatrix*instanceMatrix*vec4(0.,0.,0.,1.); p.xy+=position.xy*1.4; gl_Position=projectionMatrix*p;}',
     fragmentShader:'uniform float alpha; varying vec2 vUv; void main(){float a=exp(-length(vUv-.5)*10.)*.3*alpha; gl_FragColor=vec4(.57,.68,1.,a);}' })
   const glows = new InstancedMesh(new PlaneGeometry(1,1),glowMaterial,structureCount(mobile)*2); glows.frustumCulled=false;structure.add(glows)
-  const mirrors: Reflector[] = []
+  const mirrors: Reflector[] = [], room = new Group(); group.add(room)
+  const roomMaterial = new MeshStandardMaterial({ color: 0x0c111b, metalness: .4, roughness: .42 })
+  const { halfWidth, halfHeight, depth, centerZ, inset } = mirrorRoom
+  for (const side of [-1, 1]) {
+    const wall = new Mesh(new PlaneGeometry(depth, halfHeight * 2), roomMaterial)
+    wall.position.set(side * halfWidth, 0, centerZ); wall.rotation.y = -side * Math.PI / 2
+    const horizontal = new Mesh(new PlaneGeometry(halfWidth * 2, depth), roomMaterial)
+    horizontal.position.set(0, side * halfHeight, centerZ); horizontal.rotation.x = side * Math.PI / 2
+    room.add(wall, horizontal)
+  }
   for (let i=0;i<(mobile?1:2);i++) {
-    const mirror = new Reflector(new PlaneGeometry(i?26:(mobile?26:40),i?90:22),{color:0xa2acc1,textureWidth:mobile?512:1024,textureHeight:mobile?256:512,clipBias:.003,multisample:0})
-    if (i) { mirror.position.set(0,-11.05,-39);mirror.rotation.x=-Math.PI/2 }
-    else { mirror.position.set(mobile?0:10,0,mobile?-68:-65);mirror.rotation.y=mobile?.08:-Math.PI/4 }
+    const size = mobile ? 512 : 1024
+    const mirror = new Reflector(new PlaneGeometry(i ? depth : halfWidth * 2, i ? halfHeight * 2 : depth),{color:0x8794ad,textureWidth:size,textureHeight:size,clipBias:.003,multisample:mobile?0:2})
+    if (i) { mirror.position.set(halfWidth-inset,0,centerZ);mirror.rotation.y=-Math.PI/2 }
+    else { mirror.position.set(0,-halfHeight+inset,centerZ);mirror.rotation.x=-Math.PI/2 }
     const reflectionMaterial=mirror.material as ShaderMaterial
-    reflectionMaterial.transparent=true;reflectionMaterial.depthWrite=false
-    reflectionMaterial.uniforms.alpha={value:1}
-    reflectionMaterial.fragmentShader='uniform float alpha;\n'+reflectionMaterial.fragmentShader.replace('color ), 1.0','color ), alpha')
+    reflectionMaterial.uniforms.reflectionMix={value:1}
+    reflectionMaterial.uniforms.roomOpacity={value:1}
+    reflectionMaterial.uniforms.texel={value:new Vector2(.7/size,.7/size)}
+    reflectionMaterial.fragmentShader='uniform float reflectionMix; uniform float roomOpacity; uniform vec2 texel;\n'+reflectionMaterial.fragmentShader
+      .replace('vec4 base = texture2DProj( tDiffuse, vUv );', `vec2 uv = vUv.xy / vUv.w;
+        vec4 base = texture2D(tDiffuse, uv) * .4;
+        base += texture2D(tDiffuse, uv + vec2(texel.x,0.)) * .15;
+        base += texture2D(tDiffuse, uv - vec2(texel.x,0.)) * .15;
+        base += texture2D(tDiffuse, uv + vec2(0.,texel.y)) * .15;
+        base += texture2D(tDiffuse, uv - vec2(0.,texel.y)) * .15;`)
+      .replace('vec4( blendOverlay( base.rgb, color ), 1.0 )', 'vec4(mix(vec3(.008,.012,.02), blendOverlay(base.rgb,color), reflectionMix), roomOpacity)')
     const original = mirror.onBeforeRender
     mirror.onBeforeRender = function (...args) {
       const visibility=mirrors.map(item=>item.visible)
       mirrors.forEach(item=>{item.visible=false})
       try { original.apply(this,args) } finally { mirrors.forEach((item,index)=>{item.visible=visibility[index]}) }
     }
-    group.add(mirror);mirrors.push(mirror)
+    room.add(mirror);mirrors.push(mirror)
   }
-  // Static black glass closes the room beyond the two bounded reflection passes.
-  const ceiling=new Mesh(new PlaneGeometry(26,90),glass);ceiling.rotation.x=Math.PI/2;ceiling.position.set(0,11.08,-39)
-  const wall=new Mesh(new PlaneGeometry(90,22),glass);wall.rotation.y=Math.PI/2;wall.position.set(-13.08,0,-39);structure.add(ceiling,wall)
-  const textureCanvas=document.createElement('canvas');textureCanvas.width=mobile?512:1024;textureCanvas.height=textureCanvas.width
-  const context=textureCanvas.getContext('2d')!
-  context.fillStyle='#163fe3';context.fillRect(0,0,textureCanvas.width,textureCanvas.height)
-  const unit=textureCanvas.width/1024;context.scale(unit,unit);context.fillStyle='#f1f4ff';context.font='500 128px Arial, sans-serif'
-  context.fillText('FALCON',70,220);context.fillText('FALCON',380,770)
-  context.save();context.translate(210,440);context.rotate(-.3)
-  for(let i=0;i<5;i++){context.beginPath();context.moveTo(i*40,-i*12);context.bezierCurveTo(130+i*40,-140,210+i*40,-160,260+i*38,-130);context.quadraticCurveTo(120+i*35,-20,i*40,90-i*12);context.fill()}
-  context.restore()
-  const texture=new CanvasTexture(textureCanvas);texture.colorSpace=SRGBColorSpace;texture.wrapS=texture.wrapT=RepeatWrapping;texture.repeat.set(2,5);texture.anisotropy=4
-  const blueMaterial=new MeshStandardMaterial({map:texture,roughness:.5,metalness:.15,side:DoubleSide,transparent:true,emissive:0xffffff,emissiveMap:texture,emissiveIntensity:.2})
-  const blueTunnel=new Mesh(tunnel.geometry,blueMaterial);group.add(blueTunnel)
+  const tunnelCopy=[['SEARCH','SEO / GEO','#1025a8'],['BUILD','WEBSITES & PLATFORMS','#123be0'],['DESIGN','BRAND & EXPERIENCE','#1c45e5'],['AI','SYSTEMS & AUTOMATION','#0b2fc4']]
+  const tunnelTextures=tunnelCopy.map(([title,subtitle,color],side)=>{
+    const canvas=document.createElement('canvas'),w=side%2?1024:672,h=side%2?672:1024
+    canvas.width=mobile?w/2:w;canvas.height=mobile?h/2:h
+    const context=canvas.getContext('2d')
+    if(!context)throw new Error('TUNNEL_TEXTURE_ERROR: Canvas 2D context unavailable')
+    context.scale(mobile?.5:1,mobile?.5:1);context.fillStyle=color;context.fillRect(0,0,w,h)
+    context.fillStyle='rgba(225,235,255,.28)'
+    if(side%2){context.fillRect(0,5,w,2);context.fillRect(0,h-7,w,2)}
+    else{context.fillRect(5,0,2,h);context.fillRect(w-7,0,2,h)}
+    context.fillStyle='#f1f4ff';context.textAlign='center';context.textBaseline='middle'
+    context.font=`500 ${side%2?(mobile?128:154):(mobile?82:106)}px "Helvetica Neue", sans-serif`
+    context.fillText(title,w/2,h*.47)
+    context.font='400 25px "Helvetica Neue", sans-serif';context.fillText(subtitle,w/2,h*.47+95)
+    context.fillStyle='rgba(225,235,255,.6)';context.font='400 17px "Helvetica Neue", sans-serif'
+    context.fillText(`FALCON  /  0${side+1}`,w/2,h*.47-110)
+    const texture=new CanvasTexture(canvas);texture.colorSpace=SRGBColorSpace;texture.wrapS=texture.wrapT=RepeatWrapping;texture.anisotropy=4
+    return texture
+  })
+  const blueMaterials=tunnelTextures.map(map=>new MeshStandardMaterial({map,roughness:.68,metalness:.05,side:DoubleSide,transparent:true,emissive:0xffffff,emissiveMap:map,emissiveIntensity:.12}))
+  const wallIndices=tunnel.geometry.index!.count/4;tunnel.geometry.clearGroups()
+  for(let side=0;side<4;side++)tunnel.geometry.addGroup(side*wallIndices,wallIndices,side)
+  const blueTunnel=new Mesh(tunnel.geometry,blueMaterials);group.add(blueTunnel)
   const horizonMaterial=new ShaderMaterial({transparent:true,depthWrite:false,uniforms:{alpha:{value:1}},
     vertexShader:'varying vec2 vUv; void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
     fragmentShader:'varying vec2 vUv; uniform float alpha; void main(){float y=vUv.y-.47; vec3 c=mix(vec3(.015,.035,.10),vec3(.04,.16,.72),exp(-abs(y)*12.));c+=vec3(.8,.86,1.)*exp(-abs(y)*160.);gl_FragColor=vec4(c,alpha);}'})
@@ -66,8 +93,18 @@ export function createJourneyWorld(asset: Group, mobile: boolean) {
     const reveal=smooth(.12,.22,p),retire=1-smooth(.64,.72,p)
     structure.visible=reveal*retire>.001;metal.opacity=glass.opacity=reveal*retire;light.opacity=reveal*retire
     glowMaterial.uniforms.alpha.value=reveal*retire
-    mirrors.forEach(mirror=>{mirror.visible=p>=.15&&p<.44;(mirror.material as ShaderMaterial).uniforms.alpha.value=smooth(.15,.22,p)*(1-smooth(.39,.44,p))})
-    blueMaterial.opacity=smooth(.58,.68,p);blueTunnel.visible=blueMaterial.opacity>0
+    const reflection=smooth(.15,.22,p)*(1-smooth(.39,.44,p))
+    const opacity=mirrorRoomOpacity(p)
+    room.visible=opacity>.001
+    roomMaterial.opacity=opacity;roomMaterial.transparent=opacity<1;roomMaterial.depthWrite=opacity===1
+    mirrors.forEach((mirror,i)=>{
+      const material=mirror.material as ShaderMaterial
+      material.uniforms.reflectionMix.value=reflection*(i?.86:.72)
+      material.uniforms.roomOpacity.value=opacity
+      material.transparent=opacity<1;material.depthWrite=opacity===1
+    })
+    const blueOpacity=smooth(.58,.68,p)
+    blueMaterials.forEach(material=>{material.opacity=blueOpacity});blueTunnel.visible=blueOpacity>0
     horizonMaterial.uniforms.alpha.value=1-smooth(.18,.27,p);horizon.visible=p<.27
     ornaments.forEach((mesh,i)=>{mesh.visible=p>.18&&p<.69;mesh.rotation.z=i*.8+p*.3})
     if(!structure.visible)return
@@ -84,5 +121,5 @@ export function createJourneyWorld(asset: Group, mobile: boolean) {
     }
     for(const mesh of [beams,panels,lights,glows])mesh.instanceMatrix.needsUpdate=true
   }
-  return {group,update,reduceReflections(){mirrors.forEach(mirror=>mirror.getRenderTarget().setSize(mobile?256:512,mobile?128:256))},disableGlow(){glows.visible=false},dispose(){mirrors.forEach(mirror=>mirror.dispose());texture.dispose()}}
+  return {group,update,reduceReflections(){mirrors.forEach(mirror=>{const size=mobile?256:512;mirror.getRenderTarget().setSize(size,size);(mirror.material as ShaderMaterial).uniforms.texel.value.set(.7/size,.7/size)})},disableGlow(){glows.visible=false},dispose(){mirrors.forEach(mirror=>mirror.dispose());tunnelTextures.forEach(texture=>texture.dispose())}}
 }

@@ -2,6 +2,7 @@
 import { getI18n } from '@/lib/i18n/server'
 import Link from '@/lib/i18n/link'
 import { ArrowRight, Bot, Code2, PhoneCall, Search, Sparkles } from 'lucide-react'
+import { HomeServiceGraphic } from './HomeServiceGraphic'
 
 const deliveryTracks = [
   {
@@ -63,60 +64,60 @@ export function HomeDeliverables() {
   const { t } = getI18n()
 
   return (
-    <section id="deliverables" className="fh-content">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid gap-8 border-b border-[var(--site-border)]/20 pb-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
+    <section id="deliverables" className="fh-content fh-deliverables">
+      <div>
+        <div className="fh-delivery-heading">
           <div>
-            <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[var(--site-accent)]">{t("Actual deliverables")}</p>
-            <h2 className="text-3xl leading-tight md:text-5xl">{t("真正交付的，不是一句服務名稱")}</h2>
+            <p className="fh-editorial-eyebrow">{t("Actual deliverables")}</p>
+            <h2>{t("真正交付的，不是一句服務名稱")}</h2>
           </div>
-          <p className="max-w-2xl text-lg leading-relaxed text-[var(--site-muted)] lg:justify-self-end">
+          <p className="fh-editorial-description">
             {t("首頁要回答的核心不是「我們什麼都會」，而是你委託之後會得到什麼、如何驗收，以及哪些結果不能亂保證。")}</p>
         </div>
 
-        <div className="divide-y divide-[var(--site-border)]/20">
+        <div className="fh-delivery-tracks">
           {deliveryTracks.map((track) => (
             <article
               key={track.number}
-              className="grid gap-9 py-14 lg:grid-cols-[0.58fr_1.42fr] lg:gap-16"
+              className="fh-delivery-track"
             >
-              <div className="flex flex-col">
-                <div className="mb-6 flex items-center gap-3 text-sm uppercase tracking-[0.18em] text-[var(--site-accent)]">
-                  <span className="font-mono">{t(track.number)}</span>
-                  <span className="h-px w-10 bg-[var(--site-accent)]/60" />
+              <div className="fh-delivery-summary"><div className="fh-delivery-summary-inner">
+                <div className="fh-track-label">
+                  <span>{t(track.number)}</span>
                   <span>{t(track.label)}</span>
                 </div>
-                <h3 className="max-w-md text-2xl leading-snug md:text-3xl">{t(track.title)}</h3>
-                <p className="mt-5 max-w-md leading-relaxed text-[var(--site-muted)]">{t(track.description)}</p>
-
-                <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
+                <HomeServiceGraphic kind={track.label==='Build'?'build':'grow'} />
+                <h3>{t(track.title)}</h3>
+                <p className="fh-editorial-description">{t(track.description)}</p>
+                <div className="fh-service-links">
                   {track.links.map(({ label, href, icon: Icon }) => (
                     <Link
                       key={href}
                       href={href}
-                      className="inline-flex items-center gap-2 border-b border-[var(--site-border)]/25 pb-1 text-sm font-medium hover:border-[var(--site-accent)] hover:text-[var(--site-accent)]"
+                      className="fh-service-link"
                     >
                       <Icon size={16} aria-hidden="true" />
                       {t(label)}
                     </Link>
                   ))}
                 </div>
-              </div>
+              </div></div>
 
-              <div>
-                <div className="divide-y divide-[var(--site-border)]/15 border-y border-[var(--site-border)]/15">
+              <div className="fh-delivery-details">
+                <div className="fh-track-progress" aria-hidden="true"><span /></div>
+                <ol className="fh-delivery-list">
                   {track.deliverables.map((item, index) => (
-                    <div key={item.title} className="grid gap-2 py-6 sm:grid-cols-[3rem_0.62fr_1.38fr] sm:gap-5">
-                      <span className="font-mono text-xs text-[var(--site-accent)]">{t("0")}{index + 1}</span>
-                      <h4 className="text-lg">{t(item.title)}</h4>
-                      <p className="text-sm leading-relaxed text-[var(--site-muted)]">{t(item.body)}</p>
-                    </div>
+                    <li key={item.title} className="fh-delivery-row">
+                      <span className="fh-delivery-number">{t("0")}{index + 1}</span>
+                      <div className="fh-delivery-row-copy"><h4>{t(item.title)}</h4>
+                      <p>{t(item.body)}</p></div>
+                    </li>
                   ))}
-                </div>
-                <p className="mt-5 flex items-start gap-2 text-sm leading-relaxed text-[var(--site-muted)]">
+                </ol>
+                <p className="fh-delivery-validation">
                   <ArrowRight size={16} className="mt-0.5 shrink-0 text-[var(--site-accent)]" aria-hidden="true" />
                   <span>
-                    <strong className="font-medium text-[var(--site-text)]">{t("驗收方式：")}</strong>
+                    <strong>{t("驗收方式：")}</strong>
                     {t(track.validation)}
                   </span>
                 </p>

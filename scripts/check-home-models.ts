@@ -4,7 +4,7 @@ import { Vector3, Mesh, Group, Matrix4, PerspectiveCamera, Line3 } from 'three'
 import { particleSeeds } from '../src/lib/home3d/particles'
 import { ribbonScreenLength } from '../src/lib/home3d/ribbon'
 import { flightScale, surfacePoint, surfaceSegments, wingEnvelope } from '../src/lib/home3d/surfaces'
-import { structureCount, structureSegment } from '../src/lib/home3d/world-geometry'
+import { mirrorRoom, mirrorRoomOpacity, pathFrame, structureCount, structureSegment, tunnelGeometry } from '../src/lib/home3d/world-geometry'
 import { portalWorldMatrix } from '../src/lib/home3d/portal'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { birdPose, journeyPose, journeyChapters, wingBeat } from '../src/lib/home3d/choreography'
@@ -21,6 +21,29 @@ for (const quality of ['desktop', 'mobile'] as const) {
   assert.equal(gltf.nodes.filter((node: { name?: string }) => node.name?.startsWith('FalconPart_')).length, 6)
   assert(bytes.length <= (quality === 'mobile' ? 1_600_000 : 3_600_000), `${quality}: asset budget`)
   const sculpture = (await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene
+  const square=(sculpture.getObjectByName('BrandTunnel') as Mesh).geometry,reference=tunnelGeometry(quality==='mobile')
+  for(const name of ['position','normal','uv']) {
+    const actual=square.getAttribute(name),expected=reference.getAttribute(name)
+    assert.equal(actual.count,expected.count,`Exported square tunnel ${name} count`)
+    for(let i=0;i<actual.count;i++)assert(actual.getX(i)===expected.getX(i) && actual.getY(i)===expected.getY(i) && (actual.itemSize===2 || actual.getZ(i)===expected.getZ(i)),`Exported square tunnel ${name} vertex ${i}`)
+  }
+  const tunnelRows=quality==='mobile'?100:180,positions=square.getAttribute('position'),coords=square.getAttribute('uv')
+  for(let row=0;row<=tunnelRows;row++) {
+    const basis=pathFrame(.55+row/tunnelRows*1.4),inverse=basis.rotation.clone().invert(),corners=[]
+    for(let side=0;side<4;side++) {
+      const index=side*(tunnelRows+1)*2+row*2
+      const a=new Vector3().fromBufferAttribute(positions,index).sub(basis.center).applyQuaternion(inverse)
+      const b=new Vector3().fromBufferAttribute(positions,index+1).sub(basis.center).applyQuaternion(inverse)
+      assert(Math.abs(a.distanceTo(b)-27.6)<.0001,'Four walls have equal width')
+      assert(Math.abs(a.z)<.0001 && Math.abs(b.z)<.0001,'Square sections stay on their path plane')
+      assert(Math.abs(Math.abs(a.x)-13.8)<.0001 && Math.abs(Math.abs(a.y)-13.8)<.0001,'Square corners do not rotate around the flight path')
+      assert(Math.abs(coords.getX(index+1)-coords.getX(index))===(side===0||side===2?1:0),'Wall UV horizontal orientation')
+      assert(Math.abs(coords.getY(index+1)-coords.getY(index))===(side===1||side===3?1:0),'Wall UV vertical orientation')
+      corners.push(a)
+    }
+    for(let side=0;side<4;side++)assert(Math.abs(corners[(side+1)%4].clone().sub(corners[side]).dot(corners[(side+2)%4].clone().sub(corners[(side+1)%4])))<.002,'Square wall corners remain perpendicular')
+  }
+  reference.dispose()
   let triangles = 0
   sculpture.traverse(object => {
     if (!(object instanceof Mesh)) return
@@ -55,6 +78,14 @@ for (const quality of ['desktop', 'mobile'] as const) {
     for(let i=0;i<=2000;i++) {
       const p=i/2000,camera=journeyPose(p,portrait),bird=birdPose(p)
       const scale=flightScale(p,radius,camera.position.distanceTo(bird.position),camera.fov,width/height,portrait)
+      assert(mirrorRoomOpacity(p)>=0 && mirrorRoomOpacity(p)<=1, 'Room fade stays bounded')
+      assert(Math.abs(mirrorRoomOpacity(p)-mirrorRoomOpacity(Math.max(0,p-.0005)))<.012, 'Room entry and exit remain continuous')
+      if (mirrorRoomOpacity(p) > .001) {
+        const wallDistance = Math.min(mirrorRoom.halfWidth - Math.abs(bird.position.x), mirrorRoom.halfHeight - Math.abs(bird.position.y)) - mirrorRoom.inset
+        assert(wallDistance >= radius * scale * 1.2, 'Reflective walls stay outside the full wing envelope')
+        assert(Math.min(mirrorRoom.halfWidth-Math.abs(camera.position.x),mirrorRoom.halfHeight-Math.abs(camera.position.y)) > 2, 'Camera stays inside the mirror room')
+        assert(Math.abs(camera.position.z-mirrorRoom.centerZ)<mirrorRoom.depth/2, 'Room edges remain behind the camera')
+      }
       const projected=radius*scale/(camera.position.distanceTo(bird.position)*Math.tan(camera.fov*Math.PI/360)*width/height)
       if(portrait){assert(projected<=.641,'Phone wing sphere exceeds safe width');maxSpan=Math.max(maxSpan,projected)}
       for(let frame=0;frame<structureCount(quality==='mobile');frame++)for(let side=0;side<4;side++)for(let part=0;part<3;part++) {
