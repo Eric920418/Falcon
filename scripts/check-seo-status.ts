@@ -299,11 +299,11 @@ async function auditPage(route: RouteSpec): Promise<PageAudit> {
       if (!tag || getAttribute(tag, 'href') !== href) problems.push(`hreflang ${language} 缺少或目的錯誤`)
     }
   }
-  if (marketingPage && (locale !== 'zh-tw' || unlocalizedPath(route.path) === '/case-studies')) {
+  if (marketingPage && (locale !== 'zh-tw' || ['/', '/case-studies'].includes(unlocalizedPath(route.path)))) {
     const path = unlocalizedPath(route.path)
     const study = path.startsWith('/case-studies/') ? getProjectCaseStudy(path.slice('/case-studies/'.length)) : null
-    const expectedImage = path === '/case-studies' ? `${siteConfig.url}/case-studies-share-${locale === 'zh-tw' ? 'zh-tw' : 'en'}-v2.png` : study ? new URL(study.image, siteConfig.url).href : `${siteConfig.url}/brand-og`
-    if (getMeta(html, 'property', 'og:image') !== expectedImage || getMeta(html, 'name', 'twitter:image') !== expectedImage) problems.push(path === '/case-studies' ? '案例列表必須使用作品分享封面' : study ? '案例社群圖片必須使用專案封面' : '外語社群圖片必須使用純品牌圖')
+    const expectedImage = path === '/case-studies' ? `${siteConfig.url}/case-studies-share-${locale === 'zh-tw' ? 'zh-tw' : 'en'}-v2.png` : study ? new URL(study.image, siteConfig.url).href : `${siteConfig.url}/brand-share-${locale === 'zh-tw' ? 'zh-tw' : 'en'}-v3.png`
+    if (getMeta(html, 'property', 'og:image') !== expectedImage || getMeta(html, 'name', 'twitter:image') !== expectedImage) problems.push(path === '/case-studies' ? '案例列表必須使用作品分享封面' : study ? '案例社群圖片必須使用專案封面' : '預設社群圖片必須使用新版品牌封面')
     if (getMeta(html, 'property', 'og:locale') !== languageInfo[locale].og) problems.push('Open Graph locale 錯誤')
     for (const path of getInternalLinks(html)) {
       if (/^\/(?:card|resume|privacy|terms|api)(?:\/|$)/.test(path) || /\.[^/]+$/.test(path)) continue
@@ -314,6 +314,10 @@ async function auditPage(route: RouteSpec): Promise<PageAudit> {
     const messages = Object.assign({}, ...['common', 'home', 'pages', 'services', 'pricing', 'articles', 'cases', 'portfolio', 'local'].map(group =>
       JSON.parse(readFileSync(`src/lib/i18n/messages/${locale}/${group}.json`, 'utf8'))), overrides[locale])
     const t = makeTranslator(locale, messages)
+    const shareTitle = t('以設計與技術，讓想像成形。')
+    if (getMeta(html, 'property', 'og:title') !== shareTitle || getMeta(html, 'name', 'twitter:title') !== shareTitle) problems.push('首頁分享標題必須使用精簡品牌文案')
+    const shareDescription = t('網站與 AI 開發、SEO／GEO 搜尋成長')
+    if (getMeta(html, 'property', 'og:description') !== shareDescription || getMeta(html, 'name', 'twitter:description') !== shareDescription) problems.push('首頁分享摘要必須使用精簡服務文案')
     // Inspect rendered main content, never metadata or React's serialized payload.
     const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1] ?? ''
     const text = main.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '').replace(/<[^>]*>/g, ' ')

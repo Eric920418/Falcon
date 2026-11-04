@@ -1,4 +1,4 @@
-import { initLocale } from '@/lib/i18n/server'
+import { getI18n, initLocale } from '@/lib/i18n/server'
 import type { Metadata } from 'next'
 import { Contact } from '@/components/Contact'
 import { Navigation } from '@/components/Navigation'
@@ -18,12 +18,16 @@ import { createMetadata, createWebPageSchema, JsonLd, siteConfig } from '@/lib/s
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   await initLocale((await params).locale)
-  return createMetadata({
+  const metadata = createMetadata({
   title: '台灣企業網站、AI 系統開發與 SEO／GEO 搜尋成長服務',
   description:
     '隼訊提供台灣企業網站、AI 系統開發與 SEO／GEO 搜尋成長服務，以公開案例、實名責任與合格詢盤衡量成果。',
   path: '/',
 })
+  const { t } = getI18n()
+  const title = t('以設計與技術，讓想像成形。')
+  const description = t('網站與 AI 開發、SEO／GEO 搜尋成長')
+  return { ...metadata, openGraph: { ...metadata.openGraph, title, description }, twitter: { ...metadata.twitter, title, description } }
 }
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {

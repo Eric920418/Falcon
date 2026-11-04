@@ -23,7 +23,7 @@ export function createArticleSchema(input: ArticleSchemaInput) {
     datePublished: input.datePublished,
     dateModified: input.dateModified ?? input.datePublished,
     inLanguage: 'zh-TW',
-    image: input.image ?? `${siteConfig.url}/opengraph-image`,
+    image: input.image ?? `${siteConfig.url}/brand-share-zh-tw-v3.png`,
     author: {
       '@type': 'Person',
       '@id': `${siteConfig.url}/about#${primaryAuthor.id}`,

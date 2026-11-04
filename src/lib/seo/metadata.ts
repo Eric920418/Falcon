@@ -14,7 +14,7 @@ export interface MetadataInput {
   values?: Record<string, string | number>
 }
 
-const defaultOgImage = `${siteConfig.url}/opengraph-image`
+const defaultOgImage = `${siteConfig.url}/brand-share-zh-tw-v3.png`
 
 export function createMetadata(input: MetadataInput): Metadata {
   const { t, locale } = getI18n()
@@ -22,7 +22,7 @@ export function createMetadata(input: MetadataInput): Metadata {
   const title = t(input.title, input.values)
   const description = t(input.description, input.values)
   const brand = locale === 'zh-tw' ? siteConfig.name : 'Falcon Information'
-  const image = locale === 'zh-tw' ? input.ogImage ?? defaultOgImage : `${siteConfig.url}/brand-og`
+  const image = locale === 'zh-tw' ? input.ogImage ?? defaultOgImage : `${siteConfig.url}/brand-share-en-v3.png`
   const fullTitle = title.includes(brand)
     ? title
     : `${title} | ${brand}`

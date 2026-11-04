@@ -50,13 +50,13 @@ export const baseMetadata: Metadata = {
     siteName: siteConfig.name,
     title: `${siteConfig.name} | ${siteConfig.slogan}`,
     description: siteConfig.description,
-    images: [{ url: '/opengraph-image', width: 1200, height: 630 }],
+    images: [{ url: '/brand-share-zh-tw-v3.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: `${siteConfig.name} | ${siteConfig.slogan}`,
     description: siteConfig.description,
-    images: ['/opengraph-image'],
+    images: ['/brand-share-zh-tw-v3.png'],
   },
   alternates: {
     canonical: siteConfig.url,
