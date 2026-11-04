@@ -10,7 +10,7 @@ export function HomeProofPricing() {
   const { t, locale } = getI18n()
 
   return (
-    <section className="px-6 py-24 bg-[var(--site-bg)]  border-y border-[var(--site-border)]/40">
+    <section id="pricing" className="fh-content">
       <div className="max-w-6xl mx-auto grid lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-16">
         <div>
           <p className="text-[var(--site-accent)] text-sm tracking-widest uppercase mb-4">{t("Proof & pricing")}</p>

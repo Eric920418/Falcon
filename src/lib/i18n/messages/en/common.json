@@ -290,5 +290,16 @@
   "想了解 {0} 在地服務細節？": "Want to discuss local services in {0}?",
   "{0}／{1}起": "From {0} / {1}",
   "概念插圖：{0}": "Concept illustration: {0}",
-  "圖片載入失敗": "Image failed to load"
+  "圖片載入失敗": "Image failed to load",
+  "主要導覽": "Main navigation",
+  "裝置效能不足，已切換為靜態呈現。": "This device is rendering slowly. A static version is now shown.",
+  "探索作品、服務與合作方式。": "Explore our work, services and ways to collaborate.",
+  "完整錯誤資訊": "Full error details",
+  "認識隼訊": "Meet Falcon",
+  "3D 顯示已切換為靜態版本": "3D is now shown as a static version",
+  "聊聊你的想法": "Let’s talk",
+  "作品": "Work",
+  "繪圖環境中斷，已保留完整頁面內容。": "The graphics context was lost. All page content remains available.",
+  "開啟導覽選單": "Open navigation menu",
+  "選單": "Menu"
 }

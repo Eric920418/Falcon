@@ -84,6 +84,7 @@ try {
     await resetEvents()
     await click(cta('home_ai_voice'))
     await waitService('ai_voice')
+    await page.waitForFunction(() => { const rect = document.querySelector('#contact').getBoundingClientRect(); return rect.top >= 0 && rect.top < innerHeight / 2 })
     await assertPreserved()
     assert.equal(await page.evaluate(() => window.__conversionMarker), 'same-document', '同頁 CTA 不可重新載入')
     assert.deepEqual(await events(), [{ event: 'service_cta_click', service: 'ai_voice', action: 'request_demo', placement: 'home_ai_voice' }])
@@ -283,7 +284,15 @@ try {
           assert(await page.evaluate(() => document.activeElement?.tagName === 'SELECT'), '語言切換器必須可取得焦點')
           await page.keyboard.press('Tab')
           assert(await page.evaluate(() => document.activeElement?.tagName !== 'BODY'), '語言切換器不可困住鍵盤焦點')
-          if (width === 1440) {
+          if (!path) {
+            await page.focus('#home-menu-toggle')
+            await page.keyboard.press('Enter')
+            await page.waitForSelector('#home-menu-panel')
+            assert.equal(await page.$$eval('#home-menu-panel a', links => links.length), 5)
+            await page.keyboard.press('Escape')
+            await page.waitForSelector('#home-menu-panel', { hidden: true })
+            await page.waitForFunction(() => document.activeElement?.id === 'home-menu-toggle')
+          } else if (width === 1440) {
             const dropdown = 'header nav button[aria-expanded], nav > div > div.hidden button[aria-expanded]'
             await page.mouse.move(1, 899)
             await page.focus(dropdown)

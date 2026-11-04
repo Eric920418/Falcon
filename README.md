@@ -1,8 +1,147 @@
+## 首頁導覽高度精簡（2026-11-05）
+
+- 原桌機導覽約 80px，背景漸層卻延伸 140px；手機分別為 64px／108px。導覽改為桌機 64px、手機 56px，漸層縮至 80px／64px，減少遮住捲動內容的範圍。
+- Logo 與聯絡箭頭縮小，品牌及操作入口保留至少 44px 點擊高度，手機選單寬度維持 44px。首屏頂部與錨點間距共用導覽高度變數，跟著縮至桌機 80px／手機 72px，避免只縮按鈕卻保留多餘空白。修改限首頁 CSS，保留品牌文字、九語及既有選單行為。
+- 正在驗證桌機／手機排版、選單鍵盤與錨點位置，本節將補上結果。
+
+## 第二區流線彩帶修正（2026-11-05）
+
+- 重新觀看 Lusion 第二區向下延伸、形成迴圈與倒捲收回：視覺重點是細長圓端彩帶沿路徑前進，原先旋轉的寬大金屬弧片不符合這個動作。
+- 移除第二區的硬質弧片及舊弧片備援圖，使用現有 SVG／GSAP 架構製作桌機與手機各一條連續流線，透過標準化 stroke dash 與 ScrollTrigger scrub 延伸／倒捲收回；正文及作品在彩帶上層，Three.js 保留雕塑與粒子及原共用畫布。無 JS／減少動態直接顯示完整路徑，動畫由既有 useGSAP／matchMedia 清理；沒有新增套件或模型費用。
+- 彩帶維持畫面上的固定細度；依 SVG 轉換後實際弧長計算 stroke dash，避免手機非等比縮放時提早畫完整條。手機另把曲線折返點移到正文下方。既有首頁檢查加入 .2 → .65 → .2 倒捲一致性、畫布不隱藏彩帶，以及相對 4,096 點弧長參考誤差小於 1px 的斷言；模型檢查加入非等比縮放直線的已知長度與圓周取樣精度檢查。
+- 正式 Chrome 1440×900、768×1024、390×844、360×800 共 12 個 .35 → .65 → .35 往返樣本通過，最大進度誤差為 0.000186；同位置端點一致、無橫向溢出、單一 canvas、彩帶持續可見，重新載入後前端無錯誤。保留原生捲動，僅動畫進度延遲 0.65 秒追上。桌機／手機截圖及進度讀值：`/tmp/falcon-ribbon-review/`。
+- TypeScript、模型／路徑檢查、正式建置（788 頁）、首頁檢查腳本語法、`git diff --check` 通過；已確認建置後初始 HTML 含未被 dash 隱藏的完整桌機／手機 SVG，且不再引用舊弧片備援圖。這輪未執行整套首頁 UI 腳本，改以實際 Chrome 驗證上述進度；減少動態及停用 JavaScript 的瀏覽器操作因原生視窗被其他工作切換而未完成，不列為通過。未做手機真機 GPU 測試、未部署；3101 已更新。
+
+## 首屏留白與品牌副標裁切修正（2026-11-04）
+
+- 原桌機首屏上方固定留白 135／155px，舞台再以視窗高度減固定值估算，沒有考慮標題與九語正文的實際高度；1440×800 下副標底緣落在 797px，緊貼視窗邊緣。
+- 桌機改為 96px 頂部間距，使用 CSS Grid 讓舞台分配正文以外的剩餘高度；長文可自然撐開，不固定裁字。手機頂部改為 80px、舞台改為 40svh（280–420px）。FALCON／英文副標移出 overflow 裁切的模型區，與下方入口採正常換行排版，保留全部文字與連結。沒有更動 3D 運鏡、套件或資料庫。
+- 較矮桌機視窗允許舞台縮至 220px，避免 650px 高度時副標仍落在首屏邊界。正式版本 Chrome 實測 1440×900、1440×800、1366×768、1280×720、1440×650、768×1024、390×844、360×800：繁中副標均完整位於首屏、無橫向溢出、唯一 H1 與單一 canvas 保留。1440×800 副標底緣由 797px 改為 743px，距視窗底部約 57px；360×800 底緣為 775px。
+- 英文、德文、日文另於 1440×800／390×844 驗證；長文手機版自然增加頁面高度，未強迫全部內容塞入一屏。桌機與手機各 3 次反覆跨過原瞬移門檻，兩個場景持續 rendered、首屏備援維持隱藏，前端未記錄錯誤。截圖與 DOM 讀值保存在 `/tmp/falcon-hero-fit-review/`。
+- TypeScript、正式建置（788 頁）、`git diff --check` 通過，3101 已更新。本輪未重跑完整 SEO／五幕視覺套件或手機真機測試；範圍限首屏排版與受影響交界，未部署。
+
+## 首屏／彩帶交界瞬移修正（2026-11-04）
+
+- 已重現：1440×900 下，僅捲動約 10px 跨過首屏剩餘 25% 高度的門檻，畫布就從隼搬到彩帶區；隼仍可見卻切回不同姿勢的備援圖，彩帶也由備援突然接替。
+- 首屏及彩帶改為同一個隨文件捲動的畫布區域，以兩個 scissor viewport 同時繪製；各自保持原投影與位置，中間文字區透明。同步調整彩帶區的堆疊層，讓背景不蓋住共用畫布、文字仍在模型上層。移除可見期間搬動畫布的門檻；仍只用一個 canvas／renderer，離開開場後才交給五幕旅程，錯誤／減少動態沿用靜態備援。未修改模型、正文、資料庫或新增套件。
+- 既有首頁驗收改為檢查開場聯合畫布邊界，並加入反覆跨過舊門檻時兩個場景持續就緒、首屏不露出備援圖的回歸斷言。
+- 正式 Chrome 1440×900、768×1024、390×844、360×800 各 7 次上下跨界檢查通過（共 28 次）：雙場景持續 rendered、兩區備援隱藏、單一 canvas、聯合舞台邊界誤差小於 1px、無橫向溢出或前端錯誤。手機另確認旅程接續、跳過至聯絡區（頂端約 105px）、返回首屏重建；唯一 H1 與八件作品保留。修正前後截圖與讀值在 `/tmp/falcon-handoff-review/`。
+- TypeScript、正式建置（788 頁）、首頁驗收腳本語法及 `git diff --check` 通過；3101 已更新為修正版本。本輪未重跑完整全站 SEO／視覺腳本或手機真機 GPU 測試；開場改為同時繪製兩個簡單場景，增加的 GPU 成本由既有品質降級處理，不能將桌面響應式驗收當成真機效能保證。未部署。
+
+## 五幕空間旅程重建（2026-11-04，本機版本）
+
+- 中段重建為「展示螢幕放大 → 鏡面建築 → 結構扭轉 → 品牌藍通道 → 世界退回螢幕、隼飛出」，維持銀黑／白／電光藍、桌機 12 屏／手機 8 屏。既有首屏、第二區 3D 彩帶、導覽、48 段長正文、八件作品、九語及聯絡功能保留。
+- 單一 renderer 與 GSAP 進度控制獨立 Catmull–Rom 鏡頭、注視及飛行路徑。建築固定於世界座標，倒角樑由矩形逐步扭成通道，接入連續藍色內壁與原創 FALCON／翼形圖案；Meshy 僅留中遠景。入口按橫直構圖安排左右／上下版面，修正平板直式文字重疊。
+- 桌機兩面／手機一面即時反射，預設最長邊 1024／512；每次反射排除其他反射面。出口共用投影與模型變換，前後部分依螢幕平面裁切，取代舊的兩隻隼淡化。粒子 → 反射品質 → 局部暈光 → 解析度 → 靜態逐級降級，離頁清理 GPU 資源。
+- 重生桌機／手機 GLB 與場景備援：桌機 3,299,172 bytes／121,716 面；手機 1,231,236 bytes／46,178 面。製作及重測使用 `pnpm generate:home-models`、`pnpm check:home-models`。
+- 模型檢查以五種尺寸各 2,001 個進度，驗證實際建築線段與最大拍翼球形包絡的距離、鏡頭通道、數值連續、倒捲／跳段一致及滿版投影等價。最小包絡距離 2.47 倍、鏡頭約 4.97 單位，直式包絡寬度上限 64%。第二區彩帶解析細分誤差上界 0.564／0.707 CSS px；此數字不代表所有新建築的逐像素輪廓誤差，也不把線段測試宣稱為全場景三角形碰撞測試。
+- 正式 Chrome 1440×900（33 屏）、768×1024（36 屏）、390×844（38 屏）逐屏滑到頁尾；每尺寸另存五幕起／中／終 15 張。另測 360px、844×390 橫向、跨斷點重建及快速倒捲。可見 canvas 與舞台四邊誤差 0px、無橫向溢出。修正後再次檢視平板入口；鏡面倒影、變形與出框可辨認。
+- 九語實際切換、唯一 H1、八件作品、48 段舊正文及 27 個既有獨立連結保留。鍵盤選單 Escape／焦點返回、NOVA 導頁清理與返回重建、取消語系切換時的表單保護均通過。實測發現 Next query＋anchor 未定位到聯絡區，修正首頁 AI CTA 為同頁原生定位，保留預選與追蹤；重測姓名保留、服務切成 ai_voice、聯絡區頂端約 105px。既有首頁／轉換腳本加入定位斷言。測試資料已清除，未送出真實詢問。
+- Chrome DevTools 實際模擬 reduced-motion 與停用 JavaScript：無 canvas、五幕正常高度圖文、正文可讀、無橫向溢出。臨時本機代理令 GLB 回傳 503：前端顯示資產路徑、HTTP 503、完整錯誤內容與 stack，回退靜態且無長篇空白；代理已關閉，正式資產未改動。
+- 驗收通過：TypeScript、`pnpm lint:content`（33,615 筆翻譯、17 個驗證、18 個本地化表單 mock）、模型檢查、`pnpm build`（788 頁）、`pnpm check:seo http://localhost:3101`（722 sitemap 網址／38 noindex 頁）。建置保留原 metadataBase 提醒，實際 canonical／社群網址檢查通過。瀏覽器另有既存擴充功能 content_main.js 載入錯誤，不屬網站 runtime。
+- 本機 Chrome 未節流／停用網路快取的頁面量測：桌機 LCP 0.22s、390px LCP 0.28s，乾淨首頁 CLS 0。鏡面場景 25 次 DOM 畫格間距讀值：桌機中位數 8ms、手機版 34ms（範圍 33–51ms）；這是桌面機的響應式樣本，並非完整 FPS benchmark、行動網路或手機 GPU 結果。測試時由無 JS／減少動態切回含 #contact 的頁面曾記錄 CLS 1.00，乾淨首頁重載為 0；深連結重載的定位位移仍應追蹤。
+- 截圖與逐屏紀錄在 `/tmp/falcon-world-review/`。本輪未重新執行整套 Puppeteer `check:home`、全站視覺／轉換腳本；以 Chrome 實際操作覆蓋本次變更。context loss 的現有處理保留，但本輪未實際注入；iOS／Android 真機 GPU、所有新曲面的 1 CSS px 輪廓量測尚未驗證，不能列為通過。
+- 沒有新增套件、Meshy 費用（原累計 189／200 點）、後端 API、資料庫變更、commit 或部署。下方保留歷史紀錄，不混算為新版驗收。
+
+## UI 與流線曲面重製（2026-11-04，實作中）
+
+- 近景改用可重生的開放拱帶、扭轉彩帶及展翼曲面，與中遠景 Meshy 裝飾分工；新增共用幾何、全拍翼包絡及確定性鏡頭通道計算。柔化銀、藍琺瑯與陶瓷材質，取消紫紅色相動畫。
+- 場景新增真正的 3D 第二區彩帶，三組近景曲面桌機各三件／手機各兩件，Meshy 遠景八／六件。兩批 GPU 粒子依固定種子建立，降級依序減半粒子、關閉粒子、降低解析度、靜態；Points 與其他 GPU 資源統一清理。
+- 導覽取消品牌底板與語系膠囊，保留原生九語 select／表單保護與 Radix 焦點管理；選單改右側平面／手機滿版，旅程控制移到底部。旅程縮為桌機 12 屏、手機 8 屏；服務與交付接入品牌區、AI 電話接在 GoGoCha 後、證據接在作品末端，保留全部正文及連結。場景各自首幀完成才隱藏備援圖。
+- 資產檢查擴充到每尺寸 2,001 個進度取樣的全翼包絡、20% 餘裕、鏡頭通道、曲面間距與可見視錐下的解析曲面細分誤差；首次取樣攔下開場餘裕僅 18.3% 的情況，已擴大曲面通道後重測；細分檢查另攔下尖端非線性收束造成的 2.2px 誤差，改為平滑正弦收束，並把細分預算從帶長方向移到圓滑截面。近景品質預算調整為桌機 3.6 MB／125k 面、手機 1.6 MB／52k 面。
+- 手機首屏及收尾同樣以全拍翼包絡限制尺寸，避免旅程通道安全但收尾再次切翼。
+- 幾何檢查已通過：桌機 3,101,812 bytes／120,160 面、手機 1,246,752 bytes／50,734 面；全拍翼包絡半徑 6、最小餘裕 30%、手機包絡寬度上限 64%、曲面平面最短間隔 5.39／9.71；解析曲面中點誤差保守投影上界 0.735／0.938 CSS px（非真機像素量測）。修正跨斷點以動畫進度續播，預先壓縮的 WebP 備援直接載入並加版本，避免 Next 圖片快取沿用舊模型與重複轉檔。
+- 本輪不新增套件、Meshy 費用、API 或資料庫變更；下方歷次驗收保留為歷史紀錄，不能代表本輪已通過。後續同步更新 UI、正文配置、粒子、資產與實測結果。
+
 # 隼訊數位行銷服務平台
 
 隼訊企業官網，以「網站與 AI 開發」及「SEO／GEO 搜尋成長」兩個獲客 Hub 為核心，使用 Next.js 16 + React 19 + Tailwind CSS v4 構建。
 
 **網站**: https://www.falconinformation.com
+
+## 上下捲動露邊修正（2026-11-04）
+
+- 原本固定於視窗的 3D 畫布逐幀追蹤舞台座標，會與瀏覽器捲動短暫錯位；首屏備援圖亦未在 3D 就緒後隱藏，可能從交界露出另一份模型。
+- 改為同一個 canvas 隨目前首屏／旅程舞台移動，由原生捲動與舞台邊界約束，不再逐幀平移固定覆蓋層。畫布由場景生命週期建立與移除，保持單一 renderer；首屏備援只在載入／靜態／失敗狀態顯示，原有完整錯誤與表單保留。
+- 手機切換場景立即繪製；一般畫格先決定是否略過，再調整畫布尺寸，避免 resize 清空畫布後碰到 30 FPS 節流而閃空白。
+- 既有首頁驗收增加正反捲動的畫布父層／邊界一致檢查、備援隱藏與錯誤後恢復檢查。`pnpm exec tsc --noEmit`、`pnpm build`（788 頁）、驗收腳本語法與 `git diff --check` 通過；本機 3101 已換成修正後正式建置。
+- Chrome 實測 1440×900、768×1024、390×844 首屏正反捲動、旅程進出、倒捲與跨斷點重建；所有可見畫布四邊相對舞台誤差為 0px、DOM 僅一張 canvas、首屏備援隱藏、無橫向溢出或瀏覽器錯誤。桌機與手機再次捲至頁尾並抽查沿途及各幕，另確認 NOVA 案例離頁清除畫布、返回後正確重建。截圖位於 `/tmp/falcon-edge-review/`。
+- 本輪未重新執行完整 `check:home` 故障注入、全站 SEO／翻譯／表單檢查或手機真機效能量測；既有錯誤備援斷言已更新但未列作本輪通過。未改模型、正文、翻譯或資料庫，沒有部署。
+
+## 首屏構圖與首頁正文恢復（2026-11-04）
+
+- 回復既有首頁的服務雙主軸、交付範圍、AI 電話、合作流程、三項證據案例摘要、公開起價、實名負責人與精選文章，沿用原資料、九語翻譯與服務追蹤；與目前八項作品、3D 旅程並存。
+- 正文直接由 Server Components 輸出到初始 HTML，不藏在 canvas、折疊區或視覺隱藏文字。移除舊概念插圖和工業網格，以開放式分欄與細線整理；首頁原全域 margin reset 限定不影響恢復內容的段落間距。
+- 首屏恢復原服務定位、英文標語、說明與交付原則，新增服務／起價／文章錨點。放大主標與完整隼模型、調整裝飾前後景及手機舞台高度，沿用原五件 Meshy 資產，不消耗點數。
+- 原視覺 baseline 檢查恢復首頁長段正文（20 字以上）與原有內鏈的保留斷言，避免只驗模型和表單卻漏掉內容消失。
+- SEO 驗收已新增九語首頁初始 `<main>` 斷言：七個正文區塊、原服務／搜尋／AI 說明、合作流程與三項案例摘要必須存在，不以 metadata 或 React 序列化資料代替正文。實際瀏覽器 DOM 對照舊 baseline，48 段 20 字以上正文與原有連結全部保留；首頁唯一 H1、八項精選與完整 3D 旅程並存。
+- 本輪通過 `pnpm exec tsc --noEmit`、`pnpm lint:content`（33,615 筆翻譯、17 個驗證及 18 個本地化表單 mock）、模型／八張備援圖重生與模型檢查、`pnpm build`（788 頁）、`pnpm check:seo http://localhost:3101`（722 個 sitemap URL／38 個 noindex 頁）及 `git diff --check`。建置仍有原 metadataBase 提醒，實際 canonical／社群網址檢查通過。
+- 正式建置於 Chrome 以 1440×900（42 屏）、768×1024（44 屏）、390×844（45 屏）完整捲到頁尾並逐屏檢視，七個恢復區塊與各幕旅程均可見，三種尺寸沒有橫向溢出或瀏覽器錯誤。另切換九語手機首頁、檢視服務正文，均有七區與唯一 H1、無橫向溢出；九語初始 HTML 正文檢查通過。這是桌面瀏覽器響應式驗收，不代表手機真機 GPU 量測。
+- 確認首頁起價錨點、詳細 AI 電話 CTA 的服務預選與姓名保留，以及取消切換語言後的表單保護；測試姓名已清除，未實際送出表單。詳細 AI CTA 使用 `home_ai_voice_detail`，原精簡入口的 `home_ai_voice` 追蹤位置仍唯一。
+- 本輪截圖位於 `/tmp/falcon-content-review/`，桌機 `desktop-00` 至 `desktop-41`、平板 `tablet-00` 至 `tablet-43`、手機 `phone-00` 至 `phone-44`，九語正文為 `locale-*`。本輪未重跑全站 47 路由瀏覽器視覺／轉換、無 JS／減少動態／故障注入，也未重新量測 FPS／LCP／CLS；已更新首頁正文保留斷言，但不將未執行的完整視覺腳本列為通過。
+- 沒有新增套件、修改資料庫、使用 Meshy 點數或部署；原總額仍為 189／200 點。所有改動保留為本機可驗收版本。
+
+## 沉浸式 3D 作品首頁與 Meshy 模型（2026-11-04）
+
+首頁為隼翼主題作品站，保留品牌宣言、真實專案蒙太奇、八件精選、五幕旅程、合作邀請、既有聯絡表單與頁尾。第一版雖通過技術測試，使用者指出模型分裂、裝飾粗糙、Logo 消失與外框壓迫；本輪已針對這些問題重製，不以測試通過代表達到 Lusion 的美術完成度。
+
+### 材質與空間聯動修正
+
+- 重新完整檢視 Lusion 桌機與手機至頁尾，確認第二區為彩帶整體變形、翻面與蒙太奇同步推進。彩帶改為實心曲面輪廓，捲動時改變三段貝茲曲線與帶寬，以 GSAP scrub 表現彎曲及翻面；靜態模式保留完整輪廓。
+- 修正頭部錯配白陶瓷，六部件統一霧銀鈦金屬；增加原模型保留面數，隼與裝飾焊接頂點並經兩輪 Taubin 平滑去除表面噪點。柔化環境光與金屬反射，保留固定翅根拍翼。
+- 鳥與鏡頭共享空間航線、獨立前後取樣，側傾轉向由航線曲率計算。場景開合由鳥與物件的實際相對距離觸發；鄰近環體對齊鏡頭至主角的視線通道，轉向、擴張及讓道，解決首次全頁檢查發現的近景遮滿畫面。
+- 三件新原創 Meshy 模型為金屬結、摺帶旋翼與透空花瓣，與既有流線環構成四種輪廓。兩旁雕塑隨主角接近讓道、旋轉與回彈，第二區透明裝飾使用實際旋翼模型的渲染圖；移除暫用扭結及折帶幾何。
+- 保留使用者認可的結尾：場景退回展示螢幕，完整隼再飛至前景。所有模型共用幾何／材質，桌機與手機各自減面；沒有新增套件、API 或資料庫變更。
+
+### 延續的首頁行為
+
+- 恢復原 `/logo.png` 與九語品牌名稱。首屏與頁面共享淺灰背景，取消首屏、蒙太奇及作品圖圓角外框；雙欄作品錯落排列，聯絡欄位改為底線式並保留鍵盤焦點框。
+- 主角維持完整隼形，移除六部件爆散與錯位肩軸旋轉。左右翼改用固定翅根的 Downstroke／Upstroke 頂點形變，持續拍翼、滑翔與轉向；形變包含位置及法線並寫入 GLB。這是兩個翼部的 morph 動畫，並非逐根羽毛的骨架綁定。
+- 旁邊的舊參數羽片已換成新生成的 Meshy 流線環。主角與裝飾皆為真正 3D；同一流線環經實例化排列成銀色拱廊、旋轉藍紫隧道與藍白空間，移除方格籠架和碎片。開口對齊運鏡路徑並擴大淨寬，避免主角被近景遮住。
+- GSAP ScrollTrigger 與 Catmull–Rom 弧長取樣控制側向穿行、俯衝、傾斜及視野推拉；結尾收回展示螢幕再讓完整隼飛向前景。螢幕以相機視錐計算起始尺寸，消除切換瞬間的放大跳動。藍白場景改用深色字幕。
+- 蒙太奇在短暫固定期間透視展開，作品圖片與各列採不同幅度視差，合作邀請隨捲動進場。保留原生捲動，桌機旅程 18 個視窗、手機 14 個，支援倒捲／快速跳段及跳過動畫。
+- 手機同時依裝置斷點和 canvas 比例取景；首屏縮短並重新安排裝飾。斷點重建不再重複還原初始 #hero，旅程中切換斷點會保留相對進度。
+- 單一 canvas／WebGL renderer 管理場景，結尾使用 render target。非 3D 區域停止繪製，離頁清理 GSAP、事件、幾何、材質、環境貼圖、render target 與 renderer；持續低效能先降解析度再改靜態頁。
+- 減少動態、無 JavaScript、WebGL 不支援、模型失敗或 context loss 的圖文備援保留；靜態場景使用整幅漸暗遮罩確保字幕可讀。可取得的資產 URL、HTTP 狀態、回應、堆疊及 shader 錯誤完整顯示，表單輸入不因模型錯誤清除。
+
+### 資產、費用與重生
+
+- **Meshy 授權累計 189／200 點**：使用者核准提高總上限至 200 點。前輪隼與流線環共 87 點；本輪三張 Nano Banana Pro 概念圖 27 點、三件 Meshy 7.1／2K／私有／無貼圖 GLB 75 點，新增 102 點。費用依任務介面標示；沒有儲值、新訂閱或使用他人的社群模型。本機材質與減面不消耗 Meshy 點數。
+- 隼原檔：`assets/home3d/meshy-falcon-source.glb`，12,314,732 bytes，SHA-256 `35a065bc60648053be6f1436235adae8ebb479bda1ddaf9cc6cb4f5b50d3dcbc`。
+- 流線環原檔：`assets/home3d/meshy-slipstream-source.glb`，5,208,612 bytes／216,986 原始三角面，SHA-256 `5a6028717a8e0a911462958826d1441938c8fd1d58279ed19067d9940114bef4`。原檔保留於非公開路由。
+- 新增原檔（均保存在非公開路由 `assets/home3d/`）：
+  - `meshy-knot-source.glb`：3,922,160 bytes，SHA-256 `ce5fedc2ce41e0ec4f8d2f9dd6bb2ca1c6f3b59b0d63fa8bcabf170fcaa621d7`。
+  - `meshy-rotor-source.glb`：2,542,684 bytes，SHA-256 `05d87f4b3aa11142e0db77d26c6be651bc9cc993aa13e485a2481dcf5774b354`。
+  - `meshy-petal-source.glb`：3,968,908 bytes，SHA-256 `e868e336fb3fa422b5776e39062e53ebcf534c811ca5264449b90e2e7c3b2f3a`。
+- 交付 `public/models/falcon-wing-desktop.glb`：2,374,052 bytes／82,684 三角面；手機版：853,744 bytes／29,050 三角面。兩檔均含完整隼、兩組拍翼形變與四種 Meshy 裝飾。
+- `pnpm generate:home-models` 從保存原檔減面、重算法線、建立形變並輸出兩種 LOD；七張場景備援與一張透明旋翼 WebP 均由實際場景渲染，透明資產為 `falcon-rotor.webp`。移除舊流線環海報並同步視覺檢查。網站執行時不連 Meshy、不使用點數；重新生成 AI 原檔無法保證相同結果。
+- 製作器使用已安裝的 glTF Transform、meshoptimizer、Three.js 和本機 Chrome，`CHROME_PATH` 可指定路徑；所有套件以 pnpm 管理。
+
+模型資產重生時間：2026-11-04T14:45:21.824Z
+
+### 驗收與保留範圍
+
+- 本輪 `pnpm check:home-models` 通過：GLTFLoader 真正讀取兩個檔案，驗證六部件與四種裝飾、大小／面數、有限頂點與法線、索引範圍、頭身相同材質、固定翅根與翼尖位移、拍翼週期；2,001 個取樣檢查鏡頭與鳥路徑連續性及倒捲／跳段決定性。另驗證開口接近／離開反應、視線通道啟閉與彩帶變形數值。
+- 本輪 `pnpm exec tsc --noEmit`、`pnpm lint:content`（33,615 筆翻譯、17 個驗證及 18 個本地化表單 mock）、`pnpm build`（788 頁）、`pnpm check:seo http://localhost:3101`（722 個 sitemap URL／38 個 noindex 頁）與 `git diff --check` 通過。建置沿用既有 metadataBase 提示，實際 canonical／社群網址已由 SEO 檢查核對。
+- 正式建置於 Chrome 以 1440×900（36 屏）、768×1024（32 屏）、390×844（31 屏）從頂完整捲到頁尾並逐屏檢視。三種尺寸最後均維持動態模式、無橫向溢出或瀏覽器錯誤。手機另抽驗 0.12 至 0.97 各場景及倒捲回 0.42；修正前發現的轉彎遮擋不再出現。
+- 九語手機切換皆保留唯一 H1、Logo 與正常寬度；選單 Enter／Escape 及焦點恢復、NOVA 案例導頁與返回後 3D 重建、AI 電話服務預選且保留姓名輸入已確認。測試姓名已清除，未實際送出表單。
+- 本輪截圖與逐屏檢視圖位於 `/tmp/falcon-cohesion-review/`，正式重測以 `final-1440-*`、`final-768-*`、`final-390-*` 命名；Lusion 手機完整參考為 `ref-phone-00` 至 `ref-phone-72`。前輪截圖仍在 `/tmp/falcon-flight-review/`，不混算為本輪驗收。
+- 多個 3D 參考分頁與連續截圖同時存在時，曾觸發手機低效能靜態備援；靜態頁沒有大片空白且完整錯誤可見。關閉已完成參考分頁後，重新完整捲動維持 mobile 畫質。這不能取代 iOS／Android 真機 GPU 驗證，也不宣稱穩定 30／60 FPS。
+- 本輪沒有重跑全部瀏覽器故障注入、無 JS／減少動態、全站 47 路由視覺與轉換測試，亦未重新量測 FPS／LCP／CLS；原有測試與備援保留，先前通過結果不算成本輪結果。
+- 保留 NOVA、CLIMATIX、CLASP、上緯 AI Explorer、ROLL ON.、GoGoCha、神經元 2026、ESCROWA 與全部 35 項作品入口；九語、服務／價格／文章內頁、metadata、canonical、hreflang、#hero／#cases／#contact、服務預選及事件追蹤保留。沒有新增 API、修改資料庫、commit、push 或部署。
+- 模型製作程序仍有兩版 libvips 的載入提醒與 Node Three.js CJS 提醒；資產產生及檢查成功，網站 runtime 不載入這些開發工具。
+
+Meshy 流線環概念提示：
+
+```text
+A single sculptural aerodynamic ribbon loop, an original luxury industrial art object inspired by the slipstream of a diving falcon. One continuous thick titanium band twists into a dramatic elongated open teardrop knot, with broad flowing surfaces, sharply tapered sweeping tips and a large clear negative space. Polished silver on the outside, vivid cobalt blue enamel on the inner face. Precise rounded bevels, substantial solid thickness, sleek smooth surfaces, no facets, no feather blades, no bird, no separate pieces, no sphere, no stand. Entire object floating alone, three-quarter angle, centered with space around all edges, plain neutral gray studio background, soft directional product lighting, no text.
+```
+
+Meshy 隼概念提示：
+
+```text
+A premium abstract peregrine falcon sculpture for a futuristic design studio. Entire object visible, three-quarter front view. Powerful swept-back wings spread in a wide asymmetric V, layered aerodynamic titanium feathers with crisp tapered tips and visibly separated blades; compact streamlined body, small angular falcon head, long forked tail. Brushed silver and pearlescent white ceramic outer feathers, polished dark chrome underside, tiny electric cobalt blue accents. Sculptural industrial design, monolithic luxury art object, precise thick bevelled edges, smooth clean surfaces, elegant negative space between feathers. Wings anatomically rooted at two shoulders, no fan shape. Floating alone on neutral gray, soft studio illumination, no ground, no plinth, no text, no extra objects.
+```
 
 ## 元智作品網址更新（2026-11-01）
 

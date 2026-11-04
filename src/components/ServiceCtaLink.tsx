@@ -35,6 +35,13 @@ export function ServiceCtaLink({
         if (unlocalizedPath(href) === '/?service=ai_voice#contact' && !event.defaultPrevented &&
           !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && event.button === 0) {
           window.dispatchEvent(new CustomEvent(serviceInterestEvent, { detail: 'ai_voice' }))
+          const contact = document.querySelector('.falcon-home #contact')
+          if (contact && unlocalizedPath(window.location.pathname) === '/') {
+            // Next's automatic anchor scroll can skip a page with a tall sticky WebGL stage.
+            event.preventDefault()
+            window.history.pushState(null, '', event.currentTarget.href)
+            contact.scrollIntoView({ behavior: 'instant', block: 'start' })
+          }
         }
       }}
     >

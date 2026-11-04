@@ -1,3 +1,7 @@
+import { readFileSync } from 'node:fs'
+import { makeTranslator } from '../src/lib/i18n/translate'
+import { overrides } from '../src/lib/i18n/overrides'
+import { getAllCaseStudies } from '../src/lib/content/case-studies'
 import { locales, localizedPath, unlocalizedPath, localeFromPath, languageInfo } from '../src/lib/i18n/config'
 import { languageAlternates } from '../src/lib/i18n/seo'
 /**
@@ -304,6 +308,34 @@ async function auditPage(route: RouteSpec): Promise<PageAudit> {
     for (const path of getInternalLinks(html)) {
       if (/^\/(?:card|resume|privacy|terms|api)(?:\/|$)/.test(path) || /\.[^/]+$/.test(path)) continue
       if (localeFromPath(path) !== locale) problems.push(`站內連結離開目前語言：${path}`)
+    }
+  }
+  if (unlocalizedPath(route.path) === '/') {
+    const messages = Object.assign({}, ...['common', 'home', 'pages', 'services', 'pricing', 'articles', 'cases', 'portfolio', 'local'].map(group =>
+      JSON.parse(readFileSync(`src/lib/i18n/messages/${locale}/${group}.json`, 'utf8'))), overrides[locale])
+    const t = makeTranslator(locale, messages)
+    // Inspect rendered main content, never metadata or React's serialized payload.
+    const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1] ?? ''
+    const text = main.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '').replace(/<[^>]*>/g, ' ')
+      .replace(/&#x([\da-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+      .replace(/&#(\d+);/g, (_, number) => String.fromCodePoint(Number(number)))
+      .replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/\s+/g, ' ')
+    for (const id of ['services', 'deliverables', 'ai-voice', 'process', 'evidence', 'pricing', 'insights']) {
+      if (!main.includes(`id="${id}"`)) problems.push(`首頁正文區塊缺少：${id}`)
+    }
+    for (const copy of [
+      '台灣企業網站與 AI 系統開發',
+      '從可維護的網站與企業系統，到可索引、可量測的搜尋成長。 以公開案例、實名責任與合格詢盤檢驗成果，不販售保證排名或 AI 引用。',
+      '企業官網、電商、客製系統與 AI 工具。從需求、資料、權限、測試到部署，交付可維護的產品。',
+      '先修抓取、索引、速度與量測，再用實名內容、案例證據與外部實體訊號爭取傳統與 AI 搜尋曝光。',
+      '檢查 canonical、sitemap、內鏈、速度與結構化資料，讓重要內容可被搜尋引擎取得。',
+      '拆分品牌與非品牌搜尋、自然詢盤、AI 平台引薦與固定查詢集，不把「被提到」當成成交。',
+      '隼訊把來電內容接到派單、工單、CRM、LINE、App 與營運後台。GoGoCha 證明我們做過 AI 電話入口與即時派單整合；PBX、多線、錄音、監控及客服席位則依企業環境客製並經 POC 驗收。',
+      '先看既有網站、流程、資料、帳號與量測，找出真正卡住成交或營運的位置。',
+      '先確認預算是否對得上', '誰負責，不用猜', '先看我們怎麼判斷，再決定要不要合作',
+      ...getAllCaseStudies().map(study => study.summary),
+    ]) {
+      if (!text.includes(t(copy).replace(/\s+/g, ' '))) problems.push(`首頁可索引正文缺少：${copy}`)
     }
   }
   const robots = getMeta(html, 'name', 'robots')

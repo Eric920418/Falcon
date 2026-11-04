@@ -290,5 +290,16 @@
   "{0}／{1}起": "À partir de {0} / {1}",
   "隼訊提供台灣企業網站、AI 系統開發與 SEO／GEO 搜尋成長服務，以可驗證案例、技術品質與合格詢盤為成效核心。": "Falcon propose des services de développement de sites web pour les entreprises taïwanaises, de systèmes d'IA et d'optimisation pour les moteurs de recherche (SEO/GEO), en mettant l'accent sur des études de cas vérifiables, la qualité technique et la capacité à répondre aux demandes.",
   "概念插圖：{0}": "Illustration conceptuelle : {0}",
-  "圖片載入失敗": "Échec du chargement de l’image"
+  "圖片載入失敗": "Échec du chargement de l’image",
+  "主要導覽": "Navigation principale",
+  "裝置效能不足，已切換為靜態呈現。": "L’appareil affiche lentement la 3D. La version statique est activée.",
+  "探索作品、服務與合作方式。": "Découvrez nos projets, services et possibilités de collaboration.",
+  "完整錯誤資訊": "Détails complets de l’erreur",
+  "認識隼訊": "Découvrir Falcon",
+  "3D 顯示已切換為靜態版本": "La vue 3D est passée en version statique",
+  "聊聊你的想法": "Parlons-en",
+  "作品": "Projets",
+  "繪圖環境中斷，已保留完整頁面內容。": "Le contexte graphique a été interrompu. Tout le contenu reste accessible.",
+  "開啟導覽選單": "Ouvrir le menu",
+  "選單": "Menu"
 }

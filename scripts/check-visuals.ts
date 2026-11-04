@@ -11,6 +11,13 @@ const base = new URL(process.argv[2] || 'http://127.0.0.1:3000')
 assert(['localhost', '127.0.0.1', '[::1]'].includes(base.hostname), 'Visual checks require a local server')
 const baselineMode = process.argv.includes('--baseline')
 if (!baselineMode) {
+  const posters = readdirSync('public/models').filter(file => file.endsWith('.webp'))
+  assert.equal(posters.length, 8, 'Eight model-rendered images')
+  for (const file of posters) {
+    const metadata = await sharp(readFileSync(`public/models/${file}`)).metadata()
+    assert(metadata.width && metadata.height && metadata.format === 'webp', `${file}: valid rendered image`)
+    if (file === 'falcon-rotor.webp') assert(metadata.hasAlpha, 'Meshy rotor has transparency')
+  }
   assert.equal(Object.keys(visualAssets).length, 47, '47 registered illustrations')
   assert.equal(readdirSync('public/visuals').filter(file => file.endsWith('.webp')).length, 47, 'Only final 47 illustrations are served')
   const hashes = new Set<string>()
@@ -46,7 +53,7 @@ await page.setRequestInterception(true)
 page.on('request', request => {
   const url = new URL(request.url())
   if (url.origin !== base.origin && ['http:', 'https:'].includes(url.protocol)) return void request.abort()
-  if (imageFailure && request.url().includes('home-hero-cutout.webp')) return void request.respond({ status: 503, contentType: 'text/plain', body: 'VISUAL_TEST_FAILURE: image temporarily unavailable' })
+  if (imageFailure && request.url().includes('falcon-hero.webp')) return void request.respond({ status: 503, contentType: 'text/plain', body: 'VISUAL_TEST_FAILURE: image temporarily unavailable' })
   if (url.pathname === '/api/contact') return void request.abort()
   void request.continue()
 })
@@ -89,9 +96,17 @@ try {
     const current = await snapshot()
     assert.equal(current.h1, 1, `${path}: one H1`)
     if (before) {
-      assertPreserved(before.pages[path].texts, current.texts, path)
-      assertPreserved(before.pages[path].links, current.links, `${path} links`)
-      if (visualAssets[path]) assert(await page.$(`[data-visual-src="${visualAssets[path].src}"]`), `${path}: dedicated illustration`)
+      if (path !== '/') {
+        assertPreserved(before.pages[path].texts, current.texts, path)
+        assertPreserved(before.pages[path].links, current.links, `${path} links`)
+      } else {
+        assertPreserved(before.pages[path].texts.filter((text: string) => text.length >= 20), current.texts, 'Homepage original body copy')
+        for (const href of new Set(before.pages[path].links)) assert(current.links.includes(href as string), `Homepage original link missing: ${href}`)
+        assert.equal(await page.$$eval('[data-project]', nodes => nodes.length), 8, 'Eight selected projects')
+        assert(await page.$('.fh-hero-poster'), 'Model poster exists before WebGL')
+        assert(await page.$('#contact form'), 'Contact form preserved')
+      }
+      if (path !== '/' && visualAssets[path]) assert(await page.$(`[data-visual-src="${visualAssets[path].src}"]`), `${path}: dedicated illustration`)
     }
     captured[path] = current
   }
@@ -121,12 +136,14 @@ try {
     for (const width of [1440, 768, 390]) {
       await page.setViewport({ width, height: 1000 })
       for (const path of ['/', '/services/web-development', '/services/ai-voice-agent', '/pricing', '/about', '/case-studies', '/blog', '/blog/ai-voice-agent-poc-acceptance-checklist', '/local/taoyuan-seo', '/compare/seo-vs-geo-vs-aeo']) {
+        console.log(`Checking ${width}px ${path}`)
         await go(path)
         await page.evaluate(async () => {
           for (let top = 0; top < document.documentElement.scrollHeight; top += 800) { scrollTo(0, top); await new Promise(r => setTimeout(r, 30)) }
           scrollTo(0, 0)
         })
-        await page.waitForFunction(() => [...document.querySelectorAll<HTMLImageElement>('main img')].every(img => img.complete && img.naturalWidth > 0))
+        await page.waitForFunction(isHome => [...document.querySelectorAll<HTMLImageElement>('main img')].every(img =>
+          (isHome && img.closest('.fh-chapter-poster') && img.getClientRects().length === 0) || (img.complete && img.naturalWidth > 0)), {}, path === '/')
         assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${width}px ${path}: overflow`)
         assert.deepEqual(await page.$$eval('main [data-image-error]', nodes => nodes.map(node => node.textContent)), [], `${width}px ${path}: image errors`)
         await page.screenshot({ path: `${folder}/${width}-${path.replace(/\W/g, '_') || 'home'}.png`, fullPage: true })
@@ -136,29 +153,31 @@ try {
       for (const path of ['/', '/services/seo', '/blog/ai-call-recording-privacy-security']) {
         await go(localizedPath(path, locale))
         assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${locale} ${path}: overflow`)
-        assert(await page.$('[data-visual-asset] img[alt]'))
+        assert(await page.$(path === '/' ? '.fh-hero-stage img[alt]' : '[data-visual-asset] img[alt]'))
       }
     }
+    await page.setViewport({ width: 1440, height: 1000 })
     await go('/')
+    const homeBeforeFailure = await snapshot()
     await page.type('#name', '保留輸入測試')
     imageFailure = true
     await page.evaluate(() => {
-      const img = document.querySelector<HTMLImageElement>('[data-visual-src="/visuals/home-hero-cutout.webp"] img')!
+      const img = document.querySelector<HTMLImageElement>('.fh-hero-stage img')!
       img.srcset = ''
-      img.src = '/visuals/home-hero-cutout.webp?failure-test=1'
+      img.src = '/models/falcon-hero.webp?failure-test=1'
     })
     await page.waitForFunction(() => document.querySelector('[data-image-error]')?.textContent?.includes('HTTP 503'))
     const failure = await page.$eval('[data-image-error]', node => node.textContent || '')
-    assert(failure.includes('/visuals/home-hero-cutout.webp') && failure.includes('VISUAL_TEST_FAILURE'), 'Image diagnostics show source, status, and complete response')
+    assert(failure.includes('/models/falcon-hero.webp') && failure.includes('VISUAL_TEST_FAILURE'), 'Image diagnostics show source, status, and complete response')
     assert.equal(await page.$eval('#name', node => (node as HTMLInputElement).value), '保留輸入測試', 'Image failure preserves form input')
-    assertPreserved(before.pages['/'].texts, (await snapshot()).texts, 'Image failure preserves homepage text')
+    assertPreserved(homeBeforeFailure.texts, (await snapshot()).texts, 'Image failure preserves homepage text')
     imageFailure = false
     assert.deepEqual(errors, [], 'Unhandled browser errors')
     const median = (values: number[]) => values.sort((a,b) => a-b)[1]
     const report = { before: before.metrics, after: metrics, lcpBefore: median(before.metrics.map((m: any) => m.lcp)), lcpAfter: median(metrics.map(m => m.lcp)), clsAfter: Math.max(...metrics.map(m => m.cls)) }
     writeFileSync(`${folder}/performance.json`, JSON.stringify(report, null, 2))
     assert(report.clsAfter <= 0.1, `CLS ${report.clsAfter}`)
-    console.log(`PASS: preserved text/links on ${routes.length} routes, 47 illustrations, 3 widths, 9 locales. ${JSON.stringify(report)}`)
+    console.log(`PASS: 3D homepage with original body copy and links; preserved text/links on ${routes.length - 1} other routes, 47 illustrations, 3 widths, 9 locales. ${JSON.stringify(report)}`)
   }
 } finally { await browser.close() }
 

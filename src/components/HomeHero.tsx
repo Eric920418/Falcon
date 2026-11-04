@@ -1,55 +1,29 @@
-import { PageVisual } from '@/components/PageVisual'
+import { ImageWithFallback as Image } from '@/components/figma/ImageWithFallback'
 import { getI18n } from '@/lib/i18n/server'
 import Link from '@/lib/i18n/link'
-import { ArrowRight, ArrowUpRight, Check } from 'lucide-react'
+import { ArrowDown, ArrowUpRight } from 'lucide-react'
 
 export function HomeHero() {
   const { t } = getI18n()
-
   return (
-    <section id="hero" className="home-hero">
-      <div className="home-hero-inner">
-        <div className="home-hero-composition">
-          <div className="home-hero-copy">
-            <p className="home-hero-eyebrow">
-              <span aria-hidden="true" />
-              {t('Web, AI & Search Growth')}
-            </p>
-            <h1 className="home-hero-heading">
-              <span className="home-hero-title">{t('台灣企業網站與 AI 系統開發')}</span>
-              <span className="home-hero-growth">{t('SEO／GEO 搜尋成長')}</span>
-            </h1>
-            <p className="home-hero-description">
-              {t('從可維護的網站與企業系統，到可索引、可量測的搜尋成長。 以公開案例、實名責任與合格詢盤檢驗成果，不販售保證排名或 AI 引用。')}
-            </p>
-            <div className="home-hero-actions">
-              <Link href="/#contact" className="home-hero-primary">
-                <span>{t('討論專案需求')}</span>
-                <span className="home-hero-action-icon" aria-hidden="true"><ArrowUpRight size={20} /></span>
-              </Link>
-              <Link href="/case-studies" className="home-hero-secondary">
-                {t('查看公開案例')}<ArrowRight size={17} aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-          <div className="home-hero-stage">
-            <div className="home-hero-field" aria-hidden="true" />
-            <PageVisual path="/" priority className="home-hero-art" sizes="(min-width: 1280px) 840px, (min-width: 1024px) 68vw, (min-width: 768px) 80vw, 100vw" />
-          </div>
-        </div>
-        <div className="home-hero-proof">
-          {[
-            '原始碼與帳號歸屬先確認',
-            '技術量測與商業結果分開揭露',
-            '錯誤與限制不隱藏',
-          ].map(item => (
-            <div key={item}>
-              <Check size={17} aria-hidden="true" />
-              <span>{t(item)}</span>
-            </div>
-          ))}
+    <section id="hero" className="fh-hero">
+      <div className="fh-hero-heading">
+        <h1>{t('以設計與技術，讓想像成形。')}</h1>
+        <div className="fh-hero-description">
+          <p className="fh-hero-specialty">{t('台灣企業網站與 AI 系統開發')}<br />{t('SEO／GEO 搜尋成長')}</p>
+          <p>{t('從可維護的網站與企業系統，到可索引、可量測的搜尋成長。 以公開案例、實名責任與合格詢盤檢驗成果，不販售保證排名或 AI 引用。')}</p>
+          <Link href="/#cases" className="fh-text-link">{t('探索作品')}<ArrowUpRight size={20} aria-hidden="true" /></Link>
         </div>
       </div>
+      <div className="fh-hero-stage" data-home-stage="hero">
+        <picture><source media="(max-width: 767px)" srcSet="/models/falcon-hero-mobile.webp?v=flow4" /><Image src="/models/falcon-hero.webp?v=flow4" alt={t('銀白金屬羽片構成的原創隼翼雕塑')} fill unoptimized preload sizes="100vw" className="fh-poster fh-hero-poster" /></picture>
+      </div>
+      <div className="fh-hero-bottom">
+        <span className="fh-stage-signature">FALCON<small>{t('Web, AI & Search Growth')}</small></span>
+        <div className="fh-hero-shortcuts"><a href="#services">{t('所有服務項目')}</a><a href="#pricing">{t('公開起價')}</a><a href="#insights">{t('實作文章')}</a></div>
+        <a href="#manifesto">{t('向下探索')}<ArrowDown size={17} aria-hidden="true" /></a>
+      </div>
+      <ul className="fh-hero-proof">{['原始碼與帳號歸屬先確認', '技術量測與商業結果分開揭露', '錯誤與限制不隱藏'].map(item => <li key={item}>{t(item)}</li>)}</ul>
     </section>
   )
 }

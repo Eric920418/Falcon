@@ -1,4 +1,3 @@
-import { PageVisual } from '@/components/PageVisual'
 
 import { getI18n } from '@/lib/i18n/server'
 import Link from '@/lib/i18n/link'
@@ -22,12 +21,12 @@ function formatDate(value: string) {
 }
 
 export function HomeAuthorityInsights() {
-  const { t, locale } = getI18n()
+  const { t } = getI18n()
 
   const featuredPosts = featuredPostSlugs.map((slug) => blogPosts[slug])
 
   return (
-    <section className="bg-[var(--site-soft)] px-6 py-24">
+    <section id="insights" className="fh-content">
       <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20">
         <div>
           <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[var(--site-accent)]">{t("Named responsibility")}</p>
@@ -69,10 +68,9 @@ export function HomeAuthorityInsights() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group grid gap-3 py-7 sm:grid-cols-[8rem_1fr_auto] sm:items-start sm:gap-5"
+                className="group grid gap-3 py-7 sm:grid-cols-[2rem_1fr_auto] sm:items-start sm:gap-5"
               >
                 <span>
-                  <PageVisual path={`/blog/${post.slug}`} sizes="128px" className="mb-3" />
                   <span className="font-mono text-xs text-[var(--site-accent)]">{t("0")}{index + 1}</span>
                 </span>
                 <span>

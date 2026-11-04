@@ -1,4 +1,3 @@
-import { PageVisual } from '@/components/PageVisual'
 
 import { getI18n } from '@/lib/i18n/server'
 import { ImageWithFallback as Image } from '@/components/figma/ImageWithFallback'
@@ -14,17 +13,16 @@ const flow = [
 ]
 
 export function HomeAiVoice() {
-  const { t, locale } = getI18n()
+  const { t } = getI18n()
 
   return (
-    <section id="ai-voice" className="relative overflow-hidden border-y border-[var(--site-border)] bg-[var(--site-soft)] px-6 py-24">
-      <div className="absolute inset-0 industrial-grid opacity-20" aria-hidden="true" />
+    <section id="ai-voice" className="fh-content">
       <div className="relative mx-auto max-w-6xl">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div>
             <div className="mb-6 flex flex-wrap items-center gap-3">
               <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--site-accent)]">{t("Flagship capability")}</span>
-              <span className="border border-emerald-500/35 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-700">{t("GoGoCha 公開實作")}</span>
+              <span className="text-xs text-[var(--site-muted)]">{t("GoGoCha 公開實作")}</span>
             </div>
             <h2 className="max-w-3xl text-3xl leading-tight text-[var(--site-text)] md:text-5xl">
               {t("企業 AI 電話，不只回答問題；要能把工作做進系統")}</h2>
@@ -54,7 +52,7 @@ export function HomeAiVoice() {
               </ServiceCtaLink>
               <ServiceCtaLink
                 href="/?service=ai_voice#contact"
-                placement="home_ai_voice"
+                placement="home_ai_voice_detail"
                 className="falcon-btn-outline inline-flex items-center justify-center gap-2"
               >
                 {t("提出流程 Demo 需求")}<PhoneCall size={17} aria-hidden="true" />
@@ -63,7 +61,6 @@ export function HomeAiVoice() {
           </div>
 
           <div className="grid gap-4">
-            <PageVisual path="/#ai-voice" />
             <div className="border border-[var(--site-border)] bg-[var(--site-card)] p-5">
               <div className="mb-5 flex items-center justify-between border-b border-[var(--site-border)] pb-4">
                 <span className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--site-muted)]">{t("Call → Action")}</span>

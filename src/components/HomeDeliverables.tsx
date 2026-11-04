@@ -1,4 +1,3 @@
-import { PageVisual } from '@/components/PageVisual'
 
 import { getI18n } from '@/lib/i18n/server'
 import Link from '@/lib/i18n/link'
@@ -61,10 +60,10 @@ const deliveryTracks = [
 ]
 
 export function HomeDeliverables() {
-  const { t, locale } = getI18n()
+  const { t } = getI18n()
 
   return (
-    <section className="bg-[var(--site-soft)] px-6 py-24 text-[var(--site-text)]">
+    <section id="deliverables" className="fh-content">
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-8 border-b border-[var(--site-border)]/20 pb-12 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
           <div>
@@ -82,7 +81,6 @@ export function HomeDeliverables() {
               className="grid gap-9 py-14 lg:grid-cols-[0.58fr_1.42fr] lg:gap-16"
             >
               <div className="flex flex-col">
-                <PageVisual path={track.label === 'Build' ? '/services/web-development' : '/services/seo'} className="order-last mt-7 lg:order-first lg:mb-7 lg:mt-0" sizes="(min-width: 1024px) 30vw, 100vw" />
                 <div className="mb-6 flex items-center gap-3 text-sm uppercase tracking-[0.18em] text-[var(--site-accent)]">
                   <span className="font-mono">{t(track.number)}</span>
                   <span className="h-px w-10 bg-[var(--site-accent)]/60" />

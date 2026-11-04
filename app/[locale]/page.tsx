@@ -2,11 +2,14 @@ import { initLocale } from '@/lib/i18n/server'
 import type { Metadata } from 'next'
 import { Contact } from '@/components/Contact'
 import { Navigation } from '@/components/Navigation'
+import { HomeExperience } from '@/components/HomeExperience'
+import { HomeShowcase } from '@/components/HomeShowcase'
+import { HomeJourney } from '@/components/HomeJourney'
+import './home.css'
 import { HomeHero } from '@/components/HomeHero'
-import { HomeHubs } from '@/components/HomeHubs'
-import { HomeAiVoice } from '@/components/HomeAiVoice'
-import { HomeDeliverables } from '@/components/HomeDeliverables'
 import { HomeCases } from '@/components/HomeCases'
+import { HomeHubs } from '@/components/HomeHubs'
+import { HomeDeliverables } from '@/components/HomeDeliverables'
 import { HomeProcess } from '@/components/HomeProcess'
 import { HomeProofPricing } from '@/components/HomeProofPricing'
 import { HomeAuthorityInsights } from '@/components/HomeAuthorityInsights'
@@ -28,7 +31,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const url = siteConfig.url
 
   return (
-    <div className="falcon-site bg-[var(--site-bg)] text-[var(--site-text)] overflow-x-hidden">
+    <HomeExperience>
       <JsonLd
         data={createWebPageSchema({
           name: '台灣企業網站、AI 系統開發與 SEO／GEO 搜尋成長服務',
@@ -39,17 +42,18 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       />
       <Navigation />
       <main>
-        <HomeHero />
-        <HomeHubs />
-        <HomeAiVoice />
-        <HomeDeliverables />
+        <div className="fh-opening">
+          <HomeHero />
+          <HomeShowcase><HomeHubs /><HomeDeliverables /></HomeShowcase>
+        </div>
         <HomeCases />
+        <HomeJourney />
         <HomeProcess />
         <HomeProofPricing />
         <HomeAuthorityInsights />
         <Contact />
       </main>
       <SitePageFooter />
-    </div>
+    </HomeExperience>
   )
 }

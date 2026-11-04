@@ -1,4 +1,3 @@
-import { PageVisual } from '@/components/PageVisual'
 
 import { getI18n } from '@/lib/i18n/server'
 import Link from '@/lib/i18n/link'
@@ -32,11 +31,10 @@ const processSteps = [
 ]
 
 export function HomeProcess() {
-  const { t, locale } = getI18n()
+  const { t } = getI18n()
 
   return (
-    <section className="relative overflow-hidden bg-[var(--site-soft)] px-6 py-24">
-      <div className="industrial-grid absolute inset-0 opacity-[0.08]" />
+    <section id="process" className="fh-content">
       <div className="relative mx-auto max-w-6xl">
         <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
           <div>
@@ -47,8 +45,7 @@ export function HomeProcess() {
               {t("開發案最常敗在需求一直漂移；搜尋案最常敗在只有曝光、沒有詢盤基準。兩者都需要同一件事：能被雙方檢查的定義。")}</p>
           </div>
 
-          <aside className="border-l-2 border-[var(--site-accent)] bg-[var(--site-soft)] p-6 md:p-8">
-            <PageVisual path="/about" className="mb-6" sizes="(min-width: 1024px) 30vw, 100vw" />
+          <aside className="border-t border-[var(--site-border)] pt-6">
             <p className="text-sm uppercase tracking-[0.16em] text-[var(--site-muted)]">{t("Fit check")}</p>
             <h3 className="mt-3 text-2xl text-[var(--site-text)]">{t("先確認彼此適不適合")}</h3>
             <div className="mt-6 space-y-4 text-sm leading-relaxed">

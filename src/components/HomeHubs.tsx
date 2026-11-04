@@ -1,4 +1,3 @@
-import { PageVisual } from '@/components/PageVisual'
 
 import { getI18n } from '@/lib/i18n/server'
 import Link from '@/lib/i18n/link'
@@ -33,10 +32,10 @@ const hubs = [
 ]
 
 export function HomeHubs() {
-  const { t, locale } = getI18n()
+  const { t } = getI18n()
 
   return (
-    <section id="services" className="py-24 px-6 bg-[var(--site-bg)] ">
+    <section id="services" className="fh-content">
       <div className="max-w-6xl mx-auto">
         <p className="text-[var(--site-accent)] text-sm tracking-widest uppercase mb-3">{t("Two focused hubs")}</p>
         <h2 className="text-3xl md:text-5xl text-[var(--site-text)] mb-5">{t("兩條清楚的合作路徑")}</h2>
@@ -45,8 +44,7 @@ export function HomeHubs() {
 
         <div className="grid lg:grid-cols-2 gap-6">
           {hubs.map((hub) => (
-            <article key={hub.title} className="flex flex-col border border-[var(--site-border)] rounded-2xl p-7 md:p-9 bg-[var(--site-soft)]">
-              <PageVisual path={hub.eyebrow === 'Build' ? '/#build' : '/#grow'} className="order-last mt-7 lg:order-first lg:mb-7 lg:mt-0" />
+            <article key={hub.title} className="flex flex-col border-t border-[var(--site-border)] py-8">
               <span className="text-[var(--site-accent)] text-sm">{t(hub.eyebrow)}</span>
               <h3 className="text-3xl text-[var(--site-text)] mt-3 mb-4">{t(hub.title)}</h3>
               <p className="text-[var(--site-muted)] leading-relaxed">{t(hub.description)}</p>
@@ -55,7 +53,7 @@ export function HomeHubs() {
                   <Link
                     key={href}
                     href={href}
-                    className="flex items-center gap-3 rounded-lg border border-[var(--site-border)] p-4 text-[var(--site-text)] hover:border-[var(--site-accent)] hover:text-[var(--site-accent)] transition-colors"
+                    className="flex items-center gap-3 border-b border-[var(--site-border)] py-4 text-[var(--site-text)] hover:border-[var(--site-accent)] hover:text-[var(--site-accent)] transition-colors"
                   >
                     <Icon size={18} />
                     <span>{t(label)}</span>

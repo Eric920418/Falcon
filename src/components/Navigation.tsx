@@ -1,302 +1,33 @@
 'use client'
+import { useState } from 'react'
+import Image from 'next/image'
+import { ArrowUpRight, Plus } from 'lucide-react'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import { useI18n } from '@/lib/i18n/client'
-
-
-import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
-import { Menu, X, ChevronDown } from 'lucide-react'
-import Image from 'next/image'
 import Link from '@/lib/i18n/link'
-
-const buildLinks = [
-  { label: '網站建置與軟體開發', href: '/services/web-development' },
-  { label: 'AI 工具開發', href: '/services/ai-tools' },
-  { label: '企業 AI 語音客服', href: '/services/ai-voice-agent' },
-]
-
-const growthLinks = [
-  { label: 'SEO 搜尋成長', href: '/services/seo' },
-  { label: 'GEO AI 搜尋', href: '/services/geo' },
-]
-
-type NavItem =
-  | { label: string; kind: 'scroll'; id: string }
-  | { label: string; kind: 'link'; href: string }
-  | { label: string; kind: 'dropdown'; items: { label: string; href: string }[] }
-
-const navItems: NavItem[] = [
-  { label: '網站與 AI 開發', kind: 'dropdown', items: buildLinks },
-  { label: 'SEO／GEO', kind: 'dropdown', items: growthLinks },
-  { label: '案例', kind: 'link', href: '/case-studies' },
-  { label: '價格', kind: 'link', href: '/pricing' },
-  { label: '關於', kind: 'link', href: '/about' },
-  { label: '聯絡', kind: 'scroll', id: 'contact' },
-]
+import { Dialog, DialogContent, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog'
 
 export function Navigation() {
-  const { t, locale } = useI18n()
-
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
-  const lastScrollY = useRef(0);
-  const ticking = useRef(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      lastScrollY.current = window.scrollY;
-
-      if (!ticking.current) {
-        // 使用 requestAnimationFrame 节流，限制在 ~60fps
-        requestAnimationFrame(() => {
-          setIsScrolled(lastScrollY.current > 50);
-          ticking.current = false;
-        });
-        ticking.current = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const closeMobile = () => {
-    setIsMobileMenuOpen(false);
-    setMobileDropdown(null);
-  };
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    closeMobile();
-  };
-
-  return (
-    <motion.nav
-      className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-300 ${
-        isScrolled
-          ? 'bg-[var(--site-soft)] border-b border-[var(--site-border)]/50'
-          : 'bg-transparent'
-      }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-3">
-        {/* Logo */}
-        <motion.button
-          onClick={() => scrollToSection('hero')}
-          className="flex items-center gap-3 group"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <Image
-            src="/logo.png"
-            alt={t("隼訊數位行銷")}
-            width={44}
-            height={44}
-            className="rounded"
-          />
-          <span
-            className="hidden sm:inline text-xl text-[var(--site-text)] group-hover:text-[var(--site-muted)] transition-colors"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            {t("隼訊數位行銷")}</span>
-        </motion.button>
-
-        {/* Desktop Navigation */}
-        <div className="hidden xl:flex items-center gap-1">
-          {navItems.map((item) => {
-            if (item.kind === 'dropdown') {
-              return (
-                <div
-                  key={item.label}
-                  className="relative"
-                  onMouseEnter={() => setOpenDropdown(item.label)}
-                  onMouseLeave={() => setOpenDropdown(null)}
-                  onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setOpenDropdown(null) }}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Escape') {
-                      setOpenDropdown(null)
-                      event.currentTarget.querySelector('button')?.focus()
-                    }
-                  }}
-                >
-                  <button
-                    className="flex items-center gap-1 px-4 py-2 text-sm text-[var(--site-muted)] hover:text-[var(--site-text)] transition-colors"
-                    aria-expanded={openDropdown === item.label}
-                    onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
-                  >
-                    {t(item.label)}
-                    <ChevronDown
-                      size={14}
-                      className={`transition-transform ${openDropdown === item.label ? 'rotate-180' : ''}`}
-                    />
-                  </button>
-                  <AnimatePresence>
-                    {openDropdown === item.label && (
-                      <motion.div
-                        className="absolute left-0 top-full w-64 pt-2"
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 8 }}
-                        transition={{ duration: 0.15 }}
-                      >
-                        <div className="rounded-lg border border-[var(--site-border)]/60 bg-[var(--site-soft)] py-2 shadow-xl">
-                          {item.items.map((s) => (
-                            <Link
-                              key={s.href}
-                              href={s.href}
-                              className="block px-4 py-2 text-sm text-[var(--site-muted)] hover:text-[var(--site-accent)] hover:bg-[var(--site-soft)] transition-colors"
-                            >
-                              {t(s.label)}
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            }
-
-            if (item.kind === 'link') {
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="relative px-4 py-2 text-sm text-[var(--site-muted)] hover:text-[var(--site-text)] transition-colors group"
-                >
-                  {t(item.label)}
-                  <span className="absolute bottom-1 left-4 right-4 h-px bg-[#5F808B] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-                </Link>
-              );
-            }
-
-            return (
-              <button
-                key={item.label}
-                onClick={() => scrollToSection(item.id)}
-                className="relative px-4 py-2 text-sm text-[var(--site-muted)] hover:text-[var(--site-text)] transition-colors group"
-              >
-                {t(item.label)}
-                <span className="absolute bottom-1 left-4 right-4 h-px bg-[#5F808B] scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-              </button>
-            );
-          })}
-        </div>
-
-        <LanguageSwitcher />
-
-        {/* CTA Button - Desktop */}
-        <motion.button
-          className="hidden xl:flex falcon-btn-primary text-sm py-2 px-5"
-          onClick={() => scrollToSection('contact')}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          {t("立即諮詢")}</motion.button>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="xl:hidden w-10 h-10 flex items-center justify-center text-[var(--site-text)] hover:text-[var(--site-muted)] transition-colors"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          id="home-menu-toggle"
-          aria-expanded={isMobileMenuOpen}
-          aria-controls="home-mobile-menu"
-          aria-label={t(isMobileMenuOpen ? '關閉選單' : '開啟選單')}
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            id="home-mobile-menu"
-            onKeyDown={(event) => { if (event.key === 'Escape') { closeMobile(); document.getElementById('home-menu-toggle')?.focus() } }}
-            className="xl:hidden fixed inset-x-0 top-[72px] h-[calc(100dvh-72px)] bg-[var(--site-soft)] overflow-y-auto"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="px-6 py-8 flex flex-col gap-1 pb-24">
-              {navItems.map((item) => {
-                if (item.kind === 'dropdown') {
-                  return (
-                    <div key={item.label} className="border-b border-[var(--site-border)]/50">
-                      <button
-                        onClick={() => setMobileDropdown((value) => value === item.label ? null : item.label)}
-                        aria-expanded={mobileDropdown === item.label}
-                        className="w-full flex items-center justify-between py-4 text-left text-lg text-[var(--site-text)] hover:text-[var(--site-muted)] transition-colors"
-                      >
-                        <span style={{ fontFamily: 'var(--font-display)' }}>{t(item.label)}</span>
-                        <ChevronDown
-                          size={18}
-                          className={`transition-transform ${mobileDropdown === item.label ? 'rotate-180' : ''}`}
-                        />
-                      </button>
-                      {mobileDropdown === item.label && (
-                        <div className="pb-3 pl-3 flex flex-col">
-                          {item.items.map((s) => (
-                            <Link
-                              key={s.href}
-                              href={s.href}
-                              onClick={closeMobile}
-                              className="py-2.5 text-[var(--site-muted)] hover:text-[var(--site-accent)] transition-colors"
-                            >
-                              {t(s.label)}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  );
-                }
-
-                if (item.kind === 'link') {
-                  return (
-                    <Link
-                      key={item.label}
-                      href={item.href}
-                      onClick={closeMobile}
-                      className="py-4 text-lg text-[var(--site-text)] hover:text-[var(--site-muted)] transition-colors border-b border-[var(--site-border)]/50"
-                      style={{ fontFamily: 'var(--font-display)' }}
-                    >
-                      {t(item.label)}
-                    </Link>
-                  );
-                }
-
-                return (
-                  <button
-                    key={item.label}
-                    onClick={() => scrollToSection(item.id)}
-                    className="py-4 text-left text-lg text-[var(--site-text)] hover:text-[var(--site-muted)] transition-colors border-b border-[var(--site-border)]/50"
-                    style={{ fontFamily: 'var(--font-display)' }}
-                  >
-                    {t(item.label)}
-                  </button>
-                );
-              })}
-
-              {/* Mobile CTA */}
-              <button
-                className="falcon-btn-primary mt-6 w-full text-center"
-                onClick={() => scrollToSection('contact')}
-              >
-                {t("立即諮詢")}</button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
-  );
+  const { t } = useI18n()
+  const [open, setOpen] = useState(false)
+  return <nav className="fh-nav" aria-label={t('主要導覽')}>
+    <Link href="/#hero" className="fh-brand" aria-label={t('隼訊數位行銷')}><Image src="/logo.png" alt="" width={40} height={40} priority /><span>{t('隼訊數位行銷')}<small>FALCON INFORMATION</small></span></Link>
+    <div className="fh-nav-actions">
+      <LanguageSwitcher />
+      <Link href="/#contact" className="fh-nav-contact">{t('聊聊你的想法')}<span className="fh-nav-contact-arrow"><ArrowUpRight size={19} aria-hidden="true" /></span></Link>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild><button id="home-menu-toggle" aria-controls="home-menu-panel" className="fh-menu-trigger" aria-label={t('開啟導覽選單')}><span>{t('選單')}</span><Plus size={20} aria-hidden="true" /></button></DialogTrigger>
+        <DialogContent className="fh-menu" id="home-menu-panel">
+          <DialogTitle className="sr-only">{t('主要導覽')}</DialogTitle>
+          <DialogDescription className="sr-only">{t('探索作品、服務與合作方式。')}</DialogDescription>
+          <div className="fh-menu-links">
+            {[
+              ['作品', '/case-studies'], ['所有服務項目', '/services'], ['公開起價', '/pricing'], ['認識隼訊', '/about'], ['聯絡', '/#contact'],
+            ].map(([label, href]) => <Link key={href} href={href} onClick={() => setOpen(false)}>{t(label)}<ArrowUpRight aria-hidden="true" /></Link>)}
+          </div>
+          <p className="fh-menu-signature">Falcon Information</p>
+        </DialogContent>
+      </Dialog>
+    </div>
+  </nav>
 }

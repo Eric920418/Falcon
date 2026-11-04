@@ -290,5 +290,16 @@
   "想了解 {0} 在地服務細節？": "¿Quieres conocer nuestros servicios locales en {0}?",
   "{0}／{1}起": "Desde {0} / {1}",
   "概念插圖：{0}": "Ilustración conceptual: {0}",
-  "圖片載入失敗": "No se pudo cargar la imagen"
+  "圖片載入失敗": "No se pudo cargar la imagen",
+  "主要導覽": "Navegación principal",
+  "裝置效能不足，已切換為靜態呈現。": "El dispositivo renderiza lentamente. Se muestra la versión estática.",
+  "探索作品、服務與合作方式。": "Explora proyectos, servicios y formas de colaborar.",
+  "完整錯誤資訊": "Detalles completos del error",
+  "認識隼訊": "Conoce Falcon",
+  "3D 顯示已切換為靜態版本": "La vista 3D cambió a la versión estática",
+  "聊聊你的想法": "Hablemos",
+  "作品": "Proyectos",
+  "繪圖環境中斷，已保留完整頁面內容。": "Se perdió el contexto gráfico. Todo el contenido sigue disponible.",
+  "開啟導覽選單": "Abrir menú",
+  "選單": "Menú"
 }
