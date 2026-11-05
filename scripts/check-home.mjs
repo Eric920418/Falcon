@@ -50,10 +50,11 @@ async function checkStageAttachment(mode) {
     const host = document.querySelector('.fh-canvas-host'), target = host.parentElement
     const hero = document.querySelector('[data-home-stage="hero"]'), manifesto = document.querySelector('[data-home-stage="manifesto"]')
     const canvasRect = host.getBoundingClientRect(), stageRect = target.classList.contains('fh-opening')
-      ? { top: hero.getBoundingClientRect().top, bottom: manifesto.getBoundingClientRect().bottom, left: hero.getBoundingClientRect().left, right: hero.getBoundingClientRect().right }
+      ? { top: Math.max(0,hero.getBoundingClientRect().top), bottom: Math.min(innerHeight,manifesto.getBoundingClientRect().bottom), left: hero.getBoundingClientRect().left, right: hero.getBoundingClientRect().right }
       : target.getBoundingClientRect()
     return { mode: host.querySelector('canvas').dataset.scene, position: getComputedStyle(host).position,
       edgeError: Math.max(...['top', 'right', 'bottom', 'left'].map(edge => Math.abs(canvasRect[edge] - stageRect[edge]))),
+      hostHeight: canvasRect.height, viewportHeight: innerHeight,
       heroRendered: hero.dataset.rendered, manifestoRendered: manifesto.dataset.rendered,
       poster: getComputedStyle(document.querySelector('.fh-hero-poster')).visibility, journeyPoster: getComputedStyle(document.querySelector('.fh-chapter-poster')).display }
   })
@@ -61,6 +62,7 @@ async function checkStageAttachment(mode) {
   assert.equal(state.position, 'absolute', 'Canvas must scroll with its stage, without a frame-delayed fixed overlay')
   assert(state.edgeError < 1, 'Canvas and stage edges must match')
   if (mode === 'opening') {
+    assert(state.hostHeight <= state.viewportHeight+1, 'Opening canvas stays within visible viewport')
     assert.equal(state.heroRendered, 'true'); assert.equal(state.manifestoRendered, 'true')
     assert.equal(state.poster, 'hidden', 'Visible hero must keep its live pose while the ribbon enters')
   }
@@ -70,7 +72,9 @@ async function seek(progress) {
   await page.evaluate(p => {
     const element = document.querySelector('.fh-journey')
     const start = element.getBoundingClientRect().top + scrollY
-    scrollTo({ top: start + (element.offsetHeight - innerHeight) * p, behavior: 'instant' })
+    const base = innerWidth < 768 ? 7 : 11, extra = innerWidth < 768 ? 3 : 4
+    const scroll = (p * base + extra * Math.max(0,Math.min(1,(p-.64)/.18))) / (base+extra)
+    scrollTo({ top: start + (element.offsetHeight - innerHeight) * scroll, behavior: 'instant' })
   }, progress)
   await page.waitForFunction(p => Math.abs(Number(document.querySelector('canvas[data-progress]')?.dataset.progress) - p) < 0.004, {}, progress)
   await wait(180)
@@ -128,7 +132,7 @@ try {
     assert.equal(await page.$$eval('main h1', nodes => nodes.length), 1)
     assert.equal(await page.$$eval('[data-project]', nodes => nodes.length), 8)
     assert.equal(await page.$$eval('.fh-canvas-host canvas', nodes => nodes.length), 1)
-    assert.equal(await page.$eval('.fh-journey', e => Math.round(e.offsetHeight / innerHeight)), width < 768 ? 8 : 12)
+    assert.equal(await page.$eval('.fh-journey', e => Math.round(e.offsetHeight / innerHeight)), width < 768 ? 11 : 16)
     await capture(`${width}-hero`)
     await checkStageAttachment('opening')
     for (const direction of [1, -1, 1, -1]) {
@@ -182,8 +186,9 @@ try {
     await page.waitForFunction(() => document.activeElement?.id === 'home-menu-toggle')
   }
   // The same document must rebuild its scene when crossing the phone breakpoint.
-  await page.setViewport({ width: 1440, height: 900 }); await go('/'); await ready()
+  await page.setViewport({ width: 1440, height: 900 }); await go('/'); await ready(); await seek(.73)
   await page.setViewport({ width: 390, height: 900 }); await ready()
+  await page.waitForFunction(() => Math.abs(Number(document.querySelector('canvas')?.dataset.progress)-.73)<.006)
   await page.waitForFunction(() => document.querySelector('canvas').dataset.quality === 'mobile')
   assert.equal(await page.$$eval('.fh-canvas-host canvas', nodes => nodes.length), 1)
   await page.click('[data-project] a')

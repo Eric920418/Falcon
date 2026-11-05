@@ -100,17 +100,19 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
     screenTarget.setSize(Math.min(Math.round(width * quality), 1600), Math.min(Math.round(height * quality), 1200))
     screen.scale.y = screenFrame.scale.y = (9.8 / camera.aspect) / 6.4
   }
-  function render(mode: 'hero' | 'manifesto' | 'journey', progress: number, time = 0, pointer = { x: 0, y: 0 }, viewport?: { top: number; height: number }) {
+  function render(mode: 'hero' | 'manifesto' | 'journey', progress: number, time = 0, pointer = { x: 0, y: 0 }, viewport?: { top: number; height: number; clipHeight?: number }) {
     const viewHeight = viewport?.height ?? currentHeight
     const bottom = viewport ? currentHeight - viewport.top - viewHeight : 0
     renderer.setViewport(0, bottom, currentWidth, viewHeight)
-    renderer.setScissor(0, bottom, currentWidth, viewHeight)
+    const clipTop = Math.max(0,viewport?.top ?? 0), clipBottom = Math.min(viewport?.clipHeight ?? currentHeight,(viewport?.top ?? 0)+viewHeight)
+    renderer.setScissor(0, currentHeight-clipBottom, currentWidth, Math.max(0,clipBottom-clipTop))
     renderer.setScissorTest(Boolean(viewport))
     camera.aspect = currentWidth / viewHeight
     const portrait = mobile || camera.aspect < 0.85, p = MathUtils.clamp(progress, 0, 1)
     studio.visible = mode === 'hero'; journey.visible = mode === 'journey'; manifesto.visible = mode === 'manifesto'
     journey.matrix.identity();journey.matrixAutoUpdate=false
-    ;(mode === 'journey' ? journey : scene).add(particles.group)
+    const particleParent = mode === 'journey' ? journey : scene
+    if (particles.group.parent !== particleParent) particleParent.add(particles.group)
     renderer.toneMappingExposure = 1.05
     if (mode === 'hero') {
       camera.fov = 38; camera.updateProjectionMatrix()
@@ -139,7 +141,7 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
       camera.position.copy(pose.position); camera.lookAt(pose.target); camera.rotateZ(pose.roll)
       camera.fov = pose.fov; camera.updateProjectionMatrix();camera.updateMatrixWorld()
       bg.copy(night).lerp(cobalt,smooth(.59,.69,p)); (scene.fog as Fog).far = 125
-      const bird = birdPose(p)
+      const bird = pose.bird
       sight.copy(bird.position).sub(camera.position)
       const birdDistance = sight.length()
       world.update(Math.min(p,.82))
@@ -189,13 +191,13 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
       renderer.render(screenScene,screenCamera)
     } else renderer.render(scene, camera)
   }
-  function renderOpening(heroHeight: number, manifestoTop: number, manifestoHeight: number, progress: { hero: number; manifesto: number }, time: number, pointer: { x: number; y: number }) {
+  function renderOpening(heroHeight: number, manifestoTop: number, manifestoHeight: number, progress: { hero: number; manifesto: number }, time: number, pointer: { x: number; y: number }, heroTop = 0, visibleHeight = currentHeight) {
     // Both sections can be visible together; never replace either live pose with its poster.
     renderer.setScissorTest(false)
     renderer.setClearColor(paper, 0)
     renderer.clear()
-    render('hero', progress.hero, time, pointer, { top: 0, height: heroHeight })
-    render('manifesto', progress.manifesto, time, pointer, { top: manifestoTop, height: manifestoHeight })
+    if (heroTop < visibleHeight && heroTop + heroHeight > 0) render('hero', progress.hero, time, pointer, { top: heroTop, height: heroHeight, clipHeight: visibleHeight })
+    if (manifestoTop < visibleHeight && manifestoTop + manifestoHeight > 0) render('manifesto', progress.manifesto, time, pointer, { top: manifestoTop, height: manifestoHeight, clipHeight: visibleHeight })
     renderer.setScissorTest(false)
   }
   let reduction = 0

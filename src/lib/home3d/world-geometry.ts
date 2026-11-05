@@ -1,9 +1,9 @@
 import { BufferGeometry, Float32BufferAttribute, Matrix4, Quaternion, Vector3 } from 'three'
-import { flightPath, smooth } from './choreography'
+import { flightPath, flightPoint, flightTangent, smooth } from './choreography'
 
 export function pathFrame(t: number) {
-  const center = flightPath.getPointAt(Math.min(1,t)), tangent = flightPath.getTangentAt(Math.min(1,t))
-  if (t > 1) center.addScaledVector(tangent, (t - 1) * flightPath.getLength())
+  const center = flightPoint(Math.min(1,t)), tangent = flightTangent(Math.min(1,t))
+  if (t > 1) center.addScaledVector(tangent, (t - 1) * (flightPath.getLength() + 80))
   const right = new Vector3().crossVectors(tangent, new Vector3(0,1,0)).normalize()
   const up = new Vector3().crossVectors(right, tangent).normalize()
   return { center, rotation: new Quaternion().setFromRotationMatrix(new Matrix4().makeBasis(right,up,tangent.clone().negate())) }
@@ -11,8 +11,18 @@ export function pathFrame(t: number) {
 export const structureCount = (mobile: boolean) => mobile ? 20 : 30
 export const mirrorRoom = { halfWidth: 16, halfHeight: 13, depth: 260, centerZ: -85, inset: .04 }
 export const mirrorRoomOpacity = (p: number) => smooth(.12,.22,p) * (1-smooth(.39,.46,p))
+const structureBases = new Map<number, ReturnType<typeof pathFrame>[]>()
+function structureBasis(frame: number, mobile: boolean) {
+  const count = structureCount(mobile)
+  let bases = structureBases.get(count)
+  if (!bases) {
+    bases = Array.from({length:count},(_,i)=>pathFrame(.055+i/(count-1)*1.04))
+    structureBases.set(count,bases)
+  }
+  return bases[frame]
+}
 export function structureSegment(frame: number, side: number, part: number, p: number, mobile: boolean) {
-  const t = .055 + frame / (structureCount(mobile) - 1) * 1.04, basis = pathFrame(t)
+  const t = .055 + frame / (structureCount(mobile) - 1) * 1.04, basis = structureBasis(frame, mobile)
   const twist = smooth(.39,.64,p) * smooth(.22,.62,t)
   const corners = [[-13,-11],[13,-11],[13,11],[-13,11],[-13,-11]]
   const point = (fraction: number) => {
@@ -29,10 +39,12 @@ export function structureSegment(frame: number, side: number, part: number, p: n
 export function tunnelGeometry(mobile: boolean) {
   const rows = mobile ? 100 : 180, half = 13.8
   const positions: number[]=[],uv: number[]=[],indices:number[]=[]
+  const distances=[.55*flightPath.getLength()]
+  for(let i=1;i<=rows;i++) distances.push(distances[i-1]+pathFrame(.55+i/rows*1.4).center.distanceTo(pathFrame(.55+(i-1)/rows*1.4).center))
   const corners=[[-half,-half],[half,-half],[half,half],[-half,half],[-half,-half]]
   // Each wall owns its UVs and normals; lettering never wraps across a corner.
   for(let side=0;side<4;side++) for(let i=0;i<=rows;i++) {
-    const t=.55+i/rows*1.4, basis=pathFrame(t), along=t*flightPath.getLength()/42
+    const t=.55+i/rows*1.4, basis=pathFrame(t), along=distances[i]/42
     for(let j=0;j<2;j++) {
       const corner=corners[side+j]
       positions.push(...new Vector3(corner[0],corner[1],0).applyQuaternion(basis.rotation).add(basis.center).toArray())

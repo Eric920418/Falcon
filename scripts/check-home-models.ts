@@ -9,7 +9,7 @@ import { flightScale, surfacePoint, surfaceSegments, wingEnvelope } from '../src
 import { mirrorRoom, mirrorRoomOpacity, pathFrame, structureCount, structureSegment, tunnelGeometry } from '../src/lib/home3d/world-geometry'
 import { portalWorldMatrix } from '../src/lib/home3d/portal'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
-import { birdPose, journeyPose, journeyChapters, wingBeat } from '../src/lib/home3d/choreography'
+import { birdPose, journeyPose, journeyChapters, journeyScrollProgress, journeyTimelineProgress, flightPath, wingBeat } from '../src/lib/home3d/choreography'
 
 async function checkModels() {
 const loading = await new NodeIO().registerExtensions(ALL_EXTENSIONS).read('assets/home3d/meshy-loading-source.glb')
@@ -127,10 +127,20 @@ for (const quality of ['desktop', 'mobile'] as const) {
   console.log(`${quality}: ${bytes.length} bytes, ${triangles} triangles, six Meshy parts`)
 }
 }
+for (const mobile of [false,true]) {
+  for(let i=0;i<=2000;i++) {
+    const p=i/2000, scroll=journeyScrollProgress(p,mobile)
+    assert(Math.abs(journeyTimelineProgress(scroll,mobile)-p)<1e-12,'Extended tunnel seek/reverse must round-trip')
+  }
+  const base=mobile?7:11, total=mobile?10:15
+  assert(Math.abs(journeyScrollProgress(.64,mobile)*total-.64*base)<1e-12,'Earlier scenes keep their scroll duration')
+  assert((journeyScrollProgress(.82,mobile)-journeyScrollProgress(.64,mobile))*total>4,'Blue tunnel has over four screens of travel')
+}
+assert(Math.abs(birdPose(.82).position.z-flightPath.getPointAt(1).z+80)<1e-8,'Blue flight extends eighty world units')
 for (const portrait of [false, true]) {
   let previousPosition: Vector3 | undefined, previousDirection: Vector3 | undefined
   for (let i = 0; i <= 2000; i++) {
-    const { position, target, roll } = journeyPose(i / 2000, portrait)
+    const { position, target, roll } = journeyPose(journeyTimelineProgress(i / 2000, portrait), portrait)
     assert([...position.toArray(), ...target.toArray(), roll].every(Number.isFinite))
     const direction = target.clone().sub(position).normalize()
     assert(target.distanceTo(position) > 0.05, 'Look target cannot coincide with camera')
@@ -159,7 +169,7 @@ for(const aspect of [1440/900,768/1024,390/844,360/800]) {
 }
 let lastBird: Vector3 | undefined
 for (let i = 0; i <= 2000; i++) {
-  const p = i / 2000, bird = birdPose(p)
+  const p = journeyTimelineProgress(i / 2000, false), bird = birdPose(p)
   assert([...bird.position.toArray(), bird.yaw, bird.pitch, bird.bank].every(Number.isFinite))
   if (lastBird) assert(bird.position.distanceTo(lastBird) < 0.3, 'Bird must not teleport')
   lastBird = bird.position.clone()

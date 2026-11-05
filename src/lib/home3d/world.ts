@@ -1,4 +1,4 @@
-import { AdditiveBlending, CanvasTexture, Color, DoubleSide, Group, InstancedMesh, Mesh, MeshBasicMaterial, MeshStandardMaterial, Object3D, PlaneGeometry, RepeatWrapping, ShaderMaterial, SRGBColorSpace, Vector2, Vector3 } from 'three'
+import { BoxGeometry, AdditiveBlending, CanvasTexture, Color, DoubleSide, Group, InstancedMesh, Mesh, MeshBasicMaterial, MeshStandardMaterial, Object3D, PlaneGeometry, RepeatWrapping, ShaderMaterial, SRGBColorSpace, Vector2, Vector3 } from 'three'
 import { Reflector } from 'three/addons/objects/Reflector.js'
 import { mirrorRoom, mirrorRoomOpacity, pathFrame, structureCount, structureSegment } from './world-geometry'
 import { smooth } from './choreography'
@@ -11,7 +11,8 @@ export function createJourneyWorld(asset: Group, mobile: boolean) {
   const metal = new MeshStandardMaterial({ color: 0x9ea9bc, metalness: .85, roughness: .25, transparent: true })
   const glass = new MeshStandardMaterial({ color: 0x10151e, metalness: .8, roughness: .18, transparent: true })
   const light = new MeshBasicMaterial({ color: new Color(2.8,3.1,4), transparent: true })
-  const beams = new InstancedMesh(beam.geometry, metal, count), panels = new InstancedMesh(beam.geometry, glass, count), lights = new InstancedMesh(beam.geometry, light, count)
+  const trim = mobile ? new BoxGeometry(1,1,1) : beam.geometry
+  const beams = new InstancedMesh(beam.geometry, metal, count), panels = new InstancedMesh(trim, glass, count), lights = new InstancedMesh(trim, light, count)
   for (const mesh of [beams,panels,lights]) { mesh.frustumCulled=false; structure.add(mesh) }
   const dummy = new Object3D(), direction = new Vector3(), axis = new Vector3(0,1,0)
   const glowMaterial = new ShaderMaterial({ transparent: true, depthWrite:false, blending:AdditiveBlending,
@@ -86,7 +87,7 @@ export function createJourneyWorld(asset: Group, mobile: boolean) {
     const mesh=new Mesh(source.geometry,source.material),basis=pathFrame(.16+i*.1),angle=i*2.4
     mesh.position.copy(new Vector3(Math.cos(angle)*15.7,Math.sin(angle)*15.7,0).applyQuaternion(basis.rotation).add(basis.center));mesh.scale.setScalar(.7);mesh.quaternion.copy(basis.rotation);group.add(mesh);return mesh
   })
-  let lastProgress=-1
+  let lastProgress=-1, lastTwist=-1
   function update(p:number) {
     if(p===lastProgress)return
     lastProgress=p
@@ -104,10 +105,12 @@ export function createJourneyWorld(asset: Group, mobile: boolean) {
       material.transparent=opacity<1;material.depthWrite=opacity===1
     })
     const blueOpacity=smooth(.58,.68,p)
-    blueMaterials.forEach(material=>{material.opacity=blueOpacity});blueTunnel.visible=blueOpacity>0
+    blueMaterials.forEach(material=>{material.opacity=blueOpacity;material.transparent=blueOpacity<1});blueTunnel.visible=blueOpacity>0
     horizonMaterial.uniforms.alpha.value=1-smooth(.18,.27,p);horizon.visible=p<.27
     ornaments.forEach((mesh,i)=>{mesh.visible=p>.18&&p<.69;mesh.rotation.z=i*.8+p*.3})
-    if(!structure.visible)return
+    const twist=smooth(.39,.64,p)
+    if(!structure.visible || twist===lastTwist)return
+    lastTwist=twist
     let index=0,glowIndex=0
     for(let frame=0;frame<structureCount(mobile);frame++) for(let side=0;side<4;side++) for(let part=0;part<3;part++) {
       const segment=structureSegment(frame,side,part,p,mobile)

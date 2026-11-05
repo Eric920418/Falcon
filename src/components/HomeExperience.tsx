@@ -6,7 +6,7 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useI18n } from '@/lib/i18n/client'
-import { journeyChapters, smooth } from '@/lib/home3d/choreography'
+import { journeyChapters, journeyScrollProgress, journeyTimelineProgress, smooth } from '@/lib/home3d/choreography'
 import { ribbonScreenLength } from '@/lib/home3d/ribbon'
 import type { HomeStage } from '@/lib/home3d/scene'
 import type { Group, Mesh, Material } from 'three'
@@ -34,7 +34,8 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       host.appendChild(canvas)
       let cancelled = false, stage: HomeStage | undefined, flight: gsap.core.Tween | undefined
       let lastFrame = 0, samples = 0, elapsed = 0, started = 0, qualityStep = 0
-      let sampleStart = 0
+      let lastUiProgress = NaN
+      let sampleStart = 0, frameInterval = mobile ? 1 / 60 : 0
       const abort = new AbortController()
       const state = { progress: 0, hero: 0, manifesto: 0 }, pointer = { x: 0, y: 0 }
       const hero = root.querySelector<HTMLElement>('[data-home-stage="hero"]')!
@@ -45,7 +46,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       const journeyStage = root.querySelector<HTMLElement>('[data-home-stage="journey"]')!
       const chapters = [...root.querySelectorAll<HTMLElement>('[data-chapter]')]
       const bar = root.querySelector<HTMLElement>('.fh-journey-progress span')!
-      const assetUrl = `/models/falcon-wing-${mobile ? 'mobile' : 'desktop'}.glb?v=square1`
+      const assetUrl = `/models/falcon-wing-${mobile ? 'mobile' : 'desktop'}.glb?v=long-blue1`
       root.dataset.motion = 'loading'
       setGate('loading'); setLoadStatus({ phase: '01 / ASSETS', detail: 'CONNECTING' })
       setFailure('')
@@ -104,12 +105,15 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       }
       function draw(time: number) {
         if (!stage || cancelled || document.hidden) { lastFrame = 0; return }
+        if (mobile && time - lastFrame < frameInterval - .001) return
         const heroRect = hero.getBoundingClientRect(), manifestoRect = manifesto.getBoundingClientRect(), journeyRect = journey.getBoundingClientRect()
         const inHero = heroRect.bottom > 0 && heroRect.top < innerHeight
         const inManifesto = manifestoRect.bottom > 0 && manifestoRect.top < innerHeight
         const inJourney = journeyRect.top < innerHeight && journeyRect.bottom > 0
         if (!inHero && !inManifesto && !inJourney) { host.hidden = true; delete root.dataset.scene; delete root.dataset.navDark; lastFrame = 0; return }
         const inOpening = inHero || inManifesto
+        const openingRect = inOpening ? opening.getBoundingClientRect() : null
+        const visibleTop = Math.max(0,heroRect.top), visibleBottom = Math.min(innerHeight,manifestoRect.bottom)
         const mode = inOpening ? 'opening' : 'journey'
         const target = inOpening ? opening : journeyStage
         // Native scrolling keeps the canvas and its clipping edge in the same coordinate space.
@@ -120,23 +124,24 @@ export function HomeExperience({ children }: { children: ReactNode }) {
           target.prepend(host)
         }
         if (inOpening) {
-          host.style.top = `${heroRect.top - opening.getBoundingClientRect().top}px`
-          host.style.height = `${manifestoRect.bottom - heroRect.top}px`
+          host.style.top = `${visibleTop - openingRect!.top}px`
+          host.style.height = `${Math.max(1,visibleBottom-visibleTop)}px`
           host.style.bottom = 'auto'
-        } else {
+        } else if (changedStage) {
           host.style.removeProperty('top'); host.style.removeProperty('height'); host.style.removeProperty('bottom')
         }
         host.hidden = false; root.dataset.scene = mode
         const screenLight = inJourney && (state.progress < .09 || state.progress > .87)
-        root.dataset.screenLight = String(screenLight)
-        root.dataset.navDark = String(inJourney && !screenLight && journeyRect.top < 85 && journeyRect.bottom > 85)
-        if (mobile && !changedStage && time - lastFrame < 1 / 32) return
-        stage.resize(host.clientWidth, host.clientHeight)
+        if (root.dataset.screenLight !== String(screenLight)) root.dataset.screenLight = String(screenLight)
+        const navDark = String(inJourney && !screenLight && journeyRect.top < 85 && journeyRect.bottom > 85)
+        if (root.dataset.navDark !== navDark) root.dataset.navDark = navDark
+        if (canvas.style.height !== `${innerHeight}px`) canvas.style.height = `${innerHeight}px`
+        stage.resize(inOpening ? openingRect!.width : journeyRect.width, innerHeight)
         const delta = lastFrame ? time - lastFrame : 0
         lastFrame = time
         try {
           if (inOpening) {
-            stage.renderOpening(heroRect.height, manifestoRect.top - heroRect.top, manifestoRect.height, state, time - started, pointer)
+            stage.renderOpening(heroRect.height, manifestoRect.top - visibleTop, manifestoRect.height, state, time - started, pointer, heroRect.top - visibleTop, Math.max(1,visibleBottom-visibleTop))
             hero.dataset.rendered = manifesto.dataset.rendered = 'true'
           } else stage.render('journey', state.progress, time - started, pointer)
           target.dataset.rendered = 'true'
@@ -146,22 +151,27 @@ export function HomeExperience({ children }: { children: ReactNode }) {
         canvas.dataset.scene = mode
         if (delta > 0 && delta < .25) canvas.dataset.frameMs = (delta*1000).toFixed(1)
         const p = state.progress
-        const bounds = journeyChapters
-        journeyStage.style.setProperty('--entry-title', String(smooth(.09,.13,p)*(1-smooth(.17,.2,p))))
-        journeyStage.style.setProperty('--entry-copy', String(1-smooth(.025,.09,p)))
-        journeyStage.style.setProperty('--entry-shift', `${smooth(.025,.09,p)*40}px`)
-        chapters.forEach((chapter, i) => {
-          const visible = p >= bounds[i] && (p < bounds[i + 1] || i === 4)
-          if (visible) chapterNumber.textContent = `0${i + 1} / 05`
-          chapter.style.opacity = visible ? '1' : '0'
-          chapter.style.visibility = visible ? 'visible' : 'hidden'
-          chapter.style.setProperty('--chapter-phase', String(Math.max(0, Math.min(1, (p - bounds[i]) / (bounds[i + 1] - bounds[i])))))
-        })
-        bar.style.transform = `scaleX(${p})`
+        if (p !== lastUiProgress) {
+          lastUiProgress = p
+          const bounds = journeyChapters
+          journeyStage.style.setProperty('--entry-title', String(smooth(.09,.13,p)*(1-smooth(.17,.2,p))))
+          journeyStage.style.setProperty('--entry-copy', String(1-smooth(.025,.09,p)))
+          journeyStage.style.setProperty('--entry-shift', `${smooth(.025,.09,p)*40}px`)
+          chapters.forEach((chapter, i) => {
+            const visible = p >= bounds[i] && (p < bounds[i + 1] || i === 4)
+            if (visible) chapterNumber.textContent = `0${i + 1} / 05`
+            chapter.style.opacity = visible ? '1' : '0'
+            chapter.style.visibility = visible ? 'visible' : 'hidden'
+            chapter.style.setProperty('--chapter-phase', String(Math.max(0, Math.min(1, (p - bounds[i]) / (bounds[i + 1] - bounds[i])))))
+          })
+          bar.style.transform = `scaleX(${p})`
+        }
         // Ignore tab pauses and screenshot stalls; only sustained rendering pressure changes quality.
         if (time - started > 5 && delta > 0 && delta < 0.25) { elapsed += delta; samples++ }
         if (samples >= 120 && time - sampleStart > 5) {
-          if (samples / elapsed < 20) {
+          if (mobile && frameInterval < 1 / 30 && samples / elapsed < 45) {
+            frameInterval = 1 / 30; canvas.dataset.cadence = '30'
+          } else if (samples / elapsed < 20) {
             if (!stage.reduceQuality()) { stopScene('PERFORMANCE_FALLBACK: ' + t('裝置效能不足，已切換為靜態呈現。')); return }
             qualityStep++; canvas.dataset.quality = ['half-particles', 'no-particles', 'low-reflections', 'no-glow', 'low-resolution'][qualityStep - 1]
           }
@@ -182,7 +192,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
         stage = loaded
         root.dataset.motion = 'ready'
         canvas.dataset.quality = mobile ? 'mobile' : 'desktop'
-        flight = gsap.to(state, { progress: 1, ease: 'none', scrollTrigger: {
+        flight = gsap.to(state, { progress: 1, ease: value => journeyTimelineProgress(value, mobile), scrollTrigger: {
           trigger: journey, start: 'top top', end: 'bottom bottom', scrub: mobile ? 0.2 : 0.65,
           invalidateOnRefresh: true,
         } })
@@ -191,7 +201,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
         ScrollTrigger.refresh()
         const hash = window.location.hash
         if (journeyResume.current !== null) {
-          window.scrollTo(0, scrollY + journey.getBoundingClientRect().top + journeyResume.current * (journey.offsetHeight - innerHeight))
+          window.scrollTo(0, scrollY + journey.getBoundingClientRect().top + journeyScrollProgress(journeyResume.current, mobile) * (journey.offsetHeight - innerHeight))
           journeyResume.current = null
         } else if (!initialAnchorHandled.current && hash && ['#hero', '#cases', '#contact'].includes(hash)) document.querySelector(hash)?.scrollIntoView({ behavior: 'instant' })
         initialAnchorHandled.current = true
@@ -242,8 +252,8 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       }
       void load()
       return () => {
-        const rect = journey.getBoundingClientRect()
-        if (root.dataset.motion === 'ready' && rect.top < 0 && rect.bottom > innerHeight) journeyResume.current = state.progress
+        const progress = Number(canvas.dataset.progress)
+        if (root.dataset.motion === 'ready' && root.dataset.scene === 'journey' && progress > 0 && progress < 1) journeyResume.current = progress
         cancelled = true; abort.abort(); stopScene()
         canvas.removeEventListener('webglcontextlost', onContextLost)
         window.removeEventListener('pointermove', onPointer)
