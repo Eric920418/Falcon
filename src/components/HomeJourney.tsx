@@ -19,7 +19,7 @@ export function HomeJourney() {
         <div className="fh-portal-intro"><span>FALCON — 01 / 05</span><h3>{t('換個視角，看見可能。')}</h3><p>{t('好的數位體驗，讓人願意多停留一步。現在，換個角度看隼訊。')}</p><p>{t('從一片羽翼，展開一個世界。')}</p></div>
         <div className="fh-journey-copy">
           {chapters.map((chapter, i) => <div key={chapter.poster} className="fh-chapter" data-chapter={i}>
-            <div className="fh-chapter-poster"><Image src={`/models/falcon-${chapter.poster}.webp?v=brand-sculptures1`} alt={t(chapter.title)} fill unoptimized sizes="100vw" className="object-cover" /></div>
+            <div className="fh-chapter-poster"><Image src={`/models/falcon-${chapter.poster}.webp?v=brand-sculptures2`} alt={t(chapter.title)} fill unoptimized sizes="100vw" className="object-cover" /></div>
             <div className="fh-chapter-text"><h2>{t(chapter.title)}</h2><p>{t(chapter.text)}</p></div>
           </div>)}
         </div>

@@ -11,7 +11,7 @@ export function Navigation() {
   const { t } = useI18n()
   const [open, setOpen] = useState(false)
   return <nav className="fh-nav" aria-label={t('主要導覽')}>
-    <Link href="/#hero" className="fh-brand" aria-label={t('隼訊數位行銷')}><Image src="/logo.png" alt="" width={40} height={40} priority /><span>{t('隼訊數位行銷')}<small>FALCON INFORMATION</small></span></Link>
+    <a href="#hero" className="fh-brand" aria-label={t('隼訊數位行銷')}><Image src="/logo.png" alt="" width={40} height={40} priority /><span>{t('隼訊數位行銷')}<small>FALCON INFORMATION</small></span></a>
     <div className="fh-nav-actions">
       <LanguageSwitcher />
       <Link href="/#contact" className="fh-nav-contact">{t('聊聊你的想法')}<span className="fh-nav-contact-arrow"><ArrowUpRight size={19} aria-hidden="true" /></span></Link>

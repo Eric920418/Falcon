@@ -124,5 +124,8 @@ export function createJourneyWorld(asset: Group, mobile: boolean) {
     }
     for(const mesh of [beams,panels,lights,glows])mesh.instanceMatrix.needsUpdate=true
   }
-  return {group,update,reduceReflections(){mirrors.forEach(mirror=>{const size=mobile?256:512;mirror.getRenderTarget().setSize(size,size);(mirror.material as ShaderMaterial).uniforms.texel.value.set(.7/size,.7/size)})},disableGlow(){glows.visible=false},dispose(){mirrors.forEach(mirror=>mirror.dispose());tunnelTextures.forEach(texture=>texture.dispose())}}
+  function reflectionSize(size:number) {
+    mirrors.forEach(mirror=>{mirror.getRenderTarget().setSize(size,size);(mirror.material as ShaderMaterial).uniforms.texel.value.set(.7/size,.7/size)})
+  }
+  return {group,update,reduceReflections(){reflectionSize(mobile?256:512)},restoreReflections(){reflectionSize(mobile?512:1024)},disableGlow(){glows.visible=false},dispose(){mirrors.forEach(mirror=>mirror.dispose());tunnelTextures.forEach(texture=>texture.dispose())}}
 }

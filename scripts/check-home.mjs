@@ -129,6 +129,11 @@ try {
     await page.setViewport({ width, height: 900 })
     assert.equal((await go('/')).status(), 200)
     await ready()
+    if(width===390) {
+      const pixels=await page.evaluate(()=>{const canvas=document.querySelector('canvas');return {width:canvas.width,height:canvas.height,cssWidth:innerWidth,cssHeight:innerHeight,ratio:Number(canvas.dataset.pixelRatio),native:devicePixelRatio}})
+      assert(pixels.width>=pixels.cssWidth-1 && pixels.height>=pixels.cssHeight-1,'Mobile canvas never falls below CSS pixel resolution')
+      assert(pixels.ratio>=Math.min(pixels.native,1.25) && pixels.ratio<=Math.min(pixels.native,2),'Mobile clarity floor and GPU ceiling')
+    }
     assert.equal(await page.$$eval('main h1', nodes => nodes.length), 1)
     assert.equal(await page.$$eval('[data-project]', nodes => nodes.length), 8)
     assert.equal(await page.$$eval('.fh-canvas-host canvas', nodes => nodes.length), 1)
@@ -194,6 +199,13 @@ try {
   await page.click('[data-project] a')
   await page.waitForSelector('.fh-canvas-host', { hidden: true })
   await page.goBack({ waitUntil: 'networkidle0' }); await ready()
+
+  for (const width of [1440, 390]) {
+    await page.evaluate(() => scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'})); await wait(800)
+    await page.setViewport({width,height:900}); await ready()
+    await page.waitForFunction(() => document.querySelector('#journey').getBoundingClientRect().bottom < 0)
+    await page.click('nav a[href="#hero"]'); await page.waitForFunction(() => scrollY < 2)
+  }
 
   for (const width of [1440, 390]) {
     await page.setViewport({ width, height: 900 }); await go('/'); await ready()

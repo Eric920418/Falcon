@@ -68,7 +68,7 @@ async function updateOrnaments() {
         for(const primitive of mesh.listPrimitives()) transformPrimitive(primitive,matrix.elements)
         const triangles=mesh.listPrimitives().reduce((n,p)=>n+p.getIndices()!.getCount()/3,0),budget=name==='core'?(detail==='mobile'?5000:8000):(detail==='mobile'?1600:4500)
         await source.transform(weld(),simplify({simplifier:MeshoptSimplifier,ratio:Math.min(1,budget/triangles),error:detail==='mobile'?.008:.004}),prune())
-        for(const primitive of mesh.listPrimitives())cleanSculptureNormals(primitive,name==='core'?30:name==='cursor'?0:12)
+        for(const primitive of mesh.listPrimitives())cleanSculptureNormals(primitive,name==='core'||name==='growth'?30:name==='cursor'?0:12)
         for(const texture of source.getRoot().listTextures()) {
           const image=texture.getImage();if(!image)continue
           const normal=source.getRoot().listMaterials().some(m=>m.getNormalTexture()===texture)
@@ -79,7 +79,7 @@ async function updateOrnaments() {
             // Remove baked studio shading while retaining Meshy's blue inlay mask.
             for(let i=0;i<data.length;i+=info.channels) {
               const saturation=(data[i+2]-Math.max(data[i],data[i+1]))/(data[i+2]+1)
-              const blue=saturation>.09?1:0
+              const blue=name==='growth'?0:saturation>.09?1:0
               for(let c=0;c<3;c++)data[i+c]=Math.round([193,204,221][c]*(1-blue)+[24,53,198][c]*blue)
             }
             resized=sharp(data,{raw:{width:info.width,height:info.height,channels:info.channels}})
@@ -88,7 +88,7 @@ async function updateOrnaments() {
           texture.setImage(bytes).setMimeType('image/png')
         }
         const material=mesh.listPrimitives()[0].getMaterial()!
-        material.setName(`Falcon_${name}`).setNormalTexture(null).setMetallicRoughnessTexture(null).setMetallicFactor(.85).setRoughnessFactor(.34)
+        material.setName(`Falcon_${name}`).setNormalTexture(null).setMetallicRoughnessTexture(null).setMetallicFactor(.85).setRoughnessFactor(name==='growth'?.42:.34)
         const copied=copyToDocument(document,source,[mesh]).get(mesh) as GltfMesh
         const target=document.getRoot().listNodes().find(n=>n.getName()===slot)!
         target.setMesh(copied).setExtras({meaning:name,source:'Meshy'})
@@ -163,6 +163,7 @@ async function main() {
           import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
           try {
             const params=new URLSearchParams(location.search),mobile=params.get('mobile')==='1';
+            if(params.has('dpr'))Object.defineProperty(window,'devicePixelRatio',{value:Math.max(1,Math.min(3,Number(params.get('dpr'))||1))});
             const model=await new GLTFLoader().loadAsync('/models/falcon-wing-'+(mobile?'mobile':'desktop')+'.glb');
             if(params.get('object')) {
               const renderer=new T.WebGLRenderer({canvas:document.querySelector('canvas'),alpha:true,antialias:true});renderer.setSize(innerWidth,innerHeight);renderer.setClearColor(0,0);renderer.toneMapping=T.ACESFilmicToneMapping;
@@ -172,10 +173,13 @@ async function main() {
               const button=document.createElement('button');button.textContent='Export transparent PNG';button.style.cssText='position:fixed;bottom:12px;left:12px;padding:12px';button.onclick=async()=>{try{renderer.render(scene,camera);const blob=await new Promise(resolve=>renderer.domElement.toBlob(resolve));if(!blob)throw Error('Canvas PNG export failed');const response=await fetch('/export-object?name='+params.get('object'),{method:'POST',body:blob});if(!response.ok)throw Error(await response.text());button.textContent=await response.text();}catch(error){button.textContent=String(error);}};document.body.appendChild(button);document.body.dataset.ready='true';
             } else {
             const stage=createHomeStage(document.querySelector('canvas'),model.scene,mobile);
+            stage.resize(innerWidth,innerHeight);
+            for(let i=0;i<Math.min(5,Math.max(0,Number(params.get('quality'))||0));i++)stage.reduceQuality();
             const mode=['hero','manifesto'].includes(params.get('scene'))?params.get('scene'):'journey';
             const progress=mode==='hero'?0:mode==='manifesto'?.35:({gallery:.73,corridor:.315,tunnel:.5,entry:.02,finale:1}[params.get('scene')]??.73);
             const time=Number(params.get('time')||0);
             const render=()=>{stage.resize(innerWidth,innerHeight);stage.render(mode,progress,time);};
+            if(params.has('quality')){const button=document.createElement('button');button.textContent='Restore quality';button.style.cssText='position:fixed;bottom:12px;left:12px;padding:12px;z-index:2';button.onclick=()=>{stage.restoreQuality();render();};document.body.appendChild(button);}
             render();addEventListener('resize',render);document.body.dataset.ready='true';
             }
           }catch(error){document.body.textContent=error.stack??String(error);}

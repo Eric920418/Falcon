@@ -5,6 +5,7 @@ import { NodeIO } from '@gltf-transform/core'
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
 import { Vector3, Mesh, Group, Matrix4, PerspectiveCamera, Line3, DataTexture } from 'three'
 import { particleSeeds } from '../src/lib/home3d/particles'
+import { homePixelRatio } from '../src/lib/home3d/scene'
 import { ribbonScreenLength } from '../src/lib/home3d/ribbon'
 import { flightScale, surfacePoint, surfaceSegments, wingEnvelope } from '../src/lib/home3d/surfaces'
 import { mirrorRoom, mirrorRoomOpacity, pathFrame, structureCount, structureSegment, tunnelGeometry } from '../src/lib/home3d/world-geometry'
@@ -13,6 +14,13 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { birdPose, journeyPose, journeyChapters, journeyScrollProgress, journeyTimelineProgress, flightPath, wingBeat } from '../src/lib/home3d/choreography'
 
 async function checkModels() {
+for(const native of [.75, 1, 1.25, 2, 3]) for(const quality of [1, .9, .8, .7, .625, .35]) {
+  const ratio=homePixelRatio(native,true,quality)
+  assert(ratio>=Math.min(Math.max(1,native),1.25),'Mobile rendering never undersamples the clarity floor')
+  assert(ratio<=Math.min(Math.max(1,native),2),'Mobile rendering respects the GPU pixel budget')
+}
+assert.equal(homePixelRatio(3,true),2,'Retina mobile renders at 2x instead of 1.25x')
+assert.equal(homePixelRatio(3,false,.65),1.6*.65,'Desktop quality policy is unchanged')
 const loading = await new NodeIO().registerExtensions(ALL_EXTENSIONS).read('assets/home3d/meshy-loading-source.glb')
 assert(loading.getRoot().listTextures().some(texture => texture.getSize()?.[0] === 4096), 'Loading preserves Meshy 4K texture')
 for (const mesh of loading.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
@@ -41,7 +49,9 @@ for (const quality of ['desktop', 'mobile'] as const) {
   for(const [name,meaning] of [['Slipstream','search'],['OrbitKnot','core'],['FoldedRibbon','growth'],['PetalBloom','cursor']]) {
     const ornament=sculpture.getObjectByName(name) as Mesh
     assert.equal(ornament.userData.meaning,meaning,'Generated sculptures retain their service meaning')
-    assert((ornament.material as import('three').MeshStandardMaterial).map,'Generated sculpture keeps its painted inlay')
+    const material=ornament.material as import('three').MeshStandardMaterial
+    if(meaning==='growth')assert(material.color.r>0 && material.roughness>=.4,'Growth keeps its continuous silver material')
+    else assert(material.map,'Generated sculpture keeps its painted inlay')
   }
   const square=(sculpture.getObjectByName('BrandTunnel') as Mesh).geometry,reference=tunnelGeometry(quality==='mobile')
   for(const name of ['position','normal','uv']) {

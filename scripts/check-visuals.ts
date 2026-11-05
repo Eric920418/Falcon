@@ -12,11 +12,11 @@ assert(['localhost', '127.0.0.1', '[::1]'].includes(base.hostname), 'Visual chec
 const baselineMode = process.argv.includes('--baseline')
 if (!baselineMode) {
   const posters = readdirSync('public/models').filter(file => file.endsWith('.webp'))
-  assert.equal(posters.length, 8, 'Eight model-rendered images')
+  assert.equal(posters.length, 10, 'Ten model-rendered images including mobile and Loading')
   for (const file of posters) {
     const metadata = await sharp(readFileSync(`public/models/${file}`)).metadata()
     assert(metadata.width && metadata.height && metadata.format === 'webp', `${file}: valid rendered image`)
-    if (file === 'falcon-rotor.webp') assert(metadata.hasAlpha, 'Meshy rotor has transparency')
+    if (file === 'falcon-growth.webp') assert(metadata.hasAlpha, 'Meshy growth sculpture has transparency')
   }
   assert.equal(Object.keys(visualAssets).length, 47, '47 registered illustrations')
   assert.equal(readdirSync('public/visuals').filter(file => file.endsWith('.webp')).length, 47, 'Only final 47 illustrations are served')

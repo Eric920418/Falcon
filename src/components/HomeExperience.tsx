@@ -35,7 +35,10 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       let cancelled = false, stage: HomeStage | undefined, flight: gsap.core.Tween | undefined
       let lastFrame = 0, samples = 0, elapsed = 0, started = 0, qualityStep = 0
       let lastUiProgress = NaN
+      let visibleJourneyProgress: number | null = null
       let sampleStart = 0, frameInterval = mobile ? 1 / 60 : 0
+      let recoveryTime = 0
+      const qualityLabels = mobile ? ['mobile','low-reflections','resolution-90','resolution-80','resolution-70','resolution-62'] : ['desktop','half-particles','no-particles','low-reflections','no-glow','low-resolution']
       const abort = new AbortController()
       const state = { progress: 0, hero: 0, manifesto: 0 }, pointer = { x: 0, y: 0 }
       const hero = root.querySelector<HTMLElement>('[data-home-stage="hero"]')!
@@ -46,7 +49,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       const journeyStage = root.querySelector<HTMLElement>('[data-home-stage="journey"]')!
       const chapters = [...root.querySelectorAll<HTMLElement>('[data-chapter]')]
       const bar = root.querySelector<HTMLElement>('.fh-journey-progress span')!
-      const assetUrl = `/models/falcon-wing-${mobile ? 'mobile' : 'desktop'}.glb?v=brand-sculptures1`
+      const assetUrl = `/models/falcon-wing-${mobile ? 'mobile' : 'desktop'}.glb?v=brand-sculptures2`
       root.dataset.motion = 'loading'
       setGate('loading'); setLoadStatus({ phase: '01 / ASSETS', detail: 'CONNECTING' })
       setFailure('')
@@ -105,11 +108,13 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       }
       function draw(time: number) {
         if (!stage || cancelled || document.hidden) { lastFrame = 0; return }
+        if (mobile !== (innerWidth < 768)) return
         if (mobile && time - lastFrame < frameInterval - .001) return
         const heroRect = hero.getBoundingClientRect(), manifestoRect = manifesto.getBoundingClientRect(), journeyRect = journey.getBoundingClientRect()
         const inHero = heroRect.bottom > 0 && heroRect.top < innerHeight
         const inManifesto = manifestoRect.bottom > 0 && manifestoRect.top < innerHeight
         const inJourney = journeyRect.top < innerHeight && journeyRect.bottom > 0
+        visibleJourneyProgress = journeyRect.top <= 0 && journeyRect.bottom >= innerHeight ? state.progress : null
         if (!inHero && !inManifesto && !inJourney) { host.hidden = true; delete root.dataset.scene; delete root.dataset.navDark; lastFrame = 0; return }
         const inOpening = inHero || inManifesto
         const openingRect = inOpening ? opening.getBoundingClientRect() : null
@@ -172,10 +177,17 @@ export function HomeExperience({ children }: { children: ReactNode }) {
           if (mobile && frameInterval < 1 / 30 && samples / elapsed < 45) {
             frameInterval = 1 / 30; canvas.dataset.cadence = '30'
           }
-          if (samples / elapsed < (mobile ? 24 : 20)) {
+          const fps = samples / elapsed
+          if (fps < (mobile ? 24 : 20)) {
+            recoveryTime = 0
             if (!stage.reduceQuality()) { stopScene('PERFORMANCE_FALLBACK: ' + t('裝置效能不足，已切換為靜態呈現。')); return }
-            qualityStep++; canvas.dataset.quality = (mobile ? ['resolution-85', 'resolution-70', 'resolution-55', 'resolution-45', 'resolution-35'] : ['half-particles', 'no-particles', 'low-reflections', 'no-glow', 'low-resolution'])[qualityStep - 1]
-          }
+            qualityStep++; canvas.dataset.quality = qualityLabels[qualityStep]
+          } else if (mobile && qualityStep > 0 && fps > 28) {
+            recoveryTime += elapsed
+            if (recoveryTime >= 8 && stage.restoreQuality()) {
+              qualityStep--; canvas.dataset.quality = qualityLabels[qualityStep]; recoveryTime = 0
+            }
+          } else recoveryTime = 0
           elapsed = 0; samples = 0; sampleStart = time
         }
       }
@@ -237,7 +249,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
             return
           }
           abort.signal.throwIfAborted()
-          for (const name of ['Slipstream','OrbitKnot','FoldedRibbon','PetalBloom']) {
+          for (const name of ['Slipstream','OrbitKnot','PetalBloom']) {
             const mesh = asset.getObjectByName(name) as Mesh
             const materials = Array.isArray(mesh?.material) ? mesh.material : [mesh?.material]
             if (materials.some(material => !(material as Material & { map?: unknown })?.map)) throw new Error(`MODEL_TEXTURE_MISSING: ${name}\n${assetUrl}`)
@@ -258,8 +270,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       }
       void load()
       return () => {
-        const progress = Number(canvas.dataset.progress)
-        if (root.dataset.motion === 'ready' && root.dataset.scene === 'journey' && progress > 0 && progress < 1) journeyResume.current = progress
+        journeyResume.current = visibleJourneyProgress !== null && visibleJourneyProgress > 0 && visibleJourneyProgress < 1 ? visibleJourneyProgress : null
         cancelled = true; abort.abort(); stopScene()
         canvas.removeEventListener('webglcontextlost', onContextLost)
         window.removeEventListener('pointermove', onPointer)

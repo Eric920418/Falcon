@@ -13,6 +13,11 @@ import { createJourneyWorld } from './world'
 import { portalWorldMatrix } from './portal'
 
 export type HomeStage = ReturnType<typeof createHomeStage>
+export function homePixelRatio(deviceRatio: number, mobile: boolean, quality = 1) {
+  const native = mobile ? Math.max(1, deviceRatio || 1) : deviceRatio || 1
+  const ratio = Math.min(native, mobile ? 2 : 1.6) * quality
+  return mobile ? Math.max(Math.min(native, 1.25), ratio) : ratio
+}
 export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile: boolean) {
   const sculpture = asset.getObjectByName('Wing') as Group
   const originalFrame = asset.getObjectByName('Portal') as Mesh
@@ -60,7 +65,7 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
   const particles = createFlightParticles(mobile); scene.add(particles.group)
   const journeyWing = sculpture.clone(true); journey.add(journeyWing)
   const screenScene = new Scene(), screenCamera = new PerspectiveCamera(42, 1, 0.05, 1000)
-  const screenTarget = new WebGLRenderTarget(1, 1), screenGroup = new Group()
+  const screenTarget = new WebGLRenderTarget(1, 1, { samples: mobile ? Math.min(2, renderer.capabilities.maxSamples) : 0 }), screenGroup = new Group()
   const screenMaterial = new MeshBasicMaterial({ map: screenTarget.texture })
   const projectiveMaterial = new ShaderMaterial({ uniforms: { image: { value: screenTarget.texture } },
     vertexShader: 'varying vec4 projected; void main(){projected=projectionMatrix*modelViewMatrix*vec4(position,1.);gl_Position=projected;}',
@@ -94,10 +99,17 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
   function resize(width: number, height: number) {
     if (width === currentWidth && height === currentHeight) return
     currentWidth = width; currentHeight = height
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 1.6) * quality)
+    const ratio = homePixelRatio(window.devicePixelRatio, mobile, quality)
+    renderer.setPixelRatio(ratio)
     renderer.setSize(width, height, false); camera.aspect = width / height; camera.updateProjectionMatrix()
     screenCamera.aspect = camera.aspect; screenCamera.updateProjectionMatrix()
-    screenTarget.setSize(Math.min(Math.round(width * quality), 1600), Math.min(Math.round(height * quality), 1200))
+    if (mobile) {
+      const screenRatio = Math.min(ratio, 1600 / Math.max(width, height))
+      screenTarget.setSize(Math.round(width * screenRatio), Math.round(height * screenRatio))
+    } else screenTarget.setSize(Math.min(Math.round(width * quality), 1600), Math.min(Math.round(height * quality), 1200))
+    canvas.dataset.pixelRatio = ratio.toFixed(3)
+    canvas.dataset.screenResolution = `${screenTarget.width}x${screenTarget.height}`
+    canvas.dataset.screenSamples = String(screenTarget.samples)
     screen.scale.y = screenFrame.scale.y = (9.8 / camera.aspect) / 6.4
   }
   function render(mode: 'hero' | 'manifesto' | 'journey', progress: number, time = 0, pointer = { x: 0, y: 0 }, viewport?: { top: number; height: number; clipHeight?: number }) {
@@ -125,8 +137,8 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
       flap(heroWing, time, portrait ? .75 : 0)
       for (let i = 0; i < loose.length; i++) {
         loose[i].visible = !portrait || i < 2
-        loose[i].position.set(portrait ? (i === 0 ? 5.3 : -5.1) : [6.4, -6.4, -5.6, 6][i], portrait ? (i === 0 ? 2.5 : -2.7) : [2.3, -1.8, 2.8, -2.4][i], (portrait ? [-2, -4, 2, -6] : [1, -3, 2, -6])[i])
-        loose[i].scale.setScalar(portrait ? 0.8 : [1.05, 1.05, 0.85, 0.85][i])
+        loose[i].position.set(portrait ? (i === 0 ? 5.3 : -5.1) : [6.4, -6.4, -5.6, 6][i], portrait ? (i === 0 ? 5.2 : -2.7) : [3, -1.8, 1.6, -3.8][i], (portrait ? [-4, -4, 2, -6] : [-3, -3, 0, -3])[i])
+        loose[i].scale.setScalar(portrait ? 0.8 : [.9, 1.05, .7, .85][i])
         loose[i].rotation.set([.22,.08,.06,.12][i]+Math.sin(time*.45+i)*.18, [-.2,.1,-.35,.15][i]+Math.sin(time*.3+i)*.25+p*.5, [0,.15,-.12,.2][i]+Math.sin(time*.26+i)*.09+p*.4)
       }
     } else if (mode === 'manifesto') {
@@ -201,18 +213,27 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
     renderer.setScissorTest(false)
   }
   let reduction = 0
+  const mobileScales = [1, 1, .9, .8, .7, .625]
   function reduceQuality() {
     reduction++
     if (mobile) {
       if (reduction > 5) return false
-      quality = [.85,.7,.55,.45,.35][reduction-1]
-      if (reduction === 2) world.reduceReflections()
+      quality = mobileScales[reduction]
+      if (reduction === 1) world.reduceReflections()
       const w = currentWidth, h = currentHeight; currentWidth = 0; resize(w,h)
     } else if (reduction <= 2) particles.reduce(reduction)
     else if (reduction === 3) world.reduceReflections()
     else if (reduction === 4) world.disableGlow()
     else if (reduction === 5) { quality = .65; const w = currentWidth, h = currentHeight; currentWidth = 0; resize(w, h) }
     return reduction < 6
+  }
+  function restoreQuality() {
+    if (!mobile || reduction <= 0) return false
+    reduction--
+    quality = mobileScales[reduction]
+    if (!reduction) world.restoreReflections()
+    const w = currentWidth, h = currentHeight; currentWidth = 0; resize(w, h)
+    return true
   }
   function dispose() {
     const geometries = new Set<BufferGeometry>(), materials = new Set<Material>()
@@ -237,5 +258,5 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
     }
     signal.throwIfAborted()
   }
-  return { resize, render, renderOpening, warmup, reduceQuality, dispose, renderer }
+  return { resize, render, renderOpening, warmup, reduceQuality, restoreQuality, dispose, renderer }
 }
