@@ -119,15 +119,15 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
       bg.copy(paper); (scene.fog as Fog).far = 100
       camera.position.set(2.6 + pointer.x * 0.7 - p * 4, 3.2 + pointer.y * 0.4 + p * 2.5, MathUtils.lerp(20, 11.5, smooth(0.85, 2.5, camera.aspect)) - p * 2)
       camera.lookAt(0, portrait ? 0.3 : 0.7, 0)
-      heroWing.scale.setScalar(portrait ? Math.min(1.1, camera.position.length() * Math.tan(MathUtils.degToRad(19)) * camera.aspect * .68 / radius) : 1.4)
+      heroWing.scale.setScalar(portrait ? Math.min(1.65, camera.position.length() * Math.tan(MathUtils.degToRad(19)) * camera.aspect * .98 / radius) : 1.4)
       heroWing.rotation.set(0.08 + p * 0.1, -0.28 + Math.sin(time * 0.4) * 0.13 + p * 0.7, -0.13 + Math.sin(time * 0.6) * 0.1 - p * 0.25)
-      heroWing.position.set(0, (portrait ? 0.55 : 0) + Math.sin(time * 2.6 - 0.6) * 0.14, 0)
-      flap(heroWing, time)
+      heroWing.position.set(0, (portrait ? -.6 : 0) + Math.sin(time * 2.6 - 0.6) * 0.14, 0)
+      flap(heroWing, time, portrait ? .75 : 0)
       for (let i = 0; i < loose.length; i++) {
         loose[i].visible = !portrait || i < 2
-        loose[i].position.set(portrait ? (i === 0 ? 3.1 : -3.6) : [6.4, -6.4, -5.6, 6][i], portrait ? (i === 0 ? 3.1 : -2.3) : [2.3, -1.8, 2.8, -2.4][i], [1, -3, 2, -6][i])
-        loose[i].scale.setScalar(portrait ? 0.55 : [1.05, 1.05, 0.85, 0.85][i])
-        loose[i].rotation.set(i * 0.7 + time * 0.08, i + time * 0.1 + p * 0.5, i * 0.8 + p * 0.4)
+        loose[i].position.set(portrait ? (i === 0 ? 5.3 : -5.1) : [6.4, -6.4, -5.6, 6][i], portrait ? (i === 0 ? 2.5 : -2.7) : [2.3, -1.8, 2.8, -2.4][i], (portrait ? [-2, -4, 2, -6] : [1, -3, 2, -6])[i])
+        loose[i].scale.setScalar(portrait ? 0.8 : [1.05, 1.05, 0.85, 0.85][i])
+        loose[i].rotation.set(i * 0.7 + (portrait ? Math.sin(time*.45)*.18 : time*.08), i + (portrait ? Math.sin(time*.3)*.25 : time*.1) + p*.5, i*.8+p*.4)
       }
     } else if (mode === 'manifesto') {
       camera.fov = 38; camera.updateProjectionMatrix()
@@ -203,7 +203,12 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
   let reduction = 0
   function reduceQuality() {
     reduction++
-    if (reduction <= 2) particles.reduce(reduction)
+    if (mobile) {
+      if (reduction > 5) return false
+      quality = [.85,.7,.55,.45,.35][reduction-1]
+      if (reduction === 2) world.reduceReflections()
+      const w = currentWidth, h = currentHeight; currentWidth = 0; resize(w,h)
+    } else if (reduction <= 2) particles.reduce(reduction)
     else if (reduction === 3) world.reduceReflections()
     else if (reduction === 4) world.disableGlow()
     else if (reduction === 5) { quality = .65; const w = currentWidth, h = currentHeight; currentWidth = 0; resize(w, h) }

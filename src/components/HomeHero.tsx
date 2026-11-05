@@ -16,7 +16,7 @@ export function HomeHero() {
         </div>
       </div>
       <div className="fh-hero-stage" data-home-stage="hero">
-        <picture><source media="(max-width: 767px)" srcSet="/models/falcon-hero-mobile.webp?v=flow4" /><Image src="/models/falcon-hero.webp?v=flow4" alt={t('銀白金屬羽片構成的原創隼翼雕塑')} fill unoptimized preload sizes="100vw" className="fh-poster fh-hero-poster" /></picture>
+        <picture><source media="(max-width: 767px)" srcSet="/models/falcon-hero-mobile.webp?v=mobile-close1" /><Image src="/models/falcon-hero.webp?v=flow4" alt={t('銀白金屬羽片構成的原創隼翼雕塑')} fill unoptimized preload sizes="100vw" className="fh-poster fh-hero-poster" /></picture>
       </div>
       <div className="fh-hero-bottom">
         <span className="fh-stage-signature">FALCON<small>{t('Web, AI & Search Growth')}</small></span>

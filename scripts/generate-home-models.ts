@@ -63,8 +63,10 @@ async function main() {
             const params=new URLSearchParams(location.search),mobile=params.get('mobile')==='1';
             const model=await new GLTFLoader().loadAsync('/models/falcon-wing-'+(mobile?'mobile':'desktop')+'.glb');
             const stage=createHomeStage(document.querySelector('canvas'),model.scene,mobile);
-            const progress={gallery:.73,corridor:.315,finale:1}[params.get('scene')]??.73;
-            const render=()=>{stage.resize(innerWidth,innerHeight);stage.render('journey',progress,0);};
+            const mode=params.get('scene')==='hero'?'hero':'journey';
+            const progress=mode==='hero'?0:({gallery:.73,corridor:.315,finale:1}[params.get('scene')]??.73);
+            const time=Number(params.get('time')||0);
+            const render=()=>{stage.resize(innerWidth,innerHeight);stage.render(mode,progress,time);};
             render();addEventListener('resize',render);document.body.dataset.ready='true';
           }catch(error){document.body.textContent=error.stack??String(error);}
         </script>` : ''))

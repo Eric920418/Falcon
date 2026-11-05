@@ -167,13 +167,14 @@ export function HomeExperience({ children }: { children: ReactNode }) {
           bar.style.transform = `scaleX(${p})`
         }
         // Ignore tab pauses and screenshot stalls; only sustained rendering pressure changes quality.
-        if (time - started > 5 && delta > 0 && delta < 0.25) { elapsed += delta; samples++ }
-        if (samples >= 120 && time - sampleStart > 5) {
+        if (time - started > 2 && delta > 0 && delta < 1) { elapsed += delta; samples++ }
+        if (samples >= 8 && time - sampleStart > 1.5) {
           if (mobile && frameInterval < 1 / 30 && samples / elapsed < 45) {
             frameInterval = 1 / 30; canvas.dataset.cadence = '30'
-          } else if (samples / elapsed < 20) {
+          }
+          if (samples / elapsed < (mobile ? 24 : 20)) {
             if (!stage.reduceQuality()) { stopScene('PERFORMANCE_FALLBACK: ' + t('裝置效能不足，已切換為靜態呈現。')); return }
-            qualityStep++; canvas.dataset.quality = ['half-particles', 'no-particles', 'low-reflections', 'no-glow', 'low-resolution'][qualityStep - 1]
+            qualityStep++; canvas.dataset.quality = (mobile ? ['resolution-85', 'resolution-70', 'resolution-55', 'resolution-45', 'resolution-35'] : ['half-particles', 'no-particles', 'low-reflections', 'no-glow', 'low-resolution'])[qualityStep - 1]
           }
           elapsed = 0; samples = 0; sampleStart = time
         }
