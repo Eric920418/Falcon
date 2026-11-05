@@ -49,13 +49,13 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
   const heroWing = sculpture.clone(true); studio.add(heroWing)
   const loose: Mesh[] = []
   for (let i = 0; i < 4; i++) {
-    const loop = new Mesh([petal, knot, folded, slipstream][i].geometry, [blue, silver, ceramic, blue][i])
+    const loop = new Mesh([petal, knot, folded, slipstream][i].geometry, [petal, knot, folded, slipstream][i].material)
     loose.push(loop); studio.add(loop)
   }
   const radius = wingEnvelope(sculpture)
   const world = createJourneyWorld(asset,mobile); journey.add(world.group)
   const manifesto = new Group(); scene.add(manifesto)
-  const sculptureAccent = new Mesh(folded.geometry, ceramic)
+  const sculptureAccent = new Mesh(folded.geometry, folded.material)
   manifesto.add(sculptureAccent)
   const particles = createFlightParticles(mobile); scene.add(particles.group)
   const journeyWing = sculpture.clone(true); journey.add(journeyWing)
@@ -127,7 +127,7 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
         loose[i].visible = !portrait || i < 2
         loose[i].position.set(portrait ? (i === 0 ? 5.3 : -5.1) : [6.4, -6.4, -5.6, 6][i], portrait ? (i === 0 ? 2.5 : -2.7) : [2.3, -1.8, 2.8, -2.4][i], (portrait ? [-2, -4, 2, -6] : [1, -3, 2, -6])[i])
         loose[i].scale.setScalar(portrait ? 0.8 : [1.05, 1.05, 0.85, 0.85][i])
-        loose[i].rotation.set(i * 0.7 + (portrait ? Math.sin(time*.45)*.18 : time*.08), i + (portrait ? Math.sin(time*.3)*.25 : time*.1) + p*.5, i*.8+p*.4)
+        loose[i].rotation.set([.22,.08,.06,.12][i]+Math.sin(time*.45+i)*.18, [-.2,.1,-.35,.15][i]+Math.sin(time*.3+i)*.25+p*.5, [0,.15,-.12,.2][i]+Math.sin(time*.26+i)*.09+p*.4)
       }
     } else if (mode === 'manifesto') {
       camera.fov = 38; camera.updateProjectionMatrix()
@@ -135,7 +135,7 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
       camera.position.set(0, 0, portrait ? 28 : 22); camera.lookAt(0, 0, 0)
       sculptureAccent.position.set(portrait ? -2.8 : -6.8, 2.1 - p * 2, 1)
       sculptureAccent.scale.setScalar(portrait ? .65 : .9)
-      sculptureAccent.rotation.set(p * .5, time * .12, -.4 + p)
+      sculptureAccent.rotation.set(.12+p*.12, -.2+Math.sin(time*.3)*.2, -.12+p*.25)
     } else {
       const pose = journeyPose(p, portrait)
       camera.position.copy(pose.position); camera.lookAt(pose.target); camera.rotateZ(pose.roll)

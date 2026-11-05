@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
+import sharp from 'sharp'
 import { NodeIO } from '@gltf-transform/core'
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
-import { Vector3, Mesh, Group, Matrix4, PerspectiveCamera, Line3 } from 'three'
+import { Vector3, Mesh, Group, Matrix4, PerspectiveCamera, Line3, DataTexture } from 'three'
 import { particleSeeds } from '../src/lib/home3d/particles'
 import { ribbonScreenLength } from '../src/lib/home3d/ribbon'
 import { flightScale, surfacePoint, surfaceSegments, wingEnvelope } from '../src/lib/home3d/surfaces'
@@ -30,7 +31,18 @@ for (const quality of ['desktop', 'mobile'] as const) {
   for (const name of ['Wing', 'LeftWing', 'RightWing', 'Portal', 'FeatherPrototype', 'BluePrototype', 'CeramicPrototype', 'Slipstream', 'OrbitKnot', 'FoldedRibbon', 'PetalBloom', 'TwistedRibbon', 'ArchitectureBeam', 'BrandTunnel']) assert(gltf.nodes.some((node: { name: string }) => node.name === name), name)
   assert.equal(gltf.nodes.filter((node: { name?: string }) => node.name?.startsWith('FalconPart_')).length, 6)
   assert(bytes.length <= (quality === 'mobile' ? 1_600_000 : 3_600_000), `${quality}: asset budget`)
-  const sculpture = (await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene
+  const loader = new GLTFLoader().register(() => ({name:'NodeTextureDecode',loadTexture:async(index:number)=>{
+    const image=gltf.images[gltf.textures[index].source],view=gltf.bufferViews[image.bufferView],start=28+jsonSize+(view.byteOffset||0)
+    const {data,info}=await sharp(bytes.subarray(start,start+view.byteLength)).ensureAlpha().raw().toBuffer({resolveWithObject:true})
+    assert(info.width<=(quality==='mobile'?512:1024),'Ornament textures respect GPU budget')
+    const texture=new DataTexture(new Uint8Array(data),info.width,info.height);texture.needsUpdate=true;return texture
+  }}))
+  const sculpture = (await loader.parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '')).scene
+  for(const [name,meaning] of [['Slipstream','search'],['OrbitKnot','core'],['FoldedRibbon','growth'],['PetalBloom','cursor']]) {
+    const ornament=sculpture.getObjectByName(name) as Mesh
+    assert.equal(ornament.userData.meaning,meaning,'Generated sculptures retain their service meaning')
+    assert((ornament.material as import('three').MeshStandardMaterial).map,'Generated sculpture keeps its painted inlay')
+  }
   const square=(sculpture.getObjectByName('BrandTunnel') as Mesh).geometry,reference=tunnelGeometry(quality==='mobile')
   for(const name of ['position','normal','uv']) {
     const actual=square.getAttribute(name),expected=reference.getAttribute(name)

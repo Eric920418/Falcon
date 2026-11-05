@@ -21,7 +21,7 @@ const live = {
 // - 圖片處理用 Web Worker 從 blob: URL 載入 (worker-src blob:)
 function buildCsp({ resume = false }: { resume?: boolean } = {}): string {
   const scriptExtra = resume ? " 'wasm-unsafe-eval'" : ''
-  const connectExtra = resume ? ' data: blob:' : ''
+  const connectExtra = resume ? ' data: blob:' : ' blob:'
   const workerExtra = resume ? "; worker-src 'self' blob:" : ''
   const directives = [
     "default-src 'self'",

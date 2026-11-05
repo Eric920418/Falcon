@@ -83,7 +83,7 @@ export function createJourneyWorld(asset: Group, mobile: boolean) {
     fragmentShader:'varying vec2 vUv; uniform float alpha; void main(){float y=vUv.y-.47; vec3 c=mix(vec3(.015,.035,.10),vec3(.04,.16,.72),exp(-abs(y)*12.));c+=vec3(.8,.86,1.)*exp(-abs(y)*160.);gl_FragColor=vec4(c,alpha);}'})
   const horizon=new Mesh(new PlaneGeometry(240,110),horizonMaterial);horizon.position.set(0,0,-95);group.add(horizon)
   const ornaments=Array.from({length:mobile?6:8},(_,i)=>{
-    const source=asset.getObjectByName(['OrbitKnot','FoldedRibbon','PetalBloom'][i%3]) as Mesh
+    const source=asset.getObjectByName(['OrbitKnot','FoldedRibbon','PetalBloom','Slipstream'][i%4]) as Mesh
     const mesh=new Mesh(source.geometry,source.material),basis=pathFrame(.16+i*.1),angle=i*2.4
     mesh.position.copy(new Vector3(Math.cos(angle)*15.7,Math.sin(angle)*15.7,0).applyQuaternion(basis.rotation).add(basis.center));mesh.scale.setScalar(.7);mesh.quaternion.copy(basis.rotation);group.add(mesh);return mesh
   })
@@ -107,7 +107,7 @@ export function createJourneyWorld(asset: Group, mobile: boolean) {
     const blueOpacity=smooth(.58,.68,p)
     blueMaterials.forEach(material=>{material.opacity=blueOpacity;material.transparent=blueOpacity<1});blueTunnel.visible=blueOpacity>0
     horizonMaterial.uniforms.alpha.value=1-smooth(.18,.27,p);horizon.visible=p<.27
-    ornaments.forEach((mesh,i)=>{mesh.visible=p>.18&&p<.69;mesh.rotation.z=i*.8+p*.3})
+    ornaments.forEach((mesh,i)=>{mesh.visible=p>.18&&p<.69;mesh.rotation.z=[0,.2,-.1,.15][i%4]+p*.3})
     const twist=smooth(.39,.64,p)
     if(!structure.visible || twist===lastTwist)return
     lastTwist=twist

@@ -15,7 +15,7 @@ export function HomeShowcase({ children }: { children: ReactNode }) {
       <path className="fh-ribbon-mobile" d={ribbonPaths.mobile} fill="none" stroke="url(#flight-ribbon)" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
     </svg>
     <div className="fh-manifesto-visual" data-home-stage="manifesto" aria-hidden="true">
-    <div className="fh-floating-feather" aria-hidden="true"><Image src="/models/falcon-rotor.webp?v=flow4" alt="" fill unoptimized sizes="(max-width: 767px) 140px, 280px" className="object-contain" /></div>
+    <div className="fh-floating-feather" aria-hidden="true"><Image src="/models/falcon-growth.webp?v=brand-sculptures1" alt="" fill unoptimized sizes="(max-width: 767px) 140px, 280px" className="object-contain" /></div>
     </div>
     <h2 className="fh-display" data-reveal>{t('想得更遠。')}<br />{t('做得更深。')}</h2>
     <div className="fh-manifesto-detail">

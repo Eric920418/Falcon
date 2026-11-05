@@ -46,7 +46,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       const journeyStage = root.querySelector<HTMLElement>('[data-home-stage="journey"]')!
       const chapters = [...root.querySelectorAll<HTMLElement>('[data-chapter]')]
       const bar = root.querySelector<HTMLElement>('.fh-journey-progress span')!
-      const assetUrl = `/models/falcon-wing-${mobile ? 'mobile' : 'desktop'}.glb?v=long-blue1`
+      const assetUrl = `/models/falcon-wing-${mobile ? 'mobile' : 'desktop'}.glb?v=brand-sculptures1`
       root.dataset.motion = 'loading'
       setGate('loading'); setLoadStatus({ phase: '01 / ASSETS', detail: 'CONNECTING' })
       setFailure('')
@@ -237,6 +237,11 @@ export function HomeExperience({ children }: { children: ReactNode }) {
             return
           }
           abort.signal.throwIfAborted()
+          for (const name of ['Slipstream','OrbitKnot','FoldedRibbon','PetalBloom']) {
+            const mesh = asset.getObjectByName(name) as Mesh
+            const materials = Array.isArray(mesh?.material) ? mesh.material : [mesh?.material]
+            if (materials.some(material => !(material as Material & { map?: unknown })?.map)) throw new Error(`MODEL_TEXTURE_MISSING: ${name}\n${assetUrl}`)
+          }
           stage = createHomeStage(canvas, asset, mobile)
           await stage.warmup(abort.signal, (done, total) => {
             if (!cancelled) setLoadStatus({ phase: '03 / SCENES', detail: `${done} / ${total}` })
