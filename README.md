@@ -1,9 +1,23 @@
+## Meshy Loading 雕塑製作（2026-11-05）
+
+- 驗收：正式 Chrome 1440×900／390×844 檢視正常動畫、手機邊緣融合、延遲模型時禁止捲動及完成後解鎖；模型 HTTP 503 與同頁重試通過。影片 HTTP 503 可顯示完整可取得的 URL／MediaError 並保留 poster，模型完成仍解鎖；手機診斷頂端 677px、標題底端 624px，無重疊。六秒影片 180 幀，首尾平均通道差 1.47／255。截圖在 `/tmp/falcon-meshy-loading-review/`。
+- TypeScript、模型／鏡頭既有檢查與新 Loading 資產檢查、正式建置（788 頁）、首頁檢查腳本語法及 diff whitespace 檢查通過。未執行整套首頁自動化、全站 SEO、無 JS／減少動態瀏覽器實測或 iOS／Android 真機影片解碼；本輪無文案翻譯／資料庫變更，未部署。
+
+- 移除 Loading 的 CSS 羽片與軌道假模型，換成 Meshy 羽翼雕塑的六秒循環攝影；保留真實下載／解碼／場景預熱狀態、捲動鎖、0.7 秒退場、完整錯誤、原地重試與靜態瀏覽。影片失敗（含 hydration 前的預載失敗）顯示 URL 及 MediaError，使用 poster 備援，不阻擋網站模型完成後解鎖。
+- 來源 `assets/home3d/meshy-loading-source.glb`：40,168,864 bytes、577,508 三角面；兩張 4096×4096 貼圖及一張 2048×2048 貼圖，原始幾何／材質保留。SHA-256 `f6db518a259e122c2b4581c7ea7de623d1990497e60cb98181793a23aa80be81`。
+- 產出 `public/models/falcon-loading-v1.mp4`（960×960、30 FPS、180 幀、678399 bytes）及 WebP poster。影片不含音訊、muted／playsInline／loop；減少動態偏好在初始 CSS 即隱藏影片，沿用靜態首頁分支；桌機左右構圖、手機上下分層，原模型不加入網站請求。
+- 影格輸出後執行 `ffmpeg -y -framerate 30 -i /tmp/falcon-loading-frames/%03d.png -vf scale=out_color_matrix=bt709 -colorspace bt709 -color_primaries bt709 -color_trc bt709 -c:v libx264 -preset slow -crf 23 -pix_fmt yuv420p -movflags +faststart -an public/models/falcon-loading-v1.mp4`；poster 使用既有 sharp 將 `000.png` 以 WebP quality 88 編碼。模型檢查加入原始幾何有限數值、4K 貼圖、影片 2MB／poster 150KB 預算。
+
+- 使用者核准累計上限由 200 提高至 400 點；本輪開始累計 189 點，兩張 Nano Banana Pro 羽翼雕塑概念 18 點、Meshy 模型 25 點及貼圖 10 點，本輪共扣 53 點，目前累計 242／400 點。帳戶畫面由 720 變為 667 點；不儲值、不新增訂閱。
+- 方向為連續脊線連接的銀白鈦金屬羽翼、細緻倒角與局部電光藍琺瑯，先比較概念，再生成高精度 Meshy 模型。Loading 使用該模型的預渲染循環，不新增執行時 WebGL 或讓開場等待大型 GLB。
+- 新增本機製作工具 `pnpm exec tsx scripts/render-loading-model.ts`，透過瀏覽器按鈕輸出 180 幀到 `/tmp/falcon-loading-frames/`，僅綁定 localhost，無網站 API／資料庫變更。模型已完成並整合；影片預載失敗、poster 保留與診斷已在 Chrome 實測，手機錯誤資訊與標題另外留位。
+
 ## 首頁與共用分享封面（2026-11-05）
 
 - 正式首頁仍指定 `/opengraph-image` 的舊黑金圖，前輪作品圖只涵蓋案例列表。首頁／共用封面更新為銀白模型與電光藍大標題，繁中及其他八語分別使用中文／英文 1200×630 PNG，約 200KB；版本檔名 `brand-share-*-v3.png` 避免沿用舊圖網址。
 - `pnpm exec tsx scripts/generate-brand-share.tsx` 使用既有模型實拍、Logo、字型與 ImageResponse 重生封面，不新增套件或外部圖片。舊 `/opengraph-image`、`/brand-og` 路徑也回傳新版圖片；預設 metadata、根層 metadata 與文章 schema 的品牌備援圖同步更新，既有案例專屬圖保留。
 - 首頁 Open Graph／Twitter 標題改為既有九語「以設計與技術，讓想像成形。」，摘要精簡為「網站與 AI 開發、SEO／GEO 搜尋成長」；搜尋 title、description、canonical、hreflang 保留。SEO 檢查涵蓋繁中首頁及所有外語預設分享圖。
-- 中文／英文封面均已目視確認；兩張 PNG 尺寸與 1MB 上限斷言、HTTP 200／image/png、舊圖片端點與靜態檔 byte 比對、TypeScript、正式建置（788 頁）及 `git diff --check` 通過。全站 SEO 驗收包含九語首頁分享標題／摘要／圖片與案例專屬封面。
+- 中文／英文封面均已目視確認；兩張 PNG 尺寸與 1MB 上限斷言、HTTP 200／image/png、舊圖片端點與靜態檔 byte 比對、TypeScript、正式建置（788 頁）及 `git diff --check` 通過。全站 SEO 驗收通過，包含九語首頁分享標題／摘要／圖片與案例專屬封面。
 - 3101 已更新，尚未部署，未向聊天平台送出測試訊息。正式網址與聊天平台既有訊息不會因本機修改而自動換圖，部署後新抓取才會取得更新，平台快取更新時間由各平台控制。
 
 ## 首頁 3D 開場載入（2026-11-05）

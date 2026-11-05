@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
+import { NodeIO } from '@gltf-transform/core'
+import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
 import { Vector3, Mesh, Group, Matrix4, PerspectiveCamera, Line3 } from 'three'
 import { particleSeeds } from '../src/lib/home3d/particles'
 import { ribbonScreenLength } from '../src/lib/home3d/ribbon'
@@ -10,6 +12,14 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { birdPose, journeyPose, journeyChapters, wingBeat } from '../src/lib/home3d/choreography'
 
 async function checkModels() {
+const loading = await new NodeIO().registerExtensions(ALL_EXTENSIONS).read('assets/home3d/meshy-loading-source.glb')
+assert(loading.getRoot().listTextures().some(texture => texture.getSize()?.[0] === 4096), 'Loading preserves Meshy 4K texture')
+for (const mesh of loading.getRoot().listMeshes()) for (const primitive of mesh.listPrimitives()) {
+  assert(primitive.getAttribute('POSITION')?.getArray()?.every(Number.isFinite), 'Loading model has finite positions')
+  assert(primitive.getIndices()!.getCount() / 3 > 200000, 'Loading keeps the detailed source mesh')
+}
+assert(readFileSync('public/models/falcon-loading-v1.mp4').length < 2000000, 'Loading movie stays below 2 MB')
+assert(readFileSync('public/models/falcon-loading-v1.webp').length < 150000, 'Loading poster stays below 150 KB')
 for (const quality of ['desktop', 'mobile'] as const) {
   const bytes = readFileSync(`public/models/falcon-wing-${quality}.glb`)
   assert.equal(bytes.toString('utf8', 0, 4), 'glTF')

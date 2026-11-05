@@ -21,6 +21,7 @@ page.on('request', request => {
   const url = new URL(request.url())
   if (url.origin !== base.origin && ['http:', 'https:'].includes(url.protocol)) return void request.abort()
   if (url.pathname === '/api/contact') return void request.respond({ status: 500, contentType: 'application/json', body: '{"code":"SMTP_SEND_FAILED","error":"HOME_TEST_ONLY"}' })
+  if (glbFailure && url.pathname.endsWith('/falcon-loading-v1.mp4')) return void request.respond({ status: 503, contentType: 'text/plain', body: 'VIDEO_TEST_FAILURE' })
   if (url.pathname.endsWith('.glb')) {
     modelRequests++
     if (glbFailure) return void request.respond({ status: 503, contentType: 'text/plain', body: 'MODEL_TEST_FAILURE: complete diagnostic response' })
@@ -215,6 +216,9 @@ try {
   await page.waitForSelector('.fh-loading-error')
   const message = await page.$eval('.fh-loading-error', e => e.textContent)
   assert(message.includes('HTTP 503') && message.includes('MODEL_TEST_FAILURE') && message.includes('.glb'))
+  await page.waitForSelector('.fh-loading-media-error')
+  const mediaError = await page.$eval('.fh-loading-media-error', e => e.textContent)
+  assert(mediaError.includes('falcon-loading-v1.mp4') && mediaError.includes('MediaError'), 'Preload errors remain visible after hydration')
   assert.equal(await page.$$eval('[data-project]', nodes => nodes.length), 8)
   assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).overflow),'hidden','Failure waits for retry or static choice')
   await page.click('.fh-loading-error button:last-child')
