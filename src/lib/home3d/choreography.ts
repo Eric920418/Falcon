@@ -33,13 +33,15 @@ export function journeyPose(progress: number, portrait = false) {
 }
 export function journeyScrollProgress(p: number, mobile: boolean) {
   const base = mobile ? 7 : 11, extra = mobile ? 3 : 4
-  return (clamp(p) * base + extra * clamp((p - .64) / .18)) / (base + extra)
+  return (clamp(p) * base + base * clamp((p - .2) / .62) + extra * clamp((p - .64) / .18)) / (base * 2 + extra)
 }
 export function journeyTimelineProgress(scroll: number, mobile: boolean) {
-  const base = mobile ? 7 : 11, extra = mobile ? 3 : 4, distance = clamp(scroll) * (base + extra)
-  if (distance <= .64 * base) return distance / base
-  if (distance <= .82 * base + extra) return .64 + (distance - .64 * base) / (.18 * base + extra) * .18
-  return (distance - extra) / base
+  const base = mobile ? 7 : 11, extra = mobile ? 3 : 4, distance = clamp(scroll) * (base * 2 + extra)
+  const corridorRate = base + base / .62, blueStart = .64 * base + base * .44 / .62
+  if (distance <= .2 * base) return distance / base
+  if (distance <= blueStart) return .2 + (distance - .2 * base) / corridorRate
+  if (distance <= .82 * base + base + extra) return .64 + (distance - blueStart) / (corridorRate + extra / .18)
+  return (distance - base - extra) / base
 }
 const blueTravelStart = smooth(.16, .82, .64)
 export function flightOffset(t: number) {

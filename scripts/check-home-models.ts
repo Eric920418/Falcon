@@ -154,15 +154,26 @@ for (const mobile of [false,true]) {
     const p=i/2000, scroll=journeyScrollProgress(p,mobile)
     assert(Math.abs(journeyTimelineProgress(scroll,mobile)-p)<1e-12,'Extended tunnel seek/reverse must round-trip')
   }
-  const base=mobile?7:11, total=mobile?10:15
-  assert(Math.abs(journeyScrollProgress(.64,mobile)*total-.64*base)<1e-12,'Earlier scenes keep their scroll duration')
-  assert((journeyScrollProgress(.82,mobile)-journeyScrollProgress(.64,mobile))*total>4,'Blue tunnel has over four screens of travel')
+  const base=mobile?7:11, total=mobile?17:26
+  const screens=(start:number,end:number)=>(journeyScrollProgress(end,mobile)-journeyScrollProgress(start,mobile))*total
+  assert(Math.abs(screens(0,.2)-.2*base)<1e-12,'Screen entry keeps its scroll duration')
+  assert(Math.abs(screens(.82,1)-.18*base)<1e-12,'Screen exit keeps its scroll duration')
+  assert(screens(.2,.43)>(mobile?4:6),'Mirror corridor has a sustained traversal')
+  assert(screens(.43,.64)>(mobile?3.8:6),'Transforming corridor has a sustained traversal')
+  assert(screens(.64,.82)>(mobile?6:9),'Blue tunnel keeps the longest traversal')
+  for(const boundary of [.2,.64,.82]) {
+    const before=journeyTimelineProgress(journeyScrollProgress(boundary,mobile)-1e-8,mobile)
+    const after=journeyTimelineProgress(journeyScrollProgress(boundary,mobile)+1e-8,mobile)
+    assert(before<boundary && after>boundary && after-before<1e-6,'Corridor boundaries remain continuous on reverse/seek')
+  }
+  console.log(`${mobile?'mobile':'desktop'} scroll screens: mirror ${screens(.2,.43).toFixed(2)}, transform ${screens(.43,.64).toFixed(2)}, blue ${screens(.64,.82).toFixed(2)}, total ${total}`)
 }
 assert(Math.abs(birdPose(.82).position.z-flightPath.getPointAt(1).z+80)<1e-8,'Blue flight extends eighty world units')
+const scrollSamples = 4000
 for (const portrait of [false, true]) {
   let previousPosition: Vector3 | undefined, previousDirection: Vector3 | undefined
-  for (let i = 0; i <= 2000; i++) {
-    const { position, target, roll } = journeyPose(journeyTimelineProgress(i / 2000, portrait), portrait)
+  for (let i = 0; i <= scrollSamples; i++) {
+    const { position, target, roll } = journeyPose(journeyTimelineProgress(i / scrollSamples, portrait), portrait)
     assert([...position.toArray(), ...target.toArray(), roll].every(Number.isFinite))
     const direction = target.clone().sub(position).normalize()
     assert(target.distanceTo(position) > 0.05, 'Look target cannot coincide with camera')
@@ -190,8 +201,8 @@ for(const aspect of [1440/900,768/1024,390/844,360/800]) {
   }
 }
 let lastBird: Vector3 | undefined
-for (let i = 0; i <= 2000; i++) {
-  const p = journeyTimelineProgress(i / 2000, false), bird = birdPose(p)
+for (let i = 0; i <= scrollSamples; i++) {
+  const p = journeyTimelineProgress(i / scrollSamples, false), bird = birdPose(p)
   assert([...bird.position.toArray(), bird.yaw, bird.pitch, bird.bank].every(Number.isFinite))
   if (lastBird) assert(bird.position.distanceTo(lastBird) < 0.3, 'Bird must not teleport')
   lastBird = bird.position.clone()

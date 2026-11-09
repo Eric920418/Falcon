@@ -73,7 +73,7 @@ async function seek(progress) {
     const element = document.querySelector('.fh-journey')
     const start = element.getBoundingClientRect().top + scrollY
     const base = innerWidth < 768 ? 7 : 11, extra = innerWidth < 768 ? 3 : 4
-    const scroll = (p * base + extra * Math.max(0,Math.min(1,(p-.64)/.18))) / (base+extra)
+    const scroll = (p * base + base * Math.max(0,Math.min(1,(p-.2)/.62)) + extra * Math.max(0,Math.min(1,(p-.64)/.18))) / (base*2+extra)
     scrollTo({ top: start + (element.offsetHeight - innerHeight) * scroll, behavior: 'instant' })
   }, progress)
   await page.waitForFunction(p => Math.abs(Number(document.querySelector('canvas[data-progress]')?.dataset.progress) - p) < 0.004, {}, progress)
@@ -137,7 +137,7 @@ try {
     assert.equal(await page.$$eval('main h1', nodes => nodes.length), 1)
     assert.equal(await page.$$eval('[data-project]', nodes => nodes.length), 8)
     assert.equal(await page.$$eval('.fh-canvas-host canvas', nodes => nodes.length), 1)
-    assert.equal(await page.$eval('.fh-journey', e => Math.round(e.offsetHeight / innerHeight)), width < 768 ? 11 : 16)
+    assert.equal(await page.$eval('.fh-journey', e => Math.round(e.offsetHeight / innerHeight)), width < 768 ? 18 : 27)
     await capture(`${width}-hero`)
     await checkStageAttachment('opening')
     for (const direction of [1, -1, 1, -1]) {
