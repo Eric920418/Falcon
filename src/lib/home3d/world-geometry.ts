@@ -1,28 +1,36 @@
 import { BufferGeometry, Float32BufferAttribute, Matrix4, Quaternion, Vector3 } from 'three'
-import { flightPath, flightPoint, flightTangent, smooth } from './choreography'
+import { flightPoint, flightTangent, flightLength, originalFlightLength, flightDistanceAt, flightParameterAtDistance, smooth } from './choreography'
 
 export function pathFrame(t: number) {
   const center = flightPoint(Math.min(1,t)), tangent = flightTangent(Math.min(1,t))
-  if (t > 1) center.addScaledVector(tangent, (t - 1) * (flightPath.getLength() + 80))
+  if (t > 1) center.addScaledVector(tangent, (t - 1) * flightLength)
   const right = new Vector3().crossVectors(tangent, new Vector3(0,1,0)).normalize()
   const up = new Vector3().crossVectors(right, tangent).normalize()
   return { center, rotation: new Quaternion().setFromRotationMatrix(new Matrix4().makeBasis(right,up,tangent.clone().negate())) }
 }
 export const structureCount = (mobile: boolean) => mobile ? 20 : 30
-export const mirrorRoom = { halfWidth: 16, halfHeight: 13, depth: 260, centerZ: -85, inset: .04 }
+export const mirrorRoom = { halfWidth: 16, halfHeight: 13, depth: Math.abs(flightPoint(1).z)+100, centerZ: flightPoint(1).z/2, inset: .04 }
 export const mirrorRoomOpacity = (p: number) => smooth(.12,.22,p) * (1-smooth(.39,.46,p))
-const structureBases = new Map<number, ReturnType<typeof pathFrame>[]>()
+const structureSpacing = (mobile:boolean) => originalFlightLength*1.04/(structureCount(mobile)-1)
+export function structureFirstFrame(p:number,mobile:boolean) {
+  return Math.max(0,Math.floor((flightDistanceAt(smooth(.16,.82,Math.min(.82,p)))-originalFlightLength*.055)/structureSpacing(mobile))-3)
+}
+const structureBases = new Map<number, Array<{t:number;basis:ReturnType<typeof pathFrame>}>>()
 function structureBasis(frame: number, mobile: boolean) {
   const count = structureCount(mobile)
   let bases = structureBases.get(count)
   if (!bases) {
-    bases = Array.from({length:count},(_,i)=>pathFrame(.055+i/(count-1)*1.04))
+    const spacing=structureSpacing(mobile)
+    bases = Array.from({length:Math.ceil(flightLength/spacing)+count+1},(_,i)=>{
+      const t=flightParameterAtDistance(originalFlightLength*.055+i*spacing)
+      return {t,basis:pathFrame(t)}
+    })
     structureBases.set(count,bases)
   }
   return bases[frame]
 }
 export function structureSegment(frame: number, side: number, part: number, p: number, mobile: boolean) {
-  const t = .055 + frame / (structureCount(mobile) - 1) * 1.04, basis = structureBasis(frame, mobile)
+  const {t,basis} = structureBasis(frame, mobile)
   const twist = smooth(.39,.64,p) * smooth(.22,.62,t)
   const corners = [[-13,-11],[13,-11],[13,11],[-13,11],[-13,-11]]
   const point = (fraction: number) => {
@@ -37,9 +45,9 @@ export function structureSegment(frame: number, side: number, part: number, p: n
   return { start: point(part/3), end: point((part+.92)/3), twist }
 }
 export function tunnelGeometry(mobile: boolean) {
-  const rows = mobile ? 100 : 180, half = 13.8
+  const rows = mobile ? 200 : 360, half = 13.8
   const positions: number[]=[],uv: number[]=[],indices:number[]=[]
-  const distances=[.55*flightPath.getLength()]
+  const distances=[flightDistanceAt(.55)]
   for(let i=1;i<=rows;i++) distances.push(distances[i-1]+pathFrame(.55+i/rows*1.4).center.distanceTo(pathFrame(.55+(i-1)/rows*1.4).center))
   const corners=[[-half,-half],[half,-half],[half,half],[-half,half],[-half,-half]]
   // Each wall owns its UVs and normals; lettering never wraps across a corner.

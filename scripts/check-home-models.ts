@@ -8,10 +8,10 @@ import { particleSeeds } from '../src/lib/home3d/particles'
 import { homePixelRatio } from '../src/lib/home3d/scene'
 import { ribbonScreenLength } from '../src/lib/home3d/ribbon'
 import { flightScale, surfacePoint, surfaceSegments, wingEnvelope } from '../src/lib/home3d/surfaces'
-import { mirrorRoom, mirrorRoomOpacity, pathFrame, structureCount, structureSegment, tunnelGeometry } from '../src/lib/home3d/world-geometry'
+import { mirrorRoom, mirrorRoomOpacity, pathFrame, structureCount, structureFirstFrame, structureSegment, tunnelGeometry } from '../src/lib/home3d/world-geometry'
 import { portalWorldMatrix } from '../src/lib/home3d/portal'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
-import { birdPose, journeyPose, journeyChapters, journeyScrollProgress, journeyTimelineProgress, flightPath, wingBeat } from '../src/lib/home3d/choreography'
+import { birdPose, journeyPose, journeyChapters, journeyScrollProgress, journeyTimelineProgress, flightPath, flightPoint, originalFlightPoint, flightLength, originalFlightLength, journeyScreenCount, smooth, wingBeat } from '../src/lib/home3d/choreography'
 
 async function checkModels() {
 for(const native of [.75, 1, 1.25, 2, 3]) for(const quality of [1, .9, .8, .7, .625, .35]) {
@@ -59,7 +59,7 @@ for (const quality of ['desktop', 'mobile'] as const) {
     assert.equal(actual.count,expected.count,`Exported square tunnel ${name} count`)
     for(let i=0;i<actual.count;i++)assert(actual.getX(i)===expected.getX(i) && actual.getY(i)===expected.getY(i) && (actual.itemSize===2 || actual.getZ(i)===expected.getZ(i)),`Exported square tunnel ${name} vertex ${i}`)
   }
-  const tunnelRows=quality==='mobile'?100:180,positions=square.getAttribute('position'),coords=square.getAttribute('uv')
+  const tunnelRows=quality==='mobile'?200:360,positions=square.getAttribute('position'),coords=square.getAttribute('uv')
   for(let row=0;row<=tunnelRows;row++) {
     const basis=pathFrame(.55+row/tunnelRows*1.4),inverse=basis.rotation.clone().invert(),corners=[]
     for(let side=0;side<4;side++) {
@@ -120,7 +120,7 @@ for (const quality of ['desktop', 'mobile'] as const) {
       }
       const projected=radius*scale/(camera.position.distanceTo(bird.position)*Math.tan(camera.fov*Math.PI/360)*width/height)
       if(portrait){assert(projected<=.641,'Phone wing sphere exceeds safe width');maxSpan=Math.max(maxSpan,projected)}
-      for(let frame=0;frame<structureCount(quality==='mobile');frame++)for(let side=0;side<4;side++)for(let part=0;part<3;part++) {
+      for(let frame=structureFirstFrame(p,quality==='mobile');frame<structureFirstFrame(p,quality==='mobile')+structureCount(quality==='mobile');frame++)for(let side=0;side<4;side++)for(let part=0;part<3;part++) {
         const segment=structureSegment(frame,side,part,p,quality==='mobile')
         line.set(segment.start,segment.end)
         line.closestPointToPoint(bird.position,true,closest)
@@ -154,13 +154,13 @@ for (const mobile of [false,true]) {
     const p=i/2000, scroll=journeyScrollProgress(p,mobile)
     assert(Math.abs(journeyTimelineProgress(scroll,mobile)-p)<1e-12,'Extended tunnel seek/reverse must round-trip')
   }
-  const base=mobile?7:11, total=mobile?17:26
+  const base=mobile?7:11, total=journeyScreenCount(mobile)-1
   const screens=(start:number,end:number)=>(journeyScrollProgress(end,mobile)-journeyScrollProgress(start,mobile))*total
   assert(Math.abs(screens(0,.2)-.2*base)<1e-12,'Screen entry keeps its scroll duration')
   assert(Math.abs(screens(.82,1)-.18*base)<1e-12,'Screen exit keeps its scroll duration')
   assert(screens(.2,.43)>(mobile?4:6),'Mirror corridor has a sustained traversal')
   assert(screens(.43,.64)>(mobile?3.8:6),'Transforming corridor has a sustained traversal')
-  assert(screens(.64,.82)>(mobile?6:9),'Blue tunnel keeps the longest traversal')
+  assert(screens(.64,.82)>(mobile?6:8.9),'Blue tunnel keeps the longest traversal')
   for(const boundary of [.2,.64,.82]) {
     const before=journeyTimelineProgress(journeyScrollProgress(boundary,mobile)-1e-8,mobile)
     const after=journeyTimelineProgress(journeyScrollProgress(boundary,mobile)+1e-8,mobile)
@@ -168,7 +168,23 @@ for (const mobile of [false,true]) {
   }
   console.log(`${mobile?'mobile':'desktop'} scroll screens: mirror ${screens(.2,.43).toFixed(2)}, transform ${screens(.43,.64).toFixed(2)}, blue ${screens(.64,.82).toFixed(2)}, total ${total}`)
 }
-assert(Math.abs(birdPose(.82).position.z-flightPath.getPointAt(1).z+80)<1e-8,'Blue flight extends eighty world units')
+assert(Math.abs(originalFlightPoint(1).z-flightPath.getPointAt(1).z+80)<1e-8,'Speed reference preserves the original blue extension')
+assert(flightLength>originalFlightLength*1.9,'The physical route must grow, not just the scroll range')
+for(const mobile of [false,true]) {
+  const base=mobile?7:11,extra=mobile?3:4,total=journeyScreenCount(mobile)-1
+  const oldScroll=(p:number)=>p*base+extra*Math.min(1,Math.max(0,(p-.64)/.18))
+  for(let i=21;i<=81;i++) {
+    const p=i/100;if(Math.abs(p-.64)<.01)continue
+    const dt=.00001,t=smooth(.16,.82,p),next=smooth(.16,.82,p+dt)
+    const oldSpeed=originalFlightPoint(next).distanceTo(originalFlightPoint(t))/(oldScroll(p+dt)-oldScroll(p))
+    const newSpeed=flightPoint(next).distanceTo(flightPoint(t))/((journeyScrollProgress(p+dt,mobile)-journeyScrollProgress(p,mobile))*total)
+    assert(Math.abs(newSpeed/oldSpeed-1)<.005,'World travel per scroll pixel preserves the original speed')
+  }
+  assert.equal(structureCount(mobile),mobile?20:30,'Longer world keeps the same live instance budget')
+  const first=structureFirstFrame(.3,mobile),a=structureSegment(first+4,0,0,.3,mobile)
+  assert.deepEqual(structureSegment(first+4,0,0,.35,mobile),a,'Recycled structures stay at fixed world positions')
+}
+console.log(`Physical flight length: ${originalFlightLength.toFixed(2)} -> ${flightLength.toFixed(2)}; original scroll speed preserved`)
 const scrollSamples = 4000
 for (const portrait of [false, true]) {
   let previousPosition: Vector3 | undefined, previousDirection: Vector3 | undefined

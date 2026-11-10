@@ -1,5 +1,5 @@
 import { BufferGeometry, Float32BufferAttribute, Group, Points, ShaderMaterial, Vector3 } from 'three'
-import { flightPath, smooth } from './choreography'
+import { flightPoint, smooth } from './choreography'
 
 export function particleSeeds(count: number) {
   let seed = 7139
@@ -12,7 +12,7 @@ export function createFlightParticles(mobile: boolean) {
   const fields = counts.map((count, trail) => {
     const seeds = particleSeeds(count), positions = new Float32Array(count * 3)
     for (let i = 0; i < count; i++) {
-      const point = flightPath.getPointAt(seeds[i * 3 + 1])
+      const point = flightPoint(seeds[i * 3 + 1])
       const angle = seeds[i * 3] * Math.PI * 2, radius = 5.5 + seeds[i * 3 + 2] * 8
       point.x += Math.cos(angle) * radius; point.y += Math.sin(angle) * radius
       positions.set(point.toArray(), i * 3)

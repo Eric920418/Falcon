@@ -6,7 +6,7 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useI18n } from '@/lib/i18n/client'
-import { journeyChapters, journeyScrollProgress, journeyTimelineProgress, smooth } from '@/lib/home3d/choreography'
+import { journeyChapters, journeyScreenCount, journeyScrollProgress, journeyTimelineProgress, smooth } from '@/lib/home3d/choreography'
 import { ribbonScreenLength } from '@/lib/home3d/ribbon'
 import type { HomeStage } from '@/lib/home3d/scene'
 import type { Group, Mesh, Material } from 'three'
@@ -28,6 +28,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
     const media = gsap.matchMedia()
     media.add({ mobile: '(max-width: 767px)', desktop: '(min-width: 768px)', reduced: '(prefers-reduced-motion: reduce)' }, context => {
       const mobile = Boolean(context.conditions?.mobile)
+      root.style.setProperty('--fh-journey-screens',String(journeyScreenCount(mobile)))
       if (context.conditions?.reduced) { root.dataset.motion = 'rest'; setGate('off'); return }
       const host = document.createElement('div'), canvas = document.createElement('canvas')
       host.className = 'fh-canvas-host'; host.setAttribute('aria-hidden', 'true'); host.hidden = true
@@ -49,7 +50,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       const journeyStage = root.querySelector<HTMLElement>('[data-home-stage="journey"]')!
       const chapters = [...root.querySelectorAll<HTMLElement>('[data-chapter]')]
       const bar = root.querySelector<HTMLElement>('.fh-journey-progress span')!
-      const assetUrl = `/models/falcon-wing-${mobile ? 'mobile' : 'desktop'}.glb?v=brand-sculptures2`
+      const assetUrl = `/models/falcon-wing-${mobile ? 'mobile' : 'desktop'}.glb?v=physical-flight1`
       root.dataset.motion = 'loading'
       setGate('loading'); setLoadStatus({ phase: '01 / ASSETS', detail: 'CONNECTING' })
       setFailure('')

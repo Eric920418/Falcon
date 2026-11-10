@@ -1,6 +1,6 @@
 import { BoxGeometry, AdditiveBlending, CanvasTexture, Color, DoubleSide, Group, InstancedMesh, Mesh, MeshBasicMaterial, MeshStandardMaterial, Object3D, PlaneGeometry, RepeatWrapping, ShaderMaterial, SRGBColorSpace, Vector2, Vector3 } from 'three'
 import { Reflector } from 'three/addons/objects/Reflector.js'
-import { mirrorRoom, mirrorRoomOpacity, pathFrame, structureCount, structureSegment } from './world-geometry'
+import { mirrorRoom, mirrorRoomOpacity, pathFrame, structureCount, structureFirstFrame, structureSegment } from './world-geometry'
 import { smooth } from './choreography'
 
 export function createJourneyWorld(asset: Group, mobile: boolean) {
@@ -87,7 +87,7 @@ export function createJourneyWorld(asset: Group, mobile: boolean) {
     const mesh=new Mesh(source.geometry,source.material),basis=pathFrame(.16+i*.1),angle=i*2.4
     mesh.position.copy(new Vector3(Math.cos(angle)*15.7,Math.sin(angle)*15.7,0).applyQuaternion(basis.rotation).add(basis.center));mesh.scale.setScalar(.7);mesh.quaternion.copy(basis.rotation);group.add(mesh);return mesh
   })
-  let lastProgress=-1, lastTwist=-1
+  let lastProgress=-1, lastTwist=-1, lastFirst=-1
   function update(p:number) {
     if(p===lastProgress)return
     lastProgress=p
@@ -109,10 +109,11 @@ export function createJourneyWorld(asset: Group, mobile: boolean) {
     horizonMaterial.uniforms.alpha.value=1-smooth(.18,.27,p);horizon.visible=p<.27
     ornaments.forEach((mesh,i)=>{mesh.visible=p>.18&&p<.69;mesh.rotation.z=[0,.2,-.1,.15][i%4]+p*.3})
     const twist=smooth(.39,.64,p)
-    if(!structure.visible || twist===lastTwist)return
-    lastTwist=twist
+    const first=structureFirstFrame(p,mobile)
+    if(!structure.visible || (twist===lastTwist && first===lastFirst))return
+    lastTwist=twist;lastFirst=first
     let index=0,glowIndex=0
-    for(let frame=0;frame<structureCount(mobile);frame++) for(let side=0;side<4;side++) for(let part=0;part<3;part++) {
+    for(let frame=first;frame<first+structureCount(mobile);frame++) for(let side=0;side<4;side++) for(let part=0;part<3;part++) {
       const segment=structureSegment(frame,side,part,p,mobile)
       direction.copy(segment.end).sub(segment.start)
       dummy.position.copy(segment.start).add(segment.end).multiplyScalar(.5);dummy.quaternion.setFromUnitVectors(axis,direction.clone().normalize())
