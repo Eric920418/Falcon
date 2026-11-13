@@ -1,8 +1,9 @@
 
 import { getI18n } from '@/lib/i18n/server'
 import Link from '@/lib/i18n/link'
-import { ArrowRight, Bot, Code2, PhoneCall, Search, Sparkles } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { HomeServiceGraphic } from './HomeServiceGraphic'
+import { HomeHubs, homeHubs } from './HomeHubs'
 
 const deliveryTracks = [
   {
@@ -26,11 +27,6 @@ const deliveryTracks = [
       },
     ],
     validation: '以功能驗收、錯誤情境、跨裝置測試、效能與交付清單確認。',
-    links: [
-      { label: '網站與系統開發', href: '/services/web-development', icon: Code2 },
-      { label: 'AI 工具開發', href: '/services/ai-tools', icon: Bot },
-      { label: '企業 AI 電話', href: '/services/ai-voice-agent', icon: PhoneCall },
-    ],
   },
   {
     number: '02',
@@ -53,10 +49,6 @@ const deliveryTracks = [
       },
     ],
     validation: '以索引狀態、GSC／GA4、平台引薦與合格詢盤檢查，不承諾固定排名。',
-    links: [
-      { label: 'SEO 搜尋成長', href: '/services/seo', icon: Search },
-      { label: 'GEO AI 搜尋', href: '/services/geo', icon: Sparkles },
-    ],
   },
 ]
 
@@ -64,9 +56,10 @@ export function HomeDeliverables() {
   const { t } = getI18n()
 
   return (
-    <section id="deliverables" className="fh-content fh-deliverables">
+    <section id="services" className="fh-content fh-service-hubs fh-deliverables">
       <div>
-        <div className="fh-delivery-heading">
+        <HomeHubs />
+        <div id="deliverables" className="fh-delivery-heading">
           <div>
             <p className="fh-editorial-eyebrow">{t("Actual deliverables")}</p>
             <h2>{t("真正交付的，不是一句服務名稱")}</h2>
@@ -76,21 +69,26 @@ export function HomeDeliverables() {
         </div>
 
         <div className="fh-delivery-tracks">
-          {deliveryTracks.map((track) => (
+          {deliveryTracks.map((track) => {
+            const hub=homeHubs.find(hub=>hub.eyebrow===track.label)!
+            return (
             <article
               key={track.number}
               className="fh-delivery-track"
             >
               <div className="fh-delivery-summary"><div className="fh-delivery-summary-inner">
+                <div className="fh-track-heading"><div>
                 <div className="fh-track-label">
                   <span>{t(track.number)}</span>
                   <span>{t(track.label)}</span>
                 </div>
+                <h3>{t(hub.title)}</h3>
+                </div>
                 <HomeServiceGraphic kind={track.label==='Build'?'build':'grow'} />
-                <h3>{t(track.title)}</h3>
-                <p className="fh-editorial-description">{t(track.description)}</p>
+                </div>
+                <p className="fh-editorial-description">{t(hub.description)}</p>
                 <div className="fh-service-links">
-                  {track.links.map(({ label, href, icon: Icon }) => (
+                  {hub.children.map(({ label, href, icon: Icon }) => (
                     <Link
                       key={href}
                       href={href}
@@ -101,15 +99,18 @@ export function HomeDeliverables() {
                     </Link>
                   ))}
                 </div>
+                <Link href={hub.href} className="fh-service-cta">{t(hub.cta)}<ArrowRight size={17} aria-hidden="true" /></Link>
               </div></div>
 
               <div className="fh-delivery-details">
                 <div className="fh-track-progress" aria-hidden="true"><span /></div>
+                <h4 className="fh-delivery-title">{t(track.title)}</h4>
+                <p className="fh-editorial-description">{t(track.description)}</p>
                 <ol className="fh-delivery-list">
                   {track.deliverables.map((item, index) => (
                     <li key={item.title} className="fh-delivery-row">
                       <span className="fh-delivery-number">{t("0")}{index + 1}</span>
-                      <div className="fh-delivery-row-copy"><h4>{t(item.title)}</h4>
+                      <div className="fh-delivery-row-copy"><h5>{t(item.title)}</h5>
                       <p>{t(item.body)}</p></div>
                     </li>
                   ))}
@@ -123,7 +124,7 @@ export function HomeDeliverables() {
                 </p>
               </div>
             </article>
-          ))}
+          )})}
         </div>
       </div>
     </section>

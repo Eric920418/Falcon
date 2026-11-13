@@ -5,7 +5,7 @@ import { NodeIO } from '@gltf-transform/core'
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
 import { Vector3, Mesh, Group, Matrix4, PerspectiveCamera, Line3, DataTexture } from 'three'
 import { particleSeeds } from '../src/lib/home3d/particles'
-import { homePixelRatio } from '../src/lib/home3d/scene'
+import { homePixelRatio, composeHero } from '../src/lib/home3d/scene'
 import { ribbonScreenLength } from '../src/lib/home3d/ribbon'
 import { flightScale, surfacePoint, surfaceSegments, wingEnvelope } from '../src/lib/home3d/surfaces'
 import { mirrorRoom, mirrorRoomOpacity, pathFrame, structureCount, structureFirstFrame, structureSegment, tunnelGeometry } from '../src/lib/home3d/world-geometry'
@@ -103,6 +103,44 @@ for (const quality of ['desktop', 'mobile'] as const) {
   })
   assert(triangles < (quality === 'mobile' ? 52_000 : 125_000), `${quality}: triangle budget ${triangles}`)
   const radius = wingEnvelope(sculpture.getObjectByName('Wing') as Group)
+  const hero=sculpture.getObjectByName('Wing')!.clone(true) as Group
+  const ornaments=['PetalBloom','OrbitKnot','FoldedRibbon','Slipstream'].map(name=>(sculpture.getObjectByName(name) as Mesh).clone())
+  const shapes:Mesh[]=[];hero.traverse(object=>{if(object instanceof Mesh)shapes.push(object)})
+  let heroGap=Infinity,heroWorst=''
+  for(const [w,h] of quality==='mobile'?[[390,304],[360,288]]:[[1440,483],[1600,1000],[768,300],[768,593],[2560,500]]) {
+    const camera=new PerspectiveCamera(38,w/h,.08,200)
+    for(const p of [0,.3,.7,1])for(const time of [0,.6,1.5,2.4,4.2,8,12,16,24,36,48,60])for(const pointer of quality==='mobile'?[{x:0,y:0}]:[{x:0,y:0},{x:1,y:1},{x:-1,y:-1},{x:1,y:-1},{x:-1,y:1}]) {
+      const glide=composeHero(camera,hero,ornaments,radius,quality==='mobile',p,time,pointer)
+      const beat=wingBeat(time,glide)
+      for(const mesh of shapes)if(mesh.morphTargetInfluences){mesh.morphTargetInfluences[0]=beat[0];mesh.morphTargetInfluences[1]=beat[1]}
+      hero.updateMatrixWorld(true)
+      const boxes=ornaments.filter(mesh=>mesh.visible).map(mesh=>{
+        mesh.updateMatrixWorld(true);const positions=mesh.geometry.getAttribute('position'),point=new Vector3()
+        const box={left:Infinity,right:-Infinity,bottom:Infinity,top:-Infinity}
+        for(let i=0;i<positions.count;i++){
+          point.fromBufferAttribute(positions,i).applyMatrix4(mesh.matrixWorld).project(camera)
+          box.left=Math.min(box.left,point.x);box.right=Math.max(box.right,point.x);box.bottom=Math.min(box.bottom,point.y);box.top=Math.max(box.top,point.y)
+        }
+        assert(box.left>-.99&&box.right<.99&&box.bottom>-.99&&box.top<.99,`Hero ornaments stay fully within the stage: ${JSON.stringify({w,h,p,time,box})}`)
+        assert(Math.abs((box.left+box.right)/2)<.75,'Hero ornaments remain grouped around the falcon, not at viewport corners')
+        assert(Math.abs((box.left+box.right)*w/4)<h*.95,'Wide screens cannot pull ornaments away from the falcon')
+        return box
+      })
+      for(let a=0;a<boxes.length;a++)for(let b=a+1;b<boxes.length;b++)assert(boxes[a].right<boxes[b].left||boxes[b].right<boxes[a].left||boxes[a].top<boxes[b].bottom||boxes[b].top<boxes[a].bottom,'Hero ornaments must not stack')
+      const point=new Vector3()
+      // Wings may pass in front of background sculptures; the head, body and tail must remain clear.
+      for(const mesh of shapes.filter(mesh=>!mesh.morphTargetInfluences?.length))for(let i=0;i<mesh.geometry.getAttribute('position').count;i+=3){
+        mesh.getVertexPosition(i,point).applyMatrix4(mesh.matrixWorld).project(camera)
+        for(let j=0;j<boxes.length;j++){
+          const box=boxes[j],dx=Math.max(box.left-point.x,0,point.x-box.right)*w/2,dy=Math.max(box.bottom-point.y,0,point.y-box.top)*h/2,gap=Math.hypot(dx,dy)
+          if(gap<heroGap){heroGap=gap;heroWorst=JSON.stringify({w,h,p,time,pointer,j})}
+        }
+      }
+    }
+  }
+  console.log(`${quality} hero body separation ${heroGap.toFixed(2)} CSS px; ${heroWorst}`)
+  assert(heroGap>=8,'Hero ornaments must clear the falcon head, body and tail by eight pixels')
+
   let minClearance=Infinity,minCameraClearance=Infinity,maxSpan=0
   const closest=new Vector3(),line=new Line3()
   for (const [width,height] of quality==='mobile'?[[390,844],[360,800],[844,390]]:[[1440,900],[768,1024]]) {

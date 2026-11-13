@@ -153,6 +153,8 @@ export interface ServiceContent {
   howTo?: HowToInput
   faq: FAQItem[]
   pricing?: PricingTier[]
+  relatedLinks?: RelatedLink[]
+  references?: ContentReference[]
   serviceType: string
   priceMin: string
   priceUnit: string

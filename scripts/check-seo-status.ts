@@ -16,6 +16,7 @@ import { siteConfig } from '../src/lib/seo/site-config'
 import {
   getAllServices,
   isIndexableService,
+  services,
 } from '../src/lib/content/services'
 import {
   getAllLocalPages,
@@ -393,6 +394,23 @@ async function auditPage(route: RouteSpec): Promise<PageAudit> {
       } catch {
         problems.push('JSON-LD 無法解析')
       }
+    }
+  }
+
+  const serviceSlug = unlocalizedPath(route.path).match(/^\/services\/(seo|geo)$/)?.[1]
+  if (serviceSlug) {
+    const service = services[serviceSlug]
+    const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1]
+      ?.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '') ?? ''
+    const links = getInternalLinks(main)
+    for (const link of service.relatedLinks ?? []) {
+      if (!links.has(localizedPath(link.href, locale))) problems.push(`缺少站內延伸閱讀：${link.href}`)
+    }
+    for (const reference of service.references ?? []) {
+      if (!main.includes(`href="${reference.url}"`)) problems.push(`缺少可見來源：${reference.url}`)
+    }
+    if (serviceSlug === 'seo' && /4\s*(?:[–-]\s*|to\s*)15\s*(?:篇|articles?)/i.test(main)) {
+      problems.push('SEO 頁仍有舊的每月 4–15 篇承諾')
     }
   }
 

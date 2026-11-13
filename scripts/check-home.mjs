@@ -106,6 +106,15 @@ async function checkRibbon() {
 }
 async function checkEditorial() {
   assert.equal(await page.$$eval('.fh-delivery-row',nodes=>nodes.length),6)
+  assert.equal(await page.$$eval('.fh-delivery-track',nodes=>nodes.length),2,'Each service path contains its own introduction and deliverables')
+  const reading=await page.$$eval('.fh-delivery-track',tracks=>tracks.map(track=>({
+    title:track.querySelector('.fh-delivery-summary h3')?.textContent,
+    rows:track.querySelectorAll('.fh-delivery-row').length,
+    links:track.querySelectorAll('.fh-service-link').length,
+    measure:[...track.querySelectorAll('.fh-delivery-row p')].every(p=>p.getBoundingClientRect().width/parseFloat(getComputedStyle(p).fontSize)<=30.1),
+    movingText:[...track.querySelectorAll('.fh-delivery-row-copy')].some(p=>getComputedStyle(p).transform!=='none'),
+  })))
+  assert(reading.every(track=>track.title&&track.rows===3&&track.links>=2&&track.measure&&!track.movingText),'Service copy stays grouped, at a readable line width, and stationary')
   for(const progress of [.25,.75,.25]) {
     await page.evaluate(p=>{
       const rect=document.querySelector('.fh-delivery-details').getBoundingClientRect()

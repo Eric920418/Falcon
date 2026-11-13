@@ -8,7 +8,6 @@ import { HomeJourney } from '@/components/HomeJourney'
 import './home.css'
 import { HomeHero } from '@/components/HomeHero'
 import { HomeCases } from '@/components/HomeCases'
-import { HomeHubs } from '@/components/HomeHubs'
 import { HomeDeliverables } from '@/components/HomeDeliverables'
 import { HomeProcess } from '@/components/HomeProcess'
 import { HomeProofPricing } from '@/components/HomeProofPricing'
@@ -48,7 +47,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <main>
         <div className="fh-opening">
           <HomeHero />
-          <HomeShowcase><HomeHubs /><HomeDeliverables /></HomeShowcase>
+          <HomeShowcase><HomeDeliverables /></HomeShowcase>
         </div>
         <HomeCases />
         <HomeJourney />

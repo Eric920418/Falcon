@@ -629,5 +629,16 @@
   "策略參數調整": "策略参数调整",
   "不含投資建議": "不含投资建议",
   "系統上線後的持續維運": "系统上线后的持续维运",
-  "程式交易系統開發": "程式交易系统开发"
+  "程式交易系統開發": "程式交易系统开发",
+  "SEO 是讓有需求的人在搜尋時找到網站、理解服務並完成詢問的持續工作。隼訊先檢查抓取、索引與頁面體驗，再依搜尋意圖改善服務內容、案例與內鏈，並用 GSC、GA4 和合格詢盤檢驗成果；無法保證特定排名或見效日期。": "SEO 是让有需求的人在搜索时找到网站、理解服务并完成咨询的持续工作。隼讯先检查抓取、索引与页面体验，再依据搜索意图改善服务内容、案例与内链，并用 GSC、GA4 和有效询盘检验成果；无法保证特定排名或见效日期。",
+  "內容企劃與既有頁優化；新增內容依搜尋意圖、案例素材及方案範圍決定": "内容规划与现有页面优化；新增内容依搜索意图、案例素材和方案范围决定",
+  "依搜尋意圖與可公開證據決定優先內容，先改善既有頁面，再新增必要主題，並用內部連結串起相關頁面。": "依据搜索意图与可公开证据确定内容优先级，先改善现有页面，再新增必要主题，并用内链串起相关页面。",
+  "GEO 是改善品牌與內容在 AI 搜尋中的可見度。隼訊先確認頁面可抓取、可索引，再補上實名作者、一手案例、清楚來源與相關內鏈；以可用的官方報表、AI 引薦和合格詢盤觀察變化，不保證被引用或推薦。": "GEO 是改善品牌与内容在 AI 搜索中的可见度。隼讯先确认页面可抓取、可索引，再补上实名作者、一手案例、清楚来源与相关内链；用可用的官方报表、AI 引荐和有效询盘观察变化，不保证被引用或推荐。",
+  "2023 年 GEO 研究在受控實驗中，測試加入統計、引述與來源對生成式回答「來源可見度」的影響，結果依查詢類型而異。這不能推論到本站在 Google、ChatGPT 或 Perplexity 的引用率、流量或營收。隼訊只引用可核對的資料與自身經驗，並標明方法與限制。": "2023 年 GEO 研究在受控实验中测试加入统计、引述与来源对生成式回答“来源可见度”的影响，结果因查询类型而异。这不能推断本站在 Google、ChatGPT 或 Perplexity 的引用率、流量或营收。隼讯只引用可核对的资料与自身经验，并标明方法与限制。",
+  "Search Engine Optimization (SEO) Starter Guide": "Search Engine Optimization (SEO) Starter Guide",
+  "AI features and your website": "AI features and your website",
+  "Optimizing your website for generative AI features on Google Search": "Optimizing your website for generative AI features on Google Search",
+  "GEO: Generative Engine Optimization": "GEO: Generative Engine Optimization",
+  "Google Search Central": "Google Search Central",
+  "arXiv": "arXiv"
 }

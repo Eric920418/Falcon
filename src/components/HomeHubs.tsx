@@ -1,9 +1,8 @@
 
 import { getI18n } from '@/lib/i18n/server'
-import Link from '@/lib/i18n/link'
-import { ArrowRight, Bot, Code2, PhoneCall, Search, Sparkles } from 'lucide-react'
+import { Bot, Code2, PhoneCall, Search, Sparkles } from 'lucide-react'
 
-const hubs = [
+export const homeHubs = [
   {
     eyebrow: 'Build',
     title: '網站與 AI 開發',
@@ -35,40 +34,15 @@ export function HomeHubs() {
   const { t } = getI18n()
 
   return (
-    <section id="services" className="fh-content fh-service-hubs">
-      <div className="fh-hubs-layout">
-        <div className="fh-hubs-intro">
+    <div className="fh-hubs-layout">
+      <div className="fh-hubs-intro">
         <p className="fh-editorial-eyebrow">{t("Two focused hubs")}</p>
         <h2>{t("兩條清楚的合作路徑")}</h2>
-        <p className="fh-editorial-description">
-          {t("不把所有會做的事情都當成主服務。開發解決產品與流程問題；搜尋成長解決被找到與產生詢盤的問題。")}</p>
         <svg className="fh-hub-flow" viewBox="0 0 400 130" aria-hidden="true"><path d="M5 95C80 95 80 20 150 20S220 110 285 110 340 35 395 35" fill="none" stroke="#d9dfec" strokeWidth="12"/><path className="fh-service-route" pathLength="1" d="M5 95C80 95 80 20 150 20S220 110 285 110 340 35 395 35" fill="none" stroke="#3152e7" strokeWidth="12" strokeLinecap="round"/></svg>
-        </div>
-        <div className="fh-hub-columns">
-          {hubs.map((hub,index) => (
-            <article key={hub.title} className="fh-hub">
-              <div className="fh-hub-label"><span aria-hidden="true">0{index+1}</span><span>{t(hub.eyebrow)}</span></div>
-              <h3>{t(hub.title)}</h3>
-              <p className="fh-editorial-description">{t(hub.description)}</p>
-              <div className="fh-service-links">
-                {hub.children.map(({ label, href, icon: Icon }) => (
-                  <Link
-                    key={href}
-                    href={href}
-                    className="fh-service-link"
-                  >
-                    <Icon size={17} aria-hidden="true" />
-                    <span>{t(label)}</span>
-                  </Link>
-                ))}
-              </div>
-              <Link href={hub.href} className="fh-service-cta">
-                {t(hub.cta)} <ArrowRight size={17} />
-              </Link>
-            </article>
-          ))}
-        </div>
       </div>
-    </section>
+      <p className="fh-editorial-description">
+        {t("不把所有會做的事情都當成主服務。開發解決產品與流程問題；搜尋成長解決被找到與產生詢盤的問題。")}
+      </p>
+    </div>
   )
 }

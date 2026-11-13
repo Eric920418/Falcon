@@ -68,7 +68,7 @@ export function HomeExperience({ children }: { children: ReactNode }) {
       gsap.fromTo(ribbon, { strokeDasharray: () => ribbonScreenLength(ribbon), strokeDashoffset: () => ribbonScreenLength(ribbon) }, { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: root.querySelector('.fh-ribbon'), start: 'top 90%', end: 'bottom 40%', scrub: 0.65, invalidateOnRefresh: true } })
       gsap.fromTo(root.querySelector('.fh-floating-feather'), { yPercent: -15, rotation: -28 }, { yPercent: 80, rotation: 48, ease: 'none', scrollTrigger: { trigger: root.querySelector('.fh-manifesto'), start: 'top bottom', end: 'bottom top', scrub: 0.6 } })
       root.querySelectorAll<SVGPathElement>('.fh-service-route').forEach(path => {
-        gsap.fromTo(path, { strokeDashoffset: 1 }, { strokeDashoffset: 0, autoRound: false, ease: 'none', scrollTrigger: { trigger: path.closest('.fh-delivery-track') || root.querySelector('#services'), start: 'top 85%', end: 'bottom 40%', scrub: .5 } })
+        gsap.fromTo(path, { strokeDashoffset: 1 }, { strokeDashoffset: 0, autoRound: false, ease: 'none', scrollTrigger: { trigger: path.closest('.fh-delivery-track') || path.closest('.fh-hubs-layout'), start: 'top 85%', end: 'bottom 40%', scrub: .5 } })
       })
       root.querySelectorAll<HTMLElement>('.fh-delivery-track').forEach(track => {
         gsap.fromTo(track.querySelector('.fh-service-graphic'), { y: mobile ? 8 : 22, rotation: mobile ? 0 : -4 }, { y: mobile ? -8 : -22, rotation: mobile ? 0 : 3, ease: 'none', scrollTrigger: { trigger: track, start: 'top bottom', end: 'bottom top', scrub: .6 } })
@@ -78,7 +78,6 @@ export function HomeExperience({ children }: { children: ReactNode }) {
         gsap.fromTo(track.querySelector('.fh-track-progress span'), { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: track.querySelector('.fh-delivery-details'), start: 'top 70%', end: 'bottom 55%', scrub: .3 } })
         track.querySelectorAll<HTMLElement>('.fh-delivery-row').forEach(row => {
           gsap.fromTo(row, { '--read': 0 }, { '--read': 1, ease: 'none', scrollTrigger: { trigger: row, start: 'top 78%', end: 'top 46%', scrub: .3 } })
-          gsap.fromTo(row.querySelector('.fh-delivery-row-copy'), { y: 12 }, { y: 0, ease: 'none', scrollTrigger: { trigger: row, start: 'top 95%', end: 'top 78%', scrub: .2 } })
         })
       })
       root.querySelectorAll<HTMLElement>('.fh-project').forEach((project, index) => {

@@ -8,10 +8,10 @@ export const seoService: ServiceContent = {
     '隼訊提供技術 SEO、搜尋意圖、案例內容、內部連結與 GSC／GA4 量測，並把 GEO 視為同一搜尋成長系統的延伸。',
   keywords: ['SEO', '搜尋引擎優化', 'SEO 公司', 'SEO 服務', 'SEO 優化', 'Google 排名', 'SEO 怎麼做'],
   intent: 'commercial',
-  lastModified: '2026-07-26',
+  lastModified: '2026-11-13',
   qualityTier: 'production',
   intro:
-    'SEO 是除了付費廣告之外，少數能長期帶來自然流量的渠道——一篇排名穩定的文章，可能連續好幾年、每個月都帶訪客進來。但我們得先把話說在前頭：SEO 沒有捷徑。任何廠商跟你保證「一個月衝到第一」，幾乎都是用會被 Google 演算法懲罰的手法在賭，賭輸的是你的網站。我們寧可把預期講得保守一點，也不接那種半年後排名崩盤、客戶回頭罵人的案子。',
+    'SEO 是讓有需求的人在搜尋時找到網站、理解服務並完成詢問的持續工作。隼訊先檢查抓取、索引與頁面體驗，再依搜尋意圖改善服務內容、案例與內鏈，並用 GSC、GA4 和合格詢盤檢驗成果；無法保證特定排名或見效日期。',
   sections: [
     {
       heading: 'SEO 三個層面：技術、內容、權威',
@@ -29,7 +29,7 @@ export const seoService: ServiceContent = {
       items: [
         '初次全站健檢：Core Web Vitals（含 INP）、Schema 結構化資料、Mobile-First、爬蟲可達性、索引狀態',
         '關鍵字研究與搜尋意圖分類（資訊型／商業型／交易型分開經營）',
-        '月度內容產出（依方案 4–15 篇，每篇對應一組真實查詢）',
+        '內容企劃與既有頁優化；新增內容依搜尋意圖、案例素材及方案範圍決定',
         '白帽反向連結：用內容與公關換連結，不買垃圾外鏈',
         'Google Search Console + GA4 監測，每月一份看得懂的報告（不是塞滿術語的 PDF）',
       ],
@@ -68,7 +68,7 @@ export const seoService: ServiceContent = {
       },
       {
         name: '內容產出與內部連結',
-        text: '依方案每月產出對應數量的內容，並用內部連結把相關主題串成集群，集中主題權威。',
+        text: '依搜尋意圖與可公開證據決定優先內容，先改善既有頁面，再新增必要主題，並用內部連結串起相關頁面。',
       },
       {
         name: '權威建立',
@@ -123,28 +123,14 @@ export const seoService: ServiceContent = {
         '幾個實用的判斷點：(1) 有沒有把手法講清楚——是白帽、可驗證，還是含糊帶過；(2) 報告看不看得懂，是給你數據與下一步，還是塞滿術語的 PDF；(3) 有沒有承諾「保證第一名」，有的話請直接跳過；(4) 內容與帳號（GSC、GA4）是不是掛在你名下、換廠商帶得走。價格只是其中一項，別只看月費高低。',
     },
   ],
-  pricing: [
-    {
-      name: '基礎 SEO',
-      price: '7,500',
-      unit: '月',
-      includes: ['月度健檢報告', '4 篇 SEO 內容（每篇 1500+ 字）', '技術 SEO 修正', 'GSC 監測'],
-      bestFor: '中小企業、單一服務領域',
-    },
-    {
-      name: '進階 SEO',
-      price: '15,000',
-      unit: '月',
-      includes: ['8 篇深度內容', '反向連結建立（每月 5 個）', '競品分析', '雙週優化會議'],
-      bestFor: '中大型企業、競爭較激烈的產業',
-    },
-    {
-      name: '企業 SEO',
-      price: '30,000',
-      unit: '月',
-      includes: ['15+ 篇內容', 'PR + 媒體外鏈（每月 2–3 篇）', '專屬 SEO 顧問', '即時報告儀表板'],
-      bestFor: '上市櫃公司、競爭極激烈的產業',
-    },
+  relatedLinks: [
+    { label: '網站 SEO 沒效果？常見的技術 SEO 問題盤點', href: '/blog/common-seo-mistakes' },
+    { label: 'SEO 內容品質怎麼判斷？E-E-A-T、證據與驗收標準', href: '/blog/how-we-define-good-seo-content' },
+    { label: 'SEO、GEO、AEO 差別｜先做共同基礎再談平台', href: '/compare/seo-vs-geo-vs-aeo' },
+  ],
+  references: [
+    { name: 'Search Engine Optimization (SEO) Starter Guide', url: 'https://developers.google.com/search/docs/fundamentals/seo-starter-guide', publisher: 'Google Search Central' },
+    { name: 'AI features and your website', url: 'https://developers.google.com/search/docs/appearance/ai-features', publisher: 'Google Search Central' },
   ],
   serviceType: '搜尋引擎優化',
   priceMin: '7500',

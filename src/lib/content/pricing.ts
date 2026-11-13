@@ -350,16 +350,16 @@ export const comparePages: Record<string, ComparePageContent> = {
     title: 'SEO、GEO、AEO 差別｜先做共同基礎再談平台',
     h1: 'SEO、GEO、AEO 的共同基礎與差別',
     description:
-      'Google 將 GEO、AEO 視為搜尋體驗優化的一部分。本頁比較常用名稱、平台與量測方式，不販售無官方依據的特殊 AI Schema。',
+      '比較 SEO、GEO、AEO 的工作目標、共同基礎與量測方式；Google 沒有獨立的 GEO／AEO 收錄通道，也不要求特殊 AI Schema。',
     keywords: ['SEO vs GEO', 'SEO GEO AEO 比較', 'SEO GEO AEO 比較表', '搜尋優化比較', '三者差異比較'],
-    lastModified: '2026-08-11',
+    lastModified: '2026-11-13',
     qualityTier: 'production',
     intro:
       '業界會用不同名稱描述 AI 搜尋工作，但共同前提仍是可抓取、可索引、可信且有一手價值的內容。名稱不是三份獨立預算。',
     comparisonHeaders: ['面向', 'SEO', 'GEO', 'AEO'],
     comparisonTable: [
       { feature: '完整名稱', values: ['Search Engine Optimization', 'Generative Engine Optimization', 'Answer Engine Optimization'] },
-      { feature: '目標平台', values: ['Google、Bing 等傳統搜尋', 'ChatGPT、Claude、Gemini', 'Perplexity、Google AI Overview'] },
+      { feature: '主要工作', values: ['改善搜尋結果中的可見度與到站體驗', '改善生成式搜尋中的品牌與內容可見度', '讓頁面直接回答使用者問題'] },
       { feature: '共同基礎', values: ['可抓取與可索引', 'SEO 基礎＋一手證據', '清楚回答＋可信來源'] },
       { feature: '主要量測', values: ['GSC 非品牌點擊與詢盤', 'AI 功能／引薦與詢盤', '答案曝光、引薦與詢盤'] },
       { feature: '特殊 AI Schema', values: ['沒有', '沒有', '沒有'] },

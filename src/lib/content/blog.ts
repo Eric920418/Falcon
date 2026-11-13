@@ -1353,10 +1353,10 @@ export const blogPosts: Record<string, BlogContent> = {
     title: '網站 SEO 沒效果？常見的技術 SEO 問題盤點',
     h1: '常見技術 SEO 問題盤點',
     description:
-      'SEO 做了卻沒看到排名變化？多數情況問題出在技術面而非內容。本文整理我們接手客戶網站時最常發現的技術 SEO 問題。',
+      'SEO 沒見到成效時，先核對搜尋需求、索引資格、頁面品質與量測，再排查常見技術問題及外部競爭。',
     keywords: ['SEO 沒效果', 'SEO 錯誤', '技術 SEO', 'SEO 問題'],
     datePublished,
-    dateModified: '2026-08-11',
+    dateModified: '2026-11-13',
     qualityTier: 'production',
     intent: 'informational',
     intro:
@@ -1559,11 +1559,11 @@ export const blogPosts: Record<string, BlogContent> = {
       '內容是 SEO 的核心，但「好內容」很難量化。本文整理隼訊在客戶內容生產時實際遵守的判斷標準。',
     keywords: ['SEO 內容', '內容行銷', 'E-E-A-T', '內容品質'],
     datePublished,
-    dateModified: '2026-08-26',
+    dateModified: '2026-11-13',
     qualityTier: 'production',
     intent: 'informational',
     intro:
-      '「內容是國王」這句話被講爛了，但什麼算好內容沒有統一答案。本文記錄我們在實際接案時對「可生產 / 不可生產」的判斷標準。',
+      '好 SEO 內容應回答明確的使用者問題，提供可查證的第一手經驗或來源，並說清楚適用範圍與限制。本文用這些標準判斷哪些內容值得製作，以及如何驗收。',
     sections: [
       {
         heading: '不會通過審稿的內容類型',

@@ -186,6 +186,39 @@ export function ServicePageTemplate({ service }: ServicePageTemplateProps) {
         </div>
       </section>
 
+      {service.relatedLinks && service.relatedLinks.length > 0 && (
+        <section className="px-6 py-12">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-xl text-[var(--site-text)] mb-4">{t("延伸閱讀")}</h2>
+            <ul className="flex flex-wrap gap-3">
+              {service.relatedLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="inline-flex items-center gap-2 rounded border border-[var(--site-border)] px-4 py-2 text-sm text-[var(--site-muted)] transition-colors hover:border-[var(--site-accent)]/60 hover:text-[var(--site-accent)]">
+                    {t(link.label)}<ArrowRight size={14} aria-hidden="true" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {service.references && service.references.length > 0 && (
+        <section className="px-6 pb-12">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-xl text-[var(--site-text)] mb-4">{t("參考資料")}</h2>
+            <ul className="space-y-2">
+              {service.references.map((reference) => (
+                <li key={reference.url} className="text-sm text-[var(--site-muted)]">
+                  <a href={reference.url} target="_blank" rel="noopener noreferrer" className="text-[var(--site-accent)] hover:underline">{t(reference.name)}</a>
+                  <span>{t("｜")}{t(reference.publisher)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
       {/* CTA */}
       <section className="py-16 px-6">
         <div className="max-w-3xl mx-auto text-center">

@@ -8,10 +8,10 @@ export const geoService: ServiceContent = {
     '隼訊以技術 SEO、實名作者、原創案例與 AI 搜尋量測執行 GEO；不販售 llms.txt、特殊 AI Schema 或保證引用。',
   keywords: ['GEO', '生成式引擎優化', 'GEO 服務', 'GEO 優化公司', 'Generative Engine Optimization', 'ChatGPT 優化'],
   intent: 'commercial',
-  lastModified: '2026-08-31',
+  lastModified: '2026-11-13',
   qualityTier: 'production',
   intro:
-    'GEO 是業界用來描述 AI 搜尋可見度工作的名稱。依 Google 2026 年官方指引，AI Overview 與 AI Mode 沒有額外技術門檻，也沒有專用 AI Schema；頁面仍須先能被搜尋引擎抓取、索引並提供摘要。隼訊把 GEO 視為 SEO 的延伸：用一手案例、實名責任、清楚來源與量測，增加內容在 Google AI、ChatGPT Search 與 Perplexity 被找到的機會，但不保證引用。',
+    'GEO 是改善品牌與內容在 AI 搜尋中的可見度。隼訊先確認頁面可抓取、可索引，再補上實名作者、一手案例、清楚來源與相關內鏈；以可用的官方報表、AI 引薦和合格詢盤觀察變化，不保證被引用或推薦。',
   sections: [
     {
       heading: 'GEO 與 SEO 的核心差別',
@@ -32,7 +32,7 @@ export const geoService: ServiceContent = {
     {
       heading: '想被 AI 引用，內容不能只是「通順」——要有數據、引述與來源',
       body:
-        'Princeton 等大學團隊在 2023 年的 GEO 研究裡做過一件事：拿同一批內容，分別加上統計數據、專家引述、以及可查證的來源，再測它們在生成式引擎裡被引用的機率。結論是——這幾種「增加可信度」的寫法，確實會提高被 AI 挑中的機會。要先講清楚限制：那是受控實驗裡「相對可見度」的提升，會因題目類型而異（技術、數據型主題吃引用來源，生活型主題吃易讀性），不等於保證流量或營收。我們把這個發現落地成具體寫法：關鍵論點盡量附上可查的數字與出處、引用第一手經驗或專家說法、避免空泛形容詞。這也是為什麼我們寧可少放一個沒來源的漂亮數字，也不想讓 AI（和讀者）覺得內容不可信。',
+        '2023 年 GEO 研究在受控實驗中，測試加入統計、引述與來源對生成式回答「來源可見度」的影響，結果依查詢類型而異。這不能推論到本站在 Google、ChatGPT 或 Perplexity 的引用率、流量或營收。隼訊只引用可核對的資料與自身經驗，並標明方法與限制。',
     },
     {
       heading: '讓 AI「認得你是誰」：品牌實體一致性與第三方聲量',
@@ -114,21 +114,14 @@ export const geoService: ServiceContent = {
         '先看 Google AI 曝光與 Bing 引用頁面，再在 GA4 同時追蹤 ChatGPT 的 utm_source=chatgpt.com、AI 平台 referrer、落地頁、CTA 與詢盤。無連結提及與部分 App 流量仍可能量不到，因此報告必須保留限制，不把曝光或 citations 當成已轉換。',
     },
   ],
-  pricing: [
-    {
-      name: '基礎方案',
-      price: '12,500',
-      unit: '月',
-      includes: ['索引與爬蟲檢查', '必要 Schema', '實名與案例證據', 'AI 搜尋基準與月度監測'],
-      bestFor: '中小企業、首次嘗試 GEO',
-    },
-    {
-      name: '進階方案',
-      price: '25,000',
-      unit: '月',
-      includes: ['SEO／GEO 技術基礎', '案例與原創內容', '外部實體訊號建議', '雙週檢視'],
-      bestFor: '有真實專業素材、要同時經營搜尋與 AI 引薦的企業',
-    },
+  relatedLinks: [
+    { label: 'GEO 生成式引擎優化指南：技術與內容怎麼準備', href: '/blog/geo-complete-guide-2026' },
+    { label: 'GEO 成效怎麼衡量？Google AI、Bing AI 與 GA4 量測實作', href: '/blog/geo-measurement-guide' },
+    { label: 'SEO、GEO、AEO 差別｜先做共同基礎再談平台', href: '/compare/seo-vs-geo-vs-aeo' },
+  ],
+  references: [
+    { name: 'Optimizing your website for generative AI features on Google Search', url: 'https://developers.google.com/search/docs/fundamentals/ai-optimization-guide', publisher: 'Google Search Central' },
+    { name: 'GEO: Generative Engine Optimization', url: 'https://arxiv.org/abs/2311.09735', publisher: 'arXiv' },
   ],
   serviceType: '生成式引擎優化',
   priceMin: '12500',

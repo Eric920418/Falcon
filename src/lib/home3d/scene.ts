@@ -18,6 +18,31 @@ export function homePixelRatio(deviceRatio: number, mobile: boolean, quality = 1
   const ratio = Math.min(native, mobile ? 2 : 1.6) * quality
   return mobile ? Math.max(Math.min(native, 1.25), ratio) : ratio
 }
+export function composeHero(camera:PerspectiveCamera,wing:Group,ornaments:Mesh[],radius:number,mobile:boolean,p:number,time:number,pointer={x:0,y:0}) {
+  const portrait=mobile||camera.aspect<.85
+  camera.fov=38;camera.updateProjectionMatrix()
+  camera.position.set(2.6+pointer.x*.7,3.2+pointer.y*.4,MathUtils.lerp(20,11.5,smooth(.85,2.5,camera.aspect)))
+  camera.lookAt(0,portrait?.3:.7,0);camera.updateMatrixWorld()
+  wing.scale.setScalar(portrait?Math.min(1.65,camera.position.length()*Math.tan(MathUtils.degToRad(19))*camera.aspect*.98/radius):1.4*Math.min(1,camera.aspect/1.6))
+  wing.rotation.set(.08,-.28+Math.sin(time*.4)*.13+p*.08,-.13+Math.sin(time*.6)*.1-p*.04)
+  wing.position.set(0,(portrait?-.6:0)+Math.sin(time*2.6-.6)*.14,0)
+  const center=new Vector3()
+  for(let i=0;i<ornaments.length;i++) {
+    const mesh=ornaments[i];mesh.visible=!portrait||i<2
+    if(!mesh.visible)continue
+    const size=(portrait?[.22,.26][i]:[.22,.36,.32,.24][i])*Math.min(1,portrait?1:camera.aspect/2)
+    const edgeX=1-size/camera.aspect-.025,edgeY=1-size-.025
+    const x=MathUtils.clamp((portrait?[.63,-.63][i]:[.62,-.56,MathUtils.lerp(-.65,-.55,smooth(1.3,2.4,camera.aspect)),.58][i])*Math.min(1,2.6/camera.aspect),-edgeX,edgeX)
+    const y=MathUtils.clamp(portrait?[.68,-.54][i]:[.78,-.56,MathUtils.lerp(.05,.28,smooth(1.3,2.4,camera.aspect)),-.62][i],-edgeY,edgeY)
+    const depth=camera.position.length()+4+i*.5,half=depth*Math.tan(MathUtils.degToRad(19))
+    mesh.position.set(x*half*camera.aspect,y*half,-depth).applyMatrix4(camera.matrixWorld)
+    if(!mesh.geometry.boundingSphere)mesh.geometry.computeBoundingSphere()
+    mesh.scale.setScalar(half*size/mesh.geometry.boundingSphere!.radius)
+    mesh.rotation.set([.22,.08,.06,.12][i]+Math.sin(time*.45+i)*.18,[-.2,.1,-.35,.15][i]+Math.sin(time*.3+i)*.25+p*.5,[0,.15,-.12,.2][i]+Math.sin(time*.26+i)*.09+p*.4)
+    mesh.position.sub(center.copy(mesh.geometry.boundingSphere!.center).multiplyScalar(mesh.scale.x).applyEuler(mesh.rotation))
+  }
+  return .8
+}
 export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile: boolean) {
   const sculpture = asset.getObjectByName('Wing') as Group
   const originalFrame = asset.getObjectByName('Portal') as Mesh
@@ -127,20 +152,9 @@ export function createHomeStage(canvas: HTMLCanvasElement, asset: Group, mobile:
     if (particles.group.parent !== particleParent) particleParent.add(particles.group)
     renderer.toneMappingExposure = 1.05
     if (mode === 'hero') {
-      camera.fov = 38; camera.updateProjectionMatrix()
       bg.copy(paper); (scene.fog as Fog).far = 100
-      camera.position.set(2.6 + pointer.x * 0.7 - p * 4, 3.2 + pointer.y * 0.4 + p * 2.5, MathUtils.lerp(20, 11.5, smooth(0.85, 2.5, camera.aspect)) - p * 2)
-      camera.lookAt(0, portrait ? 0.3 : 0.7, 0)
-      heroWing.scale.setScalar(portrait ? Math.min(1.65, camera.position.length() * Math.tan(MathUtils.degToRad(19)) * camera.aspect * .98 / radius) : 1.4)
-      heroWing.rotation.set(0.08 + p * 0.1, -0.28 + Math.sin(time * 0.4) * 0.13 + p * 0.7, -0.13 + Math.sin(time * 0.6) * 0.1 - p * 0.25)
-      heroWing.position.set(0, (portrait ? -.6 : 0) + Math.sin(time * 2.6 - 0.6) * 0.14, 0)
-      flap(heroWing, time, portrait ? .75 : 0)
-      for (let i = 0; i < loose.length; i++) {
-        loose[i].visible = !portrait || i < 2
-        loose[i].position.set(portrait ? (i === 0 ? 5.3 : -5.1) : [6.4, -6.4, -5.6, 6][i], portrait ? (i === 0 ? 5.2 : -2.7) : [3, -1.8, 1.6, -3.8][i], (portrait ? [-4, -4, 2, -6] : [-3, -3, 0, -3])[i])
-        loose[i].scale.setScalar(portrait ? 0.8 : [.9, 1.05, .7, .85][i])
-        loose[i].rotation.set([.22,.08,.06,.12][i]+Math.sin(time*.45+i)*.18, [-.2,.1,-.35,.15][i]+Math.sin(time*.3+i)*.25+p*.5, [0,.15,-.12,.2][i]+Math.sin(time*.26+i)*.09+p*.4)
-      }
+      const glide=composeHero(camera,heroWing,loose,radius,mobile,p,time,pointer)
+      flap(heroWing,time,glide)
     } else if (mode === 'manifesto') {
       camera.fov = 38; camera.updateProjectionMatrix()
       bg.copy(paper); (scene.fog as Fog).far = 100
